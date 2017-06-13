@@ -1,4 +1,4 @@
-$(document).ready(function() {
+var main=function() {
 
     // page is now ready, initialize the calendar...
 
@@ -12,19 +12,21 @@ $(document).ready(function() {
                title  : 'event1',
                start  : '2017-06-13',
                //rendering : "background",
-               decription : "blue"
+               description : "blue",
            },
            {
                title  : 'event2',
                start  : '2017-06-05',
                end    : '2017-06-07',
-               description : "blue"
+               description : "blue",
+               tag: "FWOP",
            },
            {
                title  : 'event3',
                start  : '2017-06-09T12:30:00',
                allDay : false, // will make the time show
-               description : "blue"
+               description : "blue",
+               tag: "BAJA",
            }
        ],
 
@@ -35,8 +37,19 @@ $(document).ready(function() {
 
         },
         eventRender: function(event, element) {
-         element.css('color', event.description);
+          if(event.tag === "FWOP"){
+         element.css('background-color', event.description);
+         element.css('border-color', event.description);
+       }
+       else if(event.tag === "BAJA"){
+         element.css('background-color', 'red');
+         element.css('border-color', 'red');
+         //event.eventBackgroundColor = 'red'
+         //event.rendering = "background"
+       }
        },
     })
 
-});
+}
+
+$(document).ready(main);
