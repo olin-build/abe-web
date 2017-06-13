@@ -50,6 +50,26 @@ var main=function() {
        },
     })
 
+var customDropdown = `
+<div class="btn-group">
+<button type="button" class="fc-button fc-state-default fc-corner-left fc-corner-right dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+Action <span class="caret"></span>
+</button>
+<ul class="dropdown-menu">
+<li><a href="#">Action</a></li>
+<li><a href="#">Another action</a></li>
+<li><a href="#">Something else here</a></li>
+<li role="separator" class="divider"></li>
+<li><a href="#">Separated link</a></li>
+</ul>
+</div>`
+
+$('.fc-toolbar .fc-left').append(
+    $(customDropdown)
+        .on('click', function() {
+          $('.dropdown-toggle').dropdown();
+    })
+);
 }
 
 $(document).ready(main);
