@@ -1,2 +1,2 @@
-# abe-web-frontend
-A Web front-end for ABE (the Amorphous Blog of Events).
+# A Web Front-End for ABE
+This is a Web front-end for the [Amorphous Blob of Events](https://github.com/olinlibrary/ABE).
