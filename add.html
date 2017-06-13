@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Event | ABE</title>
+    <!-- Begin Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>-->
+    <!-- End Bootstrap -->
+</head>
+<body>
+
+<div class="content-container">
+    <div class="content-header">
+        <h1 class="title">Add Event</h1>
+    </div>
+
+    <form class="event-info-container">
+        <input id="event-title" type="text" placeholder="Title" class="wide-text-box single-line-text-box">
+        <div class="date-time-container">
+            <input id="start-date" title="Start Date" type="date" class="single-line-text-box">
+            <input id="start-time" title="Start Time" type="time" class="single-line-text-box">
+            to
+            <input id="end-date" title="End Date" type="date" class="single-line-text-box">
+            <input id="end-time" title="End Time" type="time" class="single-line-text-box">
+        </div>
+        <input id="location" title="Event Location" class="wide-text-box single-line-text-box">
+        <textarea id="description" title="Event Description" class="wide-text-box multi-line-text-box"></textarea>
+        <div class="radio-collection-container">
+            <span class="radio-collection-title">Visibility</span>
+            <div class="radio-option">
+                <input type="radio" title="Public">
+            </div>
+            <div class="radio-option">
+                <input type="radio" title="Students, Faculty and Staff Only">
+            </div>
+            <div class="radio-option">
+                <input type="radio" title="Students Only">
+            </div>
+        </div>
+
+    </form>
+</div>
+
+</body>
+</html>
