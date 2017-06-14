@@ -1,5 +1,5 @@
 var main=function() {
-
+  var masterLabels = []
     // page is now ready, initialize the calendar...
 
     $('#calendar').fullCalendar({
@@ -37,6 +37,7 @@ var main=function() {
 
         },
         eventRender: function(event, element) {
+          masterLabels.push(event.tag);
           if(event.tag === "FWOP"){
          element.css('background-color', event.description);
          element.css('border-color', event.description);
@@ -51,6 +52,7 @@ var main=function() {
     })
 
 makeDropdown()
+populateDropdown(masterLabels)
 
 }
 
@@ -68,14 +70,17 @@ var makeDropdown=function(){
     $('#labels-dropdown').append(
       $('<ul>').attr('id','labels-dropdown-inner'));
     $('#labels-dropdown-inner').addClass('dropdown-menu');
-    $('#labels-dropdown-inner').append(
-    $('<li>').append(
-    $('<a>').attr('href','#').text('Action')
-    ),
-    $('<li>').append(
-    $('<a>').attr('href','#').text('Another Action')
-    ));
       }
+
+var populateDropdown=function(labels){
+  for (i=0; i < labels.length; i++){
+    $('#labels-dropdown-inner').append(
+      $('<li>').append(
+      $('<a>').attr('href','#').text(labels[i])
+      )
+    )
+  }
+}
 
 
 
