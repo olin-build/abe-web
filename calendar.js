@@ -1,5 +1,6 @@
 var main=function() {
-  var masterLabels = []
+  var masterLabels = [];
+  var activeLabels = ['FWOP'];
     // page is now ready, initialize the calendar...
 
     $('#calendar').fullCalendar({
@@ -13,6 +14,7 @@ var main=function() {
                start  : '2017-06-13',
                //rendering : "background",
                description : "blue",
+               tag : "FWOP",
            },
            {
                title  : 'event2',
@@ -37,7 +39,8 @@ var main=function() {
 
         },
         eventRender: function(event, element) {
-          masterLabels.push(event.tag);
+          if ($.inArray(event.tag,masterLabels) < 0){
+            masterLabels.push(event.tag)};
           if(event.tag === "FWOP"){
          element.css('background-color', event.description);
          element.css('border-color', event.description);
@@ -52,7 +55,9 @@ var main=function() {
     })
 
 makeDropdown()
-populateDropdown(masterLabels)
+populateDropdown(masterLabels, activeLabels)
+
+
 
 }
 
@@ -72,13 +77,23 @@ var makeDropdown=function(){
     $('#labels-dropdown-inner').addClass('dropdown-menu');
       }
 
-var populateDropdown=function(labels){
-  for (i=0; i < labels.length; i++){
+var populateDropdown=function(labels, activeLabels){
+  for (var i=0; i < labels.length; i++){
     $('#labels-dropdown-inner').append(
       $('<li>').append(
-      $('<a>').attr('href','#').text(labels[i])
-      )
-    )
+      $('<a>').attr('href','#').text(labels[i])).on('click',function(){
+      $(this).toggleClass('active');
+      index = activeLabels.indexOf($(this).text())
+      if(index > -1){
+        activeLabels.splice(index,1)
+      }
+      else{
+        activeLabels.push($(this).text())
+      }
+      console.log(activeLabels)
+      $('.navbar-brand').text(activeLabels.toString())
+    })
+  );
   }
 }
 
