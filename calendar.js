@@ -50,26 +50,34 @@ var main=function() {
        },
     })
 
-var customDropdown = `
-<div class="btn-group">
-<button type="button" class="fc-button fc-state-default fc-corner-left fc-corner-right dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-Action <span class="caret"></span>
-</button>
-<ul class="dropdown-menu">
-<li><a href="#">Action</a></li>
-<li><a href="#">Another action</a></li>
-<li><a href="#">Something else here</a></li>
-<li role="separator" class="divider"></li>
-<li><a href="#">Separated link</a></li>
-</ul>
-</div>`
+makeDropdown()
 
-$('.fc-toolbar .fc-left').append(
-    $(customDropdown)
-        .on('click', function() {
-          $('.dropdown-toggle').dropdown();
-    })
-);
 }
+
+var makeDropdown=function(){
+  $('.fc-toolbar .fc-left').append(
+    $('<div>').attr('id','labels-dropdown'));
+    $('#labels-dropdown').addClass('btn-group');
+    $('#labels-dropdown').append(
+      $('<button>').addClass('fc-button fc-state-default fc-corner-left fc-corner-right dropdown-toggle'));
+    $('.dropdown-toggle').attr('type','button').attr('data-toggle','dropdown').attr('aria-haspopup', 'true').attr('aria-expanded','false');
+    $('.dropdown-toggle').text('Action');
+    $('.dropdown-toggle').append(
+      $('<span>').addClass('caret')
+    );
+    $('#labels-dropdown').append(
+      $('<ul>').attr('id','labels-dropdown-inner'));
+    $('#labels-dropdown-inner').addClass('dropdown-menu');
+    $('#labels-dropdown-inner').append(
+    $('<li>').append(
+    $('<a>').attr('href','#').text('Action')
+    ),
+    $('<li>').append(
+    $('<a>').attr('href','#').text('Another Action')
+    ));
+      }
+
+
+
 
 $(document).ready(main);
