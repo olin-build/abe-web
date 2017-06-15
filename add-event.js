@@ -22,17 +22,15 @@ $(document).ready(function () {
         $.ajax({
             url: 'http://localhost:4000/calendarUpdate',
             type: 'POST',
+            dataType: 'text',
             contentType: 'text/plain', //'application/json;charset=utf-8',
             data: JSON.stringify(data),
             success: function( data ){
-                alert("Event saved")
+                alert("Event saved!");
             },
             error: function( jqXHR, textStatus, errorThrown ){
-                alert(jqXHR.responseText)
-                // alert("Error: Status: "+textStatus+" Message: "+errorThrown);
+                alert("Error: " + errorThrown);
             }
-        }).catch(function (data, status, headers, config) {
-            alert(data)
         });
 
     });
