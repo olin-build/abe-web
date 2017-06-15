@@ -19,8 +19,14 @@ $(document).ready(function () {
             description: description,
             visibility: visibility
         };
+        var url;
+        if (window.location.href.indexOf("herokuapp.com") > -1) {
+            url = 'https://abeweb.herokuapp.com/calendarUpdate';
+        } else {
+            url = 'http://localhost:4000/calendarUpdate';
+        }
         $.ajax({
-            url: 'http://localhost:4000/calendarUpdate',
+            url: url,
             type: 'POST',
             dataType: 'text',
             contentType: 'text/plain', //'application/json;charset=utf-8',
