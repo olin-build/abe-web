@@ -2,16 +2,16 @@ function customCalendar() {
   this.masterLabels = [];
   this.activeLabels = [];
   this.rendering = function(event, element) {
-    if ($.inArray(event.tag,mycalendar.masterLabels) < 0){
-      mycalendar.masterLabels.push(event.tag)};
-    if(event.tag === "FWOP"){
-      element.css('background-color', event.description);
-      element.css('border-color', event.description);
+    if ($.inArray(event.visibility,mycalendar.masterLabels) < 0){
+      mycalendar.masterLabels.push(event.visibility)};
+    if(event.visibility === "olin"){
+      element.css('background-color', 'blue');
+      element.css('border-color', 'blue');
     }
-    else if(event.tag === "BAJA"){
+    else if(event.visibility === "students"){
       element.css('background-color','red');
       //event.rendering = "background"
-    console.log(mycalendar.masterLabels.toString());
+    // console.log(mycalendar.masterLabels.toString());
     };
   };
   this.calendar = {
@@ -25,21 +25,21 @@ function customCalendar() {
               start  : '2017-06-13',
               //rendering : "background",
               description : "blue",
-              tag : "FWOP",
+              visibility : "students",
           },
           {
               title  : 'event2',
               start  : '2017-06-05',
               end    : '2017-06-07',
               description : "blue",
-              tag: "FWOP",
+              visibility: "olin",
           },
           {
               title  : 'event3',
               start  : '2017-06-09T12:30:00',
               allDay : false, // will make the time show
               description : "blue",
-              tag: "BAJA",
+              visibility: "public",
           }
         ],
 
@@ -69,6 +69,14 @@ function customCalendar() {
         $('<ul>').attr('id','labels-dropdown-inner'));
       $('#labels-dropdown-inner').addClass('dropdown-menu');
   };
+  this.filter = function (event){
+    if (mycalendar.activeLabels.indexOf(event.visibility) < 0){
+      console.log('removed');
+      console.log(event.visibility);
+      return true
+
+    }
+  };
   this.refreshFilters = function(toggledFilters){
     console.log('bleep')
     for (var i=0; i< toggledFilters.length; i++){
@@ -79,9 +87,8 @@ function customCalendar() {
       else{
         this.activeLabels.push(toggledFilters[i])
       };
-      // for (var j=0; j< this.activeLabels.length, i++){
-      //   if
-      // };
+      $('#calendar').fullCalendar('refetchEvents');
+      $('#calendar').fullCalendar('removeEvents', this.filter);
       console.log(this.activeLabels)
     };
   };
