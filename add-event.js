@@ -20,7 +20,7 @@ $(document).ready(function () {
             visibility: visibility
         };
         var url;
-        if (window.location.href.indexOf("herokuapp.com") > -1) {
+        if (window.location.href.indexOf("olinlibrary.github.io") > -1) {
             url = 'https://abeweb.herokuapp.com/calendarUpdate';
         } else {
             url = 'http://localhost:4000/calendarUpdate';
