@@ -1,18 +1,17 @@
 function customCalendar() {
   this.masterLabels = [];
-  this.activeLabels = [];
-  this.dropdownLabels = [];
-  this.rendering = function(event, element) {
-    if ($.inArray(event.visibility,mycalendar.masterLabels) < 0){
-      console.log(event.visibility);
-      mycalendar.masterLabels.push(event.visibility)};
-      //console.log(mycalendar.masterLabels)
-      if (mycalendar.activeLabels.indexOf(event.visibility) < 0){
-        console.log('removed');
-        console.log(event.visibility);
-        return false
-
-      }
+  this.activeLabels = ['public']; //add labels we want visible by default here
+  this.dropdownLabels = []; //keeps track of what's in the dropdown because we repopulate frequently
+  this.rendering = function(event, element) { /**runs every time events are rendered on the calendar (including when they're updated from the dropdown)*/
+    //add the label to masterLabels if it isn't there when we render
+    if (mycalendar.masterLabels.indexOf(event.visibility) < 0){
+      mycalendar.masterLabels.push(event.visibility)
+    };
+    //if it isn't in activeLabels, remove it from the calendar
+    if (mycalendar.activeLabels.indexOf(event.visibility) < 0){
+      return false
+    };
+    //set colors differently based on the label (will change in later iterations)
     if(event.visibility === "public"){
       element.css('background-color', 'blue');
       element.css('border-color', 'blue');
@@ -20,19 +19,15 @@ function customCalendar() {
     else if(event.visibility === "students"){
       element.css('background-color','red');
       //event.rendering = "background"
-    // console.log(mycalendar.masterLabels.toString());
     };
   };
-  this.filter = function (event){
+  this.filter = function (event){ /*if the event isn't in activeLabels, take it off the calendar (this is called by removeEvents)*/
     if (mycalendar.activeLabels.indexOf(event.visibility) < 0){
-      console.log('removed');
-      console.log(event.visibility);
       return true
-
     }
   };
-  this.refreshFilters = function(toggledFilters){
-    console.log('bleep')
+  this.refreshFilters = function(toggledFilters){ /**called when a filter is toggled to add or remove it to activeLabels and refresh - can be called with [] to just refresh*/
+    $('#calendar').fullCalendar('refetchEvents');
     for (var i=0; i< toggledFilters.length; i++){
       var index = this.activeLabels.indexOf(toggledFilters[i]);
       if(index > -1){
@@ -41,38 +36,46 @@ function customCalendar() {
       else{
         this.activeLabels.push(toggledFilters[i])
       };
-      $('#calendar').fullCalendar('refetchEvents');
       $('#calendar').fullCalendar('removeEvents', this.filter);
-      console.log(this.activeLabels)
     };
   };
-  this.populateDropdown = function(){
-    console.log('populate')
-    //console.log(mycalendar.masterLabels);
+  this.populateDropdown = function(){ /**called whenever we change which events are shown in order to update the dropdown*/
+    //console.log('populate') //this makes it easy to see how often we repopulate the dropdown which is TOO OFTEN
     for (var i=0; i < mycalendar.masterLabels.length; i++){
-    if (mycalendar.dropdownLabels.indexOf(mycalendar.masterLabels[i]) < 0){
-      $('#labels-dropdown-inner').append(
-        $('<li>').append(
-        $('<a>').attr('href','#').text(mycalendar.masterLabels[i])).on('click', function(){
-        $(this).toggleClass('active');
-        mycalendar.refreshFilters([$(this).text()])
-      })
-    );
-    mycalendar.dropdownLabels.push(mycalendar.masterLabels[i])
+    if (mycalendar.dropdownLabels.indexOf(mycalendar.masterLabels[i]) < 0){ //only add it to dropdown if it isn't there already
+      if (mycalendar.activeLabels.indexOf(mycalendar.masterLabels[i]) < 0){
+        $('#labels-dropdown-inner').append(
+          $('<li>').append(
+          $('<a>').attr('href','#').text(mycalendar.masterLabels[i])).on('click', function(){ //what happens when you click on something in the dropdown
+          $(this).toggleClass('active');
+          mycalendar.refreshFilters([$(this).text()])
+          })
+        );
+      }
+      else{ //if it's just being added and it's already active, make it start active
+        $('#labels-dropdown-inner').append(
+          $('<li>').addClass('active').append(
+          $('<a>').attr('href','#').text(mycalendar.masterLabels[i])).on('click', function(){
+          $(this).toggleClass('active');
+          mycalendar.refreshFilters([$(this).text()])
+          })
+        );
+      }
+      mycalendar.dropdownLabels.push(mycalendar.masterLabels[i]) //once you add it to the dropdown, add it to the list of stuff on the dropdown
+    };
+
     }
-    }
+
   };
-  this.calendar = {
-       // put your options and callbacks here
+  this.calendar = { /*calendar object full of settings to pass fullCalendar*/
        weekends: true,
-       //events: 'https://abeweb.herokuapp.com/calendarUpdate',
-       events: {
+       events: { //JSON settings
         url: 'https://abeweb.herokuapp.com/calendarRead',
         type: 'POST',
         error: function() {
             alert('there was an error while fetching events!');
+          },
         },
-      },
        //fake events to play with:
       //  events: [
       //     {
@@ -97,7 +100,6 @@ function customCalendar() {
       //         visibility: "public",
       //     }
       //   ],
-
        header: {
          left: 'title',
          center:'',
@@ -106,11 +108,10 @@ function customCalendar() {
        eventRender: this.rendering,
        eventAfterAllRender: this.populateDropdown,
    };
-
-  this.initCalendar = function(){
+  this.initCalendar = function(){ /*what it sounds like*/
     $('#calendar').fullCalendar(this.calendar)
   };
-  this.makeDropdown = function(){
+  this.makeDropdown = function(){ /*called after making the fullCalendar calendar to add a Bootstrap dropdown to the header*/
     $('.fc-toolbar .fc-left').append(
       $('<div>').attr('id','labels-dropdown'));
       $('#labels-dropdown').addClass('btn-group');
@@ -125,34 +126,13 @@ function customCalendar() {
         $('<ul>').attr('id','labels-dropdown-inner'));
       $('#labels-dropdown-inner').addClass('dropdown-menu');
   };
-
-
-
-
-
-    // $('#calendar').fullCalendar('refetchEvents')
-    // //console.log(this.activeLabels)
-    // //console.log(this.masterLabels)
-    // $('.navbar-brand').text(this.activeLabels.toString())
-
 }
-var mycalendar;
+var mycalendar; //THIS IS IMPORTANT because JS sucks at handling classes
 var main=function() {
-  //console.log(customCalendar.masterLabels)
   mycalendar = new customCalendar();
-
   mycalendar.initCalendar();
   mycalendar.makeDropdown();
-  console.log(mycalendar.activeLabels);
   mycalendar.refreshFilters([]);
-  console.log('active:')
-  console.log(mycalendar.activeLabels)
-  // $('#calendar').fullCalendar('eventRender')
-
-  // mycalendar.populateDropdown();
-
 }
-
-
 
 $(document).ready(main);
