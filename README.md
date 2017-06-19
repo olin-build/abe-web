@@ -27,6 +27,8 @@ Then you'll need to install the Node.js server and its package manager (npm).
 
 Once you have Node installed, you can use `npm` to install the necessary packages.
 
+    sudo npm install -g n
+    sudo n latest
     npm install --save react react-dom babel-core babel-loader babel-preset-es2015 babel-preset-react webpack
 
 #### Build and Run
