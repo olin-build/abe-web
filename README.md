@@ -21,6 +21,8 @@ Then you'll need to install the Node.js server and its package manager (npm).
 
     sudo apt-get update
     sudo apt-get install nodejs npm
+    sudo npm install -g n
+    sudo n latest
 
 #### React, Babel and Webpack
 
