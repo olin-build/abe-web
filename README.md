@@ -5,8 +5,9 @@ This is a Web front-end for the
 
 ## Setup on Ubuntu
 
-To get set up to run ABE's Web frontend, you'll need to install [Node.js](https://nodejs.org/en/https://nodejs.org/en/),
+In order to run ABE's Web frontend, you'll need [Node.js](https://nodejs.org/en/https://nodejs.org/en/),
 [React](https://facebook.github.io/react/), [Babel](https://babeljs.io/) and [Webpack](https://webpack.js.org/).
+You can install them by following the instructions below.
 
 #### Clone This Repo
 
