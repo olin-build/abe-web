@@ -31,4 +31,5 @@ class App extends React.Component {
     }
 }
 
+$(document).foundation()
 render(<App/>, document.getElementById('app'));
