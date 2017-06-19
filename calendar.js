@@ -8,13 +8,6 @@ function customCalendar() {
       if (mycalendar.masterLabels.indexOf(event.labels[i]) < 0){
         mycalendar.masterLabels.push(event.labels[i])}
     };
-    // if (mycalendar.masterLabels.indexOf(event.visibility) < 0){
-    //   mycalendar.masterLabels.push(event.visibility)
-    // };
-    //if it isn't in activeLabels, remove it from the calendar
-    // if (mycalendar.activeLabels.indexOf(event.visibility) < 0){
-    //   return false
-    // };
     var active = false
     for(i=0; i<event.labels.length; i++){
       if (mycalendar.activeLabels.indexOf(event.labels[i]) > -1){
@@ -57,8 +50,7 @@ function customCalendar() {
     };
   };
   this.populateDropdown = function(){ /**called whenever we change which events are shown in order to update the dropdown*/
-    //console.log(mycalendar.masterLabels);
-    console.log('populate') //this makes it easy to see how often we repopulate the dropdown which is TOO OFTEN
+    //console.log('populate') //this makes it easy to see how often we repopulate the dropdown which is TOO OFTEN
     if ($('#labels-dropdown-inner').length){
     for (var i=0; i < mycalendar.masterLabels.length; i++){
     if (mycalendar.dropdownLabels.indexOf(mycalendar.masterLabels[i]) < 0){ //only add it to dropdown if it isn't there already
