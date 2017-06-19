@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Event | ABE</title>
+    <link rel="stylesheet" href="add-event.css"/>
+    <!-- Begin Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>-->
+    <!-- End Bootstrap -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script><!-- jQuery -->
+    <script src="add-event.js"></script>
+</head>
+<body>
+
+<div class="content-container">
+    <div class="content-header">
+        <h1 class="title">Add Event</h1>
+    </div>
+
+    <div class="event-info-container">
+        <input id="event-title" type="text" placeholder="Title" class="wide-text-box single-line-text-box">
+        <div class="date-time-container">
+            <input id="start-date" title="Start Date" type="date" class="single-line-text-box" placeholder="Start Date">
+            <input id="start-time" title="Start Time" type="time" class="single-line-text-box" placeholder="Start Time">
+            to
+            <input id="end-date" title="End Date" type="date" class="single-line-text-box" placeholder="End Date">
+            <input id="end-time" title="End Time" type="time" class="single-line-text-box" placeholder="End Time">
+        </div>
+        <input id="location" title="Event Location" class="wide-text-box single-line-text-box" placeholder="Location">
+        <textarea id="description" title="Event Description" class="wide-text-box multi-line-text-box" placeholder="Description"></textarea>
+        <div class="radio-collection-container">
+            <span class="radio-collection-title">Visibility</span>
+            <div class="radio-option">
+                <input type="radio" id="privacy-public" name="privacy" value="public" title="Public">
+                <label for="privacy-public">Public</label>
+            </div>
+            <div class="radio-option">
+                <input type="radio" id="privacy-olin" name="privacy" value="olin" title="Olin Students, Faculty and Staff Only">
+                <label for="privacy-olin">Students, Faculty and Staff Only</label>
+            </div>
+            <div class="radio-option">
+                <input type="radio" id="privacy-students" name="privacy" value="students" title="Students Only">
+                <label for="privacy-students">Students</label>
+            </div>
+        </div>
+
+        <div class="form-submit-button-container">
+            <button id="submit" class="btn-lg">Add Event</button>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>
