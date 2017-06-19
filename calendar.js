@@ -54,10 +54,7 @@ function customCalendar() {
     if ($('#labels-dropdown-inner').length){
     for (var i=0; i < mycalendar.masterLabels.length; i++){
     if (mycalendar.dropdownLabels.indexOf(mycalendar.masterLabels[i]) < 0){ //only add it to dropdown if it isn't there already
-    console.log('add')
-    console.log(mycalendar.masterLabels[i])
       if (mycalendar.activeLabels.indexOf(mycalendar.masterLabels[i]) < 0){
-        console.log('inactive')
         $('#labels-dropdown-inner').append(
           $('<li>').append(
           $('<a>').attr('href','#').text(mycalendar.masterLabels[i])).on('click', function(){ //what happens when you click on something in the dropdown
@@ -67,7 +64,6 @@ function customCalendar() {
         );
       }
       else{ //if it's just being added and it's already active, make it start active
-      console.log('active')
         $('#labels-dropdown-inner').append(
           $('<li>').addClass('active').append(
           $('<a>').attr('href','#').text(mycalendar.masterLabels[i])).on('click', function(){
@@ -147,10 +143,8 @@ var mycalendar; //THIS IS IMPORTANT because JS sucks at handling classes
 var main=function() {
   mycalendar = new customCalendar();
   mycalendar.initCalendar();
-  console.log(mycalendar.dropdownLabels);
   mycalendar.makeDropdown();
   mycalendar.populateDropdown();
-  console.log(mycalendar.dropdownLabels);
   mycalendar.refreshFilters([]);
 }
 
