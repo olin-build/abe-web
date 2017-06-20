@@ -6,12 +6,12 @@ export default function customCalendar(){
   this.dropdownLabels = []; //keeps track of what's in the dropdown because we repopulate frequently
   this.rendering = function(event, element) { /**runs every time events are rendered on the calendar (including when they're updated from the dropdown)*/
     //add the label to masterLabels if it isn't there when we render
-    for(i=0; i<event.labels.length; i++){
+    for(var i=0; i<event.labels.length; i++){
       if (mycalendar.masterLabels.indexOf(event.labels[i]) < 0){
         mycalendar.masterLabels.push(event.labels[i])}
     };
     var active = false
-    for(i=0; i<event.labels.length; i++){
+    for(var i=0; i<event.labels.length; i++){
       if (mycalendar.activeLabels.indexOf(event.labels[i]) > -1){
         active = true
         break}
@@ -52,9 +52,11 @@ export default function customCalendar(){
     };
   };
   this.populateDropdown = function(){ /**called whenever we change which events are shown in order to update the dropdown*/
-    //console.log('populate') //this makes it easy to see how often we repopulate the dropdown which is TOO OFTEN
+    console.log('populate') //this makes it easy to see how often we repopulate the dropdown which is TOO OFTEN
     if ($('#labels-dropdown-inner').length){
+      console.log('made it here')
     for (var i=0; i < mycalendar.masterLabels.length; i++){
+      console.log('looping')
     if (mycalendar.dropdownLabels.indexOf(mycalendar.masterLabels[i]) < 0){ //only add it to dropdown if it isn't there already
       if (mycalendar.activeLabels.indexOf(mycalendar.masterLabels[i]) < 0){
         $('#labels-dropdown-inner').append(
@@ -82,38 +84,38 @@ export default function customCalendar(){
   };
   this.calendar = { /*calendar object full of settings to pass fullCalendar*/
        weekends: true,
-       events: { //JSON settings
-        //url: 'https://abeweb.herokuapp.com/calendarRead',
-        url: 'http://192.168.32.64:3000/calendarRead',
-        type: 'POST',
-        error: function() {
-            alert('there was an error while fetching events!');
-          },
-        },
+      //  events: { //JSON settings
+      //   //url: 'https://abeweb.herokuapp.com/calendarRead',
+      //   url: 'http://192.168.32.64:3000/calendarRead',
+      //   type: 'POST',
+      //   error: function() {
+      //       alert('there was an error while fetching events!');
+      //     },
+      //   },
        //fake events to play with:
-      //  events: [
-      //     {
-      //         title  : 'event1',
-      //         start  : '2017-06-13',
-      //         //rendering : "background",
-      //         labels : ['FWOP', 'Food'],
-      //         visibility : "students",
-      //     },
-      //     {
-      //         title  : 'event2',
-      //         start  : '2017-06-05',
-      //         end    : '2017-06-07',
-      //         labels : ['BAJA'],
-      //         visibility: "olin",
-      //     },
-      //     {
-      //         title  : 'event3',
-      //         start  : '2017-06-09T12:30:00',
-      //         allDay : false, // will make the time show
-      //         labels : ['BAJA', 'Food'],
-      //         visibility: "public",
-      //     }
-      //   ],
+       events: [
+          {
+              title  : 'event1',
+              start  : '2017-06-13',
+              //rendering : "background",
+              labels : ['FWOP', 'Food'],
+              visibility : "students",
+          },
+          {
+              title  : 'event2',
+              start  : '2017-06-05',
+              end    : '2017-06-07',
+              labels : ['BAJA'],
+              visibility: "olin",
+          },
+          {
+              title  : 'event3',
+              start  : '2017-06-09T12:30:00',
+              allDay : false, // will make the time show
+              labels : ['BAJA', 'Food'],
+              visibility: "public",
+          }
+        ],
        header: {
          left: 'title',
          center:'',

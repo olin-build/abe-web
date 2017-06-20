@@ -38,6 +38,7 @@ class Calendar extends React.Component {
 // }
   componentDidMount(){
     //customCalendar();
+    console.log('component mounted')
     var mycalendar; //THIS IS IMPORTANT because JS sucks at handling classes
     mycalendar = new customCalendar();
     mycalendar.initCalendar();
@@ -58,6 +59,7 @@ class Calendar extends React.Component {
 
 class App extends React.Component {
     render() {
+      console.log('rendering calendar')
         return (
         <div>
         <PageHeader/>
@@ -68,4 +70,5 @@ class App extends React.Component {
 }
 
 //$(document).foundation()
+console.log('Page loading...')
 render(<App/>, document.getElementById('app'));
