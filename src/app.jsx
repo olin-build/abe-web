@@ -5,32 +5,23 @@ import * as fullCalendar from 'fullcalendar/dist/fullcalendar';
 // require('bootstrap');
 // import * as bootstrap from 'bootstrap/js/button.js';
 import * as foundation from '../js/vendor/foundation.js'
+import {BrowserRouter} from 'react-router-dom';
+import {Switch, Route} from 'react-router-dom';
+// import {UIRouter, UIView, UISref, UISrefActive, pushStateLocationPlugin} from 'ui-router-react';
+import PageHeader from './components/header.jsx';
+import AddEditEventScene from './scenes/AddEdit/add-edit-event.jsx';
+import CalendarScene from './scenes/Calendar/calendar.jsx';
 
+class App extends React.Component {
 
-class PageHeaderTitle extends React.Component {
-    render() {
-        return <h1>Welcome to ABE!</h1>
-
+    constructor(props) {
+        super(props);
+        this.state = {title: 'ABE | Olin College of Engineering'}
     }
-}
 
-class PageHeaderNav extends React.Component {
-    render() {
-        return <p>A nav menu should go here...</p>
+    setPageTitle(newTitle) {
+        this.setState({title: newTitle + ' | Olin College of Engineering'});
     }
-}
-
-class PageHeader extends React.Component {
-    render() {
-        return (
-            <header>
-                <PageHeaderTitle/>
-                <PageHeaderNav/>
-            </header>
-
-        );
-    }
-}
 
 class Calendar extends React.Component {
 
@@ -63,6 +54,19 @@ class App extends React.Component {
     }
 }
 
+const Main = () => (
+    <main>
+        <Switch>
+            <Route exact path='/' component={CalendarScene} />
+            <Route path='/edit' component={AddEditEventScene} />
+        </Switch>
+    </main>
+);
+
 //$(document).foundation()
-console.log('Page loading...')
-render(<App/>, document.getElementById('app'));
+render(
+    <BrowserRouter>
+        <App/>
+    </BrowserRouter>,
+    document.getElementById('app')
+);

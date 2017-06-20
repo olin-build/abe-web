@@ -1,3 +1,7 @@
 @import "../node_modules/fullcalendar/dist/fullcalendar.css";
 @import "../node_modules/bootstrap/dist/css/bootstrap.css";
 @import "../css/foundation.css";
+footer .footer-message {
+    margin:1em;
+    text-align:center;
+}

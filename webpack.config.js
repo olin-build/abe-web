@@ -7,6 +7,7 @@ var APP_DIR = path.resolve(__dirname, 'src');
 var config = {
     devtool:'eval-source-map',
     entry: APP_DIR + '/app.jsx',
+    devtool: 'source-map',
     output: {
         path: BUILD_DIR,
         publicPath: 'build/',
