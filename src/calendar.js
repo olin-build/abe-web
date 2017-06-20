@@ -119,6 +119,7 @@ export default function customCalendar(){
          right:'today prev,next'
        },
        //handleWindowResize: true,
+       //defaultView: 'agendaWeek',
        aspectRatio: 2,
        eventRender: this.rendering,
        eventAfterAllRender: this.populateDropdown,
@@ -127,18 +128,32 @@ export default function customCalendar(){
     $('#calendar').fullCalendar(this.calendar)
   };
   this.makeDropdown = function(){ /*called after making the fullCalendar calendar to add a Bootstrap dropdown to the header*/
-    $('.fc-toolbar .fc-left').append(
-      $('<div>').attr('id','labels-dropdown'));
-      $('#labels-dropdown').addClass('btn-group');
-      $('#labels-dropdown').append(
-        $('<button>').addClass('fc-button fc-state-default fc-corner-left fc-corner-right dropdown-toggle'));
-      $('.dropdown-toggle').attr('type','button').attr('data-toggle','dropdown').attr('aria-haspopup', 'true').attr('aria-expanded','false');
-      $('.dropdown-toggle').text('Choose a filter');
+    // $('.fc-toolbar .fc-left').append(
+    //   $('<div>').attr('id','labels-dropdown'));
+    //   $('#labels-dropdown').addClass('btn-group');
+    //   $('#labels-dropdown').append(
+    //     $('<button>').addClass('fc-button fc-state-default fc-corner-left fc-corner-right dropdown-toggle'));
+    //   $('.dropdown-toggle').attr('type','button').attr('data-toggle','dropdown').attr('aria-haspopup', 'true').attr('aria-expanded','false');
+    //   $('.dropdown-toggle').text('Choose a filter');
+    //   $('.dropdown-toggle').append(
+    //     $('<span>').addClass('caret')
+    //   );
+    //   $('#labels-dropdown').append(
+    //     $('<ul>').attr('id','labels-dropdown-inner'));
+    //   $('#labels-dropdown-inner').addClass('dropdown-menu');
+    $('.fc-center').append(
+      $('<ul data-dropdown-menu id="primary-menu">'));//.attr('id','primary-menu').attr('data-dropdown-menu',''));
+      $('#primary-menu').addClass('dropdown menu');
+      console.log('making dropdown')
+      $('#primary-menu').append(
+        $('<li>').addClass('fc-button fc-state-default fc-corner-left fc-corner-right dropdown-toggle'));
+      //$('.dropdown-toggle').attr('type','button').attr('data-toggle','dropdown').attr('aria-haspopup', 'true').attr('aria-expanded','false');
+      //$('.dropdown-toggle').text('Choose a filter');
       $('.dropdown-toggle').append(
-        $('<span>').addClass('caret')
+        $('<a>').attr('href','#').text('Choose a filter')
       );
-      $('#labels-dropdown').append(
+      $('.dropdown-toggle').append(
         $('<ul>').attr('id','labels-dropdown-inner'));
-      $('#labels-dropdown-inner').addClass('dropdown-menu');
+      $('#labels-dropdown-inner').addClass('menu');
   };
 }

@@ -8,9 +8,6 @@ var config = {
     devtool:'eval-source-map',
     entry: APP_DIR + '/app.jsx',
     output: {
-        // devtoolLineToLine: true,
-        // sourceMapFilename: "./bundle.js.map",
-        // pathinfo: true,
         path: BUILD_DIR,
         publicPath: 'build/',
         filename: 'bundle.js'
@@ -27,13 +24,6 @@ var config = {
             { test: require.resolve('moment'), loader: 'expose-loader?moment' }
         ]
     },
-    // resolve: {
-    //   alias: {
-    //     jquery: path.resolve(path.join(__dirname, '..', 'node_modules', 'jquery')),
-    //     fullcalendar: 'fullcalendar/dist/fullcalendar'
-    //   }
-    //   },
-
   };
 
 module.exports = config;
