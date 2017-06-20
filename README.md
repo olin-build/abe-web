@@ -29,7 +29,7 @@ Then you'll need to install the Node.js server and its package manager (npm).
 
 Once you have Node installed, you can use `npm` to install the necessary packages.
 
-    npm install --save react react-dom babel-core babel-loader babel-preset-es2015 babel-preset-react webpack ui-router-react
+    npm install --save react react-dom react-router-dom babel-core babel-loader babel-preset-es2015 babel-preset-react webpack
 
 #### Build and Run
 
@@ -37,7 +37,11 @@ To launch the Web app, run the following:
 
     ./node_modules/.bin/webpack -d --watch
 
-And visit `index.html` in your browser.
+And in another Terminal:
+
+    npm run dev
+
+Then visit [http://localhost:8080](http://localhost:8080) in your browser.
 
 Changes should be reflected in your browser every time you save `app.jsx`,
 but it may take a couple seconds for Webpack to recompile everything.

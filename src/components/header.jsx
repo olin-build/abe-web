@@ -1,4 +1,5 @@
 import * as React from "react";
+import {Link} from 'react-router-dom';
 
 class PageHeaderTitle extends React.Component {
     render() {
@@ -11,8 +12,8 @@ class PageHeaderNav extends React.Component {
     render() {
         return (
             <ul>
-                <li><a href="./view">View</a></li>
-                <li><a href="./add">Add</a></li>
+                <li><Link to="/">Home</Link></li>
+                <li><Link to="/edit">Edit</Link></li>
             </ul>
         );
     }

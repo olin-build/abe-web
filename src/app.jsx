@@ -1,6 +1,9 @@
 import * as React from "react";
 import {render} from 'react-dom';
-import {UIRouter, UIView, UISref, UISrefActive, pushStateLocationPlugin} from 'ui-router-react';
+import {BrowserRouter} from 'react-router-dom';
+import {Switch, Route} from 'react-router-dom';
+// import {UIRouter, UIView, UISref, UISrefActive, pushStateLocationPlugin} from 'ui-router-react';
+import PageHeader from './components/header.jsx';
 import AddEditEventScene from './scenes/AddEdit/add-edit-event.jsx';
 import CalendarScene from './scenes/Calendar/calendar.jsx';
 
@@ -17,36 +20,28 @@ class App extends React.Component {
     }
 
     render() {
-        return <PageHeader/>
+        return (
+            <div>
+                <PageHeader/>
+                <Main/>
+            </div>
+        )
     }
 }
 
-const viewState = {
-    name: 'view',
-    url: './',
-    component: () => <CalendarScene/>
-};
-
-const addState = {
-    name: 'add',
-    url: './add',
-    component: () => <AddEditEventScene/>
-};
-
+const Main = () => (
+    <main>
+        <Switch>
+            <Route exact path='/' component={CalendarScene} />
+            <Route path='/edit' component={AddEditEventScene} />
+        </Switch>
+    </main>
+);
 
 //$(document).foundation()
 render(
-    <UIRouter plugins={[pushStateLocationPlugin]} states={[viewState, addState]}>
-        <div>
-            <UISrefActive class="active">
-                <UISref to="view"><a>View</a></UISref>
-            </UISrefActive>
-            <UISrefActive class="active">
-                <UISref to="add"><a>Add</a></UISref>
-            </UISrefActive>
-
-            <UIView/>
-        </div>
-    </UIRouter>,
+    <BrowserRouter>
+        <App/>
+    </BrowserRouter>,
     document.getElementById('app')
 );
