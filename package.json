@@ -4,7 +4,8 @@
   "description": "Web frontend utilizing React for Olin College of Engineering's Amorphous Blob of Events (ABE).",
   "main": "app.js",
   "scripts": {
-    "webpack": "webpack -d --watch"
+    "webpack": "webpack -d --watch",
+    "start": "webpack-dev-server --inline --hot"
   },
   "repository": {
     "type": "git",
@@ -34,7 +35,8 @@
     "moment": "^2.18.1",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
-    "webpack": "^2.6.1"
+    "webpack": "^2.6.1",
+    "webpack-dev-server": "^2.5.0"
   },
   "devDependencies": {
     "expose-loader": "^0.7.3"
