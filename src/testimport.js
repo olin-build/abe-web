@@ -1,4 +1,5 @@
-function customCalendar() {
+export default function foo(){
+  console.log('bar')
   this.masterLabels = [];
   this.activeLabels = ['summer']; //add labels we want visible by default here
   this.dropdownLabels = []; //keeps track of what's in the dropdown because we repopulate frequently
@@ -117,6 +118,8 @@ function customCalendar() {
          center:'',
          right:'today prev,next'
        },
+       //handleWindowResize: true,
+       aspectRatio: 2,
        eventRender: this.rendering,
        eventAfterAllRender: this.populateDropdown,
    };
@@ -139,13 +142,3 @@ function customCalendar() {
       $('#labels-dropdown-inner').addClass('dropdown-menu');
   };
 }
-var mycalendar; //THIS IS IMPORTANT because JS sucks at handling classes
-var main=function() {
-  mycalendar = new customCalendar();
-  mycalendar.initCalendar();
-  mycalendar.makeDropdown();
-  mycalendar.populateDropdown();
-  mycalendar.refreshFilters([]);
-}
-
-$(document).ready(main);
