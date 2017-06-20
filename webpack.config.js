@@ -12,6 +12,7 @@ var config = {
         // sourceMapFilename: "./bundle.js.map",
         // pathinfo: true,
         path: BUILD_DIR,
+        publicPath: 'build/',
         filename: 'bundle.js'
     },
     module : {
@@ -22,6 +23,7 @@ var config = {
                 loader : 'babel-loader'
             },
             { test: require.resolve('jquery'), loader: 'expose-loader?$!expose-loader?jQuery' },
+            { test: require.resolve('bootstrap'), loader: 'expose-loader?$!expose-loader?bootstrap' }
             { test: require.resolve('moment'), loader: 'expose-loader?moment' }
         ]
     },

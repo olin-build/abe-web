@@ -1,8 +1,12 @@
 import * as React from "react";
 import {render} from 'react-dom';
-import customCalendar from './testimport.js';
+import customCalendar from './calendar.js';
 //import customCalendar from './calendar.js';
 import * as fullCalendar from 'fullcalendar/dist/fullcalendar';
+require('bootstrap');
+import * as bootstrap from 'bootstrap/js/button.js';
+//import 'bootstrap/dist/css/bootstrap.css';
+
 
 class PageHeaderTitle extends React.Component {
     render() {
@@ -38,7 +42,6 @@ class Calendar extends React.Component {
 // }
   componentDidMount(){
     //customCalendar();
-    console.log('component mounted')
     var mycalendar; //THIS IS IMPORTANT because JS sucks at handling classes
     mycalendar = new customCalendar();
     mycalendar.initCalendar();
@@ -59,7 +62,6 @@ class Calendar extends React.Component {
 
 class App extends React.Component {
     render() {
-      console.log('rendering calendar')
         return (
         <div>
         <PageHeader/>
