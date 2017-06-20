@@ -1,6 +1,6 @@
 import * as React from "react";
 import {render} from 'react-dom';
-import foo from './testimport.js';
+import customCalendar from './testimport.js';
 //import customCalendar from './calendar.js';
 import * as fullCalendar from 'fullcalendar/dist/fullcalendar';
 
@@ -39,7 +39,7 @@ class Calendar extends React.Component {
   componentDidMount(){
     //customCalendar();
     var mycalendar; //THIS IS IMPORTANT because JS sucks at handling classes
-    mycalendar = new foo();
+    mycalendar = new customCalendar();
     mycalendar.initCalendar();
     mycalendar.makeDropdown();
     mycalendar.populateDropdown();

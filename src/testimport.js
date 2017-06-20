@@ -1,4 +1,5 @@
-export default function foo(){
+export default function customCalendar(){
+  var mycalendar = this;
   console.log('bar')
   this.masterLabels = [];
   this.activeLabels = ['summer']; //add labels we want visible by default here
