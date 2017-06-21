@@ -27,9 +27,9 @@ Then you'll need to install the Node.js server and its package manager (npm).
 
 #### React, Babel and Webpack
 
-Once you have Node installed, you can use `npm` to install the necessary packages.
+Once you have Node installed, you can use `npm` to install the necessary packages (read from `package.json`).
 
-    npm install --save react react-dom react-router-dom babel-core babel-loader babel-preset-es2015 babel-preset-react webpack
+    npm install
 
 #### Build and Run
 
