@@ -1,5 +1,16 @@
 @import "../node_modules/fullcalendar/dist/fullcalendar.css";
 @import "../css/foundation.css";
+
+/** ----- Begin Global ----- **/
+
+input::placeholder,
+textarea::placeholder {
+    color: black;
+}
+
+/** ----- End Global ----- **/
+
+
 /** ----- Begin Header ----- **/
 header nav {
     background-color: #009BDF;
@@ -40,6 +51,60 @@ header nav li.menu-text:hover a {
 }
 
 /** ----- End Calendar ----- **/
+
+
+/** ----- Begin Event Add/Edit ----- **/
+
+.content-container {
+    padding: 1em;
+}
+
+.short-text-box {
+    max-width: 10em;
+    display: inline-block;
+    margin: 0 0.5rem 1rem;
+
+}
+.short-text-box:first-child { margin-left: 0; }
+.short-text-box:last-child { margin-right: 0; }
+
+.medium-text-box {
+    max-width: 30em;
+}
+
+.radio-collection-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.radio-collection-title {
+    padding-right: 1em;
+    font-weight: bold;
+}
+
+.radio-option {
+    display: flex;
+    align-items: center;
+}
+
+.radio-option label {
+    font-size: 1em;
+}
+
+.radio-option input[type=radio] {
+    margin: 0;
+}
+
+.radio-collection-options-container {
+    display: flex;
+}
+
+.form-submit-button-container {
+    text-align: right;
+}
+
+/** ----- End Event Add/Edit ----- **/
 
 
 /** ----- Begin Footer ----- **/

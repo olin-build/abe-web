@@ -8,7 +8,7 @@ import {BrowserRouter} from 'react-router-dom';
 import {Switch, Route} from 'react-router-dom';
 // import {UIRouter, UIView, UISref, UISrefActive, pushStateLocationPlugin} from 'ui-router-react';
 import PageHeader from './components/header.jsx';
-import AddEditEventScene from './scenes/AddEdit/add-edit-event.jsx';
+import AddEditEventScene from './scenes/AddEdit/add-edit-scene.jsx';
 import CalendarScene from './scenes/Calendar/calendar.jsx';
 import Footer from "./components/footer.jsx";
 
