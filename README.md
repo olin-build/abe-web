@@ -41,7 +41,7 @@ To launch the Web app, run the following:
 
 And in another Terminal:
 
-    npm run dev
+    npm run start
 
 Then visit [http://localhost:8080](http://localhost:8080) in your browser.
 
