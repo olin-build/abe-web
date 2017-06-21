@@ -29,6 +29,22 @@ header nav li.menu-text:hover {
 
 
 /** ----- Begin Footer ----- **/
+
+/* -- Begin sticky footer -- */
+html, body, #app, #app > div {
+    height: 100%;
+}
+
+#app > div {
+    display: flex;
+    flex-direction: column;
+}
+
+.wrapper {
+    flex: 1 0 auto;
+}
+/* -- End sticky footer -- */
+
 footer .footer-message {
     margin:1em;
     text-align:center;

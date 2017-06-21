@@ -23,8 +23,10 @@ class App extends React.Component {
     render() {
         return (
             <div>
-                <PageHeader/>
-                <Main/>
+                <div className="wrapper">
+                    <PageHeader/>
+                    <Main/>
+                </div>
                 <Footer/>
             </div>
         )
