@@ -21,7 +21,6 @@ var config = {
                 loader : 'babel-loader'
             },
             { test: require.resolve('jquery'), loader: 'expose-loader?$!expose-loader?jQuery' },
-            { test: require.resolve('bootstrap'), loader: 'expose-loader?$!expose-loader?bootstrap' },
             { test: require.resolve('moment'), loader: 'expose-loader?moment' }
         ]
     },
