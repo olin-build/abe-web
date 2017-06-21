@@ -31,6 +31,16 @@ header nav li.menu-text:hover {
 /** ----- End Header ----- **/
 
 
+/** ----- Begin Calendar ----- **/
+
+.calendar-container {
+    margin-top: 2em;
+    margin-bottom: 2em;
+}
+
+/** ----- End Calendar ----- **/
+
+
 /** ----- Begin Footer ----- **/
 
 /* -- Begin sticky footer -- */

@@ -1,10 +1,9 @@
 import * as React from "react";
 import {render} from 'react-dom';
-import customCalendar from './calendar.js';
 import * as fullCalendar from 'fullcalendar/dist/fullcalendar';
 // require('bootstrap');
 // import * as bootstrap from 'bootstrap/js/button.js';
-import * as foundation from '../js/vendor/foundation.js'
+// import * as foundation from '../js/vendor/foundation.js'
 import {BrowserRouter} from 'react-router-dom';
 import {Switch, Route} from 'react-router-dom';
 // import {UIRouter, UIView, UISref, UISrefActive, pushStateLocationPlugin} from 'ui-router-react';
@@ -35,28 +34,6 @@ class App extends React.Component {
       );
     }
 }
-
-class Calendar extends React.Component {
-
-  componentDidMount(){
-    var mycalendar; //THIS IS IMPORTANT because JS sucks at handling classes
-    mycalendar = new customCalendar();
-    mycalendar.initCalendar();
-    mycalendar.makeDropdown();
-    mycalendar.populateDropdown();
-    mycalendar.refreshFilters([]);
-  }
-  render(){
-    return (
-      <div>
-        <div id='calendar'></div>
-      </div>
-
-    );
-  }
-}
-
-
 
 const Main = () => (
     <main>
