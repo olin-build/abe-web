@@ -39,13 +39,11 @@
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "webpack": "^2.6.1",
-    "webpack-dev-server": "^2.5.0"
-  },
-  "devDependencies": {
     "expose-loader": "^0.7.3",
     "react-router-dom": "^4.1.1",
+  },
+  "devDependencies": {
     "webpack": "^2.6.1",
     "webpack-dev-server": "^2.5.0"
   },
-  "heroku-postbuild": "webpack -p --config ./webpack.config.js --progress"
 }
