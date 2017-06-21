@@ -43,5 +43,5 @@ And in another Terminal:
 
 Then visit [http://localhost:8080](http://localhost:8080) in your browser.
 
-Changes should be reflected in your browser every time you save `app.jsx`,
+Changes should be reflected in your browser every time you save a file (except, it seems, CSS files, which require a manual refresh),
 but it may take a couple seconds for Webpack to recompile everything.
