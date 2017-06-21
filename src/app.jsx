@@ -6,6 +6,7 @@ import {Switch, Route} from 'react-router-dom';
 import PageHeader from './components/header.jsx';
 import AddEditEventScene from './scenes/AddEdit/add-edit-event.jsx';
 import CalendarScene from './scenes/Calendar/calendar.jsx';
+import Footer from "./components/footer.jsx";
 
 
 class App extends React.Component {
@@ -24,6 +25,7 @@ class App extends React.Component {
             <div>
                 <PageHeader/>
                 <Main/>
+                <Footer/>
             </div>
         )
     }

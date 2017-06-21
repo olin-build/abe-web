@@ -9,6 +9,7 @@ var config = {
     devtool: 'source-map',
     output: {
         path: BUILD_DIR,
+        publicPath: 'build/',
         filename: 'bundle.js'
     },
     module : {

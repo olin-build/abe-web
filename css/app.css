@@ -1,4 +1,36 @@
+/** ----- Begin Header ----- **/
+header nav {
+    background-color: #009BDF;
+}
+
+header .header-content {
+    padding: 2em;
+}
+
+header .logo-container {
+    float: left;
+    width: 40%;
+}
+
+header nav li.menu-text {
+    color: white;
+    border-top: 6px solid #009BDF;
+    border-bottom: 6px solid #009BDF;
+}
+
+header nav li.menu-text a {
+    color: white;
+}
+
+header nav li.menu-text:hover {
+    border-bottom: 6px solid #006e99;
+}
+/** ----- End Header ----- **/
+
+
+/** ----- Begin Footer ----- **/
 footer .footer-message {
     margin:1em;
     text-align:center;
 }
+/** ----- End Footer ----- **/
