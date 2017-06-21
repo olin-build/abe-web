@@ -3,18 +3,26 @@ import {Link} from 'react-router-dom';
 
 class PageHeaderTitle extends React.Component {
     render() {
-        return <h1>Welcome to ABE!</h1>
-
+        return (
+            <div className="row header-content">
+                <div className="logo-container">
+                    <img className="logo" src="../../assets/olin-logo.png"/>
+                </div>
+                <h1>Welcome to ABE!</h1>
+            </div>
+        )
     }
 }
 
 class PageHeaderNav extends React.Component {
     render() {
         return (
-            <ul>
-                <li><Link to="/">Home</Link></li>
-                <li><Link to="/edit">Edit</Link></li>
-            </ul>
+            <nav className="nav-large row expanded">
+                <ul className="row menu vertical medium-horizontal">
+                    <li className="menu-text"><Link to="/">Home</Link></li>
+                    <li className="menu-text"><Link to="/edit">Add</Link></li>
+                </ul>
+            </nav>
         );
     }
 }
