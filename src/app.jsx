@@ -22,6 +22,15 @@ class App extends React.Component {
     setPageTitle(newTitle) {
         this.setState({title: newTitle + ' | Olin College of Engineering'});
     }
+    render() {
+        return (
+        <div>
+        <PageHeader/>
+        <Calendar/>
+        </div>
+      );
+    }
+}
 
 class Calendar extends React.Component {
 
@@ -43,16 +52,6 @@ class Calendar extends React.Component {
   }
 }
 
-class App extends React.Component {
-    render() {
-        return (
-        <div>
-        <PageHeader/>
-        <Calendar/>
-        </div>
-      );
-    }
-}
 
 const Main = () => (
     <main>

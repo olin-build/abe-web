@@ -41,7 +41,7 @@
     "webpack-dev-server": "^2.5.0"
   },
   "devDependencies": {
-    "expose-loader": "^0.7.3"
+    "expose-loader": "^0.7.3",
     "react-router-dom": "^4.1.1",
     "webpack": "^2.6.1",
     "webpack-dev-server": "^2.5.0"
