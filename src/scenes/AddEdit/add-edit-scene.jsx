@@ -1,7 +1,40 @@
 import * as React from "react";
+import axios from "axios";
 import EventVisibilitySelector from './visibility-selector.jsx';
 
 export default class AddEditEventScene extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.visibilityChanged = this.visibilityChanged.bind(this);
+
+        this.state = {
+            eventData: {
+                title: '',
+                startDate: '',
+                startTime: '',
+                endDate: '',
+                endTime: '',
+                location: '',
+                description: '',
+                visibility: 'students'
+            }
+        };
+        if ('match' in props && 'id' in props.match.params) {
+            this.state.eventData.id = props.match.params.id;
+        }
+    }
+
+    componentDidMount() {
+        if ('id' in this.state.eventData) {
+            axios.get('https://abeweb.herokuapp.com/events/' + this.state.eventData.id)
+                .then(res => {
+                    let data = res.data;
+                    data = Object.assign(this.state.eventData, data);
+                    this.setState({eventData: data});
+                });
+        }
+    }
 
     addButtonClicked() {
         let title = $('#event-title').val();
@@ -23,7 +56,7 @@ export default class AddEditEventScene extends React.Component {
             visibility: visibility
         };
         let url;
-        if (window.location.href.indexOf("olinlibrary.github.io") > -1) {
+        if (window.location.href.indexOf("olinlibrary.github.io") > -1) { // TODO Do this with an environment variable or something
             url = 'https://abeweb.herokuapp.com/calendarUpdate';
         } else {
             url = 'http://localhost:4000/calendarUpdate';
@@ -44,25 +77,32 @@ export default class AddEditEventScene extends React.Component {
 
     }
 
+    visibilityChanged(e) {
+
+    }
+
     render() {
-        let title = (this.props.location.pathname === '/edit') ?  'Add Event' : 'Edit Event';
+        // console.log("match is " + (('match' in this.props) ? 'in' :'not in') + " this.props");
+        let id = ('props' in this && 'match' in this.props) ? this.props.match.params.id : null;
+        // console.log(this.props.match)
+        let title = id  ?  'Edit Event' : 'Add Event';
         return (
             <div className="row expanded page-container">
                 <div className="row content-container">
                     <h1 className="page-title">{title}</h1>
 
                     <div className="event-info-container">
-                        <input id="event-title" type="text" placeholder="Title" className="wide-text-box single-line-text-box medium-text-box"/>
+                        <input id="event-title" type="text" placeholder="Title" className="wide-text-box single-line-text-box medium-text-box" value={this.state.eventData.title}/>
                         <div className="date-time-container">
-                            <input id="start-date" title="Start Date" type="date" className="single-line-text-box short-text-box" placeholder="Start Date"/>
-                            <input id="start-time" title="Start Time" type="time" className="single-line-text-box short-text-box" placeholder="Start Time"/>
+                            <input id="start-date" title="Start Date" type="date" className="single-line-text-box short-text-box" placeholder="Start Date" value={this.state.eventData.startDate}/>
+                            <input id="start-time" title="Start Time" type="time" className="single-line-text-box short-text-box" placeholder="Start Time" value={this.state.eventData.startTime}/>
                             to
-                            <input id="end-date" title="End Date" type="date" className="single-line-text-box short-text-box" placeholder="End Date"/>
-                            <input id="end-time" title="End Time" type="time" className="single-line-text-box short-text-box" placeholder="End Time"/>
+                            <input id="end-date" title="End Date" type="date" className="single-line-text-box short-text-box" placeholder="End Date" value={this.state.eventData.endDate}/>
+                            <input id="end-time" title="End Time" type="time" className="single-line-text-box short-text-box" placeholder="End Time" value={this.state.eventData.endTime}/>
                         </div>
-                        <input id="location" type="text" title="Event Location" className="wide-text-box single-line-text-box medium-text-box" placeholder="Location"/>
-                        <textarea id="description" title="Event Description" className="wide-text-box multi-line-text-box" placeholder="Description"/>
-                        <EventVisibilitySelector/>
+                        <input id="location" type="text" title="Event Location" className="wide-text-box single-line-text-box medium-text-box" placeholder="Location" value={this.state.eventData.location}/>
+                        <textarea id="description" title="Event Description" className="wide-text-box multi-line-text-box" placeholder="Description" value={this.state.eventData.description}/>
+                        <EventVisibilitySelector visibility={this.state.eventData.visibility} onChange={this.visibilityChanged}/>
 
                         <div className="form-submit-button-container">
                             <button id="submit" className="button" onClick={this.addButtonClicked}>Add Event</button>
