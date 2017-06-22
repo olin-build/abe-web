@@ -1,6 +1,7 @@
 @import "../node_modules/fullcalendar/dist/fullcalendar.css";
+@import "../css/jquery.qtip.css";
 @import "../css/foundation.css";
-@import "../css/jquery.qtip.css"
+
 /** ----- Begin Header ----- **/
 header nav {
     background-color: #009BDF;
