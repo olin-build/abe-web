@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "webpack:deploy": "webpack --config=webpack.config.js -p",
-    "heroku-postbuild": "npm run webpack:deploy"
+    "heroku-postbuild": "npm run webpack:deploy",
     "dev": "webpack-dev-server --inline --hot"
   },
   "repository": {
