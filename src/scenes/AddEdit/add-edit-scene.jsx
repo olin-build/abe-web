@@ -3,6 +3,47 @@ import EventVisibilitySelector from './visibility-selector.jsx';
 
 export default class AddEditEventScene extends React.Component {
 
+    addButtonClicked() {
+        let title = $('#event-title').val();
+        let startDate = $('#start-date').val();
+        let startTime = $('#start-time').val();
+        let start = new Date(startDate + " " + startTime);
+        let endDate = $('#end-date').val();
+        let endTime = $('#end-time').val();
+        let end = new Date(endDate + " " + endTime);
+        let location = $('#location').val();
+        let description = $('#description').val();
+        let visibility = $('input[name=privacy]:checked').val();
+        let data = {
+            title: title,
+            start: start,
+            end: end,
+            location: location,
+            description: description,
+            visibility: visibility
+        };
+        let url;
+        if (window.location.href.indexOf("olinlibrary.github.io") > -1) {
+            url = 'https://abeweb.herokuapp.com/calendarUpdate';
+        } else {
+            url = 'http://localhost:4000/calendarUpdate';
+        }
+        $.ajax({
+            url: url,
+            type: 'POST',
+            dataType: 'text',
+            contentType: 'text/plain', //'application/json;charset=utf-8',
+            data: JSON.stringify(data),
+            success: function( data ){
+                alert("Event saved!");
+            },
+            error: function( jqXHR, textStatus, errorThrown ){
+                alert("Error: " + errorThrown);
+            }
+        });
+
+    }
+
     render() {
         let title = (this.props.location.pathname === '/edit') ?  'Add Event' : 'Edit Event';
         return (
@@ -24,7 +65,7 @@ export default class AddEditEventScene extends React.Component {
                         <EventVisibilitySelector/>
 
                         <div className="form-submit-button-container">
-                            <button id="submit" className="button">Add Event</button>
+                            <button id="submit" className="button" onClick={this.addButtonClicked}>Add Event</button>
                         </div>
                     </div>
                 </div>
