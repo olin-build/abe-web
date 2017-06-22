@@ -3,7 +3,7 @@ import {render} from 'react-dom';
 import * as fullCalendar from 'fullcalendar/dist/fullcalendar';
 // require('bootstrap');
 // import * as bootstrap from 'bootstrap/js/button.js';
-// import * as foundation from '../js/vendor/foundation.js'
+import * as qtip from '../js/vendor/jquery.qtip.js'
 import {BrowserRouter} from 'react-router-dom';
 import {Switch, Route} from 'react-router-dom';
 // import {UIRouter, UIView, UISref, UISrefActive, pushStateLocationPlugin} from 'ui-router-react';
@@ -11,6 +11,7 @@ import PageHeader from './components/header.jsx';
 import AddEditEventScene from './scenes/AddEdit/add-edit-scene.jsx';
 import CalendarScene from './scenes/Calendar/calendar.jsx';
 import Footer from "./components/footer.jsx";
+import * as foundation from '../js/vendor/foundation.js'
 
 class App extends React.Component {
 

@@ -5,6 +5,9 @@ export default function customCalendar(){
   this.dropdownLabels = []; //keeps track of what's in the dropdown because we repopulate frequently
   this.rendering = function(event, element) { /**runs every time events are rendered on the calendar (including when they're updated from the dropdown)*/
     //add the label to masterLabels if it isn't there when we render
+    element.qtip({
+           content: event.description
+       });
     for(var i=0; i<event.labels.length; i++){
       if (mycalendar.masterLabels.indexOf(event.labels[i]) < 0){
         mycalendar.masterLabels.push(event.labels[i])}
