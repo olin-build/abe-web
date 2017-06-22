@@ -83,8 +83,8 @@ export default function customCalendar(){
        weekends: true,
        events: { //JSON settings
         //url: 'https://abeweb.herokuapp.com/calendarRead',
-        url: 'http://192.168.32.64:3000/calendarRead',
-        type: 'POST',
+        url: 'http://192.168.32.64:3000/events',
+        type: 'GET',
         error: function() {
             alert('there was an error while fetching events!');
           },
