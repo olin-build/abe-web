@@ -1,5 +1,4 @@
 @import "../node_modules/fullcalendar/dist/fullcalendar.css";
-@import "../node_modules/bootstrap/dist/css/bootstrap.css";
 @import "../css/foundation.css";
 @import "../css/jquery.qtip.css"
 /** ----- Begin Header ----- **/
@@ -18,15 +17,17 @@ header .logo-container {
 
 header nav li.menu-text {
     color: white;
-    border-top: 6px solid #009BDF;
-    border-bottom: 6px solid #009BDF;
+    padding: 0;
 }
 
 header nav li.menu-text a {
     color: white;
+    padding: 1.5rem 1.8rem;
+    border-top: 6px solid #009BDF;
+    border-bottom: 6px solid #009BDF;
 }
 
-header nav li.menu-text:hover {
+header nav li.menu-text:hover a {
     border-bottom: 6px solid #006e99;
 }
 /** ----- End Header ----- **/
@@ -59,8 +60,12 @@ html, body, #app, #app > div {
 }
 /* -- End sticky footer -- */
 
+footer {
+    background-color: #e1e1e1;
+}
+
 footer .footer-message {
-    margin:1em;
+    margin: 2rem;
     text-align:center;
 }
 /** ----- End Footer ----- **/

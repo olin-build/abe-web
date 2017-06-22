@@ -6,6 +6,7 @@
   "scripts": {
     "webpack:deploy": "webpack --config=webpack.config.js -p",
     "heroku-postbuild": "npm run webpack:deploy",
+    "start": "node build/bundle.js",
     "dev": "webpack-dev-server --inline --hot"
   },
   "repository": {
