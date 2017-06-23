@@ -1,7 +1,6 @@
 @import "../node_modules/fullcalendar/dist/fullcalendar.css";
+@import "../css/jquery.qtip.css";
 @import "../css/foundation.css";
-@import "../node_modules/fullcalendar/dist/fullcalendar.css";
-@import "../css/jquery.qtip.css"
 
 /** ----- Begin Global ----- **/
 
@@ -76,6 +75,10 @@ header nav li.menu-text:hover a {
 
 .medium-text-box {
     max-width: 30em;
+}
+
+.multi-line-text-box {
+    min-height: 15em;
 }
 
 .radio-collection-container {

@@ -5,9 +5,17 @@ export default function customCalendar(){
   this.dropdownLabels = []; //keeps track of what's in the dropdown because we repopulate frequently
   this.rendering = function(event, element) { /**runs every time events are rendered on the calendar (including when they're updated from the dropdown)*/
     //add the label to masterLabels if it isn't there when we render
+    var edit = $('<a>').attr('href','/edit/'+ event.id).text('Click here');
+    var qtip = event.description  + edit;
     element.qtip({
-           content: event.description
+           content: {
+             title: event.title,
+             text: $('<div>').text(event.description).append($('<br>'),$('<a>').attr('href','/edit/'+ event.id).text('Click here to edit'))},
+            style: {classes: 'qtip-light'},
+           show: 'click',
+           hide: 'click'
        });
+    //$('.qtip-content').css('font-size', '80px');
     for(var i=0; i<event.labels.length; i++){
       if (mycalendar.masterLabels.indexOf(event.labels[i]) < 0){
         mycalendar.masterLabels.push(event.labels[i])}
@@ -91,7 +99,7 @@ export default function customCalendar(){
             alert('there was an error while fetching events!');
           },
         },
-       //fake events to play with:
+      // //fake events to play with:
       //  events: [
       //     {
       //         title  : 'event1',
