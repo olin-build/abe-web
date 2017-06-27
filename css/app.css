@@ -73,6 +73,16 @@ header nav li.menu-text:hover a {
 .short-text-box:first-child { margin-left: 0; }
 .short-text-box:last-child { margin-right: 0; }
 
+.super-short-text-box {
+    max-width: 4em;
+    display: inline-block;
+    margin: 0 0.5rem 1rem;
+
+}
+.super-short-text-box:first-child { margin-left: 0; }
+.super-short-text-box:last-child { margin-right: 0; }
+
+
 .medium-text-box {
     max-width: 30em;
 }
