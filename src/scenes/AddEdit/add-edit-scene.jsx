@@ -17,9 +17,9 @@ export default class AddEditEventScene extends React.Component {
 
         this.state = {
             eventData: {
-                title: 'Sun',
+                title: '',
                 location: '',
-                description: 'Enjoy it before it is winter',
+                description: '',
                 visibility: 'public'
             },
             startDate: '',
