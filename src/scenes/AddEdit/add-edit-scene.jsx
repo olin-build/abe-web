@@ -12,6 +12,7 @@ export default class AddEditEventScene extends React.Component {
         this.locationChanged = this.locationChanged.bind(this);
         this.descriptionChanged = this.descriptionChanged.bind(this);
         this.visibilityChanged = this.visibilityChanged.bind(this);
+        this.deleteButtonClicked = this.deleteButtonClicked.bind(this);
         this.saveButtonClicked = this.saveButtonClicked.bind(this);
 
 
@@ -31,8 +32,9 @@ export default class AddEditEventScene extends React.Component {
         if ('match' in props && 'id' in props.match.params) {
             this.state.eventData.id = props.match.params.id;
             this.state.submitButtonText = 'Update Event';
+        } else {
+            this.state.submitButtonText = 'Add Event';
         }
-        this.state.submitButtonText = 'Add Event';
     }
 
     componentDidMount() {
@@ -73,14 +75,31 @@ export default class AddEditEventScene extends React.Component {
     }
 
     cancelButtonClicked() {
-        alert('Cancel button clicked');
+        window.history.back();
+    }
+
+    deleteButtonClicked() {
+        alert('Delete functionality not implemented on backend yet'); // TODO Remove this when ready
+        return
+        if (confirm('Are you sure you want to delete this event?')) {
+            $.ajax({
+                url: 'https://abeweb-pr-19.herokuapp.com/events/' + this.state.eventData.id,
+                method: 'DELETE',
+                dataType: 'text',
+                contentType: 'text/plain',
+                success: alert('Event deleted successfully'),
+                error: function( jqXHR, testStatus, errorThrown ){
+                    alert("Error: " + errorThrown)
+                }
+            })
+        }
     }
 
     saveButtonClicked() {
         let url = 'https://abeweb.herokuapp.com/events/'; //'https://abeweb-pr-18.herokuapp.com/events/'; // TODO Do this with an environment variable or something
         $.ajax({
             url: url,
-            type: 'POST',
+            method: 'POST',
             dataType: 'text',
             contentType: 'text/plain',
             data: JSON.stringify(this.state.eventData),
@@ -119,7 +138,7 @@ export default class AddEditEventScene extends React.Component {
                         <textarea id="description" title="Event Description" className="wide-text-box multi-line-text-box" placeholder="Description" value={this.state.eventData.description} onChange={this.descriptionChanged}/>
                         <EventVisibilitySelector visibility={this.state.eventData.visibility} onChange={this.visibilityChanged}/>
 
-                        <SaveCancelButtons onCancel={this.cancelButtonClicked} onSubmit={this.saveButtonClicked} submitButtonText={this.state.submitButtonText}/>
+                        <SaveCancelButtons onCancel={this.cancelButtonClicked} onDelete={this.deleteButtonClicked} showDelete={'id' in this.state.eventData} onSubmit={this.saveButtonClicked} submitButtonText={this.state.submitButtonText}/>
                     </div>
                 </div>
             </div>

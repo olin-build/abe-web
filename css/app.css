@@ -113,6 +113,18 @@ header nav li.menu-text:hover a {
     text-align: right;
 }
 
+.form-submit-button-container button:not(:last-child) {
+    margin-right: 1em;
+}
+
+.button.delete {
+    background-color: #ff3f3f;
+}
+
+.button.cancel {
+    background-color: #9f9f9f;
+}
+
 /** ----- End Event Add/Edit ----- **/
 
 
