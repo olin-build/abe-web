@@ -94,7 +94,6 @@ export default function customCalendar(){
        weekends: true,
        events: { //JSON settings
         url: 'https://abeweb.herokuapp.com/events',
-        //url: 'http://192.168.32.64:3000/events',
         type: 'GET',
         error: function() {
             alert('there was an error while fetching events!');
@@ -124,11 +123,11 @@ export default function customCalendar(){
       //         visibility: "public",
       //     }
       //   ],
-      //  header: {
-      //    left: 'title',
-      //    center:'',
-      //    right:'today prev,next'
-      //  },
+       header: {
+         left: 'title',
+         center:'',
+         right:'today prev,next'
+       },
        //handleWindowResize: true,
        //defaultView: 'agendaWeek',
        aspectRatio: 2,

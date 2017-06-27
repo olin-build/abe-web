@@ -14,7 +14,7 @@ export default class CalendarScene extends React.Component {
     }
     render(){
         return (
-            <div>
+            <div className="row expanded page-container">
                 <div id='calendar' className="row calendar-container"></div>
             </div>
 

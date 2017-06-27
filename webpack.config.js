@@ -5,9 +5,8 @@ var BUILD_DIR = path.resolve(__dirname, 'build');
 var APP_DIR = path.resolve(__dirname, 'src');
 
 var config = {
-    devtool:'eval-source-map',
+    devtool:'source-map',
     entry: APP_DIR + '/app.jsx',
-    devtool: 'source-map',
     output: {
         path: BUILD_DIR,
         publicPath: 'build/',
@@ -24,6 +23,9 @@ var config = {
             { test: require.resolve('moment'), loader: 'expose-loader?moment' }
         ]
     },
+    devServer: {
+        historyApiFallback: true
+    }
   };
 
 module.exports = config;
