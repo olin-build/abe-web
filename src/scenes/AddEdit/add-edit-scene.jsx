@@ -2,6 +2,7 @@ import * as React from "react";
 import {browserHistory} from 'react-router-dom';
 import axios from "axios";
 import EventVisibilitySelector from './visibility-selector.jsx';
+import SaveCancelButtons from './save-cancel-buttons.jsx';
 
 export default class AddEditEventScene extends React.Component {
 
@@ -26,9 +27,12 @@ export default class AddEditEventScene extends React.Component {
             endDate: '',
             endTime: ''
         };
+        this.state['submitButtonText'] = '';
         if ('match' in props && 'id' in props.match.params) {
             this.state.eventData.id = props.match.params.id;
+            this.state.submitButtonText = 'Update Event';
         }
+        this.state.submitButtonText = 'Add Event';
     }
 
     componentDidMount() {
@@ -61,11 +65,15 @@ export default class AddEditEventScene extends React.Component {
     }
 
     eventSavedSuccessfully(response) {
-        let id = JSON.parse(response).id; //replace('\n', '').replace('\r','').replace('"','');
+        let id = JSON.parse(response).id;
         let data = this.state.eventData;
         data = Object.assign(data, {id: id});
         this.setState({eventData: data});
         this.props.history.push('/edit/'+id);
+    }
+
+    cancelButtonClicked() {
+        alert('Cancel button clicked');
     }
 
     saveButtonClicked() {
@@ -111,9 +119,7 @@ export default class AddEditEventScene extends React.Component {
                         <textarea id="description" title="Event Description" className="wide-text-box multi-line-text-box" placeholder="Description" value={this.state.eventData.description} onChange={this.descriptionChanged}/>
                         <EventVisibilitySelector visibility={this.state.eventData.visibility} onChange={this.visibilityChanged}/>
 
-                        <div className="form-submit-button-container">
-                            <button id="submit" className="button" onClick={this.saveButtonClicked}>{this.state.eventData.id ? 'Update' : 'Add'} Event</button>
-                        </div>
+                        <SaveCancelButtons onCancel={this.cancelButtonClicked} onSubmit={this.saveButtonClicked} submitButtonText={this.state.submitButtonText}/>
                     </div>
                 </div>
             </div>
