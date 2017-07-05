@@ -4,6 +4,7 @@ import axios from "axios";
 import EventVisibilitySelector from './visibility-selector.jsx';
 import SaveCancelButtons from './save-cancel-buttons.jsx';
 import EventDateTimeSelector from './date-time-selector.jsx';
+import EventRecurrenceSelector from './recurrence-selector.jsx';
 
 export default class AddEditEventScene extends React.Component {
 
@@ -16,6 +17,8 @@ export default class AddEditEventScene extends React.Component {
         this.descriptionChanged = this.descriptionChanged.bind(this);
         this.visibilityChanged = this.visibilityChanged.bind(this);
         this.saveButtonClicked = this.saveButtonClicked.bind(this);
+        this.recurrenceSelected = this.recurrenceSelected.bind(this);
+        this.recurrenceChanged = this.recurrenceChanged.bind(this);
 
 
         this.state = {
@@ -25,12 +28,13 @@ export default class AddEditEventScene extends React.Component {
                 end: new Date(),
                 location: '',
                 description: '',
-                visibility: 'public'
+                visibility: 'public',
             },
-            // startDate: this.state.eventData.start.getDate,
-            // startTime: '',
-            // endDate: '',
-            // endTime: ''
+            recurrence: {
+              frequency: 'DAILY',
+              interval: '1',
+            },
+            month_option: 'month'
         };
         this.state['submitButtonText'] = '';
         if ('match' in props && 'id' in props.match.params) {
@@ -61,6 +65,7 @@ export default class AddEditEventScene extends React.Component {
     }
 
     startChanged(value) {
+        console.log(value);
         let data = this.state.eventData;
         data.start = value;
         data = Object.assign(this.state.eventData, data);
@@ -71,6 +76,25 @@ export default class AddEditEventScene extends React.Component {
       data.end = value;
       data = Object.assign(this.state.eventData, data);
       this.setState({eventData: data});
+    }
+
+    recurrenceChanged(value) {
+        console.log(value);
+        let data = this.state.eventData;
+        data.recurrence = value;
+        data = Object.assign(this.state.eventData, data);
+        this.setState({eventData: data});
+    }
+
+    recurrenceSelected(){
+      let data = this.state.eventData;
+      if(data.recurrence){
+        data.recurrence = undefined;
+      }
+      else{
+        data.recurrence = this.state.recurrence
+      }
+      this.setState({eventData: data})
     }
 
     locationChanged(e) {
@@ -114,6 +138,7 @@ export default class AddEditEventScene extends React.Component {
     }
 
     visibilityChanged(value) {
+        console.log(value);
         let data = this.state.eventData;
         data.visibility = value;
         data = Object.assign(this.state.eventData, data);
@@ -122,15 +147,18 @@ export default class AddEditEventScene extends React.Component {
 
     render() {
         let pageTitle = this.state.eventData.id  ?  'Edit Event' : 'Add Event';
+        let recurrence = this.state.eventData.recurrence ? <EventRecurrenceSelector reccurs={this.state.eventData.recurrence} month={this.state.month_option} onChange={this.recurrenceChanged}/> : null;
         return (
             <div className="row expanded page-container">
                 <div className="row content-container">
                     <h1 className="page-title">{pageTitle}</h1>
-
                     <div className="event-info-container">
                         <input id="event-title" type="text" placeholder="Title" className="wide-text-box single-line-text-box medium-text-box" value={this.state.eventData.title} onChange={this.titleChanged}/>
                         <EventDateTimeSelector datetime={this.state.eventData.start} onChange={this.startChanged} />
                         <EventDateTimeSelector datetime={this.state.eventData.end} onChange={this.endChanged}/>
+                        <input type="checkbox" id='repeats-check' title="Repeats?" value={this.state.eventData.recurrence} onChange={this.recurrenceSelected}/>
+                        <label htmlFor="repeats-check">Repeats?</label>
+                        {recurrence}
                         <input id="location" type="text" title="Event Location" className="wide-text-box single-line-text-box medium-text-box" placeholder="Location" value={this.state.eventData.location} onChange={this.locationChanged}/>
                         <textarea id="description" title="Event Description" className="wide-text-box multi-line-text-box" placeholder="Description" value={this.state.eventData.description} onChange={this.descriptionChanged}/>
                         <EventVisibilitySelector visibility={this.state.eventData.visibility} onChange={this.visibilityChanged}/>
