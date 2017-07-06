@@ -101,7 +101,7 @@ export default class AddEditEventScene extends React.Component {
           state.eventData.recurrence.by_month_day = String(state.eventData.start.getDate())
         }
         state = Object.assign(this.state, state);
-        this.setState(state, ()=>{console.log(this.state); console.log(this.state.eventData); console.log(this.state.eventData.recurrence)});
+        this.setState(state);
     }
 
     recurrenceSelected(){
@@ -170,7 +170,6 @@ export default class AddEditEventScene extends React.Component {
     }
 
     visibilityChanged(value) {
-        console.log(value);
         let data = this.state.eventData;
         data.visibility = value;
         data = Object.assign(this.state.eventData, data);
@@ -202,10 +201,3 @@ export default class AddEditEventScene extends React.Component {
         );
     }
 }
-// <div className="date-time-container">
-//     <input id="start-date" title="Start Date" type="date" className="single-line-text-box short-text-box" placeholder="Start Date" value={this.state.eventData.start} onChange={this.startDateChanged}/>
-//     <input id="start-time" title="Start Time" type="time" className="single-line-text-box short-text-box" placeholder="Start Time" value={this.state.eventData.start} onChange={this.startTimeChanged}/>
-//     to
-//     <input id="end-date" title="End Date" type="date" className="single-line-text-box short-text-box" placeholder="End Date" value={this.state.eventData.end} onChange={this.endDateChanged}/>
-//     <input id="end-time" title="End Time" type="time" className="single-line-text-box short-text-box" placeholder="End Time" value={this.state.eventData.end} onChange={this.endTimeChanged}/>
-// </div>
