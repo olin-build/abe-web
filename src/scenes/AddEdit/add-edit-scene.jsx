@@ -52,6 +52,8 @@ export default class AddEditEventScene extends React.Component {
       let recurrs = this.state.recurrence;
       let recurrs_by_day = [days[this.state.eventData.start.getDay()]];
       recurrs = Object.assign(recurrs, {by_day: recurrs_by_day});
+      this.state.eventData.start.setMilliseconds(0);
+      this.state.eventData.end.setMilliseconds(0);
       this.setState({recurrence: recurrs});
         if ('id' in this.state.eventData) {
             axios.get('https://abeweb.herokuapp.com/events/' + this.state.eventData.id)
@@ -95,7 +97,7 @@ export default class AddEditEventScene extends React.Component {
           state.eventData.recurrence.by_day = [days[state.eventData.start.getDay()]]
         }
         else{
-          state.eventData.recurrence.by_month_day = state.eventData.start.getDate()
+          state.eventData.recurrence.by_month_day = String(state.eventData.start.getDate())
         }
         state = Object.assign(this.state, state);
         this.setState(state, ()=>{console.log(this.state); console.log(this.state.eventData); console.log(this.state.eventData.recurrence)});
@@ -170,7 +172,7 @@ export default class AddEditEventScene extends React.Component {
                         <input id="event-title" type="text" placeholder="Title" className="wide-text-box single-line-text-box medium-text-box" value={this.state.eventData.title} onChange={this.titleChanged}/>
                         <EventDateTimeSelector datetime={this.state.eventData.start} onChange={this.startChanged} />
                         <EventDateTimeSelector datetime={this.state.eventData.end} onChange={this.endChanged}/>
-                        <input type="checkbox" id='repeats-check' title="Repeats?" value={this.state.eventData.recurrence} onChange={this.recurrenceSelected}/>
+                        <input type="checkbox" id='repeats-check' title="Repeats?" checked={this.state.eventData.recurrence} onChange={this.recurrenceSelected}/>
                         <label htmlFor="repeats-check">Repeats?</label>
                         {recurrence}
                         <input id="location" type="text" title="Event Location" className="wide-text-box single-line-text-box medium-text-box" placeholder="Location" value={this.state.eventData.location} onChange={this.locationChanged}/>
