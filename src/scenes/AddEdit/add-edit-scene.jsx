@@ -20,7 +20,6 @@ export default class AddEditEventScene extends React.Component {
         this.recurrenceSelected = this.recurrenceSelected.bind(this);
         this.recurrenceChanged = this.recurrenceChanged.bind(this);
 
-
         this.state = {
             eventData: {
                 title: '',
@@ -33,18 +32,28 @@ export default class AddEditEventScene extends React.Component {
             recurrence: {
               frequency: 'DAILY',
               interval: '1',
+              by_day: '',
             },
-            month_option: 'month'
+            month_option: 'month',
+            end_option: 'forever'
         };
+
         this.state['submitButtonText'] = '';
         if ('match' in props && 'id' in props.match.params) {
             this.state.eventData.id = props.match.params.id;
             this.state.submitButtonText = 'Update Event';
         }
         this.state.submitButtonText = 'Add Event';
+
     }
 
     componentDidMount() {
+      console.log('mount');
+      var days = ["SU","MO","TU","WE","TH","FR","SA"];
+      let recurrs = this.state.recurrence;
+      let recurrs_by_day = [days[this.state.eventData.start.getDay()]];
+      recurrs = Object.assign(recurrs, {by_day: recurrs_by_day});
+      this.setState({recurrence: recurrs});
         if ('id' in this.state.eventData) {
             axios.get('https://abeweb.herokuapp.com/events/' + this.state.eventData.id)
                 .then(res => {
@@ -79,11 +88,19 @@ export default class AddEditEventScene extends React.Component {
     }
 
     recurrenceChanged(value) {
-        console.log(value);
-        let data = this.state.eventData;
-        data.recurrence = value;
-        data = Object.assign(this.state.eventData, data);
-        this.setState({eventData: data});
+        let state = this.state;
+        state.eventData.recurrence = value.recurrence;
+        state.month_option = value.month_option;
+        state.end_option = value.end_option;
+        if(value.month_option === 'week'){
+          var days = ["SU","MO","TU","WE","TH","FR","SA"];
+          state.eventData.recurrence.by_day = [days[state.eventData.start.getDay()]]
+        }
+        else{
+          state.eventData.recurrence.by_month_day = state.eventData.start.getDate()
+        }
+        state = Object.assign(this.state, state);
+        this.setState(state, ()=>{console.log(this.state); console.log(this.state.eventData); console.log(this.state.eventData.recurrence)});
     }
 
     recurrenceSelected(){
@@ -147,7 +164,7 @@ export default class AddEditEventScene extends React.Component {
 
     render() {
         let pageTitle = this.state.eventData.id  ?  'Edit Event' : 'Add Event';
-        let recurrence = this.state.eventData.recurrence ? <EventRecurrenceSelector reccurs={this.state.eventData.recurrence} month={this.state.month_option} onChange={this.recurrenceChanged}/> : null;
+        let recurrence = this.state.eventData.recurrence ? <EventRecurrenceSelector reccurs={this.state.eventData.recurrence} month={this.state.month_option} end = {this.state.end_option} onChange={this.recurrenceChanged}/> : null;
         return (
             <div className="row expanded page-container">
                 <div className="row content-container">
