@@ -15,6 +15,7 @@ textarea::placeholder {
 /** ----- Begin Header ----- **/
 header nav {
     background-color: #009BDF;
+    border-bottom: 3px #cbcbcb solid;
 }
 
 header .header-content {
