@@ -51,6 +51,29 @@ header nav li.menu-text:hover a {
     margin-bottom: 2em;
 }
 
+.filter-pane {
+    margin: 2em 0;
+}
+
+.filter-pane-labels-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.filter-pane-title {
+    font-size: 150%;
+    margin-bottom: 0.7em;
+}
+
+.label:not(.selected) {
+    background-color: darkgray;
+}
+
+.button.label:hover {
+    cursor: pointer;
+}
+
 /** ----- End Calendar ----- **/
 
 
