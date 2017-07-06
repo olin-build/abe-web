@@ -10,7 +10,7 @@ export default class SaveCancelButtons extends React.Component {
         return (
             <div className="form-submit-button-container">
                 <button className="button cancel" onClick={this.props.onCancel} >Cancel</button>
-                <button className="button submit" onClick={this.saveButtonClicked}>{this.props.submitButtonText}</button>
+                <button className="button submit" onClick={this.props.onSubmit}>{this.props.submitButtonText}</button>
             </div>
         )
     }

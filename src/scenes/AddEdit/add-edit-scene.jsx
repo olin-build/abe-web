@@ -48,7 +48,6 @@ export default class AddEditEventScene extends React.Component {
     }
 
     componentDidMount() {
-      console.log('mount');
       var days = ["SU","MO","TU","WE","TH","FR","SA"];
       let recurrs = this.state.recurrence;
       let recurrs_by_day = [days[this.state.eventData.start.getDay()]];
@@ -74,7 +73,6 @@ export default class AddEditEventScene extends React.Component {
     }
 
     startChanged(value) {
-        console.log(value);
         let data = this.state.eventData;
         data.start = value;
         data = Object.assign(this.state.eventData, data);
@@ -139,12 +137,11 @@ export default class AddEditEventScene extends React.Component {
     }
 
     saveButtonClicked() {
-        let url = 'https://abeweb.herokuapp.com/events/'; //'https://abeweb-pr-18.herokuapp.com/events/'; // TODO Do this with an environment variable or something
+        let url = 'https://abeweb-pr-29.herokuapp.com/events/'; //'https://abeweb-pr-18.herokuapp.com/events/'; // TODO Do this with an environment variable or something
         $.ajax({
             url: url,
-            type: 'POST',
-            dataType: 'text',
-            contentType: 'text/plain',
+            method: 'POST',
+            contentType: 'application/json',
             data: JSON.stringify(this.state.eventData),
             success: response => this.eventSavedSuccessfully(response),
             error: function( jqXHR, textStatus, errorThrown ){
