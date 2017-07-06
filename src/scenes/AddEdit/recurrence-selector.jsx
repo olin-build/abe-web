@@ -241,8 +241,3 @@ export default class RecurrenceSelector extends React.Component {
         )
     }
 }
-
-// <div className="radio-option">
-//     <input type="radio" id="frequency-daily" name="frequency" value="DAILY" title="Daily" checked={this.props.reccurs.frequency === 'DAILY'} onChange={this.frequencyChanged}/>
-//     <label htmlFor="frequency-daily">Daily</label>
-// </div>
