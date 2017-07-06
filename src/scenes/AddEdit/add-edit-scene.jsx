@@ -79,11 +79,9 @@ export default class AddEditEventScene extends React.Component {
     }
 
     deleteButtonClicked() {
-        alert('Delete functionality not implemented on backend yet'); // TODO Remove this when ready
-        return
         if (confirm('Are you sure you want to delete this event?')) {
             $.ajax({
-                url: 'https://abeweb-pr-19.herokuapp.com/events/' + this.state.eventData.id,
+                url: 'https://abeweb-pr-24.herokuapp.com/events/' + this.state.eventData.id,
                 method: 'DELETE',
                 dataType: 'text',
                 contentType: 'text/plain',
