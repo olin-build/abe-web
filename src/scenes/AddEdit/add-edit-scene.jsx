@@ -57,7 +57,7 @@ export default class AddEditEventScene extends React.Component {
       this.state.eventData.end.setMilliseconds(0);
       this.setState({recurrence: recurrs});
         if ('id' in this.state.eventData) {
-            axios.get('https://abeweb.herokuapp.com/events/' + this.state.eventData.id)
+            axios.get('https://abeweb-pr-29.herokuapp.com/events/' + this.state.eventData.id)
                 .then(res => {
                     let data = res.data;
                     data.start = new Date(data.start);
