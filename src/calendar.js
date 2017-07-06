@@ -93,7 +93,7 @@ export default function customCalendar(){
   this.calendar = { /*calendar object full of settings to pass fullCalendar*/
        weekends: true,
        events: { //JSON settings
-        url: 'https://abeweb.herokuapp.com/events',
+        url: 'https://abeweb-pr-29.herokuapp.com/events',
         type: 'GET',
         error: function() {
             alert('there was an error while fetching events!');
