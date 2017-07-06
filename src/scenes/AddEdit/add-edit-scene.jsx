@@ -3,6 +3,7 @@ import {browserHistory} from 'react-router-dom';
 import axios from "axios";
 import EventVisibilitySelector from './visibility-selector.jsx';
 import SaveCancelButtons from './save-cancel-buttons.jsx';
+import LocationField from './location-field.jsx';
 
 export default class AddEditEventScene extends React.Component {
 
@@ -132,7 +133,7 @@ export default class AddEditEventScene extends React.Component {
                             <input id="end-date" title="End Date" type="date" className="single-line-text-box short-text-box" placeholder="End Date" value={this.state.eventData.endDate}/>
                             <input id="end-time" title="End Time" type="time" className="single-line-text-box short-text-box" placeholder="End Time" value={this.state.eventData.endTime}/>
                         </div>
-                        <input id="location" type="text" title="Event Location" className="wide-text-box single-line-text-box medium-text-box" placeholder="Location" value={this.state.eventData.location} onChange={this.locationChanged}/>
+                        <LocationField value={this.state.eventData.location} onChange={this.locationChanged}/>
                         <textarea id="description" title="Event Description" className="wide-text-box multi-line-text-box" placeholder="Description" value={this.state.eventData.description} onChange={this.descriptionChanged}/>
                         <EventVisibilitySelector visibility={this.state.eventData.visibility} onChange={this.visibilityChanged}/>
 
