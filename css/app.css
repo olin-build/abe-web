@@ -51,6 +51,29 @@ header nav li.menu-text:hover a {
     margin-bottom: 2em;
 }
 
+.filter-pane {
+    margin: 2em 0;
+}
+
+.filter-pane-labels-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.filter-pane-title {
+    font-size: 150%;
+    margin-bottom: 0.7em;
+}
+
+.label:not(.selected) {
+    background-color: darkgray;
+}
+
+.button.label:hover {
+    cursor: pointer;
+}
+
 /** ----- End Calendar ----- **/
 
 
@@ -111,6 +134,18 @@ header nav li.menu-text:hover a {
 
 .form-submit-button-container {
     text-align: right;
+}
+
+.form-submit-button-container button:not(:last-child) {
+    margin-right: 1em;
+}
+
+.button.delete {
+    background-color: #ff3f3f;
+}
+
+.button.cancel {
+    background-color: #9f9f9f;
 }
 
 /** ----- End Event Add/Edit ----- **/
