@@ -16,6 +16,7 @@ export default class AddEditEventScene extends React.Component {
         this.endChanged = this.endChanged.bind(this);
         this.descriptionChanged = this.descriptionChanged.bind(this);
         this.visibilityChanged = this.visibilityChanged.bind(this);
+        this.deleteButtonClicked = this.deleteButtonClicked.bind(this);
         this.saveButtonClicked = this.saveButtonClicked.bind(this);
         this.recurrenceSelected = this.recurrenceSelected.bind(this);
         this.recurrenceChanged = this.recurrenceChanged.bind(this);
@@ -42,9 +43,9 @@ export default class AddEditEventScene extends React.Component {
         if ('match' in props && 'id' in props.match.params) {
             this.state.eventData.id = props.match.params.id;
             this.state.submitButtonText = 'Update Event';
+        } else {
+            this.state.submitButtonText = 'Add Event';
         }
-        this.state.submitButtonText = 'Add Event';
-
     }
 
     componentDidMount() {
@@ -135,7 +136,22 @@ export default class AddEditEventScene extends React.Component {
     }
 
     cancelButtonClicked() {
-        alert('Cancel button clicked');
+        window.history.back();
+    }
+
+    deleteButtonClicked() {
+        if (confirm('Are you sure you want to delete this event?')) {
+            $.ajax({
+                url: 'https://abeweb-pr-24.herokuapp.com/events/' + this.state.eventData.id,
+                method: 'DELETE',
+                dataType: 'text',
+                contentType: 'text/plain',
+                success: alert('Event deleted successfully'),
+                error: function( jqXHR, testStatus, errorThrown ){
+                    alert("Error: " + errorThrown)
+                }
+            })
+        }
     }
 
     saveButtonClicked() {
@@ -179,7 +195,7 @@ export default class AddEditEventScene extends React.Component {
                         <textarea id="description" title="Event Description" className="wide-text-box multi-line-text-box" placeholder="Description" value={this.state.eventData.description} onChange={this.descriptionChanged}/>
                         <EventVisibilitySelector visibility={this.state.eventData.visibility} onChange={this.visibilityChanged}/>
 
-                        <SaveCancelButtons onCancel={this.cancelButtonClicked} onSubmit={this.saveButtonClicked} submitButtonText={this.state.submitButtonText}/>
+                        <SaveCancelButtons onCancel={this.cancelButtonClicked} onDelete={this.deleteButtonClicked} showDelete={'id' in this.state.eventData} onSubmit={this.saveButtonClicked} submitButtonText={this.state.submitButtonText}/>
                     </div>
                 </div>
             </div>
