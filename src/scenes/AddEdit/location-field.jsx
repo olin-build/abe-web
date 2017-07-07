@@ -65,15 +65,15 @@ export default class LocationField extends React.Component {
         if (buildingString && buildingString.length > 0) {
             buildingString = buildingString[0].trim();
 
-            if (this.stringContains(buildingString, this.MILAS_HALL_MATCHES)) {
+            if (this.stringMatches(buildingString, this.MILAS_HALL_MATCHES)) {
                 return 'MH';
-            } else if (this.stringContains(buildingString, this.CAMPUS_CENTER_MATCHES)) {
+            } else if (this.stringMatches(buildingString, this.CAMPUS_CENTER_MATCHES)) {
                 return 'CC';
-            } else if (this.stringContains(buildingString, this.ACADEMIC_CENTER_MATCHES)) {
+            } else if (this.stringMatches(buildingString, this.ACADEMIC_CENTER_MATCHES)) {
                 return 'AC';
-            } else if (this.stringContains(buildingString, this.WEST_HALL_MATCHES)) {
+            } else if (this.stringMatches(buildingString, this.WEST_HALL_MATCHES)) {
                 return 'WH';
-            } else if (this.stringContains(buildingString, this.EAST_HALL_MATCHES)) {
+            } else if (this.stringMatches(buildingString, this.EAST_HALL_MATCHES)) {
                 return 'EH';
             }
         }
@@ -97,22 +97,22 @@ export default class LocationField extends React.Component {
                 return '';
             }
             // The regex found something, so let's parse it
-            if (this.stringContains(suffixString, this.ANTELOUNGE_MATCHES)) {
+            if (this.stringMatches(suffixString, this.ANTELOUNGE_MATCHES)) {
                 return 'AL';
-            } else if (this.stringContains(suffixString, this.LOUNGE_MATCHES)) {
+            } else if (this.stringMatches(suffixString, this.LOUNGE_MATCHES)) {
                 return 'L';
-            } else if (this.stringContains(suffixString, this.NOOK_MATCHES)) {
+            } else if (this.stringMatches(suffixString, this.NOOK_MATCHES)) {
                 return 'N';
-            } else if (this.stringContains(suffixString, this.SUITE_MATCHES)) {
+            } else if (this.stringMatches(suffixString, this.SUITE_MATCHES)) {
                 return suffixString.toUpperCase();
-            } else if (this.stringContains(suffixString, this.MISC_ROOM_MATCHES)) {
+            } else if (this.stringMatches(suffixString, this.MISC_ROOM_MATCHES)) {
                 return suffixString.toUpperCase();
             }
         }
         return null;
     }
 
-    stringContains(string, substrings) {
+    stringMatches(string, substrings) {
         string = string.trim();
         for (let i = 0; i < substrings.length; ++i) {
             if (string === substrings[i])
