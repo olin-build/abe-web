@@ -43,7 +43,13 @@ export default class AddEditEventScene extends React.Component {
         if ('match' in props && 'id' in props.match.params) {
             this.state.eventData.id = props.match.params.id;
             this.state.submitButtonText = 'Update Event';
-        } else {
+        }
+        else if('match' in props && 'sid' in props.match.params){
+          this.state.eventData.sid = props.match.params.sid;
+          this.state.eventData.rec_id = props.match.params.rec_id;
+          this.state.submitButtonText = 'Update Event';
+        }
+        else {
             this.state.submitButtonText = 'Add Event';
         }
     }
@@ -57,16 +63,25 @@ export default class AddEditEventScene extends React.Component {
       this.state.eventData.end.setMilliseconds(0);
       this.setState({recurrence: recurrs});
         if ('id' in this.state.eventData) {
-            axios.get('https://abeweb-pr-29.herokuapp.com/events/' + this.state.eventData.id)
+            axios.get('https://abeweb.herokuapp.com/events/' + this.state.eventData.id)
                 .then(res => {
                     let data = res.data;
                     data.start = new Date(data.start);
                     data.end = new Date(data.end);
                     data = Object.assign(this.state.eventData, data);
                     this.setState({eventData: data});
-
                 });
         }
+      else if ('sid' in this.state.eventData){
+        axios.get('https://abeweb.herokuapp.com/events/' + this.state.eventData.sid + '/' + this.state.eventData.rec_id)
+            .then(res => {
+                let data = res.data;
+                data.start = new Date(data.start);
+                data.end = new Date(data.end);
+                data = Object.assign(this.state.eventData, data);
+                this.setState({eventData: data});
+            });
+      }
     }
 
     titleChanged(e) {
@@ -142,7 +157,7 @@ export default class AddEditEventScene extends React.Component {
     deleteButtonClicked() {
         if (confirm('Are you sure you want to delete this event?')) {
             $.ajax({
-                url: 'https://abeweb-pr-24.herokuapp.com/events/' + this.state.eventData.id,
+                url: 'https://abeweb.herokuapp.com/events/' + this.state.eventData.id,
                 method: 'DELETE',
                 dataType: 'text',
                 contentType: 'text/plain',
@@ -155,7 +170,7 @@ export default class AddEditEventScene extends React.Component {
     }
 
     saveButtonClicked() {
-        let url = 'https://abeweb-pr-29.herokuapp.com/events/'; //'https://abeweb-pr-18.herokuapp.com/events/'; // TODO Do this with an environment variable or something
+        let url = 'https://abeweb.herokuapp.com/events/'; //'https://abeweb-pr-18.herokuapp.com/events/'; // TODO Do this with an environment variable or something
         $.ajax({
             url: url,
             method: 'POST',

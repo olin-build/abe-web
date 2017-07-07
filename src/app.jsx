@@ -41,7 +41,8 @@ const Main = () => (
         <Switch>
             <Route exact path='/' component={CalendarScene} />
             <Route exact path='/edit' component={AddEditEventScene} />
-            <Route path='/edit/:id' component={AddEditEventScene} />
+            <Route exact path='/edit/:id' component={AddEditEventScene} />
+            <Route path= '/edit/:sid/:rec_id' component={AddEditEventScene} />
         </Switch>
     </main>
 );
