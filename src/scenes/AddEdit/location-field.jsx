@@ -11,7 +11,7 @@ export default class LocationField extends React.Component {
         this.textChanged = this.textChanged.bind(this);
 
         // Matching substrings for each building. Should be lowercase.
-        this.MILAS_HALL_MATCHES = ['mh', 'milas'];
+        this.MILAS_HALL_MATCHES = ['mh', 'milas', 'milas hall', 'milashall'];
         this.CAMPUS_CENTER_MATCHES = ['cc', 'campus center', 'campuscenter'];
         this.ACADEMIC_CENTER_MATCHES = ['ac', 'academic center', 'academiccenter'];
         this.WEST_HALL_MATCHES = ['wh', 'west hall', 'westhall'];
@@ -19,27 +19,30 @@ export default class LocationField extends React.Component {
         this.LOUNGE_MATCHES = ['l', 'lounge'];
         this.ANTI_LOUNGE_MATCHES = ['al', 'anti-lounge', 'antilounge'];
         this.NOOK_MATCHES = ['n', 'nook'];
+        this.SUITE_MATCHES = ['nn', 'nw', 'ne', 'w', 'e'];
+        this.MISC_ROOM_MATCHES = ['gym', 'kitchen'];
     }
 
     textChanged() {
         let locationField = $('#location');
         let res = this.tryParseLocationInput(locationField.val());
-        if (!res) {
-            locationField.addClass('is-invalid-input');
-        } else {
+        if (res.isValid) {
             locationField.removeClass('is-invalid-input');
-            this.setState({
-                building: res.building,
-                room: res.room,
-                suffix: res.suffix
-            });
+        } else {
+            locationField.addClass('is-invalid-input');
         }
+        this.setState({
+            building: res.building,
+            room: res.room,
+            suffix: res.suffix
+        });
 
     }
 
     tryParseLocationInput(string) {
         if (string.length === 0)
-            return {};
+            return {isValid: true};
+
         string = string.toLowerCase();
         let buildingRegex = /^\D+/;
         let roomRegex = /\d+/;
@@ -47,16 +50,15 @@ export default class LocationField extends React.Component {
         let building = this.resolveBuilding(buildingRegex.exec(string));
         let room = this.resolveRoom(roomRegex.exec(string));
         let suffix = this.resolveSuffix(suffixRegex.exec(string)); // TODO Handle kitchen, gym, etc
-        if (!building || !room)
-            return null;
+        let isValid = (building !== null && room !== null && suffix !== null);
 
-        return {building: building, room: room, suffix: suffix};
+        return {isValid: isValid, building: building, room: room, suffix: suffix};
     }
 
     resolveBuilding(buildingString) {
 
         if (buildingString && buildingString.length > 0) {
-            buildingString = buildingString[0];
+            buildingString = buildingString[0].trim();
 
             if (this.stringContains(buildingString, this.MILAS_HALL_MATCHES)) {
                 return 'MH';
@@ -87,7 +89,7 @@ export default class LocationField extends React.Component {
             suffixString = suffixString[0];
             // Just return if the regex didn't find anything
             if (suffixString === null || suffixString.length === 0) {
-                return null;
+                return '';
             }
             // The regex found something, so let's parse it
             if (this.stringContains(suffixString, this.ANTI_LOUNGE_MATCHES)) {
@@ -96,14 +98,19 @@ export default class LocationField extends React.Component {
                 return 'L';
             } else if (this.stringContains(suffixString, this.NOOK_MATCHES)) {
                 return 'N';
+            } else if (this.stringContains(suffixString, this.SUITE_MATCHES)) {
+                return suffixString.toUpperCase();
+            } else if (this.stringContains(suffixString, this.MISC_ROOM_MATCHES)) {
+                return suffixString.toUpperCase();
             }
         }
         return null;
     }
 
     stringContains(string, substrings) {
+        string = string.trim();
         for (let i = 0; i < substrings.length; ++i) {
-            if (string.indexOf(substrings[i]) > -1)
+            if (string === substrings[i])
                 return true;
         }
         return false;

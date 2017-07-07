@@ -47,7 +47,7 @@ export default class CalendarScene extends React.Component {
         let startString = startDate.getFullYear() + '-' + (startDate.getMonth()+1) + '-' + startDate.getDate();
         let endString = endDate.getFullYear() + '-' + (endDate.getMonth()+1) + '-' + endDate.getDate();
         $.ajax({
-            url: 'https://abeweb-pr-24.herokuapp.com/events/?start=' + startString + '&end=' + endString, // TODO Handle caching
+            url: window.abe_url + '/events/?start=' + startString + '&end=' + endString, // TODO Handle caching
             type: 'GET',
             error: function() {
                 alert('There was an error while fetching events!');

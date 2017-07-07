@@ -39,13 +39,17 @@ export default class AddEditEventScene extends React.Component {
     }
 
     componentDidMount() {
+        let self = this;
         if ('id' in this.state.eventData) {
-            axios.get('https://abeweb.herokuapp.com/events/' + this.state.eventData.id)
-                .then(res => {
-                    let data = res.data;
-                    data = Object.assign(this.state.eventData, data);
-                    this.setState({eventData: data});
-                });
+            $.ajax({
+                url: window.abe_url + '/events/' + this.state.eventData.id,
+                method: 'GET',
+                error: (error) => alert('Error retrieving event data from server:\n' + error),
+                success: data => {
+                    data = Object.assign(self.state.eventData, data);
+                    self.setState({eventData: data});
+                }
+            });
         }
     }
 
@@ -82,7 +86,7 @@ export default class AddEditEventScene extends React.Component {
     deleteButtonClicked() {
         if (confirm('Are you sure you want to delete this event?')) {
             $.ajax({
-                url: 'https://abeweb-pr-24.herokuapp.com/events/' + this.state.eventData.id,
+                url: window.abe_url + '/events/' + this.state.eventData.id,
                 method: 'DELETE',
                 dataType: 'text',
                 contentType: 'text/plain',
@@ -95,7 +99,7 @@ export default class AddEditEventScene extends React.Component {
     }
 
     saveButtonClicked() {
-        let url = 'https://abeweb.herokuapp.com/events/'; //'https://abeweb-pr-18.herokuapp.com/events/'; // TODO Do this with an environment variable or something
+        let url = window.abe_url + '/events/';
         $.ajax({
             url: url,
             method: 'POST',
