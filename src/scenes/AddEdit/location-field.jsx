@@ -17,7 +17,7 @@ export default class LocationField extends React.Component {
         this.WEST_HALL_MATCHES = ['wh', 'west hall', 'westhall'];
         this.EAST_HALL_MATCHES = ['eh', 'east hall', 'easthall'];
         this.LOUNGE_MATCHES = ['l', 'lounge'];
-        this.ANTI_LOUNGE_MATCHES = ['al', 'anti-lounge', 'antilounge'];
+        this.ANTELOUNGE_MATCHES = ['al', 'antelounge', 'antelounge', 'antilounge', 'anti-lounge'];
         this.NOOK_MATCHES = ['n', 'nook'];
         this.SUITE_MATCHES = ['nn', 'nw', 'ne', 'w', 'e'];
         this.MISC_ROOM_MATCHES = ['gym', 'kitchen'];
@@ -97,7 +97,7 @@ export default class LocationField extends React.Component {
                 return '';
             }
             // The regex found something, so let's parse it
-            if (this.stringContains(suffixString, this.ANTI_LOUNGE_MATCHES)) {
+            if (this.stringContains(suffixString, this.ANTELOUNGE_MATCHES)) {
                 return 'AL';
             } else if (this.stringContains(suffixString, this.LOUNGE_MATCHES)) {
                 return 'L';
