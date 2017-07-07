@@ -108,17 +108,20 @@ export default class CalendarScene extends React.Component {
 
     renderEvents(event, element) {
         //add the label to masterLabels if it isn't there when we render
-        let edit = $('<a>').attr('href','/edit/'+ event.id).text('Click here');
-        let qtip = event.description  + edit;
+        var edit
+        if (!event.id){
+          edit = $('<div>').text(event.description).append($('<br>'),$('<a>').attr('href','/edit/'+ event.sid + '/' + event.start).text('Click here to edit this occurence'),$('<br>'), $('<a>').attr('href','/edit/'+ event.sid).text('Click here to edit this series'));}
+        else{
+          edit = $('<div>').text(event.description).append($('<br>'),$('<a>').attr('href','/edit/'+ event.id).text('Click here to edit'))
+        }
         element.qtip({
             content: {
                 title: event.title,
-                text: $('<div>').text(event.description).append($('<br>'),$('<a>').attr('href','/edit/'+ event.id).text('Click here to edit'))},
+                text: edit},
             style: {classes: 'qtip-light'},
             show: 'click',
-            hide: 'click'
+            hide: {event: 'unfocus'}
         });
-
         //set colors differently based on the label (will change in later iterations)
         if(event.visibility === "public"){
             element.css('background-color', 'blue');
@@ -130,6 +133,7 @@ export default class CalendarScene extends React.Component {
         }
         return true; //active;
     }
+
 
     renderFinished() {
         if ('onLabelUpdate' in this.props) {

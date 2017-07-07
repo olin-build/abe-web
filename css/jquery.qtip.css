@@ -2,7 +2,7 @@
  * qTip2 - Pretty powerful tooltips - v3.0.3
  * http://qtip2.com
  *
- * Copyright (c) 2017 
+ * Copyright (c) 2017
  * Released under the MIT licenses
  * http://jquery.org/license
  *
@@ -19,8 +19,8 @@
 	max-width: 280px;
 	min-width: 50px;
 
-	font-size: 10.5px;
-	line-height: 12px;
+	font-size: 16px;
+	line-height: 20px;
 
 	direction: ltr;
 
@@ -44,6 +44,7 @@
 
 		border-width: 0 0 1px;
 		font-weight: bold;
+		font-size: 18px;
 	}
 
 	.qtip-titlebar + .qtip-content{ border-top-width: 0 !important; }
