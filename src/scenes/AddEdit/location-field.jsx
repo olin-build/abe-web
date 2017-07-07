@@ -26,17 +26,22 @@ export default class LocationField extends React.Component {
     textChanged() {
         let locationField = $('#location');
         let res = this.tryParseLocationInput(locationField.val());
-        if (res.isValid) {
-            locationField.removeClass('is-invalid-input');
-        } else {
-            locationField.addClass('is-invalid-input');
-        }
         this.setState({
             building: res.building,
             room: res.room,
             suffix: res.suffix
         });
-
+        if (res.isValid) {
+            locationField.removeClass('is-invalid-input');
+            if (this.props.onChange) {
+                this.props.onChange(res.building+res.room+res.suffix);
+            }
+        } else {
+            locationField.addClass('is-invalid-input');
+            if (this.props.onChange) {
+                this.props.onChange(null);
+            }
+        }
     }
 
     tryParseLocationInput(string) {

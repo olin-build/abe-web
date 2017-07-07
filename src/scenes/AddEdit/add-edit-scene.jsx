@@ -59,9 +59,9 @@ export default class AddEditEventScene extends React.Component {
         this.setState({eventData: data});
     }
 
-    locationChanged(e) {
+    locationChanged(newValue) {
         let data = this.state.eventData;
-        data = Object.assign(data, {location: e.currentTarget.value});
+        data = Object.assign(data, {location: newValue});
         this.setState({eventData: data});
     }
 
