@@ -88,6 +88,16 @@ header nav li.menu-text:hover a {
     background-color: #009BDF;
 }
 
+.is-invalid-input:focus {
+    border-color: #cc4b37;
+}
+
+.location-parsed {
+    padding: 0 0.5em;
+    background-color: #dedede;
+    margin: 0.5em;
+}
+
 .short-text-box {
     max-width: 10em;
     display: inline-block;

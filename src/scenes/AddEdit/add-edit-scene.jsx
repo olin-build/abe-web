@@ -1,8 +1,8 @@
 import * as React from "react";
 import {browserHistory} from 'react-router-dom';
-import axios from "axios";
 import EventVisibilitySelector from './visibility-selector.jsx';
 import SaveCancelButtons from './save-cancel-buttons.jsx';
+import LocationField from './location-field.jsx';
 import EventDateTimeSelector from './date-time-selector.jsx';
 import EventRecurrenceSelector from './recurrence-selector.jsx';
 
@@ -62,25 +62,30 @@ export default class AddEditEventScene extends React.Component {
       this.state.eventData.start.setMilliseconds(0);
       this.state.eventData.end.setMilliseconds(0);
       this.setState({recurrence: recurrs});
-        if ('id' in this.state.eventData) {
-            axios.get('https://abeweb.herokuapp.com/events/' + this.state.eventData.id)
-                .then(res => {
-                    let data = res.data;
-                    data.start = new Date(data.start);
-                    data.end = new Date(data.end);
-                    data = Object.assign(this.state.eventData, data);
-                    this.setState({eventData: data});
-                });
-        }
+      let self = this;
+      if ('id' in this.state.eventData) {
+        $.ajax({
+            url: window.abe_url + '/events/' + this.state.eventData.id,
+            method: 'GET',
+            error: error => alert('Error retrieving event data from server:\n' + error),
+            success: data => {
+                data = Object.assign(self.state.eventData, data);
+                self.setState({eventData: data});
+            }
+        });
+      }
       else if ('sid' in this.state.eventData){
-        axios.get('https://abeweb.herokuapp.com/events/' + this.state.eventData.sid + '/' + this.state.eventData.rec_id)
-            .then(res => {
-                let data = res.data;
-                data.start = new Date(data.start);
-                data.end = new Date(data.end);
-                data = Object.assign(this.state.eventData, data);
-                this.setState({eventData: data});
-            });
+        $.ajax({
+            url: window.abe_url + '/events/' + this.state.eventData.sid + '/' + this.state.eventData.rec_id,
+            method: 'GET',
+            error: error => alert('Error retrieving event data from server:\n' + error),
+            success: data => {
+                  data.start = new Date(data.start);
+                  data.end = new Date(data.end);
+                  data = Object.assign(this.state.eventData, data);
+                  this.setState({eventData: data});
+            }
+        });
       }
     }
 
@@ -130,9 +135,9 @@ export default class AddEditEventScene extends React.Component {
       this.setState({eventData: data})
     }
 
-    locationChanged(e) {
+    locationChanged(newValue) {
         let data = this.state.eventData;
-        data = Object.assign(data, {location: e.currentTarget.value});
+        data = Object.assign(data, {location: newValue});
         this.setState({eventData: data});
     }
 
@@ -157,7 +162,7 @@ export default class AddEditEventScene extends React.Component {
     deleteButtonClicked() {
         if (confirm('Are you sure you want to delete this event?')) {
             $.ajax({
-                url: 'https://abeweb.herokuapp.com/events/' + this.state.eventData.id,
+                url: window.abe_url + '/events/' + this.state.eventData.id,
                 method: 'DELETE',
                 dataType: 'text',
                 contentType: 'text/plain',
@@ -170,7 +175,7 @@ export default class AddEditEventScene extends React.Component {
     }
 
     saveButtonClicked() {
-        let url = 'https://abeweb.herokuapp.com/events/'; //'https://abeweb-pr-18.herokuapp.com/events/'; // TODO Do this with an environment variable or something
+        let url = window.abe_url + '/events/';
         $.ajax({
             url: url,
             method: 'POST',
@@ -200,12 +205,14 @@ export default class AddEditEventScene extends React.Component {
                     <h1 className="page-title">{pageTitle}</h1>
                     <div className="event-info-container">
                         <input id="event-title" type="text" placeholder="Title" className="wide-text-box single-line-text-box medium-text-box" value={this.state.eventData.title} onChange={this.titleChanged}/>
-                        <EventDateTimeSelector datetime={this.state.eventData.start} onChange={this.startChanged} />
-                        <EventDateTimeSelector datetime={this.state.eventData.end} onChange={this.endChanged}/>
-                        <input type="checkbox" id='repeats-check' title="Repeats?" checked={this.state.eventData.recurrence} onChange={this.recurrenceSelected}/>
-                        <label htmlFor="repeats-check">Repeats?</label>
-                        {recurrence}
-                        <input id="location" type="text" title="Event Location" className="wide-text-box single-line-text-box medium-text-box" placeholder="Location" value={this.state.eventData.location} onChange={this.locationChanged}/>
+                        <div className="date-time-container">
+                          <EventDateTimeSelector datetime={this.state.eventData.start} onChange={this.startChanged} />
+                          <EventDateTimeSelector datetime={this.state.eventData.end} onChange={this.endChanged}/>
+                          <input type="checkbox" id='repeats-check' title="Repeats?" checked={this.state.eventData.recurrence} onChange={this.recurrenceSelected}/>
+                          <label htmlFor="repeats-check">Repeats?</label>
+                          {recurrence}
+                          <LocationField value={this.state.eventData.location} onChange={this.locationChanged}/>
+                        </div>
                         <textarea id="description" title="Event Description" className="wide-text-box multi-line-text-box" placeholder="Description" value={this.state.eventData.description} onChange={this.descriptionChanged}/>
                         <EventVisibilitySelector visibility={this.state.eventData.visibility} onChange={this.visibilityChanged}/>
 
