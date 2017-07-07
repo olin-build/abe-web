@@ -45,6 +45,7 @@ export default class AddEditEventScene extends React.Component {
             this.state.submitButtonText = 'Update Event';
         }
         else if('match' in props && 'sid' in props.match.params){
+          console.log(props.match.params.sid)
           this.state.eventData.sid = props.match.params.sid;
           this.state.eventData.rec_id = props.match.params.rec_id;
           this.state.submitButtonText = 'Update Event';
@@ -69,21 +70,30 @@ export default class AddEditEventScene extends React.Component {
             method: 'GET',
             error: error => alert('Error retrieving event data from server:\n' + error),
             success: data => {
+                data.start = new Date(data.start);
+                data.end = new Date(data.end);
                 data = Object.assign(self.state.eventData, data);
                 self.setState({eventData: data});
             }
         });
       }
       else if ('sid' in this.state.eventData){
+        let rec_id = new Date(Number(this.state.eventData.rec_id));
+        this.state.eventData.rec_id = rec_id;
         $.ajax({
-            url: window.abe_url + '/events/' + this.state.eventData.sid + '/' + this.state.eventData.rec_id,
+            url: window.abe_url + '/events/' + this.state.eventData.sid + '/' + rec_id.toJSON(),
             method: 'GET',
             error: error => alert('Error retrieving event data from server:\n' + error),
             success: data => {
+                  console.log(data.title)
                   data.start = new Date(data.start);
                   data.end = new Date(data.end);
-                  data = Object.assign(this.state.eventData, data);
-                  this.setState({eventData: data});
+                  data = Object.assign(self.state.eventData, data);
+                  let seriesData = {};
+                  Object.assign(seriesData, data);
+                  self.setState({eventData: data});
+                  self.setState({seriesData: seriesData});
+                  console.log(self.state.eventData);
             }
         });
       }
@@ -148,8 +158,6 @@ export default class AddEditEventScene extends React.Component {
     }
 
     eventSavedSuccessfully(response) {
-        let id = JSON.parse(response).id;
-        let data = this.state.eventData;
         data = Object.assign(data, {id: id});
         this.setState({eventData: data});
         this.props.history.push('/edit/'+id);
@@ -175,12 +183,32 @@ export default class AddEditEventScene extends React.Component {
     }
 
     saveButtonClicked() {
-        let url = window.abe_url + '/events/';
+        var newEvent = new Object
+        var url
+        var method
+        if (this.state.eventData.sid){
+          var key;
+          for (key in this.state.eventData){
+            if (this.state.eventData[key] != this.state.seriesData[key] && key != reccurence){
+              newEvent[key] = this.state.eventData[key]
+            }
+          }
+          newEvent.sid = this.state.eventData.sid;
+          newEvent.rec_id = this.state.eventData.rec_id.toJSON();
+          url = window.abe_url + '/events/' + this.state.eventData.sid;
+          method = 'PUT'
+        }
+        else{
+          url = window.abe_url + '/events/';
+          newEvent = this.state.eventData;
+          method = 'POST'
+        }
+
         $.ajax({
             url: url,
-            method: 'POST',
+            method: method,
             contentType: 'application/json',
-            data: JSON.stringify(this.state.eventData),
+            data: JSON.stringify(newEvent),
             success: response => this.eventSavedSuccessfully(response),
             error: function( jqXHR, textStatus, errorThrown ){
                 alert("Error: " + errorThrown);
@@ -197,7 +225,7 @@ export default class AddEditEventScene extends React.Component {
     }
 
     render() {
-        let pageTitle = this.state.eventData.id  ?  'Edit Event' : 'Add Event';
+        let pageTitle = this.state.eventData.id || this.state.eventData.sid ?  'Edit Event' : 'Add Event';
         let recurrence = this.state.eventData.recurrence ? <EventRecurrenceSelector reccurs={this.state.eventData.recurrence} month={this.state.month_option} end = {this.state.end_option} onChange={this.recurrenceChanged}/> : null;
         return (
             <div className="row expanded page-container">
