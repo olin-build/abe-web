@@ -9,6 +9,7 @@ import {Switch, Route} from 'react-router-dom';
 // import {UIRouter, UIView, UISref, UISrefActive, pushStateLocationPlugin} from 'ui-router-react';
 import PageHeader from './components/header.jsx';
 import AddEditEventScene from './scenes/AddEdit/add-edit-scene.jsx';
+import ImportScene from './scenes/Import/import.jsx';
 import CalendarScene from './scenes/Calendar/calendar.jsx';
 import Footer from "./components/footer.jsx";
 import * as foundation from '../js/vendor/foundation.js'
@@ -41,6 +42,7 @@ const Main = () => (
         <Switch>
             <Route exact path='/' component={CalendarScene} />
             <Route exact path='/edit' component={AddEditEventScene} />
+            <Route exact path= '/import' component={ImportScene} />
             <Route exact path='/edit/:id' component={AddEditEventScene} />
             <Route path= '/edit/:sid/:rec_id' component={AddEditEventScene} />
         </Switch>
