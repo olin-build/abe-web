@@ -89,13 +89,16 @@ export default class AddEditEventScene extends React.Component {
                   data.start = new Date(data.start);
                   data.end = new Date(data.end);
                   data = Object.assign(self.state.eventData, data);
-                  let seriesData = {};
-                  Object.assign(seriesData, data);
                   self.setState({eventData: data});
-                  self.setState({seriesData: seriesData});
                   console.log(self.state.eventData);
             }
         });
+      }
+      if ('sid' in this.state.eventData){
+        data = Object.assign(self.state.eventData, data);
+        let seriesData = {};
+        Object.assign(seriesData, data);
+        self.setState({seriesData: seriesData});
       }
     }
 
@@ -157,7 +160,7 @@ export default class AddEditEventScene extends React.Component {
         this.setState({eventData: data});
     }
 
-    eventSavedSuccessfully(response) {
+    eventSavedSuccessfully(data) {
         data = Object.assign(data, {id: id});
         this.setState({eventData: data});
         this.props.history.push('/edit/'+id);
@@ -189,7 +192,7 @@ export default class AddEditEventScene extends React.Component {
         if (this.state.eventData.sid){
           var key;
           for (key in this.state.eventData){
-            if (this.state.eventData[key] != this.state.seriesData[key] && key != reccurence){
+            if (this.state.eventData[key] != this.state.seriesData[key] && key != 'recurrence'){
               newEvent[key] = this.state.eventData[key]
             }
           }
