@@ -5,6 +5,7 @@ import SaveCancelButtons from './save-cancel-buttons.jsx';
 import LocationField from './location-field.jsx';
 import EventDateTimeSelector from './date-time-selector.jsx';
 import EventRecurrenceSelector from './recurrence-selector.jsx';
+import TagEntry from '../../components/tag-entry.jsx';
 
 export default class AddEditEventScene extends React.Component {
 
@@ -29,6 +30,7 @@ export default class AddEditEventScene extends React.Component {
                 location: '',
                 description: '',
                 visibility: 'public',
+                labels: []
             },
             recurrence: {
               frequency: 'DAILY',
@@ -53,6 +55,8 @@ export default class AddEditEventScene extends React.Component {
         else {
             this.state.submitButtonText = 'Add Event';
         }
+
+        this.possibleLabels = ['Library', 'OFAC', 'FWOP', 'OARS', 'Robolab', 'StAR', 'PGP', 'Admission', "Candidates' Weekend"];
     }
 
     componentDidMount() {
@@ -66,22 +70,24 @@ export default class AddEditEventScene extends React.Component {
       let self = this;
       if ('id' in this.state.eventData) {
         $.ajax({
-            url: window.abe_url + '/events/' + this.state.eventData.id,
+            url: window.abe_url + '/events/' + self.state.eventData.id,
             method: 'GET',
             error: error => alert('Error retrieving event data from server:\n' + error),
             success: data => {
                 data.start = new Date(data.start);
                 data.end = new Date(data.end);
                 data = Object.assign(self.state.eventData, data);
+                if (!data.labels)
+                    data.labels = [];
                 self.setState({eventData: data});
             }
         });
       }
       else if ('sid' in this.state.eventData){
-        let rec_id = new Date(Number(this.state.eventData.rec_id));
+        let rec_id = new Date(Number(self.state.eventData.rec_id));
         this.state.eventData.rec_id = rec_id;
         $.ajax({
-            url: window.abe_url + '/events/' + this.state.eventData.sid + '/' + rec_id.toJSON(),
+            url: window.abe_url + '/events/' + self.state.eventData.sid + '/' + rec_id.toJSON(),
             method: 'GET',
             error: error => alert('Error retrieving event data from server:\n' + error),
             success: data => {
@@ -89,6 +95,8 @@ export default class AddEditEventScene extends React.Component {
                   data.start = new Date(data.start);
                   data.end = new Date(data.end);
                   data = Object.assign(self.state.eventData, data);
+                  if (!data.labels)
+                      data.labels = [];
                   let seriesData = {};
                   Object.assign(seriesData, data);
                   self.setState({eventData: data});
@@ -183,12 +191,14 @@ export default class AddEditEventScene extends React.Component {
     }
 
     saveButtonClicked() {
+        let data = this.state.eventData;
+        if (data.labels.length === 0)
+            data.labels = null;
         var newEvent = new Object
         var url
         var method
         if (this.state.eventData.sid){
-          var key;
-          for (key in this.state.eventData){
+          for (let key in this.state.eventData){
             if (this.state.eventData[key] != this.state.seriesData[key] && key != reccurence){
               newEvent[key] = this.state.eventData[key]
             }
@@ -224,6 +234,14 @@ export default class AddEditEventScene extends React.Component {
         this.setState({eventData: data});
     }
 
+    labelsChanged(labels) {
+        if (this.state) {
+            let data = this.state.eventData;
+            data.labels = labels;
+            this.setState({eventData: data});
+        }
+    }
+
     render() {
         let pageTitle = this.state.eventData.id || this.state.eventData.sid ?  'Edit Event' : 'Add Event';
         let recurrence = this.state.eventData.recurrence ? <EventRecurrenceSelector reccurs={this.state.eventData.recurrence} month={this.state.month_option} end = {this.state.end_option} onChange={this.recurrenceChanged}/> : null;
@@ -243,7 +261,7 @@ export default class AddEditEventScene extends React.Component {
                         </div>
                         <textarea id="description" title="Event Description" className="wide-text-box multi-line-text-box" placeholder="Description" value={this.state.eventData.description} onChange={this.descriptionChanged}/>
                         <EventVisibilitySelector visibility={this.state.eventData.visibility} onChange={this.visibilityChanged}/>
-
+                        <TagEntry tags={this.state.eventData.labels} onChange={this.labelsChanged} possibleLabels={this.possibleLabels}/>
                         <SaveCancelButtons onCancel={this.cancelButtonClicked} onDelete={this.deleteButtonClicked} showDelete={'id' in this.state.eventData} onSubmit={this.saveButtonClicked} submitButtonText={this.state.submitButtonText}/>
                     </div>
                 </div>
