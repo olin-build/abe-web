@@ -70,7 +70,7 @@ export default class AddEditEventScene extends React.Component {
       let self = this;
       if ('id' in this.state.eventData) {
         $.ajax({
-            url: window.abe_url + '/events/' + this.state.eventData.id,
+            url: window.abe_url + '/events/' + self.state.eventData.id,
             method: 'GET',
             error: error => alert('Error retrieving event data from server:\n' + error),
             success: data => {
@@ -84,23 +84,23 @@ export default class AddEditEventScene extends React.Component {
         });
       }
       else if ('sid' in this.state.eventData){
-        let rec_id = new Date(Number(this.state.eventData.rec_id));
+        let rec_id = new Date(Number(self.state.eventData.rec_id));
         this.state.eventData.rec_id = rec_id;
         $.ajax({
-            url: window.abe_url + '/events/' + this.state.eventData.sid + '/' + rec_id.toJSON(),
+            url: window.abe_url + '/events/' + self.state.eventData.sid + '/' + rec_id.toJSON(),
             method: 'GET',
             error: error => alert('Error retrieving event data from server:\n' + error),
             success: data => {
                   console.log(data.title)
                   data.start = new Date(data.start);
                   data.end = new Date(data.end);
-                  data = Object.assign(this.state.eventData, data);
+                  data = Object.assign(self.state.eventData, data);
                   if (!data.labels)
                       data.labels = [];
                   let seriesData = {};
                   Object.assign(seriesData, data);
-                  this.setState({eventData: data});
-                  this.setState({seriesData: seriesData});
+                  self.setState({eventData: data});
+                  self.setState({seriesData: seriesData});
                   console.log(self.state.eventData);
             }
         });
