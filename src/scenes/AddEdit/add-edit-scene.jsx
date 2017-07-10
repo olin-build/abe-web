@@ -3,7 +3,7 @@ import {browserHistory} from 'react-router-dom';
 import EventVisibilitySelector from './visibility-selector.jsx';
 import SaveCancelButtons from './save-cancel-buttons.jsx';
 import LocationField from './location-field.jsx';
-import EventDateTimeSelector from './date-time-selector.jsx';
+import EventDateTimeSelector from '../../components/date-time-selector.jsx';
 import EventRecurrenceSelector from './recurrence-selector.jsx';
 import TagEntry from '../../components/tag-entry.jsx';
 
@@ -250,8 +250,8 @@ export default class AddEditEventScene extends React.Component {
                     <div className="event-info-container">
                         <input id="event-title" type="text" placeholder="Title" className="wide-text-box single-line-text-box medium-text-box" value={this.state.eventData.title} onChange={this.titleChanged}/>
                         <div className="date-time-container">
-                          <EventDateTimeSelector datetime={this.state.eventData.start} onChange={this.startChanged} />
-                          <EventDateTimeSelector datetime={this.state.eventData.end} onChange={this.endChanged}/>
+                          <EventDateTimeSelector buttonPrefix="Start: " datetime={this.state.eventData.start} onChange={this.startChanged} />
+                          <EventDateTimeSelector buttonPrefix="End: " datetime={this.state.eventData.end} onChange={this.endChanged}/>
                           <input type="checkbox" id='repeats-check' title="Repeats?" checked={this.state.eventData.recurrence} onChange={this.recurrenceSelected}/>
                           <label htmlFor="repeats-check">Repeats?</label>
                           {recurrence}
