@@ -5,6 +5,7 @@ import SaveCancelButtons from './save-cancel-buttons.jsx';
 import LocationField from './location-field.jsx';
 import EventDateTimeSelector from './date-time-selector.jsx';
 import EventRecurrenceSelector from './recurrence-selector.jsx';
+import TagEntry from '../../components/tag-entry.jsx';
 
 export default class AddEditEventScene extends React.Component {
 
@@ -29,6 +30,7 @@ export default class AddEditEventScene extends React.Component {
                 location: '',
                 description: '',
                 visibility: 'public',
+                labels: []
             },
             recurrence: {
               frequency: 'DAILY',
@@ -52,6 +54,8 @@ export default class AddEditEventScene extends React.Component {
         else {
             this.state.submitButtonText = 'Add Event';
         }
+
+        this.possibleLabels = ['Library', 'OFAC', 'FWOP', 'OARS', 'Robolab', 'StAR', 'PGP', 'Admission', "Candidates' Weekend"];
     }
 
     componentDidMount() {
@@ -70,6 +74,8 @@ export default class AddEditEventScene extends React.Component {
             error: error => alert('Error retrieving event data from server:\n' + error),
             success: data => {
                 data = Object.assign(self.state.eventData, data);
+                if (!data.labels)
+                    data.labels = [];
                 self.setState({eventData: data});
             }
         });
@@ -83,6 +89,8 @@ export default class AddEditEventScene extends React.Component {
                   data.start = new Date(data.start);
                   data.end = new Date(data.end);
                   data = Object.assign(this.state.eventData, data);
+                    if (!data.labels)
+                        data.labels = [];
                   this.setState({eventData: data});
             }
         });
@@ -176,11 +184,14 @@ export default class AddEditEventScene extends React.Component {
 
     saveButtonClicked() {
         let url = window.abe_url + '/events/';
+        let data = this.state.eventData;
+        if (data.labels.length === 0)
+            data.labels = null;
         $.ajax({
             url: url,
             method: 'POST',
             contentType: 'application/json',
-            data: JSON.stringify(this.state.eventData),
+            data: JSON.stringify(),
             success: response => this.eventSavedSuccessfully(response),
             error: function( jqXHR, textStatus, errorThrown ){
                 alert("Error: " + errorThrown);
@@ -194,6 +205,14 @@ export default class AddEditEventScene extends React.Component {
         data.visibility = value;
         data = Object.assign(this.state.eventData, data);
         this.setState({eventData: data});
+    }
+
+    labelsChanged(labels) {
+        if (this.state) {
+            let data = this.state.eventData;
+            data.labels = labels;
+            this.setState({eventData: data});
+        }
     }
 
     render() {
@@ -215,7 +234,7 @@ export default class AddEditEventScene extends React.Component {
                         </div>
                         <textarea id="description" title="Event Description" className="wide-text-box multi-line-text-box" placeholder="Description" value={this.state.eventData.description} onChange={this.descriptionChanged}/>
                         <EventVisibilitySelector visibility={this.state.eventData.visibility} onChange={this.visibilityChanged}/>
-
+                        <TagEntry tags={this.state.eventData.labels} onChange={this.labelsChanged} possibleLabels={this.possibleLabels}/>
                         <SaveCancelButtons onCancel={this.cancelButtonClicked} onDelete={this.deleteButtonClicked} showDelete={'id' in this.state.eventData} onSubmit={this.saveButtonClicked} submitButtonText={this.state.submitButtonText}/>
                     </div>
                 </div>
