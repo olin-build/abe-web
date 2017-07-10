@@ -1,6 +1,5 @@
 import * as React from "react";
 import {browserHistory} from 'react-router-dom';
-
 import TagEntry from '../../components/tag-entry.jsx';
 
 export default class ImportScene extends React.Component {
@@ -28,23 +27,26 @@ export default class ImportScene extends React.Component {
       this.setState(state);
   }
   submitICS(){
+    for (let i in this.state.labels){
+      let label = this.state.labels[i]
+      this.state.labels[i] = label.text
+    }
     $.ajax({
-        url: window.abe_url + '/ics',
-        method: POST,
+        url: window.abe_url + '/ics/',
+        method: 'POST',
         contentType: 'application/json',
         data: JSON.stringify(this.state),
         success: response => alert('ICS imported'),
         error: function( jqXHR, textStatus, errorThrown ){
-            alert("Error: " + errorThrown);
-        },
-      })
-}
+            alert("Error: " + errorThrown)},
+    })
+  }
   render(){
     return(
       <div className="row expanded page-container">
           <div className="row content-container">
               <h1 className="page-title">Import</h1>
-              <input required="required" type="url" placeholder="...example.com/example_calendar.ics" className="wide-text-box single-line-text-box medium-text-box" onChange={this.urlChanged}/>
+              <input required="required" type="url" placeholder=".../example_calendar.ics" className="wide-text-box single-line-text-box medium-text-box" onChange={this.urlChanged}/>
               <TagEntry tags={this.state.labels} onChange={this.labelsChanged} possibleLabels={this.possibleLabels}/>
               <br/>
               <input type="submit" className="button submit" value="Submit" onClick={this.submitICS}/>
