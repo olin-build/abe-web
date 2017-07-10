@@ -21,6 +21,7 @@ class PageHeaderNav extends React.Component {
                 <ul className="row menu vertical medium-horizontal">
                     <li className="menu-text"><Link to="/">Home</Link></li>
                     <li className="menu-text"><Link to="/edit">Add</Link></li>
+                    <li className="menu-text"><Link to="/import">Import</Link></li>
                 </ul>
             </nav>
         );
