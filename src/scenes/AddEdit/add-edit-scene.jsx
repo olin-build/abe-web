@@ -44,18 +44,11 @@ export default class AddEditEventScene extends React.Component {
         this.state['submitButtonText'] = '';
         if ('match' in props && 'id' in props.match.params) {
             this.state.eventData.id = props.match.params.id;
-            this.state.submitButtonText = 'Update Event';
         }
         else if('match' in props && 'sid' in props.match.params){
-          console.log(props.match.params.sid)
           this.state.eventData.sid = props.match.params.sid;
           this.state.eventData.rec_id = props.match.params.rec_id;
-          this.state.submitButtonText = 'Update Event';
         }
-        else {
-            this.state.submitButtonText = 'Add Event';
-        }
-
         this.possibleLabels = ['Library', 'OFAC', 'FWOP', 'OARS', 'Robolab', 'StAR', 'PGP', 'Admission', "Candidates' Weekend"];
     }
 
@@ -80,6 +73,11 @@ export default class AddEditEventScene extends React.Component {
                 if (!data.labels)
                     data.labels = [];
                 self.setState({eventData: data});
+                if (self.state.eventData.sid){
+                  let seriesData = {};
+                  Object.assign(seriesData, data);
+                  self.setState({seriesData: seriesData});
+                }
             }
         });
       }
@@ -91,22 +89,17 @@ export default class AddEditEventScene extends React.Component {
             method: 'GET',
             error: error => alert('Error retrieving event data from server:\n' + error),
             success: data => {
-                  console.log(data.title)
                   data.start = new Date(data.start);
                   data.end = new Date(data.end);
                   data = Object.assign(self.state.eventData, data);
                   if (!data.labels)
                       data.labels = [];
                   self.setState({eventData: data});
-                  console.log(self.state.eventData);
+                  let seriesData = {};
+                  Object.assign(seriesData, data);
+                  self.setState({seriesData: seriesData});
             }
         });
-      }
-      if ('sid' in this.state.eventData){
-        data = Object.assign(self.state.eventData, data);
-        let seriesData = {};
-        Object.assign(seriesData, data);
-        self.setState({seriesData: seriesData});
       }
     }
 
@@ -169,9 +162,10 @@ export default class AddEditEventScene extends React.Component {
     }
 
     eventSavedSuccessfully(data) {
-        data = Object.assign(data, {id: id});
+        data.start = new Date(data.start);
+        data.end = new Date(data.end);
         this.setState({eventData: data});
-        this.props.history.push('/edit/'+id);
+        this.props.history.push('/edit/'+data.id);
     }
 
     cancelButtonClicked() {
@@ -247,6 +241,7 @@ export default class AddEditEventScene extends React.Component {
 
     render() {
         let pageTitle = this.state.eventData.id || this.state.eventData.sid ?  'Edit Event' : 'Add Event';
+        let submitButtonText = this.state.eventData.id || this.state.eventData.sid ?  'Update Event' : 'Add Event';
         let recurrence = this.state.eventData.recurrence ? <EventRecurrenceSelector reccurs={this.state.eventData.recurrence} month={this.state.month_option} end = {this.state.end_option} onChange={this.recurrenceChanged}/> : null;
         return (
             <div className="row expanded page-container">
@@ -265,7 +260,7 @@ export default class AddEditEventScene extends React.Component {
                         <textarea id="description" title="Event Description" className="wide-text-box multi-line-text-box" placeholder="Description" value={this.state.eventData.description} onChange={this.descriptionChanged}/>
                         <EventVisibilitySelector visibility={this.state.eventData.visibility} onChange={this.visibilityChanged}/>
                         <TagEntry tags={this.state.eventData.labels} onChange={this.labelsChanged} possibleLabels={this.possibleLabels}/>
-                        <SaveCancelButtons onCancel={this.cancelButtonClicked} onDelete={this.deleteButtonClicked} showDelete={'id' in this.state.eventData} onSubmit={this.saveButtonClicked} submitButtonText={this.state.submitButtonText}/>
+                        <SaveCancelButtons onCancel={this.cancelButtonClicked} onDelete={this.deleteButtonClicked} showDelete={'id' in this.state.eventData} onSubmit={this.saveButtonClicked} submitButtonText={submitButtonText}/>
                     </div>
                 </div>
             </div>
