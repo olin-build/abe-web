@@ -4,7 +4,7 @@ export default class LocationField extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {value: props.value};
 
         this.tryParseLocationInput = this.tryParseLocationInput.bind(this);
         this.resolveBuilding = this.resolveBuilding.bind(this);
@@ -25,16 +25,19 @@ export default class LocationField extends React.Component {
 
     textChanged() {
         let locationField = $('#location');
-        let res = this.tryParseLocationInput(locationField.val());
-        this.setState({
-            building: res.building,
-            room: res.room,
-            suffix: res.suffix
-        });
-        if (res.isValid) {
+        let value = locationField.val();
+        let parsed = this.tryParseLocationInput(value);
+        let newState = {
+            building: parsed.building,
+            room: parsed.room,
+            suffix: parsed.suffix,
+            value: value
+        };
+        this.setState(newState);
+        if (parsed.isValid) {
             locationField.removeClass('is-invalid-input');
             if (this.props.onChange) {
-                this.props.onChange(res.building+res.room+res.suffix);
+                this.props.onChange(parsed.building+parsed.room+parsed.suffix);
             }
         } else {
             locationField.addClass('is-invalid-input');
@@ -124,7 +127,7 @@ export default class LocationField extends React.Component {
     render() {
         return (
             <div className="row expanded location-field-container">
-                <input id="location" type="text" title="Location" className="wide-text-box single-line-text-box medium-text-box" placeholder="Location" onChange={this.textChanged}/>
+                <input id="location" type="text" title="Location" className="wide-text-box single-line-text-box medium-text-box" placeholder="Location" value={this.state.value} onChange={this.textChanged}/>
                 <div className="location-parse-result-container">
                     <span className="location-label">Building:</span><span className="location-parsed">{this.state.building}</span>
                     <span className="location-label">Room:</span><span className="location-parsed">{this.state.room}</span>

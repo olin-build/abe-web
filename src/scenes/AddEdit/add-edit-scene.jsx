@@ -6,6 +6,7 @@ import LocationField from './location-field.jsx';
 import EventDateTimeSelector from '../../components/date-time-selector.jsx';
 import EventRecurrenceSelector from './recurrence-selector.jsx';
 import TagEntry from '../../components/tag-entry.jsx';
+import MarkdownEditor from '../../components/markdown-editor.jsx';
 
 export default class AddEditEventScene extends React.Component {
 
@@ -154,13 +155,13 @@ export default class AddEditEventScene extends React.Component {
 
     locationChanged(newValue) {
         let data = this.state.eventData;
-        data = Object.assign(data, {location: newValue});
+        data.location = newValue;
         this.setState({eventData: data});
     }
 
-    descriptionChanged(e) {
+    descriptionChanged(newDesc) {
         let data = this.state.eventData;
-        data = Object.assign(data, {description: e.currentTarget.value});
+        data.description = newDesc;
         this.setState({eventData: data});
     }
 
@@ -270,10 +271,10 @@ export default class AddEditEventScene extends React.Component {
                           {recurrence}
                           <LocationField value={this.state.eventData.location} onChange={this.locationChanged}/>
                         </div>
-                        <textarea id="description" title="Event Description" className="wide-text-box multi-line-text-box" placeholder="Description" value={this.state.eventData.description} onChange={this.descriptionChanged}/>
+                        <MarkdownEditor source={this.state.eventData.description} onChange={this.descriptionChanged} />
                         <EventVisibilitySelector visibility={this.state.eventData.visibility} onChange={this.visibilityChanged}/>
-                        <TagEntry tags={this.state.eventData.labels} onChange={this.labelsChanged} possibleLabels={this.possibleLabels}/>
-                        <SaveCancelButtons onCancel={this.cancelButtonClicked} onDelete={this.deleteButtonClicked} showDelete={'id' in this.state.eventData || 'sid' in this.state.eventData} onSubmit={this.saveButtonClicked} submitButtonText={submitButtonText}/>
+                        {/*<TagEntry tags={this.state.eventData.labels} onChange={this.labelsChanged} possibleLabels={this.possibleLabels}/>*/}
+                        <SaveCancelButtons onCancel={this.cancelButtonClicked} onDelete={this.deleteButtonClicked} showDelete={'id' in this.state.eventData || 'sid' in this.state.eventData} onSubmit={this.saveButtonClicked} submitButtonText={submitButtonText}/>>>>>>>> 818a1fd6eed3eb1603a714fa04d774b453a924f7
                     </div>
                 </div>
             </div>
