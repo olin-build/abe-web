@@ -6,6 +6,7 @@ import LocationField from './location-field.jsx';
 import EventDateTimeSelector from '../../components/date-time-selector.jsx';
 import EventRecurrenceSelector from './recurrence-selector.jsx';
 import TagEntry from '../../components/tag-entry.jsx';
+import MarkdownEditor from '../../components/markdown-editor.jsx';
 
 export default class AddEditEventScene extends React.Component {
 
@@ -243,6 +244,12 @@ export default class AddEditEventScene extends React.Component {
         let pageTitle = this.state.eventData.id || this.state.eventData.sid ?  'Edit Event' : 'Add Event';
         let submitButtonText = this.state.eventData.id || this.state.eventData.sid ?  'Update Event' : 'Add Event';
         let recurrence = this.state.eventData.recurrence ? <EventRecurrenceSelector reccurs={this.state.eventData.recurrence} month={this.state.month_option} end = {this.state.end_option} onChange={this.recurrenceChanged}/> : null;
+        let md = `# This is a heading
+#### This is also a heading
+\`this is some code\`
+
+This is a [link](www.olin.edu)
+`;
         return (
             <div className="row expanded page-container">
                 <div className="row content-container">
@@ -257,9 +264,10 @@ export default class AddEditEventScene extends React.Component {
                           {recurrence}
                           <LocationField value={this.state.eventData.location} onChange={this.locationChanged}/>
                         </div>
-                        <textarea id="description" title="Event Description" className="wide-text-box multi-line-text-box" placeholder="Description" value={this.state.eventData.description} onChange={this.descriptionChanged}/>
+                        <MarkdownEditor source={md}/>
+                        {/*<textarea id="description" title="Event Description" className="wide-text-box multi-line-text-box" placeholder="Description" value={this.state.eventData.description} onChange={this.descriptionChanged}/>*/}
                         <EventVisibilitySelector visibility={this.state.eventData.visibility} onChange={this.visibilityChanged}/>
-                        <TagEntry tags={this.state.eventData.labels} onChange={this.labelsChanged} possibleLabels={this.possibleLabels}/>
+                        {/*<TagEntry tags={this.state.eventData.labels} onChange={this.labelsChanged} possibleLabels={this.possibleLabels}/>*/}
                         <SaveCancelButtons onCancel={this.cancelButtonClicked} onDelete={this.deleteButtonClicked} showDelete={'id' in this.state.eventData} onSubmit={this.saveButtonClicked} submitButtonText={submitButtonText}/>
                     </div>
                 </div>

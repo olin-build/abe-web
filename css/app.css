@@ -1,6 +1,7 @@
 @import "../node_modules/fullcalendar/dist/fullcalendar.css";
 @import "../css/jquery.qtip.css";
 @import "../css/foundation.css";
+@import "../node_modules/codemirror/lib/codemirror.css";
 
 /** ----- Begin Global ----- **/
 
@@ -89,6 +90,29 @@ header nav li.menu-text:hover a {
 .m-calendar .toolbar button,
 .content-container button:not(.im-btn) {
     background-color: #009BDF;
+}
+
+.markdown-editor-container {
+    overflow: auto;
+    margin-top: 1em;
+}
+
+.markdown-editor {
+    width: 50%;
+    display: inline-block;
+    min-height: 15em;
+    float: left;
+}
+
+.markdown-preview {
+    display: inline-block;
+    width: 50%;
+    padding-left: 2em;
+    float: left;
+}
+
+textarea.markdown-editor {
+    resize: vertical;
 }
 
 /** --- Begin Date/Time Selector --- **/
