@@ -39,7 +39,8 @@ export default class AddEditEventScene extends React.Component {
               by_day: '',
             },
             month_option: 'month',
-            end_option: 'forever'
+            end_option: 'forever',
+            locationFieldValue: ''
         };
 
         this.state['submitButtonText'] = '';
@@ -70,6 +71,7 @@ export default class AddEditEventScene extends React.Component {
             success: data => {
                 data.start = new Date(data.start);
                 data.end = new Date(data.end);
+                data.location = {value: data.location};
                 data = Object.assign(self.state.eventData, data);
                 if (!data.labels)
                     data.labels = [];
@@ -92,6 +94,7 @@ export default class AddEditEventScene extends React.Component {
             success: data => {
                   data.start = new Date(data.start);
                   data.end = new Date(data.end);
+                  data.location = {value: data.location};
                   data = Object.assign(self.state.eventData, data);
                   if (!data.labels)
                       data.labels = [];
@@ -190,6 +193,7 @@ export default class AddEditEventScene extends React.Component {
 
     saveButtonClicked() {
         let data = this.state.eventData;
+        data.location = data.location.value;
         if (data.labels.length === 0)
             data.labels = null;
         var newEvent = new Object
@@ -256,7 +260,7 @@ export default class AddEditEventScene extends React.Component {
                           <input type="checkbox" id='repeats-check' title="Repeats?" checked={this.state.eventData.recurrence} onChange={this.recurrenceSelected}/>
                           <label htmlFor="repeats-check">Repeats?</label>
                           {recurrence}
-                          <LocationField value={this.state.eventData.location} onChange={this.locationChanged}/>
+                          <LocationField location={this.state.eventData.location} onChange={this.locationChanged}/>
                         </div>
                         <MarkdownEditor source={this.state.eventData.description} onChange={this.descriptionChanged} />
                         <EventVisibilitySelector visibility={this.state.eventData.visibility} onChange={this.visibilityChanged}/>
