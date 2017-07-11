@@ -1,5 +1,5 @@
 import * as React from "react";
-import EventDateTimeSelector from './date-time-selector.jsx';
+import EventDateTimeSelector from '../../components/date-time-selector.jsx';
 
 class MonthOptions extends React.Component {
   constructor(props){

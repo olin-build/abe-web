@@ -44,7 +44,8 @@
     "react-router-dom": "^4.1.1",
     "react-tag-input": "^4.7.2",
     "typescript": "^2.4.1",
-    "webpack": "^2.6.1"
+    "webpack": "^2.6.1",
+    "input-moment": "latest"
   },
   "devDependencies": {
     "webpack-dev-server": "^2.5.0"

@@ -84,9 +84,49 @@ header nav li.menu-text:hover a {
     padding: 1em;
 }
 
-.content-container button {
+.m-input-moment .btn-save,
+.m-input-moment .options button.is-active,
+.m-calendar .toolbar button,
+.content-container button:not(.im-btn) {
     background-color: #009BDF;
 }
+
+/** --- Begin Date/Time Selector --- **/
+
+.date-time-container {
+    display: inline-block;
+    margin-right: 1em;
+}
+
+.picker-popup-container {
+    position: relative;
+}
+
+.m-input-moment {
+    background-color: white;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+.m-calendar .toolbar {
+    margin-bottom: 0;
+    padding: 0.5em;
+}
+
+.m-input-moment .tabs {
+    margin-bottom: 1.8em;
+}
+
+.m-time .showtime {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/** --- End Date/Time Selector --- **/
 
 .is-invalid-input:focus {
     border-color: #cc4b37;
@@ -161,10 +201,12 @@ header nav li.menu-text:hover a {
     margin-right: 1em;
 }
 
+.content-container .button.delete,
 .button.delete {
     background-color: #ff3f3f;
 }
 
+.content-container .button.cancel,
 .button.cancel {
     background-color: #9f9f9f;
 }
