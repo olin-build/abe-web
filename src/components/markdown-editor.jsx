@@ -11,20 +11,20 @@ export default class MarkdownEditor extends React.Component {
 
         this.updateCode = this.updateCode.bind(this);
 
-        this.state = {
-            source: (props.source) ? props.source : '',
-            editorOptions: {
-                mode: 'markdown',
-                lineNumbers: true
-            }
-        };
+        // this.state = {
+        //     source: (props.source) ? props.source : '',
+        //     editorOptions: {
+        //         mode: 'markdown',
+        //         lineNumbers: true
+        //     }
+        // };
     }
 
     updateCode (e) {
         if (e.target !== undefined) {
-            this.setState({source: e.target.value});
+            this.props.onChange(e.target.value);
         } else {
-            this.setState({source: e});
+            this.props.onChange(e);
         }
 
     }
@@ -32,9 +32,9 @@ export default class MarkdownEditor extends React.Component {
     render() {
         return (
             <div className="markdown-editor-container">
-                <textarea onChange={this.updateCode} value={this.state.source}  className="markdown-editor" placeholder="Description (Markdown enabled)"/>
+                <textarea onChange={this.updateCode} value={this.props.source}  className="markdown-editor" placeholder="Description (Markdown enabled)"/>
                 {/*<CodeMirror className="markdown-editor" value={this.state.source} onChange={this.updateCode} options={this.state.editorOptions} />*/}
-                <Markdown source={this.state.source} className="markdown-preview" />
+                <Markdown source={this.props.source} className="markdown-preview" />
             </div>
         )
     }
