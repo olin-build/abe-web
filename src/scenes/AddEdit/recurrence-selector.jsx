@@ -169,9 +169,15 @@ export default class RecurrenceSelector extends React.Component {
 
     frequencyChanged(e) {
       let reccurs = this.state.recurrence;
+      if (e.currentTarget.value === 'WEEKLY' && reccurs.by_month_day){
+        //reccurs = Object.assign(reccurs, {by_month_day: undefined})
+        delete reccurs.by_month_day
+      }
       reccurs = Object.assign(reccurs, {frequency: e.currentTarget.value})
-      this.setState({recurrence: reccurs});
-      this.props.onChange(this.state)
+      this.setState({recurrence: reccurs}, () => {
+        this.props.onChange(this.state);
+      })
+
 
     }
 
