@@ -108,16 +108,22 @@ export default class CalendarScene extends React.Component {
 
     renderEvents(event, element) {
         //add the label to masterLabels if it isn't there when we render
-        var edit
-        if (!event.id){
-          edit = $('<div>').text(event.description).append($('<br>'),$('<a>').attr('href','/edit/'+ event.sid + '/' + event.start).text('Click here to edit this occurence'),$('<br>'), $('<a>').attr('href','/edit/'+ event.sid).text('Click here to edit this series'));}
-        else{
-          edit = $('<div>').text(event.description).append($('<br>'),$('<a>').attr('href','/edit/'+ event.id).text('Click here to edit'))
-        }
+        let linkSuffix = (event.id) ? event.id : event.sid;
+        // let content = (
+        //         <div>
+        //             <div className="tooltip-description">{event.description}</div>
+        //             <div className="tooltip-options">
+        //                 <a href={'/view/'+linkSuffix} alt="View event details" title="View event details">Details</a>
+        //                 <a href={'/edit/'+linkSuffix} alt="Edit event details" title="Edit event">Edit</a>
+        //             </div>
+        //         </div>
+        //     );
+        let content = $('<div>').text(event.description).append($('<br>'),$('<a>').attr('href','/view/'+linkSuffix).text('Details'),$('<span> | </span>'),$('<a>').attr('href','/edit/'+linkSuffix).text('Edit'));
         element.qtip({
             content: {
                 title: event.title,
-                text: edit},
+                text: content
+            },
             style: {classes: 'qtip-light'},
             show: 'click',
             hide: {event: 'unfocus'}

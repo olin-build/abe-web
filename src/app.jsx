@@ -11,6 +11,7 @@ import PageHeader from './components/header.jsx';
 import AddEditEventScene from './scenes/AddEdit/add-edit-scene.jsx';
 import ImportScene from './scenes/Import/import.jsx';
 import CalendarScene from './scenes/Calendar/calendar.jsx';
+import ViewEventScene from './scenes/View/view-event-scene.jsx';
 import Footer from "./components/footer.jsx";
 import * as foundation from '../js/vendor/foundation.js'
 
@@ -45,6 +46,7 @@ const Main = () => (
             <Route exact path= '/import' component={ImportScene} />
             <Route exact path='/edit/:id' component={AddEditEventScene} />
             <Route path= '/edit/:sid/:rec_id' component={AddEditEventScene} />
+            <Route path='/view/:id' component={ViewEventScene} />
         </Switch>
     </main>
 );
