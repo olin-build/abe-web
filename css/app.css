@@ -107,6 +107,7 @@ header nav li.menu-text:hover a {
     position: absolute;
     top: 0;
     left: 0;
+    z-index: 1000;
 }
 
 .m-calendar .toolbar {
@@ -200,10 +201,12 @@ header nav li.menu-text:hover a {
     margin-right: 1em;
 }
 
+.content-container .button.delete,
 .button.delete {
     background-color: #ff3f3f;
 }
 
+.content-container .button.cancel,
 .button.cancel {
     background-color: #9f9f9f;
 }
