@@ -34,13 +34,12 @@ export default class AddEditEventScene extends React.Component {
                 labels: []
             },
             recurrence: {
-              frequency: 'DAILY',
+              frequency: 'YEARLY',
               interval: '1',
               by_day: '',
             },
             month_option: 'month',
-            end_option: 'forever',
-            locationFieldValue: ''
+            end_option: 'forever'
         };
 
         this.state['submitButtonText'] = '';
@@ -77,6 +76,7 @@ export default class AddEditEventScene extends React.Component {
                     data.labels = [];
                 self.setState({eventData: data});
                 if (self.state.eventData.sid){
+                  data.rec_id = new Date(data.rec_id);
                   let seriesData = {};
                   Object.assign(seriesData, data);
                   self.setState({seriesData: seriesData});
@@ -131,12 +131,14 @@ export default class AddEditEventScene extends React.Component {
         state.eventData.recurrence = value.recurrence;
         state.month_option = value.month_option;
         state.end_option = value.end_option;
-        if(value.month_option === 'week'){
+        if(value.month_option === 'week' && value.frequency === 'MONTHLY'){
           var days = ["SU","MO","TU","WE","TH","FR","SA"];
-          state.eventData.recurrence.by_day = [days[state.eventData.start.getDay()]]
+          state.eventData.recurrence.by_day = [days[state.eventData.start.getDay()]];
+          state.eventData.recurrence.by_month_day = undefined;
         }
-        else{
+        else if(value.month_option === 'month' && value.frequency === 'MONTHLY'){
           state.eventData.recurrence.by_month_day = String(state.eventData.start.getDate())
+          state.eventData.recurrence.by_day = undefined
         }
         state = Object.assign(this.state, state);
         this.setState(state);
@@ -199,23 +201,35 @@ export default class AddEditEventScene extends React.Component {
         var newEvent = new Object
         var url
         var method
-        if (this.state.eventData.sid){
-          for (let key in this.state.eventData){
-            if (this.state.eventData[key] != this.state.seriesData[key] && key != 'recurrence'){
-              newEvent[key] = this.state.eventData[key]
-            }
-          }
-          newEvent.sid = this.state.eventData.sid;
-          newEvent.rec_id = this.state.eventData.rec_id.toJSON();
-          url = window.abe_url + '/events/' + this.state.eventData.sid;
-          method = 'PUT'
-        }
-        else{
+        if (!this.state.eventData.id && !this.state.eventData.sid){
           url = window.abe_url + '/events/';
           newEvent = this.state.eventData;
           method = 'POST'
         }
-
+        else{
+          for (let key in this.state.eventData){
+            if (this.state.eventData[key] != this.state.seriesData[key]){
+              newEvent[key] = this.state.eventData[key]
+            }
+          }
+          method = 'PUT'
+        }
+        if (this.state.eventData.id){
+          url = window.abe_url + '/events/' + this.state.eventData.id;
+        }
+        else if (this.state.eventData.sid){
+          url = window.abe_url + '/events/' + this.state.eventData.sid;
+          newEvent.sid = this.state.eventData.sid;
+          newEvent.rec_id = this.state.eventData.rec_id.toJSON();
+          newEvent.start = this.state.eventData.start;
+          newEvent.end = this.state.eventData.end;
+          newEvent.recurrence = undefined;
+        }
+        if (newEvent.labels){
+          for (let i in newEvent.labels){
+            let label = newEvent.labels[i];
+            newEvent.labels[i] = label.text}
+          newEvent.labels = newEvent.labels.toString()}
         $.ajax({
             url: url,
             method: method,
@@ -247,6 +261,7 @@ export default class AddEditEventScene extends React.Component {
     render() {
         let pageTitle = this.state.eventData.id || this.state.eventData.sid ?  'Edit Event' : 'Add Event';
         let submitButtonText = this.state.eventData.id || this.state.eventData.sid ?  'Update Event' : 'Add Event';
+        let recurrence_disable = this.state.eventData.sid ? 'disabled' : null;
         let recurrence = this.state.eventData.recurrence ? <EventRecurrenceSelector reccurs={this.state.eventData.recurrence} month={this.state.month_option} end = {this.state.end_option} onChange={this.recurrenceChanged}/> : null;
         return (
             <div className="row expanded page-container">
@@ -257,7 +272,7 @@ export default class AddEditEventScene extends React.Component {
                         <div className="date-time-container">
                           <EventDateTimeSelector buttonPrefix="Start: " datetime={this.state.eventData.start} onChange={this.startChanged} />
                           <EventDateTimeSelector buttonPrefix="End: " datetime={this.state.eventData.end} onChange={this.endChanged}/>
-                          <input type="checkbox" id='repeats-check' title="Repeats?" checked={this.state.eventData.recurrence} onChange={this.recurrenceSelected}/>
+                          <input type="checkbox" id='repeats-check' title="Repeats?" disabled={recurrence_disable} checked={this.state.eventData.recurrence} onChange={this.recurrenceSelected}/>
                           <label htmlFor="repeats-check">Repeats?</label>
                           {recurrence}
                           <LocationField location={this.state.eventData.location} onChange={this.locationChanged}/>
@@ -265,7 +280,7 @@ export default class AddEditEventScene extends React.Component {
                         <MarkdownEditor source={this.state.eventData.description} onChange={this.descriptionChanged} />
                         <EventVisibilitySelector visibility={this.state.eventData.visibility} onChange={this.visibilityChanged}/>
                         {/*<TagEntry tags={this.state.eventData.labels} onChange={this.labelsChanged} possibleLabels={this.possibleLabels}/>*/}
-                        <SaveCancelButtons onCancel={this.cancelButtonClicked} onDelete={this.deleteButtonClicked} showDelete={'id' in this.state.eventData} onSubmit={this.saveButtonClicked} submitButtonText={submitButtonText}/>
+                        <SaveCancelButtons onCancel={this.cancelButtonClicked} onDelete={this.deleteButtonClicked} showDelete={'id' in this.state.eventData || 'sid' in this.state.eventData} onSubmit={this.saveButtonClicked} submitButtonText={submitButtonText}/>>>>>>>> 818a1fd6eed3eb1603a714fa04d774b453a924f7
                     </div>
                 </div>
             </div>
