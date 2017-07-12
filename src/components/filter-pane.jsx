@@ -6,11 +6,31 @@ export default class FilterPane extends React.Component {
         super(props);
 
         this.labelClicked = this.labelClicked.bind(this);
+        this.submitExport = this.submitExport.bind(this);
 
     }
 
     labelClicked(labelName) {
         this.props.labelVisibilityToggled(labelName);
+    }
+
+    submitExport(){
+      let request = {
+        activeLabels: [],
+      }
+      for (let label in this.props.labels){
+        if (this.props.labels[label]){
+          request.activeLabels.push(label)
+        }
+      }
+      request.activeLabels=request.activeLabels.toString()
+      $.ajax({
+          url: window.abe_url + '/ics/audrey?labels=' + request.activeLabels,
+          method: 'GET',
+          error: function( jqXHR, textStatus, errorThrown ){
+              alert("Error: " + errorThrown);
+          }
+      });
     }
 
     render() {
@@ -31,6 +51,7 @@ export default class FilterPane extends React.Component {
                 <div className="column small-12 filter-pane-labels-list">
                     {labelElems}
                 </div>
+                <button className="button submit" onClick={this.submitExport}>Export ICS</button>
             </div>
         )
     }

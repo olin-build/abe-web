@@ -31,7 +31,8 @@ export default class AddEditEventScene extends React.Component {
                 location: '',
                 description: '',
                 visibility: 'public',
-                labels: []
+                labels: [],
+                recurrence: undefined,
             },
             recurrence: {
               frequency: 'YEARLY',
@@ -75,9 +76,9 @@ export default class AddEditEventScene extends React.Component {
                     data.labels = [];
                 if (self.state.eventData.sid){
                   data.rec_id = new Date(data.rec_id);
-                  let seriesData = {};
-                  Object.assign(seriesData, data);
-                  self.setState({seriesData: seriesData});}
+                let seriesData = {};
+                Object.assign(seriesData, data);
+                self.setState({seriesData: seriesData});}
                 self.setState({eventData: data});
             }
         });
