@@ -7,7 +7,7 @@ import EventDateTimeSelector from '../../components/date-time-selector.jsx';
 import EventRecurrenceSelector from './recurrence-selector.jsx';
 import TagEntry from '../../components/tag-entry.jsx';
 import MarkdownEditor from '../../components/markdown-editor.jsx';
-
+import moment from 'moment';
 export default class AddEditEventScene extends React.Component {
 
     constructor(props) {
@@ -27,8 +27,8 @@ export default class AddEditEventScene extends React.Component {
         this.state = {
             eventData: {
                 title: '',
-                start: new Date(),
-                end: new Date(),
+                start: moment(),
+                end: moment(),
                 location: '',
                 description: '',
                 visibility: 'public',
@@ -58,10 +58,10 @@ export default class AddEditEventScene extends React.Component {
     componentDidMount() {
       var days = ["SU","MO","TU","WE","TH","FR","SA"];
       let recurrs = this.state.recurrence;
-      let recurrs_by_day = [days[this.state.eventData.start.getDay()]];
+      let recurrs_by_day = [days[this.state.eventData.start.day()]];
       recurrs = Object.assign(recurrs, {by_day: recurrs_by_day});
-      this.state.eventData.start.setMilliseconds(0);
-      this.state.eventData.end.setMilliseconds(0);
+      this.state.eventData.start.milliseconds(0);
+      this.state.eventData.end.milliseconds(0);
       this.setState({recurrence: recurrs});
       let self = this;
       if ('id' in this.state.eventData) {
@@ -70,15 +70,15 @@ export default class AddEditEventScene extends React.Component {
             method: 'GET',
             error: error => alert('Error retrieving event data from server:\n' + error),
             success: data => {
-                data.start = new Date(data.start);
-                data.end = new Date(data.end);
+                data.start = moment(data.start);
+                data.end = moment(data.end);
                 data.location = {value: data.location};
                 data = Object.assign(self.state.eventData, data);
                 if (!data.labels)
                     data.labels = [];
                 self.setState({eventData: data});
                 if (self.state.eventData.sid){
-                  data.rec_id = new Date(data.rec_id);
+                  data.rec_id = moment(data.rec_id);
                 let seriesData = {};
                 Object.assign(seriesData, data);
                 self.setState({seriesData: seriesData});}
@@ -87,15 +87,15 @@ export default class AddEditEventScene extends React.Component {
         });
       }
       else if ('sid' in this.state.eventData){
-        let rec_id = new Date(Number(self.state.eventData.rec_id));
+        let rec_id = moment(Number(self.state.eventData.rec_id));
         this.state.eventData.rec_id = rec_id;
         $.ajax({
             url: window.abe_url + '/events/' + self.state.eventData.sid + '/' + rec_id.toJSON(),
             method: 'GET',
             error: error => alert('Error retrieving event data from server:\n' + error),
             success: data => {
-                  data.start = new Date(data.start);
-                  data.end = new Date(data.end);
+                  data.start = moment(data.start);
+                  data.end = moment(data.end);
                   data.location = {value: data.location};
                   data = Object.assign(self.state.eventData, data);
                   if (!data.labels)
@@ -135,11 +135,11 @@ export default class AddEditEventScene extends React.Component {
         state.end_option = value.end_option;
         if(value.month_option === 'week' && value.frequency === 'MONTHLY'){
           var days = ["SU","MO","TU","WE","TH","FR","SA"];
-          state.eventData.recurrence.by_day = [days[state.eventData.start.getDay()]];
+          state.eventData.recurrence.by_day = [days[state.eventData.start.day()]];
           state.eventData.recurrence.by_month_day = undefined;
         }
         else if(value.month_option === 'month' && value.frequency === 'MONTHLY'){
-          state.eventData.recurrence.by_month_day = String(state.eventData.start.getDate())
+          state.eventData.recurrence.by_month_day = String(state.eventData.start.date())
           state.eventData.recurrence.by_day = undefined
         }
         state = Object.assign(this.state, state);
@@ -170,8 +170,8 @@ export default class AddEditEventScene extends React.Component {
     }
 
     eventSavedSuccessfully(data) {
-        data.start = new Date(data.start);
-        data.end = new Date(data.end);
+        data.start = moment(data.start);
+        data.end = moment(data.end);
         this.setState({eventData: data});
         this.props.history.push('/edit/'+data.id);
     }
@@ -277,10 +277,10 @@ export default class AddEditEventScene extends React.Component {
                         <MarkdownEditor source={this.state.eventData.description} onChange={this.descriptionChanged} />
                         <EventVisibilitySelector visibility={this.state.eventData.visibility} onChange={this.visibilityChanged}/>
                         <TagEntry tags={this.state.eventData.labels} onChange={this.labelsChanged} possibleLabels={this.possibleLabels}/>
-                        <SaveCancelButtons onCancel={this.cancelButtonClicked} onDelete={this.deleteButtonClicked} showDelete={'id' in this.state.eventData || 'sid' in this.state.eventData} onSubmit={this.saveButtonClicked} submitButtonText={submitButtonText}/>>>>>>>> 818a1fd6eed3eb1603a714fa04d774b453a924f7
-                    </div>
+                        <SaveCancelButtons onCancel={this.cancelButtonClicked} onDelete={this.deleteButtonClicked} showDelete={'id' in this.state.eventData || 'sid' in this.state.eventData} onSubmit={this.saveButtonClicked} submitButtonText={submitButtonText}/>
                 </div>
             </div>
+          </div>
         );
     }
 }
