@@ -118,7 +118,12 @@ export default class CalendarScene extends React.Component {
         //             </div>
         //         </div>
         //     );
-        let content = $('<div>').text(event.description).append($('<br>'),$('<a>').attr('href','/view/'+linkSuffix).text('Details'),$('<span> | </span>'),$('<a>').attr('href','/edit/'+linkSuffix).text('Edit'));
+        let content = $('<div>').text(event.description);
+        if (event.sid)
+          content.append($('<br>'),$('<a>').attr('href','/view/'+linkSuffix).text('Details'),$('<span> | </span>'),$('<a>').attr('href','/edit/'+linkSuffix).text('Edit'),$('<span> | </span>'),$('<a>').attr('href','/edit/'+linkSuffix+'/'+event.start).text('Edit Occurence'));
+        else {
+          content.append($('<br>'),$('<a>').attr('href','/view/'+linkSuffix).text('Details'),$('<span> | </span>'),$('<a>').attr('href','/edit/'+linkSuffix).text('Edit'));
+        }
         element.qtip({
             content: {
                 title: event.title,
