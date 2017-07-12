@@ -17,6 +17,7 @@ export default class AddEditEventScene extends React.Component {
         this.startChanged = this.startChanged.bind(this);
         this.endChanged = this.endChanged.bind(this);
         this.descriptionChanged = this.descriptionChanged.bind(this);
+        this.labelsChanged = this.labelsChanged.bind(this);
         this.visibilityChanged = this.visibilityChanged.bind(this);
         this.deleteButtonClicked = this.deleteButtonClicked.bind(this);
         this.saveButtonClicked = this.saveButtonClicked.bind(this);
@@ -71,9 +72,11 @@ export default class AddEditEventScene extends React.Component {
             success: data => {
                 data.start = new Date(data.start);
                 data.end = new Date(data.end);
+                data.location = {value: data.location};
                 data = Object.assign(self.state.eventData, data);
                 if (!data.labels)
                     data.labels = [];
+                self.setState({eventData: data});
                 if (self.state.eventData.sid){
                   data.rec_id = new Date(data.rec_id);
                 let seriesData = {};
@@ -93,6 +96,7 @@ export default class AddEditEventScene extends React.Component {
             success: data => {
                   data.start = new Date(data.start);
                   data.end = new Date(data.end);
+                  data.location = {value: data.location};
                   data = Object.assign(self.state.eventData, data);
                   if (!data.labels)
                       data.labels = [];
@@ -132,7 +136,7 @@ export default class AddEditEventScene extends React.Component {
         if(value.month_option === 'week' && value.frequency === 'MONTHLY'){
           var days = ["SU","MO","TU","WE","TH","FR","SA"];
           state.eventData.recurrence.by_day = [days[state.eventData.start.getDay()]];
-          state.eventData.recurrence.by_month_day = undefined
+          state.eventData.recurrence.by_month_day = undefined;
         }
         else if(value.month_option === 'month' && value.frequency === 'MONTHLY'){
           state.eventData.recurrence.by_month_day = String(state.eventData.start.getDate())
@@ -192,6 +196,10 @@ export default class AddEditEventScene extends React.Component {
     }
 
     saveButtonClicked() {
+        let data = this.state.eventData;
+        data.location = data.location.value;
+        if (data.labels.length === 0)
+            data.labels = null;
         var newEvent = new Object
         var url
         var method
@@ -219,11 +227,6 @@ export default class AddEditEventScene extends React.Component {
           newEvent.end = this.state.eventData.end;
           newEvent.recurrence = undefined;
         }
-        if (newEvent.labels){
-          for (let i in newEvent.labels){
-            let label = newEvent.labels[i];
-            newEvent.labels[i] = label.text}
-          newEvent.labels = newEvent.labels.toString()}
         $.ajax({
             url: url,
             method: method,
@@ -255,7 +258,7 @@ export default class AddEditEventScene extends React.Component {
     render() {
         let pageTitle = this.state.eventData.id || this.state.eventData.sid ?  'Edit Event' : 'Add Event';
         let submitButtonText = this.state.eventData.id || this.state.eventData.sid ?  'Update Event' : 'Add Event';
-        let recurrence_disable = this.state.eventData.sid ? 'diabled' : null;
+        let recurrence_disable = this.state.eventData.sid ? 'disabled' : null;
         let recurrence = this.state.eventData.recurrence ? <EventRecurrenceSelector reccurs={this.state.eventData.recurrence} month={this.state.month_option} end = {this.state.end_option} onChange={this.recurrenceChanged}/> : null;
         return (
             <div className="row expanded page-container">
@@ -269,12 +272,12 @@ export default class AddEditEventScene extends React.Component {
                           <input type="checkbox" id='repeats-check' title="Repeats?" disabled={recurrence_disable} checked={this.state.eventData.recurrence} onChange={this.recurrenceSelected}/>
                           <label htmlFor="repeats-check">Repeats?</label>
                           {recurrence}
-                          <LocationField value={this.state.eventData.location} onChange={this.locationChanged}/>
+                          <LocationField location={this.state.eventData.location} onChange={this.locationChanged}/>
                         </div>
                         <MarkdownEditor source={this.state.eventData.description} onChange={this.descriptionChanged} />
                         <EventVisibilitySelector visibility={this.state.eventData.visibility} onChange={this.visibilityChanged}/>
-                        {/*<TagEntry tags={this.state.eventData.labels} onChange={this.labelsChanged} possibleLabels={this.possibleLabels}/>*/}
-                        <SaveCancelButtons onCancel={this.cancelButtonClicked} onDelete={this.deleteButtonClicked} showDelete={'id' in this.state.eventData || 'sid' in this.state.eventData} onSubmit={this.saveButtonClicked} submitButtonText={submitButtonText}/>
+                        <TagEntry tags={this.state.eventData.labels} onChange={this.labelsChanged} possibleLabels={this.possibleLabels}/>
+                        <SaveCancelButtons onCancel={this.cancelButtonClicked} onDelete={this.deleteButtonClicked} showDelete={'id' in this.state.eventData || 'sid' in this.state.eventData} onSubmit={this.saveButtonClicked} submitButtonText={submitButtonText}/>>>>>>>> 818a1fd6eed3eb1603a714fa04d774b453a924f7
                     </div>
                 </div>
             </div>

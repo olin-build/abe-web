@@ -4,7 +4,7 @@ export default class LocationField extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {value: props.value};
+        this.state = {};
 
         this.tryParseLocationInput = this.tryParseLocationInput.bind(this);
         this.resolveBuilding = this.resolveBuilding.bind(this);
@@ -23,28 +23,30 @@ export default class LocationField extends React.Component {
         this.MISC_ROOM_MATCHES = ['gym', 'kitchen'];
     }
 
+    componentWillReceiveProps(nextProps) {
+        this.setState({value: nextProps.value})
+    }
+
     textChanged() {
         let locationField = $('#location');
         let value = locationField.val();
         let parsed = this.tryParseLocationInput(value);
-        let newState = {
+        let locationObj = {
             building: parsed.building,
             room: parsed.room,
             suffix: parsed.suffix,
             value: value
         };
-        this.setState(newState);
+        this.setState(locationObj);
         if (parsed.isValid) {
             locationField.removeClass('is-invalid-input');
-            if (this.props.onChange) {
-                this.props.onChange(parsed.building+parsed.room+parsed.suffix);
-            }
         } else {
             locationField.addClass('is-invalid-input');
-            if (this.props.onChange) {
-                this.props.onChange(null);
-            }
         }
+        if (this.props.onChange) {
+            this.props.onChange(locationObj);
+        }
+
     }
 
     tryParseLocationInput(string) {
@@ -127,11 +129,11 @@ export default class LocationField extends React.Component {
     render() {
         return (
             <div className="row expanded location-field-container">
-                <input id="location" type="text" title="Location" className="wide-text-box single-line-text-box medium-text-box" placeholder="Location" value={this.state.value} onChange={this.textChanged}/>
+                <input id="location" type="text" title="Location" className="wide-text-box single-line-text-box medium-text-box" placeholder="Location" value={this.props.location.value} onChange={this.textChanged}/>
                 <div className="location-parse-result-container">
-                    <span className="location-label">Building:</span><span className="location-parsed">{this.state.building}</span>
-                    <span className="location-label">Room:</span><span className="location-parsed">{this.state.room}</span>
-                    <span className="location-label">Suffix:</span><span className="location-parsed">{this.state.suffix}</span>
+                    <span className="location-label">Building:</span><span className="location-parsed">{this.props.location.building}</span>
+                    <span className="location-label">Room:</span><span className="location-parsed">{this.props.location.room}</span>
+                    <span className="location-label">Suffix:</span><span className="location-parsed">{this.props.location.suffix}</span>
                 </div>
             </div>
         )
