@@ -17,6 +17,7 @@ export default class AddEditEventScene extends React.Component {
         this.startChanged = this.startChanged.bind(this);
         this.endChanged = this.endChanged.bind(this);
         this.descriptionChanged = this.descriptionChanged.bind(this);
+        this.labelsChanged = this.labelsChanged.bind(this);
         this.visibilityChanged = this.visibilityChanged.bind(this);
         this.deleteButtonClicked = this.deleteButtonClicked.bind(this);
         this.saveButtonClicked = this.saveButtonClicked.bind(this);
@@ -225,11 +226,6 @@ export default class AddEditEventScene extends React.Component {
           newEvent.end = this.state.eventData.end;
           newEvent.recurrence = undefined;
         }
-        if (newEvent.labels){
-          for (let i in newEvent.labels){
-            let label = newEvent.labels[i];
-            newEvent.labels[i] = label.text}
-          newEvent.labels = newEvent.labels.toString()}
         $.ajax({
             url: url,
             method: method,
@@ -279,7 +275,7 @@ export default class AddEditEventScene extends React.Component {
                         </div>
                         <MarkdownEditor source={this.state.eventData.description} onChange={this.descriptionChanged} />
                         <EventVisibilitySelector visibility={this.state.eventData.visibility} onChange={this.visibilityChanged}/>
-                        {/*<TagEntry tags={this.state.eventData.labels} onChange={this.labelsChanged} possibleLabels={this.possibleLabels}/>*/}
+                        <TagEntry tags={this.state.eventData.labels} onChange={this.labelsChanged} possibleLabels={this.possibleLabels}/>
                         <SaveCancelButtons onCancel={this.cancelButtonClicked} onDelete={this.deleteButtonClicked} showDelete={'id' in this.state.eventData || 'sid' in this.state.eventData} onSubmit={this.saveButtonClicked} submitButtonText={submitButtonText}/>>>>>>>> 818a1fd6eed3eb1603a714fa04d774b453a924f7
                     </div>
                 </div>

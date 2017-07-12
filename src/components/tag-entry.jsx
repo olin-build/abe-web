@@ -1,5 +1,4 @@
 import * as React from "react";
-// import { WithContext as ReactTags } from './react-tags/ReactTags';
 import { WithContext as ReactTags } from 'react-tag-input';
 
 export default class TagEntry extends React.Component {
@@ -10,22 +9,32 @@ export default class TagEntry extends React.Component {
         if (!this.props.tags)
             console.error('TagEntry tags prop must be defined. Use [] for an empty tags list.');
 
+        this.state = {};
+
         this.handleDelete = this.handleDelete.bind(this);
         this.handleAddition = this.handleAddition.bind(this);
         this.handleDrag = this.handleDrag.bind(this);
     }
 
-    handleAddition(tag) {
-        let tags = this.props.tags;
-        tags.push({
-            id: tags.length + 1,
-            text: tag
+    componentWillReceiveProps(nextProps) {
+        let tags = [];
+        nextProps.tags.forEach((tag) => {
+            tags.push({
+                id: tags.length,
+                text: tag
+            });
         });
+        this.setState({tagsWithIds: tags, tagsWithoutIds: nextProps.tags}); // IDs used by React to keep track of individual list items (error if missing)
+    }
+
+    handleAddition(tag) {
+        let tags = this.state.tagsWithoutIds;
+        tags.push(tag);
         this.props.onChange(tags);
     }
 
     handleDrag(tag, currPos, newPos) {
-        let tags = this.props.tags;
+        let tags = this.state.tagsWithoutIds;
 
         // mutate array
         tags.splice(currPos, 1);
@@ -36,7 +45,7 @@ export default class TagEntry extends React.Component {
     }
 
     handleDelete(i) {
-        let tags = this.props.tags;
+        let tags = this.state.tagsWithoutIds;
         tags.splice(i, 1);
         this.props.onChange(tags);
     }
@@ -46,13 +55,12 @@ export default class TagEntry extends React.Component {
             <div>
                 <link href="/css/reactTags.css" type="text/css" rel="stylesheet" />
                 <ReactTags
-                    tags={this.props.tags}
+                    tags={this.state.tagsWithIds}
                     suggestions={this.props.possibleLabels}
                     handleAddition={this.handleAddition}
                     handleDrag={this.handleDrag}
                     handleDelete={this.handleDelete}
                 />
-                {/*<div style="display:none;" id="tag-box" className="tag-box"></div>*/}
             </div>
         )
     }
