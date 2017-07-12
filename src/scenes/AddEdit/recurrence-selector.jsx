@@ -98,13 +98,13 @@ class EndOptions extends React.Component {
     this.occurenceChangedHandler = this.occurenceChangedHandler.bind(this);
     this.state = {
       option : this.props.option,
-      endDate : new Date(),
+      endDate : moment(),
       occurence : String(2)
     }
   }
 
   componentDidMount(){
-    this.state.endDate.setMilliseconds(0);
+    this.state.endDate.milliseconds(0);
   }
 
   radioCheckedHandler(e) {

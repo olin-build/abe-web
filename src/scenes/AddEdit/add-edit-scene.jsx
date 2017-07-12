@@ -78,11 +78,12 @@ export default class AddEditEventScene extends React.Component {
                     data.labels = [];
                 self.setState({eventData: data});
                 if (self.state.eventData.sid){
-                  data.rec_id = moment(data.rec_id);
+                  data.rec_id = moment(data.rec_id);}
                 let seriesData = {};
-                Object.assign(seriesData, data);
-                self.setState({seriesData: seriesData});}
+                seriesData = Object.assign(seriesData, data);
+                self.setState({seriesData: seriesData});
                 self.setState({eventData: data});
+
             }
         });
       }
