@@ -27,10 +27,6 @@ export default class ImportScene extends React.Component {
       this.setState(state);
   }
   submitICS(){
-    for (let i in this.state.labels){
-      let label = this.state.labels[i]
-      this.state.labels[i] = label.text
-    }
     $.ajax({
         url: window.abe_url + '/ics/',
         method: 'POST',
