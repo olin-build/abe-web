@@ -88,7 +88,6 @@ export default class AddEditEventScene extends React.Component {
       }
       else if ('sid' in this.state.eventData){
         let rec_id = new Date(Number(self.state.eventData.rec_id));
-        this.state.eventData.rec_id = rec_id;
         $.ajax({
             url: window.abe_url + '/events/' + self.state.eventData.sid + '/' + rec_id.toJSON(),
             method: 'GET',
@@ -96,6 +95,7 @@ export default class AddEditEventScene extends React.Component {
             success: data => {
                   data.start = new Date(data.start);
                   data.end = new Date(data.end);
+                  data.rec_id = new Date(data.rec_id);
                   data.location = {value: data.location};
                   data = Object.assign(self.state.eventData, data);
                   if (!data.labels)
@@ -181,9 +181,17 @@ export default class AddEditEventScene extends React.Component {
     }
 
     deleteButtonClicked() {
+      var url
+      if (this.state.eventData.id){
+        url =  window.abe_url + '/events/' + this.state.eventData.id
+      }
+      else{
+
+        url = window.abe_url + '/events/' + this.state.eventData.sid + '/' + this.state.eventData.rec_id.toJSON()
+      }
         if (confirm('Are you sure you want to delete this event?')) {
             $.ajax({
-                url: window.abe_url + '/events/' + this.state.eventData.id,
+                url: url,
                 method: 'DELETE',
                 dataType: 'text',
                 contentType: 'text/plain',
