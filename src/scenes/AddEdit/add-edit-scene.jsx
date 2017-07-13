@@ -10,6 +10,7 @@ import MarkdownEditor from '../../components/markdown-editor.jsx';
 import moment from 'moment';
 import deepcopy from 'deepcopy';
 moment.fn.toJSON = function() { return this.format(); };
+moment.fn.toString = function() {return this.format();};
 export default class AddEditEventScene extends React.Component {
 
     constructor(props) {
@@ -72,8 +73,10 @@ export default class AddEditEventScene extends React.Component {
             method: 'GET',
             error: error => alert('Error retrieving event data from server:\n' + error),
             success: data => {
-                data.start = moment(data.start);
-                data.end = moment(data.end);
+                data.start = moment.utc(data.start);
+                data.start = data.start.local();
+                data.end = moment.utc(data.end);
+                data.end = data.end.local();
                 data.location = {value: data.location};
                 data = Object.assign(self.state.eventData, data);
                 if (!data.labels)
@@ -96,9 +99,12 @@ export default class AddEditEventScene extends React.Component {
             method: 'GET',
             error: error => alert('Error retrieving event data from server:\n' + error),
             success: data => {
-                  data.start = moment(data.start);
-                  data.end = moment(data.end);
-                  data.rec_id = moment(data.rec_id);
+                  data.start = moment.utc(data.start);
+                  data.start = data.start.local();
+                  data.end = moment.utc(data.end);
+                  data.end = data.end.local();
+                  data.rec_id = moment.utc(data.rec_id);
+                  data.rec_id = data.rec_id.local();
                   data.location = {value: data.location};
                   data = Object.assign(self.state.eventData, data);
                   if (!data.labels)
@@ -172,8 +178,10 @@ export default class AddEditEventScene extends React.Component {
     }
 
     eventSavedSuccessfully(data) {
-        data.start = moment(data.start);
-        data.end = moment(data.end);
+        data.start = moment.utc(data.start);
+        data.start = data.start.local();
+        data.end = moment.utc(data.end);
+        data.end = data.end.local();
         this.setState({eventData: data});
         this.props.history.push('/edit/'+data.id);
     }
@@ -208,7 +216,6 @@ export default class AddEditEventScene extends React.Component {
         if (!this.state.eventData.id && !this.state.eventData.sid){
           url = window.abe_url + '/events/';
           newEvent = this.state.eventData;
-          newEvent = JSON.stringify(newEvent);
           method = 'POST'
         }
         else{
@@ -218,12 +225,6 @@ export default class AddEditEventScene extends React.Component {
               newEvent[key] = this.state.eventData[key].toString()
             }
           }
-          // if (this.state.eventData.start.isSame(this.state.seriesData.start)){
-          //   delete newEvent.start
-          // }
-          // if (this.state.eventData.end.isSame(this.state.seriesData.end)){
-          //   delete newEvent.end
-          // }
           method = 'PUT'
         }
         if (this.state.eventData.id){
@@ -231,10 +232,10 @@ export default class AddEditEventScene extends React.Component {
         }
         else if (this.state.eventData.sid){
           url = window.abe_url + '/events/' + this.state.eventData.sid;
-          newEvent.sid = this.state.eventData.sid;
-          newEvent.rec_id = this.state.eventData.rec_id.toJSON();
-          newEvent.start = this.state.eventData.start;
-          newEvent.end = this.state.eventData.end;
+          newEvent.sid = this.state.eventData.sid.toString();
+          newEvent.rec_id = this.state.eventData.rec_id.toString();
+          newEvent.start = this.state.eventData.start.toString();
+          newEvent.end = this.state.eventData.end.toString();
           delete newEvent.recurrence;
         }
         $.ajax({
