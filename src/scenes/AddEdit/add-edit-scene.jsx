@@ -105,7 +105,6 @@ export default class AddEditEventScene extends React.Component {
                   data.end = data.end.local();
                   data.rec_id = moment.utc(data.rec_id);
                   data.rec_id = data.rec_id.local();
-                  data.location = {value: data.location};
                   data = Object.assign(self.state.eventData, data);
                   if (!data.labels)
                       {data.labels = [];}
