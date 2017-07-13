@@ -228,7 +228,6 @@ export default class AddEditEventScene extends React.Component {
         }
         else{
           for (let key in this.state.eventData){
-            console.log(this.state.eventData[key])
             if (this.state.eventData[key].toString() != this.state.seriesData[key].toString()){
               newEvent[key] = this.state.eventData[key].toString()
             }
