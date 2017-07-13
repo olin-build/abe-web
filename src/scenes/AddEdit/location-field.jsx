@@ -4,7 +4,14 @@ export default class LocationField extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            building: null,
+            room: null,
+            suffix: null,
+            isOlin: false,
+            value: this.props.location,
+
+        };
 
         this.tryParseLocationInput = this.tryParseLocationInput.bind(this);
         this.textChanged = this.textChanged.bind(this);
@@ -13,8 +20,8 @@ export default class LocationField extends React.Component {
         // Could be done better
         this.O_MATCHES = ['o', 'the o', 'oval', 'the oval'];
         this.LIBRARY_MATCHES = ['library', 'lib', 'l'];
-        this.LIBRARY_UPPER_LEVEL_MATCHES = ['library upper level', 'lu', 'lul'];
-        this.LIBRARY_LOWER_LEVEL_MATCHES = ['library lower level', 'll', 'lll'];
+        this.LIBRARY_UPPER_LEVEL_MATCHES = ['library upper level', 'lu', 'lul', 'library ul'];
+        this.LIBRARY_LOWER_LEVEL_MATCHES = ['library lower level', 'll', 'lll', 'library ll'];
         this.AUDITORIUM_MATCHES = ['auditorium', 'nordatorium', 'nord'];
         this.DINING_HALL_MATCHES = ['dh', 'dining hall'];
         this.DINING_HALL_MEZZANINE_MATCHES = ['dh mezz', 'dhm', 'mezz', 'dining hall mezz', 'dining hall mezzanine', 'cc mezz', 'campus center mezz', 'campus center mezzanine'];
@@ -37,7 +44,16 @@ export default class LocationField extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        this.setState({value: nextProps.value})
+        let value = nextProps.location;
+        let parsed = this.tryParseLocationInput(value);
+        let locationObj = {
+            building: parsed.building,
+            room: parsed.room,
+            suffix: parsed.suffix,
+            isOlin: parsed.isOlin,
+            value: value
+        };
+        this.setState(locationObj);
     }
 
     textChanged() {
@@ -58,7 +74,7 @@ export default class LocationField extends React.Component {
         //     locationField.addClass('is-invalid-input');
         // }
         if (this.props.onChange) {
-            this.props.onChange(locationObj);
+            this.props.onChange(value);
         }
 
     }
@@ -207,13 +223,13 @@ export default class LocationField extends React.Component {
         return (
             <div className="row expanded location-field-container">
                 <div className="location-input-container">
-                    <input id="location" type="text" title="Location" className="wide-text-box single-line-text-box medium-text-box" placeholder="Location" value={this.props.location.value} onChange={this.textChanged}/>
+                    <input id="location" type="text" title="Location" className="wide-text-box single-line-text-box medium-text-box" placeholder="Location" value={this.props.location} onChange={this.textChanged}/>
                     <img src={svgSrc} className="location-indicator-img" />
                 </div>
                 <div className="location-parse-result-container">
-                    <span className="location-label">Building:</span><span className="location-parsed">{this.props.location.building}</span>
-                    <span className="location-label">Room:</span><span className="location-parsed">{this.props.location.room}</span>
-                    <span className="location-label">Suffix:</span><span className="location-parsed">{this.props.location.suffix}</span>
+                    <span className="location-label">Building:</span><span className="location-parsed">{this.state.building}</span>
+                    <span className="location-label">Room:</span><span className="location-parsed">{this.state.room}</span>
+                    <span className="location-label">Suffix:</span><span className="location-parsed">{this.state.suffix}</span>
                 </div>
             </div>
         )

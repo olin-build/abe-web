@@ -77,7 +77,7 @@ export default class AddEditEventScene extends React.Component {
                 data.start = data.start.local();
                 data.end = moment.utc(data.end);
                 data.end = data.end.local();
-                data.location = {value: data.location};
+                data.location = data.location;
                 data = Object.assign(self.state.eventData, data);
                 if (!data.labels)
                     data.labels = [];
@@ -215,7 +215,6 @@ export default class AddEditEventScene extends React.Component {
 
     saveButtonClicked() {
         let data = this.state.eventData;
-        data.location = data.location.value;
         if (data.labels.length === 0)
             data.labels = null;
         var newEvent = new Object

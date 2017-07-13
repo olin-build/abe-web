@@ -56,10 +56,9 @@ export default class CalendarScene extends React.Component {
                 for (let i in events){
                   start = moment(events[i].start);
                   end = moment(events[i].end);
-                  let d = new Date;
-                  let offset = d.getTimezoneOffset();
-                  events[i].start = start.subtract(offset, 'minutes')
-                  events[i].end = end.subtract(offset, 'minutes')}
+                  events[i].start = start
+                  events[i].end = end
+                }
                 self.setState({events: events});
                 self.updateFilters(events);
                 callback(self.getEventsFiltered());
