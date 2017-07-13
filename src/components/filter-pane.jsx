@@ -24,9 +24,11 @@ export default class FilterPane extends React.Component {
         }
       }
       request.activeLabels=request.activeLabels.toString()
+      let url = window.abe_url + '/ics/?labels=' + request.activeLabels
       $.ajax({
-          url: window.abe_url + '/ics/audrey?labels=' + request.activeLabels,
+          url: url,
           method: 'GET',
+          success: alert('Put this link into your calendar application: \n \n'+url),
           error: function( jqXHR, textStatus, errorThrown ){
               alert("Error: " + errorThrown);
           }

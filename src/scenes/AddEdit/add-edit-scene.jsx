@@ -191,9 +191,17 @@ export default class AddEditEventScene extends React.Component {
     }
 
     deleteButtonClicked() {
+      var url
+      if (this.state.eventData.id){
+        url =  window.abe_url + '/events/' + this.state.eventData.id
+      }
+      else{
+
+        url = window.abe_url + '/events/' + this.state.eventData.sid + '/' + this.state.eventData.rec_id.toJSON()
+      }
         if (confirm('Are you sure you want to delete this event?')) {
             $.ajax({
-                url: window.abe_url + '/events/' + this.state.eventData.id,
+                url: url,
                 method: 'DELETE',
                 dataType: 'text',
                 contentType: 'text/plain',
