@@ -25,7 +25,7 @@ export default class CalendarScene extends React.Component {
             events: this.getEvents,
             aspectRatio: 2,
             eventRender: this.renderEvents,
-            eventAfterAllRender: this.renderFinished
+            eventAfterAllRender: this.renderFinished,
         });
 
     }
@@ -53,6 +53,13 @@ export default class CalendarScene extends React.Component {
                 alert('There was an error while fetching events!');
             },
             success: function (events) {
+                for (let i in events){
+                  start = moment(events[i].start);
+                  end = moment(events[i].end);
+                  let d = new Date;
+                  let offset = d.getTimezoneOffset();
+                  events[i].start = start.subtract(offset, 'minutes')
+                  events[i].end = end.subtract(offset, 'minutes')}
                 self.setState({events: events});
                 self.updateFilters(events);
                 callback(self.getEventsFiltered());

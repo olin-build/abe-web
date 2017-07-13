@@ -7,7 +7,10 @@ import EventDateTimeSelector from '../../components/date-time-selector.jsx';
 import EventRecurrenceSelector from './recurrence-selector.jsx';
 import TagEntry from '../../components/tag-entry.jsx';
 import MarkdownEditor from '../../components/markdown-editor.jsx';
-
+import moment from 'moment';
+import deepcopy from 'deepcopy';
+moment.fn.toJSON = function() { return this.format(); };
+moment.fn.toString = function() {return this.format();};
 export default class AddEditEventScene extends React.Component {
 
     constructor(props) {
@@ -27,14 +30,14 @@ export default class AddEditEventScene extends React.Component {
         this.state = {
             eventData: {
                 title: '',
-                start: new Date(),
-                end: new Date(),
+                start: moment(),
+                end: moment(),
                 location: '',
                 description: '',
                 visibility: 'public',
                 labels: [],
-                recurrence: undefined,
             },
+            seriesData: {},
             recurrence: {
               frequency: 'YEARLY',
               interval: '1',
@@ -58,10 +61,10 @@ export default class AddEditEventScene extends React.Component {
     componentDidMount() {
       var days = ["SU","MO","TU","WE","TH","FR","SA"];
       let recurrs = this.state.recurrence;
-      let recurrs_by_day = [days[this.state.eventData.start.getDay()]];
+      let recurrs_by_day = [days[this.state.eventData.start.day()]];
       recurrs = Object.assign(recurrs, {by_day: recurrs_by_day});
-      this.state.eventData.start.setMilliseconds(0);
-      this.state.eventData.end.setMilliseconds(0);
+      this.state.eventData.start.milliseconds(0);
+      this.state.eventData.end.milliseconds(0);
       this.setState({recurrence: recurrs});
       let self = this;
       if ('id' in this.state.eventData) {
@@ -70,39 +73,44 @@ export default class AddEditEventScene extends React.Component {
             method: 'GET',
             error: error => alert('Error retrieving event data from server:\n' + error),
             success: data => {
-                data.start = new Date(data.start);
-                data.end = new Date(data.end);
+                data.start = moment.utc(data.start);
+                data.start = data.start.local();
+                data.end = moment.utc(data.end);
+                data.end = data.end.local();
                 data.location = {value: data.location};
                 data = Object.assign(self.state.eventData, data);
                 if (!data.labels)
                     data.labels = [];
-                self.setState({eventData: data});
                 if (self.state.eventData.sid){
-                  data.rec_id = new Date(data.rec_id);
-                let seriesData = {};
-                Object.assign(seriesData, data);
-                self.setState({seriesData: seriesData});}
+                  data.rec_id = moment(data.rec_id);}
                 self.setState({eventData: data});
+                let seriesData = deepcopy(data);
+                seriesData.start = moment(seriesData.start);
+                seriesData.end = moment(seriesData.end);
+                self.setState({seriesData: seriesData});
             }
         });
       }
       else if ('sid' in this.state.eventData){
-        let rec_id = new Date(Number(self.state.eventData.rec_id));
+        let rec_id = moment(Number(self.state.eventData.rec_id));
+        this.state.eventData.rec_id = rec_id;
         $.ajax({
             url: window.abe_url + '/events/' + self.state.eventData.sid + '/' + rec_id.toJSON(),
             method: 'GET',
             error: error => alert('Error retrieving event data from server:\n' + error),
             success: data => {
-                  data.start = new Date(data.start);
-                  data.end = new Date(data.end);
-                  data.rec_id = new Date(data.rec_id);
+                  data.start = moment.utc(data.start);
+                  data.start = data.start.local();
+                  data.end = moment.utc(data.end);
+                  data.end = data.end.local();
+                  data.rec_id = moment.utc(data.rec_id);
+                  data.rec_id = data.rec_id.local();
                   data.location = {value: data.location};
                   data = Object.assign(self.state.eventData, data);
                   if (!data.labels)
-                      data.labels = [];
+                      {data.labels = [];}
                   self.setState({eventData: data});
-                  let seriesData = {};
-                  Object.assign(seriesData, data);
+                  let seriesData = deepcopy(data);
                   self.setState({seriesData: seriesData});
             }
         });
@@ -135,12 +143,12 @@ export default class AddEditEventScene extends React.Component {
         state.end_option = value.end_option;
         if(value.month_option === 'week' && value.frequency === 'MONTHLY'){
           var days = ["SU","MO","TU","WE","TH","FR","SA"];
-          state.eventData.recurrence.by_day = [days[state.eventData.start.getDay()]];
-          state.eventData.recurrence.by_month_day = undefined;
+          state.eventData.recurrence.by_day = [days[state.eventData.start.day()]];
+          delete state.eventData.recurrence.by_month_day;
         }
         else if(value.month_option === 'month' && value.frequency === 'MONTHLY'){
-          state.eventData.recurrence.by_month_day = String(state.eventData.start.getDate())
-          state.eventData.recurrence.by_day = undefined
+          state.eventData.recurrence.by_month_day = String(state.eventData.start.date())
+          delete state.eventData.recurrence.by_day;
         }
         state = Object.assign(this.state, state);
         this.setState(state);
@@ -149,7 +157,7 @@ export default class AddEditEventScene extends React.Component {
     recurrenceSelected(){
       let data = this.state.eventData;
       if(data.recurrence){
-        data.recurrence = undefined;
+        delete data.recurrence;
       }
       else{
         data.recurrence = this.state.recurrence
@@ -170,8 +178,10 @@ export default class AddEditEventScene extends React.Component {
     }
 
     eventSavedSuccessfully(data) {
-        data.start = new Date(data.start);
-        data.end = new Date(data.end);
+        data.start = moment.utc(data.start);
+        data.start = data.start.local();
+        data.end = moment.utc(data.end);
+        data.end = data.end.local();
         this.setState({eventData: data});
         this.props.history.push('/edit/'+data.id);
     }
@@ -218,8 +228,8 @@ export default class AddEditEventScene extends React.Component {
         }
         else{
           for (let key in this.state.eventData){
-            if (this.state.eventData[key] != this.state.seriesData[key]){
-              newEvent[key] = this.state.eventData[key]
+            if (this.state.eventData[key].toString() != this.state.seriesData[key].toString()){
+              newEvent[key] = this.state.eventData[key].toString()
             }
           }
           method = 'PUT'
@@ -229,11 +239,11 @@ export default class AddEditEventScene extends React.Component {
         }
         else if (this.state.eventData.sid){
           url = window.abe_url + '/events/' + this.state.eventData.sid;
-          newEvent.sid = this.state.eventData.sid;
-          newEvent.rec_id = this.state.eventData.rec_id.toJSON();
-          newEvent.start = this.state.eventData.start;
-          newEvent.end = this.state.eventData.end;
-          newEvent.recurrence = undefined;
+          newEvent.sid = this.state.eventData.sid.toString();
+          newEvent.rec_id = this.state.eventData.rec_id.toString();
+          newEvent.start = this.state.eventData.start.toString();
+          newEvent.end = this.state.eventData.end.toString();
+          delete newEvent.recurrence;
         }
         $.ajax({
             url: url,
@@ -286,9 +296,9 @@ export default class AddEditEventScene extends React.Component {
                         <EventVisibilitySelector visibility={this.state.eventData.visibility} onChange={this.visibilityChanged}/>
                         <TagEntry tags={this.state.eventData.labels} onChange={this.labelsChanged} possibleLabels={this.possibleLabels}/>
                         <SaveCancelButtons onCancel={this.cancelButtonClicked} onDelete={this.deleteButtonClicked} showDelete={'id' in this.state.eventData || 'sid' in this.state.eventData} onSubmit={this.saveButtonClicked} submitButtonText={submitButtonText}/>
-                    </div>
                 </div>
             </div>
+          </div>
         );
     }
 }

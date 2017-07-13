@@ -18,8 +18,10 @@ export default class ViewEventScene extends React.Component {
                 method: 'GET',
                 error: error => alert('Error retrieving event data from server:\n' + error),
                 success: data => {
-                    data.start = moment(data.start);
-                    data.end = moment(data.end);
+                    data.start = moment.utc(data.start);
+                    data.start = data.start.local();
+                    data.end = moment.utc(data.end);
+                    data.end = data.end.local();
                     self.setState({eventData: data});
                 }
             });
@@ -29,14 +31,14 @@ export default class ViewEventScene extends React.Component {
     render() {
         if (this.state.eventData) {
             let oneDay = this.state.eventData.start.diff(this.state.eventData.end, 'days') === 0;
-            let endDateFormat = (oneDay) ? 'h:mm A' : 'ddd, MMM d, YYYY h:mm A';
+            let endDateFormat = (oneDay) ? 'h:mm A' : 'ddd, MMM D, YYYY h:mm A';
             return (
                 <div className="row expanded page-container">
                     <div className="row content-container">
                         <h1 className="page-title">{this.state.eventData.title}</h1>
                         <div className="event-info-container">
                             <div className="event-date-location-container">
-                                <span className="event-start">{this.state.eventData.start.format('ddd, MMM d, YYYY h:mm A')}</span>
+                                <span className="event-start">{this.state.eventData.start.format('ddd, MMM D, YYYY h:mm A')}</span>
                                 &nbsp; to &nbsp;
                                 <span className="event-start">{this.state.eventData.end.format(endDateFormat)}</span><br/>
                                 <span className="event-location">{this.state.eventData.location}</span>

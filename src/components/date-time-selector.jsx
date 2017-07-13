@@ -20,7 +20,7 @@ export default class EventDateTimeSelector extends React.Component {
 
     componentWillReceiveProps(nextProps) {
       this.setState({
-          moment: moment(nextProps.datetime)
+          moment: nextProps.datetime
       });
     }
 
@@ -34,7 +34,7 @@ export default class EventDateTimeSelector extends React.Component {
 
     handleChange(m) {
         this.setState({ moment: m });
-        this.props.onChange(m.toDate());
+        this.props.onChange(m);
     }
 
     handleSave(e) {
