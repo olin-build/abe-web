@@ -53,7 +53,7 @@ export default class TagEntry extends React.Component {
     render() {
         return (
             <div>
-                <link href="/css/reactTags.css" type="text/css" rel="stylesheet" />
+                <link href="/public/css/reactTags.css" type="text/css" rel="stylesheet" />
                 <ReactTags
                     tags={this.state.tagsWithIds}
                     autocomplete={true}
