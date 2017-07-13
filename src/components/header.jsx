@@ -6,7 +6,7 @@ class PageHeaderTitle extends React.Component {
         return (
             <div className="row header-content">
                 <div className="logo-container">
-                    <img className="logo" src="../../assets/olin-logo.png"/>
+                    <img className="logo" src="/public/assets/olin-logo.png"/>
                 </div>
                 <h1>Welcome to ABE!</h1>
             </div>

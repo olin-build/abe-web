@@ -1,7 +1,7 @@
-@import "../node_modules/fullcalendar/dist/fullcalendar.css";
+@import "../../node_modules/fullcalendar/dist/fullcalendar.css";
 @import "../css/jquery.qtip.css";
 @import "../css/foundation.css";
-@import "../node_modules/codemirror/lib/codemirror.css";
+@import "../../node_modules/codemirror/lib/codemirror.css";
 
 /** ----- Begin Global ----- **/
 
