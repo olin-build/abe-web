@@ -156,6 +156,17 @@ textarea.markdown-editor {
     margin: 0.5em;
 }
 
+.location-input-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.location-input-container > img {
+    margin-left: 0.5em;
+    padding: 0.2rem;
+    height: 2.4375rem;
+}
+
 .short-text-box {
     max-width: 10em;
     display: inline-block;
