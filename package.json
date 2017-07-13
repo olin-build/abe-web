@@ -37,6 +37,7 @@
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
     "blacklist": "^1.1.4",
+    "body-parser": "^1.17.2",
     "commonmark-react-renderer": "^4.3.3",
     "css-loader": "^0.28.4",
     "deepcopy": "^0.6.3",
@@ -54,6 +55,7 @@
     "react-markdown": "^2.5.0",
     "react-router-dom": "^4.1.1",
     "react-tag-input": "git+https://github.com/kylecombes/react-tags.git",
+    "serve-static": "^1.12.3",
     "typescript": "^2.4.1",
     "webpack": "^2.6.1"
   },
