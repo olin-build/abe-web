@@ -31,10 +31,10 @@ export default class MarkdownEditor extends React.Component {
 
     render() {
         return (
-            <div className="markdown-editor-container">
-                <textarea onChange={this.updateCode} value={this.props.source}  className="markdown-editor" placeholder="Description (Markdown enabled)"/>
+            <div className="markdown-editor-container row">
+                <textarea onChange={this.updateCode} value={this.props.source}  className="markdown-editor column medium-6" placeholder="Description (Markdown enabled)"/>
                 {/*<CodeMirror className="markdown-editor" value={this.state.source} onChange={this.updateCode} options={this.state.editorOptions} />*/}
-                <Markdown source={this.props.source} className="markdown-preview" />
+                <Markdown source={this.props.source} className="markdown-preview column medium-6" />
             </div>
         )
     }

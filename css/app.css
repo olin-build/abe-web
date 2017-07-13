@@ -98,17 +98,11 @@ header nav li.menu-text:hover a {
 }
 
 .markdown-editor {
-    width: 50%;
-    display: inline-block;
     min-height: 15em;
-    float: left;
 }
 
 .markdown-preview {
-    display: inline-block;
-    width: 50%;
     padding-left: 2em;
-    float: left;
 }
 
 textarea.markdown-editor {

@@ -56,6 +56,8 @@ export default class TagEntry extends React.Component {
                 <link href="/css/reactTags.css" type="text/css" rel="stylesheet" />
                 <ReactTags
                     tags={this.state.tagsWithIds}
+                    autocomplete={true}
+                    restrictTags={true}
                     suggestions={this.props.possibleLabels}
                     handleAddition={this.handleAddition}
                     handleDrag={this.handleDrag}
