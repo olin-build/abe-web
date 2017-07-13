@@ -199,15 +199,15 @@ export default class RecurrenceSelector extends React.Component {
       let state = this.state;
       if (value.option === 'date'){
         state.recurrence.until = value.endDate;
-        state.recurrence.count = undefined;
+        delete state.recurrence.count;
       }
       else if (value.option === 'occurences'){
         state.recurrence.count = value.occurence;
-        state.recurrence.until = undefined;
+        delete state.recurrence.until;
       }
       else{
-        state.recurrence.count = undefined;
-        state.recurrence.until = undefined;
+        delete state.recurrence.count;
+        delete state.recurrence.until;
       }
       state.end_option = value.option;
       this.setState(state, () => {

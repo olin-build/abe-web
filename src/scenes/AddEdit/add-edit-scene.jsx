@@ -8,6 +8,8 @@ import EventRecurrenceSelector from './recurrence-selector.jsx';
 import TagEntry from '../../components/tag-entry.jsx';
 import MarkdownEditor from '../../components/markdown-editor.jsx';
 import moment from 'moment';
+import deepcopy from 'deepcopy';
+moment.fn.toJSON = function() { return this.format(); };
 export default class AddEditEventScene extends React.Component {
 
     constructor(props) {
@@ -33,8 +35,8 @@ export default class AddEditEventScene extends React.Component {
                 description: '',
                 visibility: 'public',
                 labels: [],
-                recurrence: undefined,
             },
+            seriesData: {},
             recurrence: {
               frequency: 'YEARLY',
               interval: '1',
@@ -76,14 +78,13 @@ export default class AddEditEventScene extends React.Component {
                 data = Object.assign(self.state.eventData, data);
                 if (!data.labels)
                     data.labels = [];
-                self.setState({eventData: data});
                 if (self.state.eventData.sid){
                   data.rec_id = moment(data.rec_id);}
-                let seriesData = {};
-                seriesData = Object.assign(seriesData, data);
-                self.setState({seriesData: seriesData});
                 self.setState({eventData: data});
-
+                let seriesData = deepcopy(data);
+                seriesData.start = moment(seriesData.start);
+                seriesData.end = moment(seriesData.end);
+                self.setState({seriesData: seriesData});
             }
         });
       }
@@ -97,13 +98,13 @@ export default class AddEditEventScene extends React.Component {
             success: data => {
                   data.start = moment(data.start);
                   data.end = moment(data.end);
+                  data.rec_id = moment(data.rec_id);
                   data.location = {value: data.location};
                   data = Object.assign(self.state.eventData, data);
                   if (!data.labels)
-                      data.labels = [];
+                      {data.labels = [];}
                   self.setState({eventData: data});
-                  let seriesData = {};
-                  Object.assign(seriesData, data);
+                  let seriesData = deepcopy(data);
                   self.setState({seriesData: seriesData});
             }
         });
@@ -137,11 +138,11 @@ export default class AddEditEventScene extends React.Component {
         if(value.month_option === 'week' && value.frequency === 'MONTHLY'){
           var days = ["SU","MO","TU","WE","TH","FR","SA"];
           state.eventData.recurrence.by_day = [days[state.eventData.start.day()]];
-          state.eventData.recurrence.by_month_day = undefined;
+          delete state.eventData.recurrence.by_month_day;
         }
         else if(value.month_option === 'month' && value.frequency === 'MONTHLY'){
           state.eventData.recurrence.by_month_day = String(state.eventData.start.date())
-          state.eventData.recurrence.by_day = undefined
+          delete state.eventData.recurrence.by_day;
         }
         state = Object.assign(this.state, state);
         this.setState(state);
@@ -150,7 +151,7 @@ export default class AddEditEventScene extends React.Component {
     recurrenceSelected(){
       let data = this.state.eventData;
       if(data.recurrence){
-        data.recurrence = undefined;
+        delete data.recurrence;
       }
       else{
         data.recurrence = this.state.recurrence
@@ -207,14 +208,22 @@ export default class AddEditEventScene extends React.Component {
         if (!this.state.eventData.id && !this.state.eventData.sid){
           url = window.abe_url + '/events/';
           newEvent = this.state.eventData;
+          newEvent = JSON.stringify(newEvent);
           method = 'POST'
         }
         else{
           for (let key in this.state.eventData){
-            if (this.state.eventData[key] != this.state.seriesData[key]){
-              newEvent[key] = this.state.eventData[key]
+            console.log(this.state.eventData[key])
+            if (this.state.eventData[key].toString() != this.state.seriesData[key].toString()){
+              newEvent[key] = this.state.eventData[key].toString()
             }
           }
+          // if (this.state.eventData.start.isSame(this.state.seriesData.start)){
+          //   delete newEvent.start
+          // }
+          // if (this.state.eventData.end.isSame(this.state.seriesData.end)){
+          //   delete newEvent.end
+          // }
           method = 'PUT'
         }
         if (this.state.eventData.id){
@@ -226,7 +235,7 @@ export default class AddEditEventScene extends React.Component {
           newEvent.rec_id = this.state.eventData.rec_id.toJSON();
           newEvent.start = this.state.eventData.start;
           newEvent.end = this.state.eventData.end;
-          newEvent.recurrence = undefined;
+          delete newEvent.recurrence;
         }
         $.ajax({
             url: url,
