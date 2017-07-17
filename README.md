@@ -35,11 +35,7 @@ Once you have Node installed, you can use `npm` to install the necessary package
 
 To launch the Web app, run the following:
 
-    ./node_modules/.bin/webpack -d --watch
-
-And in another Terminal:
-
-    npm run start
+    npm run dev
 
 Then visit [http://localhost:8080](http://localhost:8080) in your browser.
 
