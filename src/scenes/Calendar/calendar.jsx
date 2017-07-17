@@ -54,8 +54,10 @@ export default class CalendarScene extends React.Component {
             },
             success: function (events) {
                 for (let i in events){
-                  start = moment(events[i].start);
-                  end = moment(events[i].end);
+                  start = moment.utc(events[i].start);
+                  start = start.local()
+                  end = moment.utc(events[i].end);
+                  end = end.local()
                   events[i].start = start
                   events[i].end = end
                 }
