@@ -5,17 +5,17 @@ export default class CalendarScene extends React.Component {
 
     constructor(props) {
         super(props);
-
-        this.state = {labels: []};
-
+        this.state = {labels: [],
+          events: [],
+        };
         this.doingLabelRefresh = false;
-
         this.getEvents = this.getEvents.bind(this);
         this.getEventsFromServer = this.getEventsFromServer.bind(this);
         this.updateFilters = this.updateFilters.bind(this);
         this.renderEvents = this.renderEvents.bind(this);
         this.renderFinished = this.renderFinished.bind(this);
         this.labelVisibilityToggled = this.labelVisibilityToggled.bind(this);
+        this.viewRefresh = this.viewRefresh.bind(this);
     }
 
     componentDidMount(){
@@ -26,8 +26,19 @@ export default class CalendarScene extends React.Component {
             aspectRatio: 2,
             eventRender: this.renderEvents,
             eventAfterAllRender: this.renderFinished,
+            viewRender: this.viewRefresh,
+            header: {
+               left:   'title',
+               center: 'month, agendaWeek, agendaDay',
+               right:  'today prev,next'
+           }
         });
 
+    }
+
+    viewRefresh(view, element){
+          this.doingLabelRefresh = false;
+          this.calendar.fullCalendar('refetchEvents');
     }
 
     getEvents(start, end, timezone, callback) {
@@ -61,11 +72,15 @@ export default class CalendarScene extends React.Component {
                   events[i].start = start
                   events[i].end = end
                 }
-                self.setState({events: events});
-                self.updateFilters(events);
-                callback(self.getEventsFiltered());
-            }
-        })
+                self.setState({events: events}, ()=> {
+                  // Call updateFilters after setState finishes
+                  self.updateFilters(events, () => {
+                    // Call getEventsFiltered after the setState call in updateFilters returns
+                    let events = self.getEventsFiltered();
+                    callback(events);
+                })});
+              }
+            })
     }
 
     getEventsFiltered() {
@@ -101,7 +116,7 @@ export default class CalendarScene extends React.Component {
         });
     }
 
-    updateFilters(events) {
+    updateFilters(events, callback) {
         let labels = {};
         for (let i = 0; i < events.length; ++i) {
             let event = events[i];
@@ -111,7 +126,7 @@ export default class CalendarScene extends React.Component {
                 // }
             }
         }
-        this.setState({labels: labels});
+        this.setState({labels: labels}, callback);
     }
 
     renderEvents(event, element) {
