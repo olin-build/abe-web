@@ -77,7 +77,6 @@ export default class AddEditEventScene extends React.Component {
                 data.start = data.start.local();
                 data.end = moment.utc(data.end);
                 data.end = data.end.local();
-                data.location = data.location;
                 data = Object.assign(self.state.eventData, data);
                 if (!data.labels)
                     data.labels = [];
@@ -227,7 +226,7 @@ export default class AddEditEventScene extends React.Component {
         else{
           for (let key in this.state.eventData){
             if (this.state.eventData[key].toString() != this.state.seriesData[key].toString()){
-              newEvent[key] = this.state.eventData[key].toString()
+              newEvent[key] = this.state.eventData[key]
             }
           }
           method = 'PUT'
