@@ -91,10 +91,9 @@ export default class AddEditEventScene extends React.Component {
         });
       }
       else if ('sid' in this.state.eventData){
-        let rec_id = moment(Number(self.state.eventData.rec_id));
-        this.state.eventData.rec_id = rec_id;
+        let rec_id = moment.utc(Number(self.state.eventData.rec_id));
         $.ajax({
-            url: window.abe_url + '/events/' + self.state.eventData.sid + '/' + rec_id.toJSON(),
+            url: window.abe_url + '/events/' + self.state.eventData.sid + '/' + rec_id.toString(),
             method: 'GET',
             error: error => alert('Error retrieving event data from server:\n' + error),
             success: data => {
