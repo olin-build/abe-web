@@ -1,5 +1,5 @@
 import * as React from "react";
-import {browserHistory} from 'react-router-dom';
+import {browserHistory, Redirect} from 'react-router';
 import EventVisibilitySelector from './visibility-selector.jsx';
 import SaveCancelButtons from './save-cancel-buttons.jsx';
 import LocationField from './location-field.jsx';
@@ -44,7 +44,8 @@ export default class AddEditEventScene extends React.Component {
               by_day: '',
             },
             month_option: 'month',
-            end_option: 'forever'
+            end_option: 'forever',
+            redirect: false
         };
 
         this.state['submitButtonText'] = '';
@@ -175,12 +176,11 @@ export default class AddEditEventScene extends React.Component {
     }
 
     eventSavedSuccessfully(data) {
-        data.start = moment.utc(data.start);
-        data.start = data.start.local();
-        data.end = moment.utc(data.end);
-        data.end = data.end.local();
-        this.setState({eventData: data});
-        this.props.history.push('/edit/'+data.id);
+        // data.start = moment.utc(data.start);
+        // data.start = data.start.local();
+        // data.end = moment.utc(data.end);
+        // data.end = data.end.local();
+        this.setState({redirect: true});
     }
 
     cancelButtonClicked() {
@@ -251,7 +251,6 @@ export default class AddEditEventScene extends React.Component {
                 alert("Error: " + errorThrown);
             }
         });
-
     }
 
     visibilityChanged(value) {
@@ -274,10 +273,12 @@ export default class AddEditEventScene extends React.Component {
         let submitButtonText = this.state.eventData.id || this.state.eventData.sid ?  'Update Event' : 'Add Event';
         let recurrence_disable = this.state.eventData.sid ? 'disabled' : null;
         let recurrence = this.state.eventData.recurrence ? <EventRecurrenceSelector reccurs={this.state.eventData.recurrence} month={this.state.month_option} end = {this.state.end_option} onChange={this.recurrenceChanged}/> : null;
+        let redirect = this.state.redirect ? <Redirect to='/'/> : null;
         return (
             <div className="row expanded page-container">
                 <div className="row content-container">
                     <h1 className="page-title">{pageTitle}</h1>
+                    {redirect}
                     <div className="event-info-container">
                         <input id="event-title" type="text" placeholder="Title" className="wide-text-box single-line-text-box medium-text-box" value={this.state.eventData.title} onChange={this.titleChanged}/>
                         <div className="date-time-container">
