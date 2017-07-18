@@ -45,7 +45,7 @@
     "expose-loader": "^0.7.3",
     "fullcalendar": "^3.4.0",
     "http-server": "0.10.0",
-    "input-moment": "^0.3.4",
+    "input-moment": "git+https://github.com/kylecombes/input-moment.git",
     "jquery": "^3.2.1",
     "moment": "^2.18.1",
     "react": "^15.6.1",
