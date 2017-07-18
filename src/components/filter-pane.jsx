@@ -1,4 +1,5 @@
 import * as React from "react";
+import copy from 'copy-to-clipboard';
 
 export default class FilterPane extends React.Component {
 
@@ -14,7 +15,7 @@ export default class FilterPane extends React.Component {
         this.props.labelVisibilityToggled(labelName);
     }
 
-    submitExport(){
+    submitExport(e){
       let request = {
         activeLabels: [],
       }
@@ -25,10 +26,13 @@ export default class FilterPane extends React.Component {
       }
       request.activeLabels=request.activeLabels.toString()
       let url = window.abe_url + '/ics/?labels=' + request.activeLabels
+      copy(url);
       $.ajax({
           url: url,
           method: 'GET',
-          success: alert('Put this link into your calendar application: \n \n'+url),
+          success: function(){
+            alert('This link was automatically copied to your clipboard: \n \n'+url + '\n \nPut it in your calendar application to subscribe to a custom feed.');
+            },
           error: function( jqXHR, textStatus, errorThrown ){
               alert("Error: " + errorThrown);
           }

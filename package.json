@@ -39,6 +39,7 @@
     "blacklist": "^1.1.4",
     "body-parser": "^1.17.2",
     "commonmark-react-renderer": "^4.3.3",
+    "copy-to-clipboard": "^3.0.6",
     "css-loader": "^0.28.4",
     "deepcopy": "^0.6.3",
     "expose": "^0.1.4",
