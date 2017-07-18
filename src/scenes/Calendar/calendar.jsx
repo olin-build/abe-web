@@ -11,11 +11,11 @@ export default class CalendarScene extends React.Component {
         this.doingLabelRefresh = false;
         this.getEvents = this.getEvents.bind(this);
         this.getEventsFromServer = this.getEventsFromServer.bind(this);
-        this.updateFilters = this.updateFilters.bind(this);
         this.renderEvents = this.renderEvents.bind(this);
         this.renderFinished = this.renderFinished.bind(this);
         this.labelVisibilityToggled = this.labelVisibilityToggled.bind(this);
         this.viewRefresh = this.viewRefresh.bind(this);
+        this.setLabels = this.setLabels.bind(this);
     }
 
     componentDidMount(){
@@ -73,12 +73,9 @@ export default class CalendarScene extends React.Component {
                   events[i].end = end
                 }
                 self.setState({events: events}, ()=> {
-                  // Call updateFilters after setState finishes
-                  self.updateFilters(events, () => {
-                    // Call getEventsFiltered after the setState call in updateFilters returns
                     let events = self.getEventsFiltered();
                     callback(events);
-                })});
+                });
               }
             })
     }
@@ -101,14 +98,18 @@ export default class CalendarScene extends React.Component {
     }
 
     isLabelVisible(label) {
-        return this.state.labels[label];
+        if (this.state.labels[label])
+        {return this.state.labels[label].visible;}
+        else{
+          return false
+        }
     }
 
     labelVisibilityToggled(labelName) {
         // Update the label visibility in our state
         let labels = this.state.labels;
-        let currentVisibility = this.state.labels[labelName];
-        labels[labelName] = !currentVisibility;
+        let currentVisibility = this.state.labels[labelName].visible;
+        labels[labelName].visible = !currentVisibility;
         this.setState({labels: labels}, () => {
             // Update the calendar view
             this.doingLabelRefresh = true;
@@ -116,18 +117,6 @@ export default class CalendarScene extends React.Component {
         });
     }
 
-    updateFilters(events, callback) {
-        let labels = {};
-        for (let i = 0; i < events.length; ++i) {
-            let event = events[i];
-            for (let j = 0; j < event.labels.length; ++j) {
-                // if (this.state.labels.indexOf(event.labels[j]) < 0) {
-                    labels[event.labels[j]] = true; // {labelName: isVisible} TODO Don't always default to visible
-                // }
-            }
-        }
-        this.setState({labels: labels}, callback);
-    }
 
     renderEvents(event, element) {
         //add the label to masterLabels if it isn't there when we render
@@ -176,11 +165,20 @@ export default class CalendarScene extends React.Component {
         }
     }
 
+    setLabels(labels){
+      let finalLabels = {};
+      for (let i in labels){
+        let key = labels[i].name;
+        finalLabels[key] = labels[i]
+      }
+      this.setState({labels: finalLabels}, ()=>{this.getEventsFiltered()})
+    }
+
     render(){
         return (
             <div className="row page-container">
                 <div className="columns large-2 large-push-10 filter-pane-container">
-                    <FilterPane labels={this.state.labels} labelVisibilityToggled={this.labelVisibilityToggled}/>
+                    <FilterPane labels={this.state.labels} labelVisibilityToggled={this.labelVisibilityToggled} setLabels={this.setLabels}/>
                 </div>
                 <div id='calendar' className="columns calendar-container large-10 large-pull-2"></div>
             </div>
