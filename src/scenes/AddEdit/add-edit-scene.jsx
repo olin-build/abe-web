@@ -31,7 +31,7 @@ export default class AddEditEventScene extends React.Component {
         this.recurrenceChanged = this.recurrenceChanged.bind(this);
         this.getEventURL = this.getEventURL.bind(this);
         this.getLabels = this.getLabels.bind(this);
-
+        this.allDayChanged = this.allDayChanged.bind(this);
         this.state = this.getInitialState();
 
         // Load the ID(s) for the event
@@ -40,11 +40,12 @@ export default class AddEditEventScene extends React.Component {
         if (this.state.eventData.id || this.state.eventData.sid)
             this.updateEventData();
 
-        this.possibleLabels = [];
         let labels = this.getLabels((labels)=>{
+            let possibleLabels = [];
             for (let i in labels){
-                this.possibleLabels.push(labels[i].name)
+                possibleLabels.push(labels[i].name)
             }
+            this.setState({possibleLabels: possibleLabels})
         })
     }
 
@@ -65,12 +66,14 @@ export default class AddEditEventScene extends React.Component {
                 description: '',
                 visibility: 'public',
                 labels: [],
+                allDay: false,
             },
             seriesData: {},
             recurrence: recurrence,
             month_option: 'month',
             end_option: 'forever',
-            redirect: false
+            redirect: false,
+            possibleLabels: [],
         };
     }
 
@@ -203,6 +206,12 @@ export default class AddEditEventScene extends React.Component {
       this.setState({eventData: data})
     }
 
+    allDayChanged(){
+      let data = this.state.eventData;
+      data.allDay = !data.allDay;
+      this.setState({eventData: data});
+    }
+
     locationChanged(newValue) {
         let data = this.state.eventData;
         data.location = newValue;
@@ -238,8 +247,10 @@ export default class AddEditEventScene extends React.Component {
 
     saveButtonClicked() {
         let data = this.state.eventData;
-        // if (data.labels.length === 0)
-        //     data.labels = null;
+        if (data.allDay){
+          data.start.startOf('day');
+          data.end.endOf('day');
+        }
         var newEvent = new Object
         var url
         var method
@@ -313,8 +324,10 @@ export default class AddEditEventScene extends React.Component {
                     <div className="event-info-container">
                         <input id="event-title" type="text" placeholder="Title" className="wide-text-box single-line-text-box medium-text-box" value={this.state.eventData.title} onChange={this.titleChanged}/>
                         <div className="date-time-container">
-                          <EventDateTimeSelector buttonPrefix="Start: " datetime={this.state.eventData.start} onChange={this.startChanged} />
-                          <EventDateTimeSelector buttonPrefix="End: " datetime={this.state.eventData.end} onChange={this.endChanged}/>
+                          <EventDateTimeSelector buttonPrefix="Start: " datetime={this.state.eventData.start} onChange={this.startChanged} show={this.state.eventData.allDay ? 'date' : 'both'}/>
+                          <EventDateTimeSelector buttonPrefix="End: " datetime={this.state.eventData.end} onChange={this.endChanged} show={this.state.eventData.allDay ? 'date' : 'both'}/>
+                          <input type="checkbox" id='all-day-check' title="All Day" checked={this.state.eventData.allDay} onChange={this.allDayChanged}/>
+                          <label htmlFor="all-day-check">All Day</label>
                           <input type="checkbox" id='repeats-check' title="Repeats?" disabled={recurrence_disable} checked={this.state.eventData.recurrence} onChange={this.recurrenceSelected}/>
                           <label htmlFor="repeats-check">Repeats?</label>
                           {recurrence}
@@ -322,7 +335,7 @@ export default class AddEditEventScene extends React.Component {
                         </div>
                         <MarkdownEditor source={this.state.eventData.description} onChange={this.descriptionChanged} />
                         <EventVisibilitySelector visibility={this.state.eventData.visibility} onChange={this.visibilityChanged}/>
-                        <TagEntry tags={this.state.eventData.labels} onChange={this.labelsChanged} possibleLabels={this.possibleLabels}/>
+                        <TagEntry tags={this.state.eventData.labels} onChange={this.labelsChanged} possibleLabels={this.state.possibleLabels}/>
                         <SaveCancelButtons onCancel={this.cancelButtonClicked} onDelete={this.deleteButtonClicked} showDelete={'id' in this.state.eventData || 'sid' in this.state.eventData} onSubmit={this.saveButtonClicked} submitButtonText={submitButtonText}/>
                 </div>
             </div>
