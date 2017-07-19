@@ -21,12 +21,8 @@ export default class EventVisibilitySelector extends React.Component {
                         <label htmlFor="privacy-public">Public</label>
                     </div>
                     <div className="radio-option">
-                        <input type="radio" id="privacy-olin" name="privacy" value="olin" title="Olin Students, Faculty and Staff Only" checked={this.props.visibility === 'olin'} onChange={this.radioCheckedHandler}/>
-                        <label htmlFor="privacy-olin">Students, Faculty and Staff Only</label>
-                    </div>
-                    <div className="radio-option">
-                        <input type="radio" id="privacy-students" name="privacy" value="students" title="Students Only" checked={this.props.visibility === 'students'} onChange={this.radioCheckedHandler}/>
-                        <label htmlFor="privacy-students">Students</label>
+                        <input type="radio" id="privacy-olin" name="privacy" value="olin" title="Olin Community Only" checked={this.props.visibility === 'olin'} onChange={this.radioCheckedHandler}/>
+                        <label htmlFor="privacy-olin">Olin Community Only</label>
                     </div>
                 </div>
             </div>
