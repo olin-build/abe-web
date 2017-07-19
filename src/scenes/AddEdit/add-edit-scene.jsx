@@ -26,6 +26,7 @@ export default class AddEditEventScene extends React.Component {
         this.saveButtonClicked = this.saveButtonClicked.bind(this);
         this.recurrenceSelected = this.recurrenceSelected.bind(this);
         this.recurrenceChanged = this.recurrenceChanged.bind(this);
+        this.getLabels = this.getLabels.bind(this);
 
         this.state = {
             eventData: {
@@ -47,7 +48,7 @@ export default class AddEditEventScene extends React.Component {
             end_option: 'forever',
             redirect: false
         };
-
+        this.possibleLabels = [];
         this.state['submitButtonText'] = '';
         if ('match' in props && 'id' in props.match.params) {
             this.state.eventData.id = props.match.params.id;
@@ -56,8 +57,13 @@ export default class AddEditEventScene extends React.Component {
           this.state.eventData.sid = props.match.params.sid;
           this.state.eventData.rec_id = props.match.params.rec_id;
         }
-        this.possibleLabels = ['Library', 'OFAC', 'FWOP', 'OARS', 'Robolab', 'StAR', 'PGP', 'Admission', "Candidates' Weekend"];
-    }
+
+        let labels = this.getLabels((labels)=>{
+          for (let i in labels){
+            this.possibleLabels.push(labels[i].name)
+          }
+        })
+      }
 
     componentDidMount() {
       var days = ["SU","MO","TU","WE","TH","FR","SA"];
@@ -113,6 +119,18 @@ export default class AddEditEventScene extends React.Component {
             }
         });
       }
+    }
+
+    getLabels(callback){
+      let self = this
+      $.ajax({
+          url: window.abe_url + '/labels/',
+          method: 'GET',
+          success: callback,
+          error: function( jqXHR, textStatus, errorThrown ){
+              alert("Error: " + errorThrown);
+          }
+      });
     }
 
     titleChanged(e) {
@@ -212,8 +230,8 @@ export default class AddEditEventScene extends React.Component {
 
     saveButtonClicked() {
         let data = this.state.eventData;
-        if (data.labels.length === 0)
-            data.labels = null;
+        // if (data.labels.length === 0)
+        //     data.labels = null;
         var newEvent = new Object
         var url
         var method
@@ -224,7 +242,12 @@ export default class AddEditEventScene extends React.Component {
         }
         else{
           for (let key in this.state.eventData){
-            if (this.state.eventData[key].toString() != this.state.seriesData[key].toString()){
+            if (this.state.seriesData[key]){
+              if (this.state.eventData[key].toString() != this.state.seriesData[key].toString()){
+                newEvent[key] = this.state.eventData[key]
+              }
+            }
+            else{
               newEvent[key] = this.state.eventData[key]
             }
           }
