@@ -7,7 +7,7 @@
 
 input::placeholder,
 textarea::placeholder {
-    color: black;
+    color: #888888;
 }
 
 /** ----- End Global ----- **/
