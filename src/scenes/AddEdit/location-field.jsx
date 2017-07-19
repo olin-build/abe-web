@@ -67,16 +67,13 @@ export default class LocationField extends React.Component {
             isOlin: parsed.isOlin,
             value: value
         };
-        this.setState(locationObj);
-        // if (parsed.isValid) {
-        //     locationField.removeClass('is-invalid-input');
-        // } else {
-        //     locationField.addClass('is-invalid-input');
-        // }
-        if (this.props.onChange) {
+        // this.setState(locationObj, () => {
+        //     if (this.props.onChange) {
+        //         this.props.onChange(this.state.building + this.state.room + this.state.suffix;
+        //     }
+        // });
+        if (this.props.onChange)
             this.props.onChange(value);
-        }
-
     }
 
     tryParseLocationInput(string) {
@@ -201,6 +198,8 @@ export default class LocationField extends React.Component {
                     } else if (this.stringMatches(suffixString, this.SUITE_MATCHES)) {
                         result.suffix = suffixString.toUpperCase();
                     }
+                } else {
+                    result.suffix = null;
                 }
             }
 
@@ -220,11 +219,12 @@ export default class LocationField extends React.Component {
 
     render() {
         let svgSrc = (this.state.isOlin) ? '/assets/olin-o.svg' : '/assets/olin-o-slash.svg';
+        let oTooltip = (this.state.isOlin) ? 'Recognized Olin location' : 'Location not at Olin';
         return (
             <div className="row expanded location-field-container">
                 <div className="location-input-container">
                     <input id="location" type="text" title="Location" className="wide-text-box single-line-text-box medium-text-box" placeholder="Location" value={this.props.location} onChange={this.textChanged}/>
-                    <img src={svgSrc} className="location-indicator-img" />
+                    <img src={svgSrc} className="location-indicator-img" title={oTooltip}/>
                 </div>
                 <div className="location-parse-result-container">
                     <span className="location-label">Building:</span><span className="location-parsed">{this.state.building}</span>

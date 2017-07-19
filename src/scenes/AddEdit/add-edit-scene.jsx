@@ -9,12 +9,15 @@ import TagEntry from '../../components/tag-entry.jsx';
 import MarkdownEditor from '../../components/markdown-editor.jsx';
 import moment from 'moment';
 import deepcopy from 'deepcopy';
+import axios from 'axios';
 moment.fn.toJSON = function() { return this.format(); };
 moment.fn.toString = function() {return this.format();};
+
 export default class AddEditEventScene extends React.Component {
 
     constructor(props) {
         super(props);
+        this.receivedSuccessfulResponse = this.receivedSuccessfulResponse.bind(this);
         this.titleChanged = this.titleChanged.bind(this);
         this.locationChanged = this.locationChanged.bind(this);
         this.startChanged = this.startChanged.bind(this);
@@ -26,99 +29,118 @@ export default class AddEditEventScene extends React.Component {
         this.saveButtonClicked = this.saveButtonClicked.bind(this);
         this.recurrenceSelected = this.recurrenceSelected.bind(this);
         this.recurrenceChanged = this.recurrenceChanged.bind(this);
+        this.getEventURL = this.getEventURL.bind(this);
         this.getLabels = this.getLabels.bind(this);
 
-        this.state = {
+        this.state = this.getInitialState();
+
+        // Load the ID(s) for the event
+        Object.assign(this.state.eventData, this.getIdFromURL(props));
+
+        if (this.state.eventData.id || this.state.eventData.sid)
+            this.updateEventData();
+
+        this.possibleLabels = [];
+        let labels = this.getLabels((labels)=>{
+            for (let i in labels){
+                this.possibleLabels.push(labels[i].name)
+            }
+        })
+    }
+
+    getInitialState() {
+        let defaultStart = moment().minutes(0).milliseconds(0);
+        let defaultEnd = defaultStart.clone().add(1, 'h');
+        let recurrence = {
+            frequency: 'YEARLY',
+            interval: '1',
+            by_day: defaultStart.format('dd').toUpperCase()
+        };
+        return {
             eventData: {
                 title: '',
-                start: moment(),
-                end: moment(),
+                start: defaultStart,
+                end: defaultEnd,
                 location: '',
                 description: '',
                 visibility: 'public',
                 labels: [],
             },
             seriesData: {},
-            recurrence: {
-              frequency: 'YEARLY',
-              interval: '1',
-              by_day: '',
-            },
+            recurrence: recurrence,
             month_option: 'month',
             end_option: 'forever',
             redirect: false
         };
-        this.possibleLabels = [];
-        this.state['submitButtonText'] = '';
+    }
+
+    getIdFromURL(props) {
         if ('match' in props && 'id' in props.match.params) {
-            this.state.eventData.id = props.match.params.id;
+            return {id: props.match.params.id};
         }
         else if('match' in props && 'sid' in props.match.params){
-          this.state.eventData.sid = props.match.params.sid;
-          this.state.eventData.rec_id = props.match.params.rec_id;
+            return {sid: props.match.params.sid, rec_id: props.match.params.rec_id};
+        }
+        return null;
+    }
+
+    componentWillReceiveProps(nextProps) {
+        // Check to see if the ID parameter in the URL has changed
+        let oldId = (this.state.eventData.id) ? this.state.eventData.id : this.state.eventData.sid;
+        let newId = this.getIdFromURL(nextProps);
+        if (oldId !== newId) {
+            // URL has changed
+            if (newId === null) { // New event
+                this.setState(this.getInitialState());
+            } else { // Existing event
+                let eventData = Object.assign(newId, this.state.eventData);
+                this.setState({eventData: eventData}, () => this.updateEventData()); // Set ID and update once state has been set
+            }
+
+        }
+    }
+
+    updateEventData() {
+        // Make the request and register the response handlers
+        axios.get(this.getEventURL()).then(this.receivedSuccessfulResponse).catch(this.requestError);
+    }
+
+    getEventURL() {
+        let id = this.state.eventData.id;
+        let sid = this.state.eventData.sid;
+        let rec_id = moment.utc(Number(this.state.eventData.rec_id)).toString(); // Reformat as ms since UNIX epoch
+
+        return window.abe_url + '/events/' + ((id) ? id.toString() : (sid + '/' + rec_id));
+    }
+
+    receivedSuccessfulResponse(response) {
+        let eventData = response.data;
+
+        // If the labels are null/undefined, create an empty list in our state
+        if (!eventData.labels)
+            eventData.labels = [];
+
+        // Convert start strings (in UTC) to local-time Moment.js objects
+        eventData.start = moment.utc(eventData.start).local();
+        eventData.end = moment.utc(eventData.end).local();
+
+        // Create copy of event data to compare to later to determine changes
+        let seriesData = deepcopy(eventData);
+        // Create copy of Moment objects
+        seriesData.start = moment(seriesData.start).local();
+        seriesData.end = moment(seriesData.end).local();
+
+        if (!eventData.id) { // Recurring event
+            eventData.rec_id = moment.utc(eventData.rec_id).local(); // rec_id is start time
         }
 
-        let labels = this.getLabels((labels)=>{
-          for (let i in labels){
-            this.possibleLabels.push(labels[i].name)
-          }
-        })
-      }
+        this.setState({eventData: eventData, seriesData: seriesData});
+    }
 
-    componentDidMount() {
-      var days = ["SU","MO","TU","WE","TH","FR","SA"];
-      let recurrs = this.state.recurrence;
-      let recurrs_by_day = [days[this.state.eventData.start.day()]];
-      recurrs = Object.assign(recurrs, {by_day: recurrs_by_day});
-      this.state.eventData.start.milliseconds(0);
-      this.state.eventData.end.milliseconds(0);
-      this.setState({recurrence: recurrs});
-      let self = this;
-      if ('id' in this.state.eventData) {
-        $.ajax({
-            url: window.abe_url + '/events/' + self.state.eventData.id,
-            method: 'GET',
-            error: error => alert('Error retrieving event data from server:\n' + error),
-            success: data => {
-                data.start = moment.utc(data.start);
-                data.start = data.start.local();
-                data.end = moment.utc(data.end);
-                data.end = data.end.local();
-                data = Object.assign(self.state.eventData, data);
-                if (!data.labels)
-                    data.labels = [];
-                if (self.state.eventData.sid){
-                  data.rec_id = moment(data.rec_id);}
-                self.setState({eventData: data});
-                let seriesData = deepcopy(data);
-                seriesData.start = moment(seriesData.start);
-                seriesData.end = moment(seriesData.end);
-                self.setState({seriesData: seriesData});
-            }
-        });
-      }
-      else if ('sid' in this.state.eventData){
-        let rec_id = moment.utc(Number(self.state.eventData.rec_id));
-        $.ajax({
-            url: window.abe_url + '/events/' + self.state.eventData.sid + '/' + rec_id.toString(),
-            method: 'GET',
-            error: error => alert('Error retrieving event data from server:\n' + error),
-            success: data => {
-                  data.start = moment.utc(data.start);
-                  data.start = data.start.local();
-                  data.end = moment.utc(data.end);
-                  data.end = data.end.local();
-                  data.rec_id = moment.utc(data.rec_id);
-                  data.rec_id = data.rec_id.local();
-                  data = Object.assign(self.state.eventData, data);
-                  if (!data.labels)
-                      {data.labels = [];}
-                  self.setState({eventData: data});
-                  let seriesData = deepcopy(data);
-                  self.setState({seriesData: seriesData});
-            }
-        });
-      }
+    requestError(error) {
+        console.error('Error making request for event data:');
+        console.error(error);
+        alert('Error: ' + error.message);
     }
 
     getLabels(callback){
@@ -206,25 +228,11 @@ export default class AddEditEventScene extends React.Component {
     }
 
     deleteButtonClicked() {
-      var url
-      if (this.state.eventData.id){
-        url =  window.abe_url + '/events/' + this.state.eventData.id
-      }
-      else{
-
-        url = window.abe_url + '/events/' + this.state.eventData.sid + '/' + this.state.eventData.rec_id.toJSON()
-      }
         if (confirm('Are you sure you want to delete this event?')) {
-            $.ajax({
-                url: url,
-                method: 'DELETE',
-                dataType: 'text',
-                contentType: 'text/plain',
-                success: alert('Event deleted successfully'),
-                error: function( jqXHR, testStatus, errorThrown ){
-                    alert("Error: " + errorThrown)
-                }
-            })
+          axios.delete(this.getEventURL()).then(() => {
+              alert('Event deleted successfully');
+              this.setState({redirect: true});
+          }).catch(this.requestError);
         }
     }
 
