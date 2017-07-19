@@ -22,7 +22,7 @@ export default class FilterPane extends React.Component {
     componentDidMount(){
       let labels = this.getLabels((labels)=>{
         for (let i in labels){
-          labels[i].visible = false
+          labels[i].visible = true
         }
         this.setState({labels: labels});
         this.props.setLabels(labels);
