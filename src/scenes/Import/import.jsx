@@ -8,12 +8,32 @@ export default class ImportScene extends React.Component {
       this.labelsChanged = this.labelsChanged.bind(this);
       this.urlChanged = this.urlChanged.bind(this);
       this.submitICS = this.submitICS.bind(this);
+      this.getLabels = this.getLabels.bind(this);
       this.state = {
         labels : [],
         url : '',
+        possibleLabels: [],
       }
-      this.possibleLabels = ['Library', 'OFAC', 'FWOP', 'OARS', 'Robolab', 'StAR', 'PGP', 'Admission', "Candidates' Weekend"]
+      let possibleLabels = []
+      let labels = this.getLabels((labels)=>{
+        for (let i in labels){
+          possibleLabels.push(labels[i].name)
+        }
+        this.setState({possibleLabels: possibleLabels})
+      })
     }
+
+    getLabels(callback){
+      $.ajax({
+          url: window.abe_url + '/labels/',
+          method: 'GET',
+          success: callback,
+          error: function( jqXHR, textStatus, errorThrown ){
+              alert("Error: " + errorThrown);
+          }
+      });
+    }
+
   labelsChanged(labels) {
       if (this.state) {
           let state = this.state;
@@ -43,7 +63,7 @@ export default class ImportScene extends React.Component {
           <div className="row content-container">
               <h1 className="page-title">Import</h1>
               <input required="required" type="url" placeholder=".../example_calendar.ics" className="wide-text-box single-line-text-box medium-text-box" onChange={this.urlChanged}/>
-              <TagEntry tags={this.state.labels} onChange={this.labelsChanged} possibleLabels={this.possibleLabels}/>
+              <TagEntry tags={this.state.labels} onChange={this.labelsChanged} possibleLabels={this.state.possibleLabels}/>
               <br/>
               <input type="submit" className="button submit" value="Submit" onClick={this.submitICS}/>
           </div>
