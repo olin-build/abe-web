@@ -132,7 +132,10 @@ export default class CalendarScene extends React.Component {
         //     );
         let content = $('<div>').text(event.description);
         let rec_id = event.start.utc().valueOf()
-        if (event.sid)
+        if (event.UID){
+          content.append($('<br>'),$('<a>').attr('href','/view/'+linkSuffix).text('Details'))
+        }
+        else if (event.sid)
           content.append($('<br>'),$('<a>').attr('href','/view/'+linkSuffix).text('Details'),$('<span> | </span>'),$('<a>').attr('href','/edit/'+linkSuffix).text('Edit'),$('<span> | </span>'),$('<a>').attr('href','/edit/'+linkSuffix+'/'+rec_id).text('Edit Occurence'));
         else {
           content.append($('<br>'),$('<a>').attr('href','/view/'+linkSuffix).text('Details'),$('<span> | </span>'),$('<a>').attr('href','/edit/'+linkSuffix).text('Edit'));
