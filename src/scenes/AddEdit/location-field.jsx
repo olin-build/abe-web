@@ -79,7 +79,7 @@ export default class LocationField extends React.Component {
     tryParseLocationInput(string) {
         let result = {isOlin: false, building: null, room: null};
 
-        if (string.length > 0) {
+        if (string && string.length > 0) {
             // We don't care about case
             string = string.toLowerCase();
 
@@ -156,8 +156,6 @@ export default class LocationField extends React.Component {
                 } else if (this.stringMatches(buildingString, this.DINING_HALL_MATCHES)) {
                     result.building = 'CC';
                     result.room = 'dining hall';
-                    result.isOlin = true;
-                    return result;
                 } else if (this.stringMatches(buildingString, this.DINING_HALL_MEZZANINE_MATCHES)) {
                     result.building = 'CC';
                     result.room = 'dining hall';
