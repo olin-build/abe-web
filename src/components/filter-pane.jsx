@@ -77,12 +77,14 @@ export default class FilterPane extends React.Component {
     render() {
         let labelElems = this.state.labelElems;
         return (
-            <div className="row large-collapse filter-pane">
-                <span className="column small-12 filter-pane-title">Filter</span>
-                <div className="column small-12 filter-pane-labels-list">
-                    {labelElems}
+            <div className="sidebar-item filter-pane">
+                <span className="filter-pane-title sidebar-title">Filter</span>
+                <div className="sidebar-item-content">
+                    <div className="filter-pane-labels-list">
+                        {labelElems}
+                    </div>
+                    <button className="button submit" onClick={this.submitExport}>Export ICS</button>
                 </div>
-                <button className="button submit" onClick={this.submitExport}>Export ICS</button>
             </div>
         )
     }

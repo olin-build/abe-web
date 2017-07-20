@@ -47,6 +47,7 @@ export default class AddEditEventScene extends React.Component {
             }
             this.setState({possibleLabels: possibleLabels})
         })
+        this.props.setSidebarContent(null);
     }
 
     getInitialState() {

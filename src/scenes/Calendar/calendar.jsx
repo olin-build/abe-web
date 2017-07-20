@@ -1,13 +1,18 @@
 import * as React from "react";
+import {browserHistory, Redirect} from 'react-router';
 import FilterPane from '../../components/filter-pane.jsx';
+import Sidebar from "../../components/sidebar.jsx";
+import MaterialButton from "../../components/material-button.jsx";
 
 export default class CalendarScene extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {labels: [],
-          events: [],
-          colorSettings: '',
+        this.state = {
+            labels: [],
+            events: [],
+            colorSettings: '',
+            redirectTo: null
         };
         this.doingLabelRefresh = false;
         this.getEvents = this.getEvents.bind(this);
@@ -17,6 +22,10 @@ export default class CalendarScene extends React.Component {
         this.labelVisibilityToggled = this.labelVisibilityToggled.bind(this);
         this.viewRefresh = this.viewRefresh.bind(this);
         this.setLabels = this.setLabels.bind(this);
+        this.addButtonClick = this.addButtonClick.bind(this);
+
+        let labelsPane = <FilterPane labels={this.state.labels} labelVisibilityToggled={this.labelVisibilityToggled} setLabels={this.setLabels}/>
+        this.props.setSidebarContent(labelsPane);
     }
 
     componentDidMount(){
@@ -176,14 +185,19 @@ export default class CalendarScene extends React.Component {
       this.setState({labels: finalLabels, colorSettings : colorSettings}, ()=>{this.getEventsFiltered()})
     }
 
+    addButtonClick() {
+        this.setState({redirectTo: '/edit'});
+    }
+
     render(){
         return (
-            <div className="row page-container">
-              <style type="text/css">{this.state.colorSettings}</style>
-                <div className="columns large-2 large-push-10 filter-pane-container">
-                    <FilterPane labels={this.state.labels} labelVisibilityToggled={this.labelVisibilityToggled} setLabels={this.setLabels}/>
+            <div className="wrapper">
+                {(this.state.redirectTo) ? <Redirect to={this.state.redirectTo}/> : null}
+                <div className="calendar-container">
+                    <style type="text/css">{this.state.colorSettings}</style>
+                    <div id='calendar' className="page-container calendar-container"></div>
+                    <MaterialButton onClick={this.addButtonClick} name="add" className="add-button"/>
                 </div>
-                <div id='calendar' className="columns calendar-container large-10 large-pull-2"></div>
             </div>
         );
     }
