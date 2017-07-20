@@ -1,7 +1,7 @@
 @import "../../node_modules/fullcalendar/dist/fullcalendar.css";
 @import "../css/jquery.qtip.css";
 @import "../css/foundation.css";
-@import "../../node_modules/codemirror/lib/codemirror.css";
+/*@import "../../node_modules/codemirror/lib/codemirror.css";*/
 
 /** ----- Begin Global ----- **/
 
@@ -26,7 +26,7 @@ textarea::placeholder {
 .app-sidebar {
     display: flex;
     flex-direction: column;
-    max-width: 30rem;
+    max-width: 20rem;
     width: 33.3%;
     flex-basis: content;
     background-color: #efefef;
@@ -37,6 +37,16 @@ textarea::placeholder {
 .sidebar-item-content {
     background-color: white;
     padding: 1em;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+
+.sidebar-item-content::-webkit-scrollbar {
+    display: none;
+}
+
+.sidebar-item-content > button:last-child {
+    margin-bottom: 0;
 }
 
 .sidebar-title {
@@ -49,13 +59,13 @@ textarea::placeholder {
     flex-grow: 1;
 }
 
-.sidebar-item-content > button:last-child {
-    margin-bottom: 0;
-}
-
 .sidebar-title,
 .sidebar-item {
     border-bottom: 2px solid #ddd;
+}
+
+.link-pane button {
+    margin: 1rem;
 }
 
 main {
@@ -67,6 +77,8 @@ main {
     display: flex;
     flex-direction: row;
     height: 100%;
+    width: 100%;
+    overflow: scroll;
 }
 
 /** ----- Begin Header ----- **/
@@ -129,7 +141,7 @@ main,
 }
 
 #calendar {
-    padding: 0;
+    padding: 1rem 0 0;
 }
 
 .fc-toolbar.fc-header-toolbar {
@@ -151,7 +163,7 @@ main,
 }
 
 .filter-pane-title {
-    font-size: 150%;
+    font-size: 120%;
     /*margin-bottom: 0.7em;*/
 }
 
@@ -371,8 +383,9 @@ footer {
 }
 
 footer .footer-message {
-    margin: 2rem;
+    margin: 1rem;
     text-align:center;
     color: #9c9c9c;
+    font-size: small;
 }
 /** ----- End Footer ----- **/

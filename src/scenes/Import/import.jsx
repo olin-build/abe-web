@@ -1,6 +1,6 @@
 import * as React from "react";
-import {browserHistory} from 'react-router-dom';
 import TagEntry from '../../components/tag-entry.jsx';
+import SidebarModes from "../../data/sidebar-modes";
 
 export default class ImportScene extends React.Component {
   constructor(props) {
@@ -8,32 +8,15 @@ export default class ImportScene extends React.Component {
       this.labelsChanged = this.labelsChanged.bind(this);
       this.urlChanged = this.urlChanged.bind(this);
       this.submitICS = this.submitICS.bind(this);
-      this.getLabels = this.getLabels.bind(this);
       this.state = {
         labels : [],
-        url : '',
-        possibleLabels: [],
+        url : ''
       }
-      let possibleLabels = []
-      let labels = this.getLabels((labels)=>{
-        for (let i in labels){
-          possibleLabels.push(labels[i].name)
-        }
-        this.setState({possibleLabels: possibleLabels})
-      })
     }
 
-    getLabels(callback){
-      $.ajax({
-          url: window.abe_url + '/labels/',
-          method: 'GET',
-          success: callback,
-          error: function( jqXHR, textStatus, errorThrown ){
-              alert("Error: " + errorThrown);
-          }
-      });
+    componentDidMount() {
+        this.props.setSidebarMode(SidebarModes.VIEW_EVENT);
     }
-
   labelsChanged(labels) {
       if (this.state) {
           let state = this.state;
@@ -63,7 +46,7 @@ export default class ImportScene extends React.Component {
           <div className="row content-container">
               <h1 className="page-title">Import</h1>
               <input required="required" type="url" placeholder=".../example_calendar.ics" className="wide-text-box single-line-text-box medium-text-box" onChange={this.urlChanged}/>
-              <TagEntry tags={this.state.labels} onChange={this.labelsChanged} possibleLabels={this.state.possibleLabels}/>
+              <TagEntry tags={this.state.labels} onChange={this.labelsChanged} possibleLabels={this.props.labels}/>
               <br/>
               <input type="submit" className="button submit" value="Submit" onClick={this.submitICS}/>
           </div>

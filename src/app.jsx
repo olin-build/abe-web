@@ -1,65 +1,54 @@
-import * as React from "react";
-import {render} from 'react-dom';
-import * as fullCalendar from 'fullcalendar/dist/fullcalendar';
-import Sidebar from './components/sidebar.jsx';
-import {BrowserRouter, Switch, Route} from 'react-router-dom';
-// import {UIRouter, UIView, UISref, UISrefActive, pushStateLocationPlugin} from 'ui-router-react';
-import PageHeader from './components/header.jsx';
-import AddEditEventScene from './scenes/AddEdit/add-edit-scene.jsx';
-import ImportScene from './scenes/Import/import.jsx';
-import CalendarScene from './scenes/Calendar/calendar.jsx';
-import ViewEventScene from './scenes/View/view-event-scene.jsx';
-import Footer from "./components/footer.jsx";
-import * as foundation from '../public/js/vendor/foundation.js'
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux'
+import { createLogger } from 'redux-logger'
+import { createStore, applyMiddleware, combineReducers } from 'redux'
+import thunkMiddleware from 'redux-thunk'
+import { Router, Route, IndexRoute, browserHistory, Switch } from 'react-router'
+import createHistory from 'history/createBrowserHistory';
+import { ConnectedRouter, routerReducer, routerMiddleware } from 'react-router-redux'
 
-class App extends React.Component {
-
-    constructor(props) {
-        super(props);
-        this.state = {title: 'ABE | Olin College of Engineering', sidebarContent: null};
-        this.setSidebarContent = this.setSidebarContent.bind(this);
-        this.AppCalendarScene = this.AppCalendarScene.bind(this);
+import CalendarContainer from "./containers/calendar-container";
+import SidebarContainer from "./containers/sidebar-container";
+import AddEditContainer from "./containers/add-edit-container";
+import ViewEventContainer from "./containers/view-container";
+import ImportContainer from "./containers/import-container";
+import * as reducers from './data/reducers';
+import SidebarMode from "./data/sidebar-modes";
+const initialState = {
+    sidebar: {
+        mode: SidebarMode.LOADING
     }
+};
+const history = createHistory();
+const rMiddleware = routerMiddleware(history);
+const loggerMiddleware = createLogger();
+let store = createStore(
+    combineReducers({...reducers, router: routerReducer}),
+    initialState,
+    applyMiddleware(
+        thunkMiddleware, // lets us dispatch() functions
+        loggerMiddleware, // neat middleware that logs actions
+        rMiddleware
+    ));
 
-    setPageTitle(newTitle) {
-        this.setState({title: newTitle + ' | Olin College of Engineering'});
-    }
-
-    setSidebarContent(content) {
-        this.setState({sidebarContent: content});
-    }
-
-    AppCalendarScene(props) {
-        return <CalendarScene setSidebarContent={this.setSidebarContent}/>
-    }
-
-    AppAddEditScene(props) {
-        return <AppEditScene setSidebarContent={this.setSidebarContent}/>
-    }
-
-    render() {
-        return (
-            <div className="app-container">
-                <Sidebar content={this.state.sidebarContent} onSetContent={this.setSidebarContent}/>
+ReactDOM.render(
+    <Provider store={store}>
+        <div className="app-container">
+            <SidebarContainer/>
+            <Router history={history}>
                 <Switch>
-                    <Route exact path='/' component={this.AppCalendarScene}  />
-                    <Route exact path='/edit' component={this.AppAddEditEventScene} />
-                    <Route exact path= '/import' component={ImportScene} />
-                    <Route exact path='/edit/:id' component={AddEditEventScene} />
-                    <Route path= '/edit/:sid/:rec_id' component={AddEditEventScene} />
-                    <Route path='/view/:id' component={ViewEventScene} />
+                    <Route exact path='/' component={CalendarContainer}/>
+                    <Route exact path='/edit' component={AddEditContainer}/>
+                    <Route exact path='/edit/:id' component={AddEditContainer}/>
+                    <Route path='/edit/:sid/:rec_id' component={AddEditContainer}/>
+                    <Route exact path='/import' component={ImportContainer}/>
+                    <Route exact path='/edit/:id' component={AddEditContainer}/>
+                    <Route path='/edit/:sid/:rec_id' component={AddEditContainer}/>
+                    <Route path='/view/:id' component={ViewEventContainer}/>
                 </Switch>
-            </div>
-      );
-    }
-
-}
-
-//$(document).foundation()
-// Good tutorial for routing: https://medium.com/@pshrmn/a-simple-react-router-v4-tutorial-7f23ff27adf
-render(
-    <BrowserRouter>
-        <App/>
-    </BrowserRouter>,
+            </Router>
+        </div>
+    </Provider>,
     document.getElementById('app')
 );

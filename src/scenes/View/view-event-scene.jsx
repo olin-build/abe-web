@@ -2,6 +2,7 @@ import * as React from "react";
 import {browserHistory, Redirect} from 'react-router';
 import moment from "moment";
 import Markdown from 'react-markdown';
+import SidebarModes from "../../data/sidebar-modes";
 
 export default class ViewEventScene extends React.Component {
 
@@ -14,6 +15,7 @@ export default class ViewEventScene extends React.Component {
     }
 
     componentDidMount() {
+        this.props.setSidebarMode(SidebarModes.VIEW_EVENT);
         let self = this;
         if ('id' in this.state) {
             $.ajax({

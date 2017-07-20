@@ -1,7 +1,6 @@
 import * as React from "react";
 import ReactDOM from "react-dom";
 import InputMoment from 'input-moment';
-// require('input-moment/src/less/input-moment.less');
 import moment from 'moment';
 
 export default class EventDateTimeSelector extends React.Component {
@@ -50,10 +49,9 @@ export default class EventDateTimeSelector extends React.Component {
                 <div className="picker-popup-container">
                     <PickerPopup
                         visible={this.state.pickerVisible}
-                        lostFocus={this.lostFocus}
-                        moment={this.state.moment}
                         onChange={this.handleChange}
                         onSave={this.handleSave}
+                        {...this.props}
                     />
                 </div>
             </div>
@@ -101,11 +99,9 @@ class PickerPopup extends React.Component {
         if (this.props.visible) {
             return (
                 <InputMoment
-                    moment={this.props.moment}
-                    onChange={this.props.onChange}
-                    onSave={this.props.onSave}
                     prevMonthIcon="ion-ios-arrow-left" // default
                     nextMonthIcon="ion-ios-arrow-right" // default
+                    {...this.props}
                 />
             )
         } else {
