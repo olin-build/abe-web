@@ -7,6 +7,7 @@ export default class CalendarScene extends React.Component {
         super(props);
         this.state = {labels: [],
           events: [],
+          colorSettings: '',
         };
         this.doingLabelRefresh = false;
         this.getEvents = this.getEvents.bind(this);
@@ -89,7 +90,7 @@ export default class CalendarScene extends React.Component {
             for (let j = 0; j < event.labels.length; ++j) {
                 if (this.isLabelVisible(event.labels[j])) {
                     // This event should be visible
-                    event.color = event.labels[j].color
+                    event.color = this.state.labels[event.labels[j]].color
                     eventsToShow.push(event);
                     break;
                 }
@@ -99,8 +100,9 @@ export default class CalendarScene extends React.Component {
     }
 
     isLabelVisible(label) {
-        if (this.state.labels[label])
-        {return this.state.labels[label].visible;}
+        if (this.state.labels[label]){
+          return this.state.labels[label].default
+        }
         else{
           return false
         }
@@ -109,8 +111,8 @@ export default class CalendarScene extends React.Component {
     labelVisibilityToggled(labelName) {
         // Update the label visibility in our state
         let labels = this.state.labels;
-        let currentVisibility = this.state.labels[labelName].visible;
-        labels[labelName].visible = !currentVisibility;
+        let currentVisibility = this.state.labels[labelName].default;
+        labels[labelName].default = !currentVisibility;
         this.setState({labels: labels}, () => {
             // Update the calendar view
             this.doingLabelRefresh = true;
@@ -165,16 +167,19 @@ export default class CalendarScene extends React.Component {
 
     setLabels(labels){
       let finalLabels = {};
+      let colorSettings = ''
       for (let i in labels){
         let key = labels[i].name;
         finalLabels[key] = labels[i]
+        colorSettings += '.button.' + key + ':not(.selected){background-color: darkgray;}.'+key+',.button.' + key + ':hover,.button.'+key+'.selected{background-color:' + labels[i].color + ';}'
       }
-      this.setState({labels: finalLabels}, ()=>{this.getEventsFiltered()})
+      this.setState({labels: finalLabels, colorSettings : colorSettings}, ()=>{this.getEventsFiltered()})
     }
 
     render(){
         return (
             <div className="row page-container">
+              <style type="text/css">{this.state.colorSettings}</style>
                 <div className="columns large-2 large-push-10 filter-pane-container">
                     <FilterPane labels={this.state.labels} labelVisibilityToggled={this.labelVisibilityToggled} setLabels={this.setLabels}/>
                 </div>

@@ -21,9 +21,6 @@ export default class FilterPane extends React.Component {
 
     componentDidMount(){
       let labels = this.getLabels((labels)=>{
-        for (let i in labels){
-          labels[i].visible = true
-        }
         this.setState({labels: labels});
         this.props.setLabels(labels);
       })
@@ -35,7 +32,7 @@ export default class FilterPane extends React.Component {
       for (let i in nextProps.labels) {
             let label = nextProps.labels[i];
             let name = label.name;
-            let classes = label.visible ? 'button label selected': 'button label';
+            let classes = label.default ? 'button label selected '+ name: 'button label ' + name;
               labelElems.push(<button id={'label-'+name} key={name} type="button" className={classes} onClick={() => this.labelClicked(name)}>{name}</button>);
           }
           this.setState({labelElems : labelElems})
