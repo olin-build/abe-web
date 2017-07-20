@@ -89,6 +89,7 @@ export default class CalendarScene extends React.Component {
             for (let j = 0; j < event.labels.length; ++j) {
                 if (this.isLabelVisible(event.labels[j])) {
                     // This event should be visible
+                    event.color = event.labels[j].color
                     eventsToShow.push(event);
                     break;
                 }
@@ -147,14 +148,8 @@ export default class CalendarScene extends React.Component {
             hide: {event: 'unfocus'}
         });
         //set colors differently based on the label (will change in later iterations)
-        if(event.visibility === "public"){
-            element.css('background-color', 'blue');
-            element.css('border-color', 'blue');
-        }
-        else if(event.visibility === "students"){
-            element.css('background-color','red');
-            //event.rendering = "background"
-        }
+        element.css('background-color', event.color);
+        element.css('border-color', event.color);
         return true; //active;
     }
 
