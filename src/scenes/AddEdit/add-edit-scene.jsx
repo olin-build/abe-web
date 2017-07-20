@@ -55,7 +55,7 @@ export default class AddEditEventScene extends React.Component {
         let recurrence = {
             frequency: 'YEARLY',
             interval: '1',
-            by_day: defaultStart.format('dd').toUpperCase()
+            by_day: [defaultStart.format('dd').toUpperCase()]
         };
         return {
             eventData: {
