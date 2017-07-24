@@ -365,8 +365,19 @@ textarea.markdown-editor {
     background-color: #9f9f9f;
 }
 
+.recurrence-container{
+    margin-bottom: 1em;
+}
+
 /** ----- End Event Add/Edit ----- **/
 
+/** ----- Begin View ----- **/
+
+.event-date-location-container{
+  margin-bottom: 1em;
+}
+
+/** ----- End View ----- **/
 
 /** ----- Begin Footer ----- **/
 
