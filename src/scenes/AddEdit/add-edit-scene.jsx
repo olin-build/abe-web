@@ -166,7 +166,9 @@ export default class AddEditEventScene extends React.Component {
 
     startChanged(value) {
         let data = this.state.eventData;
+        let diff = value.diff(data.start);
         data.start = value;
+        data.end = data.end.add(diff, 'ms');
         data = Object.assign(this.state.eventData, data);
         this.setState({eventData: data});
     }
@@ -315,8 +317,8 @@ export default class AddEditEventScene extends React.Component {
                     <div className="event-info-container">
                         <input id="event-title" type="text" placeholder="Title" className="wide-text-box single-line-text-box medium-text-box" value={this.state.eventData.title} onChange={this.titleChanged}/>
                         <div className="date-time-container">
-                          <EventDateTimeSelector buttonPrefix="Start: " datetime={this.state.eventData.start} onChange={this.startChanged} show={this.state.eventData.allDay ? 'date' : 'both'}/>
-                          <EventDateTimeSelector buttonPrefix="End: " datetime={this.state.eventData.end} onChange={this.endChanged} show={this.state.eventData.allDay ? 'date' : 'both'}/>
+                          <EventDateTimeSelector buttonPrefix="Start: " datetime={moment(this.state.eventData.start)} onChange={this.startChanged} show={this.state.eventData.allDay ? 'date' : 'both'}/>
+                          <EventDateTimeSelector buttonPrefix="End: " datetime={moment(this.state.eventData.end)} onChange={this.endChanged} show={this.state.eventData.allDay ? 'date' : 'both'}/>
                           <input type="checkbox" id='all-day-check' title="All Day" checked={this.state.eventData.allDay} onChange={this.allDayChanged}/>
                           <label htmlFor="all-day-check">All Day</label>
                           <input type="checkbox" id='repeats-check' title="Repeats?" disabled={recurrence_disable} checked={this.state.eventData.recurrence} onChange={this.recurrenceSelected}/>

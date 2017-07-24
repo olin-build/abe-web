@@ -43,7 +43,7 @@ export default class EventDateTimeSelector extends React.Component {
 
     render() {
         let buttonText = (this.props.buttonPrefix) ? this.props.buttonPrefix : '';
-        buttonText += this.state.moment.format('MMM D, YYYY h:mm A');
+        buttonText += (this.props.show == 'date') ? this.state.moment.format('MMM D, YYYY') : this.state.moment.format('MMM D, YYYY h:mm A');
         return (
             <div className="date-time-container">
                 <button className="button" onClick={this.buttonClicked}>{buttonText}</button>
