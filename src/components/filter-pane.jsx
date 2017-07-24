@@ -6,13 +6,12 @@ export default class FilterPane extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-          labels : this.props.labels,
+          labels : props.labels,
           labelElems: []
         };
         this.labelClicked = this.labelClicked.bind(this);
         this.submitExport = this.submitExport.bind(this);
-        this.getLabels = this.getLabels.bind(this);
-
+        this.processLabels = this.processLabels.bind(this);
     }
 
     labelClicked(labelName) {
@@ -20,34 +19,20 @@ export default class FilterPane extends React.Component {
     }
 
     componentDidMount(){
-      let labels = this.getLabels((labels)=>{
-        this.setState({labels: labels});
-        this.props.setLabels(labels);
-      })
-
+        this.props.refreshLabels();
     }
 
     componentWillReceiveProps(nextProps){
-      let labelElems = [];
-      for (let i in nextProps.labels) {
-            let label = nextProps.labels[i];
-            let name = label.name;
-            let classes = label.default ? 'button label selected '+ name: 'button label ' + name;
-              labelElems.push(<button id={'label-'+name} key={name} type="button" className={classes} onClick={() => this.labelClicked(name)}>{name}</button>);
-          }
-          this.setState({labelElems : labelElems})
+        this.processLabels(nextProps.labels);
     }
 
-    getLabels(callback){
-      let self = this
-      $.ajax({
-          url: window.abe_url + '/labels/',
-          method: 'GET',
-          success: callback,
-          error: function( jqXHR, textStatus, errorThrown ){
-              alert("Error: " + errorThrown);
-          }
-      });
+    processLabels(labels) {
+        let labelElems = [];
+        Object.keys(labels).forEach( (name) => {
+            let classes = labels[name].default ? 'button label selected '+ name: 'button label ' + name;
+            labelElems.push(<button id={'label-'+name} key={name} type="button" className={classes} onClick={() => this.labelClicked(name)}>{name}</button>);
+        });
+        this.setState({labelElems : labelElems})
     }
 
     submitExport(e){
@@ -55,7 +40,7 @@ export default class FilterPane extends React.Component {
         activeLabels: [],
       }
       for (let label in this.props.labels){
-        if (this.props.labels[label]){
+        if (this.props.labels[label].default){
           request.activeLabels.push(label)
         }
       }
@@ -77,12 +62,15 @@ export default class FilterPane extends React.Component {
     render() {
         let labelElems = this.state.labelElems;
         return (
-            <div className="row large-collapse filter-pane">
-                <span className="column small-12 filter-pane-title">Filter</span>
-                <div className="column small-12 filter-pane-labels-list">
-                    {labelElems}
+            <div className="sidebar-item filter-pane">
+                <span className="filter-pane-title sidebar-title">Filter</span>
+                <div className="sidebar-item-content">
+                    <div className="filter-pane-labels-list">
+                        {labelElems}
+                    </div>
+                    <button className="button submit" onClick={this.submitExport}>Export ICS</button>
+                    <input type="checkbox" checked={this.state.checked} />
                 </div>
-                <button className="button submit" onClick={this.submitExport}>Export ICS</button>
             </div>
         )
     }

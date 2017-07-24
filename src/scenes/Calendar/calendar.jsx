@@ -1,13 +1,19 @@
 import * as React from "react";
-import FilterPane from '../../components/filter-pane.jsx';
+import {browserHistory, Redirect} from 'react-router';
+import MaterialButton from "../../components/material-button.jsx";
+import SidebarModes from "../../data/sidebar-modes";
+import * as fullCalendar from 'fullcalendar/dist/fullcalendar';
+import * as qtip from '../../../public/js/vendor/jquery.qtip.js'
 
 export default class CalendarScene extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {labels: [],
-          events: [],
-          colorSettings: '',
+        this.state = {
+            labels: [],
+            events: [],
+            colorSettings: '',
+            redirectTo: null
         };
         this.doingLabelRefresh = false;
         this.getEvents = this.getEvents.bind(this);
@@ -17,9 +23,12 @@ export default class CalendarScene extends React.Component {
         this.labelVisibilityToggled = this.labelVisibilityToggled.bind(this);
         this.viewRefresh = this.viewRefresh.bind(this);
         this.setLabels = this.setLabels.bind(this);
+        this.addButtonClick = this.addButtonClick.bind(this);
     }
 
     componentDidMount(){
+        this.props.setSidebarMode(SidebarModes.CALENDAR_VIEW);
+
         this.calendar = $('#calendar');
         this.calendar.fullCalendar({
             weekends: true,
@@ -34,7 +43,10 @@ export default class CalendarScene extends React.Component {
                right:  'today prev,next'
            }
         });
+    }
 
+    componentWillReceiveProps(nextProps) {
+        this.calendar.fullCalendar('refetchEvents');
     }
 
     viewRefresh(view, element){
@@ -90,7 +102,7 @@ export default class CalendarScene extends React.Component {
             for (let j = 0; j < event.labels.length; ++j) {
                 if (this.isLabelVisible(event.labels[j])) {
                     // This event should be visible
-                    event.color = this.state.labels[event.labels[j]].color
+                    event.color = this.props.labels[event.labels[j]].color
                     eventsToShow.push(event);
                     break;
                 }
@@ -100,18 +112,17 @@ export default class CalendarScene extends React.Component {
     }
 
     isLabelVisible(label) {
-        if (this.state.labels[label]){
-          return this.state.labels[label].default
-        }
-        else{
-          return false
+        try {
+            return this.props.labels[label].default === "True" || this.props.labels[label].default === true;
+        } catch (e) {
+            return false;
         }
     }
 
     labelVisibilityToggled(labelName) {
         // Update the label visibility in our state
-        let labels = this.state.labels;
-        let currentVisibility = this.state.labels[labelName].default;
+        let labels = this.props.labels;
+        let currentVisibility = this.props.labels[labelName].default;
         labels[labelName].default = !currentVisibility;
         this.setState({labels: labels}, () => {
             // Update the calendar view
@@ -120,28 +131,31 @@ export default class CalendarScene extends React.Component {
         });
     }
 
+    eventEditClicked = (event) => {
+        let linkSuffix = event.target.getAttribute('linkSuffix');
+        this.props.editEvent(linkSuffix);
+        event.preventDefault();
+    };
+
+    eventViewClicked = (event) => {
+        let linkSuffix = event.target.getAttribute('linkSuffix');
+        this.props.viewEvent(linkSuffix);
+        event.preventDefault();
+    };
 
     renderEvents(event, element) {
         //add the label to masterLabels if it isn't there when we render
         let linkSuffix = (event.id) ? event.id : event.sid;
-        // let content = (
-        //         <div>
-        //             <div className="tooltip-description">{event.description}</div>
-        //             <div className="tooltip-options">
-        //                 <a href={'/view/'+linkSuffix} alt="View event details" title="View event details">Details</a>
-        //                 <a href={'/edit/'+linkSuffix} alt="Edit event details" title="Edit event">Edit</a>
-        //             </div>
-        //         </div>
-        //     );
         let content = $('<div>').text(event.description);
+        content.append($('<br>'));
         let rec_id = event.start.utc().valueOf()
         if (event.UID){
-          content.append($('<br>'),$('<a>').attr('href','/view/'+linkSuffix).text('Details'))
+          content.append($('<a>').attr('linkSuffix', linkSuffix).on('click',this.eventViewClicked).text('Details'))
         }
         else if (event.sid)
-          content.append($('<br>'),$('<a>').attr('href','/view/'+linkSuffix).text('Details'),$('<span> | </span>'),$('<a>').attr('href','/edit/'+linkSuffix).text('Edit'),$('<span> | </span>'),$('<a>').attr('href','/edit/'+linkSuffix+'/'+rec_id).text('Edit Occurence'));
+          content.append($('<a>').attr('linkSuffix', linkSuffix).on('click',this.eventViewClicked).text('Details'),$('<span> | </span>'),$('<a>').attr('linkSuffix', linkSuffix).on('click',this.eventEditClicked).text('Edit'),$('<span> | </span>'),$('<a>').attr('linkSuffix', linkSuffix+'/'+rec_id).on('click',this.eventViewClicked).text('Edit Occurrence'));
         else {
-          content.append($('<br>'),$('<a>').attr('href','/view/'+linkSuffix).text('Details'),$('<span> | </span>'),$('<a>').attr('href','/edit/'+linkSuffix).text('Edit'));
+          content.append($('<a>').attr('linkSuffix', linkSuffix).on('click',this.eventViewClicked).text('Details'),$('<span> | </span>'),$('<a>').attr('linkSuffix', linkSuffix).on('click',this.eventEditClicked).text('Edit'));
         }
         element.qtip({
             content: {
@@ -150,7 +164,7 @@ export default class CalendarScene extends React.Component {
             },
             style: {classes: 'qtip-light'},
             show: 'click',
-            hide: {event: 'unfocus'}
+            hide: {event: 'unfocus click'}
         });
         //set colors differently based on the label (will change in later iterations)
         element.css('background-color', event.color);
@@ -161,7 +175,7 @@ export default class CalendarScene extends React.Component {
 
     renderFinished() {
         if ('onLabelUpdate' in this.props) {
-            this.props.onLabelUpdate(this.state.labels);
+            this.props.onLabelUpdate(this.props.labels);
         }
     }
 
@@ -176,14 +190,24 @@ export default class CalendarScene extends React.Component {
       this.setState({labels: finalLabels, colorSettings : colorSettings}, ()=>{this.getEventsFiltered()})
     }
 
+    addButtonClick() {
+        this.setState({redirectTo: '/edit'});
+    }
+
     render(){
+        let colorSettings = '';
+        for (let i in this.props.labels){
+            let key = this.props.labels[i].name;
+            colorSettings += '.button.' + key + ':not(.selected){background-color: darkgray;}.'+key+',.button.' + key + ':hover,.button.'+key+'.selected{background-color:' + this.props.labels[i].color + ';}'
+        }
         return (
-            <div className="row page-container">
-              <style type="text/css">{this.state.colorSettings}</style>
-                <div className="columns large-2 large-push-10 filter-pane-container">
-                    <FilterPane labels={this.state.labels} labelVisibilityToggled={this.labelVisibilityToggled} setLabels={this.setLabels}/>
+            <div className="wrapper">
+                {(this.state.redirectTo) ? <Redirect to={this.state.redirectTo}/> : null}
+                <div className="calendar-container">
+                    <style type="text/css">{colorSettings}</style>
+                    <div id='calendar' className="page-container calendar-container"></div>
+                    <MaterialButton onClick={this.addButtonClick} name="add" className="add-button"/>
                 </div>
-                <div id='calendar' className="columns calendar-container large-10 large-pull-2"></div>
             </div>
         );
     }

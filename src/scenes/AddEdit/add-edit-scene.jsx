@@ -10,6 +10,7 @@ import MarkdownEditor from '../../components/markdown-editor.jsx';
 import moment from 'moment';
 import deepcopy from 'deepcopy';
 import axios from 'axios';
+import SidebarModes from "../../data/sidebar-modes";
 moment.fn.toJSON = function() { return this.format(); };
 moment.fn.toString = function() {return this.format();};
 
@@ -45,7 +46,7 @@ export default class AddEditEventScene extends React.Component {
             for (let i in labels){
                 possibleLabels.push(labels[i].name)
             }
-            this.setState({possibleLabels: possibleLabels})
+            this.state.possibleLabels = possibleLabels;
         })
     }
 
@@ -75,6 +76,10 @@ export default class AddEditEventScene extends React.Component {
             redirect: false,
             possibleLabels: [],
         };
+    }
+
+    componentDidMount() {
+        this.props.setSidebarMode(SidebarModes.ADD_EDIT_EVENT);
     }
 
     getIdFromURL(props) {

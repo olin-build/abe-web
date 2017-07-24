@@ -1,14 +1,12 @@
 import * as React from "react";
 import {Link} from 'react-router-dom';
+import OlinLogo from 'svg-react-loader?name=Icon!../../assets/olin-logo.svg';
 
-class PageHeaderTitle extends React.Component {
+export class PageHeaderTitle extends React.Component {
     render() {
         return (
-            <div className="row header-content">
-                <div className="logo-container">
-                    <img className="logo" src="/public/assets/olin-logo.png"/>
-                </div>
-                <h1>Welcome to ABE!</h1>
+            <div className="header-content">
+                <OlinLogo className="olin-logo"/>
             </div>
         )
     }
