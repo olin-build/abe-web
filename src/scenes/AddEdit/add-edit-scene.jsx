@@ -182,15 +182,6 @@ export default class AddEditEventScene extends React.Component {
         state.eventData.recurrence = value.recurrence;
         state.month_option = value.month_option;
         state.end_option = value.end_option;
-        // if(value.month_option === 'week' && value.frequency === 'MONTHLY'){
-        //   var days = ["SU","MO","TU","WE","TH","FR","SA"];
-        //   state.eventData.recurrence.by_day = [days[state.eventData.start.day()]];
-        //   delete state.eventData.recurrence.by_month_day;
-        // }
-        // else if(value.month_option === 'month' && value.frequency === 'MONTHLY'){
-        //   state.eventData.recurrence.by_month_day = String(state.eventData.start.date())
-        //   delete state.eventData.recurrence.by_day;
-        // }
         state = Object.assign(this.state, state);
         this.setState(state);
     }

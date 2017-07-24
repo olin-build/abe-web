@@ -37,7 +37,7 @@ export default class ViewEventScene extends React.Component {
             let oneDay = this.state.eventData.start.diff(this.state.eventData.end, 'days') === 0;
             let timeFormat = this.state.eventData.allDay ? '' : ' h:mm A';
             let startDateFormat = 'ddd, MMM D, YYYY' + timeFormat;
-            let endDateFormat = (oneDay) ? timeFormat : 'ddd, MMM D, YYYY' + timeFormat;
+            let endDateFormat = (oneDay) ? timeFormat : ' ddd, MMM D, YYYY' + timeFormat;
             let redirect = this.state.redirect ? <Redirect to={'/edit/'+ this.state.eventData.id}/> : null;
             let edit = this.state.eventData.UID ?  null : <button className="button cancel" onClick={()=>{this.setState({redirect: true})}}>Edit Event</button>;
             let end = this.state.eventData.allDay && oneDay ? null : <span> to<span className="event-start">{this.state.eventData.end.format(endDateFormat)}</span></span>;
@@ -51,10 +51,9 @@ export default class ViewEventScene extends React.Component {
                             <div className="event-date-location-container">
                                 <span className="event-start">{this.state.eventData.start.format(startDateFormat)}</span>
                                 {end}
-                                <br/>
-                                <span className="event-location">{this.state.eventData.location}</span>
+                                {recurrence}
+                                <p className="event-location">{this.state.eventData.location}</p>
                             </div>
-                            {recurrence}
                             <Markdown source={this.state.eventData.description} className="description-container" />
                           {edit}
                         </div>

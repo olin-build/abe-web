@@ -259,7 +259,6 @@ export default class RecurrenceSelector extends React.Component {
               {week_options}
               <EndOptions option={this.state.end_option} onChange={this.endOptionsChanged}/>
               <PlainEnglishRecurrence recurrence={this.state.recurrence} start={this.state.start}/>
-              <br/>
             </div>
         )
     }
