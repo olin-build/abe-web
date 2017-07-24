@@ -2,6 +2,7 @@ import * as React from "react";
 import {browserHistory, Redirect} from 'react-router';
 import moment from "moment";
 import Markdown from 'react-markdown';
+import PlainEnglishRecurrence from '../../components/plain-english-recurrence.jsx'
 
 export default class ViewEventScene extends React.Component {
 
@@ -40,6 +41,7 @@ export default class ViewEventScene extends React.Component {
             let redirect = this.state.redirect ? <Redirect to={'/edit/'+ this.state.eventData.id}/> : null;
             let edit = this.state.eventData.UID ?  null : <button className="button cancel" onClick={()=>{this.setState({redirect: true})}}>Edit Event</button>;
             let end = this.state.eventData.allDay && oneDay ? null : <span> to<span className="event-start">{this.state.eventData.end.format(endDateFormat)}</span></span>;
+            let recurrence = this.state.eventData.recurrence ? <PlainEnglishRecurrence recurrence={this.state.eventData.recurrence} start={this.state.eventData.start}/> : null;
             return (
                 <div className="row expanded page-container">
                     <div className="row content-container">
@@ -52,6 +54,7 @@ export default class ViewEventScene extends React.Component {
                                 <br/>
                                 <span className="event-location">{this.state.eventData.location}</span>
                             </div>
+                            {recurrence}
                             <Markdown source={this.state.eventData.description} className="description-container" />
                           {edit}
                         </div>
