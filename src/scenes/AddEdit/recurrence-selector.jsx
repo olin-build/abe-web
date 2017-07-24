@@ -1,5 +1,6 @@
 import * as React from "react";
 import EventDateTimeSelector from '../../components/date-time-selector.jsx';
+import PlainEnglishRecurrence from '../../components/plain-english-recurrence.jsx'
 
 class MonthOptions extends React.Component {
   constructor(props){
@@ -127,19 +128,21 @@ class EndOptions extends React.Component {
 
 
   render(){
-    let untilDate = this.state.option === 'date' ? <EventDateTimeSelector datetime = {this.state.endDate} onChange = {this.endDateHandler}/> : null;
+    let untilDate = this.state.option === 'date' ? <EventDateTimeSelector datetime = {this.state.endDate} onChange = {this.endDateHandler} show="date"/> : null;
     return(
       <div className="radio-collection-container">
-          <span className="radio-collection-title">until</span>
+          <span className="radio-collection-title">ends</span>
           <div className="radio-collection-options-container">
               <div className="radio-option">
                   <input type="radio" id="end-options-date" name="end-options" value="date" title="date" checked={this.props.option === 'date'} onChange={this.radioCheckedHandler}/>
                   <label htmlFor="end-options-date">date</label>
               </div>
+              {untilDate}
               <div className="radio-option">
                   <input type="radio" id="end-options-occurences" name="end-options" value="occurences" title="occurences" checked={this.props.option === 'occurences'} onChange={this.radioCheckedHandler}/>
-                  <label htmlFor="end-options-occurences">occurences
+                  <label htmlFor="end-options-occurences">
                       <input title="Occurence Number" type='number' min="1" className="single-line-text-box super-short-text-box" placeholder="#" value={this.state.occurence} onChange={this.occurenceChangedHandler}/>
+                      <span> times</span>
                   </label>
               </div>
               <div className="radio-option">
@@ -147,7 +150,7 @@ class EndOptions extends React.Component {
                   <label htmlFor="end-options-forever">forever</label>
               </div>
           </div>
-          {untilDate}
+
       </div>
     )
   }
@@ -163,7 +166,8 @@ export default class RecurrenceSelector extends React.Component {
         this.state = {
           recurrence: this.props.reccurs,
           month_option: this.props.month,
-          end_option: this.props.end
+          end_option: this.props.end,
+          start: this.props.start,
         };
     }
 
@@ -171,6 +175,7 @@ export default class RecurrenceSelector extends React.Component {
       let reccurs = this.state.recurrence;
       if (e.currentTarget.value === 'WEEKLY' && reccurs.by_month_day){
         //reccurs = Object.assign(reccurs, {by_month_day: undefined})
+        reccurs.by_day = [this.state.start.format('dd').toUpperCase()]
         delete reccurs.by_month_day
       }
       reccurs = Object.assign(reccurs, {frequency: e.currentTarget.value})
@@ -190,7 +195,17 @@ export default class RecurrenceSelector extends React.Component {
     }
 
     monthOptionsChanged(value) {
-      this.setState({month_option: value}, () => {
+      let state = this.state
+      if (value === 'month'){
+        state.recurrence.by_month_day = state.start.date().toString()
+        delete state.recurrence.by_day;
+      }
+      else if (value === 'week'){
+        state.recurrence.by_day = [state.start.format('dd').toUpperCase()]
+        delete state.recurrence.by_month_day;
+      }
+      state.month_option = value
+      this.setState(state, () => {
         this.props.onChange(this.state);
       });
     }
@@ -243,6 +258,7 @@ export default class RecurrenceSelector extends React.Component {
               {month_options}
               {week_options}
               <EndOptions option={this.state.end_option} onChange={this.endOptionsChanged}/>
+              <PlainEnglishRecurrence recurrence={this.state.recurrence} start={this.state.start}/>
             </div>
         )
     }

@@ -53,7 +53,7 @@ export default class AddEditEventScene extends React.Component {
         let defaultStart = moment().minutes(0).milliseconds(0);
         let defaultEnd = defaultStart.clone().add(1, 'h');
         let recurrence = {
-            frequency: 'YEARLY',
+            frequency: 'WEEKLY',
             interval: '1',
             by_day: [defaultStart.format('dd').toUpperCase()]
         };
@@ -70,7 +70,7 @@ export default class AddEditEventScene extends React.Component {
             },
             seriesData: {},
             recurrence: recurrence,
-            month_option: 'month',
+            month_option: 'week',
             end_option: 'forever',
             redirect: false,
             possibleLabels: [],
@@ -182,15 +182,6 @@ export default class AddEditEventScene extends React.Component {
         state.eventData.recurrence = value.recurrence;
         state.month_option = value.month_option;
         state.end_option = value.end_option;
-        if(value.month_option === 'week' && value.frequency === 'MONTHLY'){
-          var days = ["SU","MO","TU","WE","TH","FR","SA"];
-          state.eventData.recurrence.by_day = [days[state.eventData.start.day()]];
-          delete state.eventData.recurrence.by_month_day;
-        }
-        else if(value.month_option === 'month' && value.frequency === 'MONTHLY'){
-          state.eventData.recurrence.by_month_day = String(state.eventData.start.date())
-          delete state.eventData.recurrence.by_day;
-        }
         state = Object.assign(this.state, state);
         this.setState(state);
     }
@@ -314,7 +305,7 @@ export default class AddEditEventScene extends React.Component {
         let pageTitle = this.state.eventData.id || this.state.eventData.sid ?  'Edit Event' : 'Add Event';
         let submitButtonText = this.state.eventData.id || this.state.eventData.sid ?  'Update Event' : 'Add Event';
         let recurrence_disable = this.state.eventData.sid ? 'disabled' : null;
-        let recurrence = this.state.eventData.recurrence ? <EventRecurrenceSelector reccurs={this.state.eventData.recurrence} month={this.state.month_option} end = {this.state.end_option} onChange={this.recurrenceChanged}/> : null;
+        let recurrence = this.state.eventData.recurrence ? <EventRecurrenceSelector reccurs={this.state.eventData.recurrence} month={this.state.month_option} start = {this.state.eventData.start} end = {this.state.end_option} onChange={this.recurrenceChanged}/> : null;
         let redirect = this.state.redirect ? <Redirect to='/'/> : null;
         return (
             <div className="row expanded page-container">
