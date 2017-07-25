@@ -251,6 +251,10 @@ export default class AddEditEventScene extends React.Component {
 
     saveButtonClicked() {
         let data = this.state.eventData;
+        if (!data.title){
+          alert('Event Title is required')
+          return
+        }
         if (data.allDay){
           data.start.startOf('day');
           data.end.endOf('day');
