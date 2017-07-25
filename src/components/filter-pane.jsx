@@ -83,14 +83,19 @@ export default class FilterPane extends React.Component {
         for (let key in this.props.labels) {
             colorSettings += '.button.' + key + ':not(.selected){background-color: darkgray;}.'+key+',.button.' + key + ':hover,.button.'+key+'.selected{background-color:' + this.props.labels[key].color + ';}'
         }
+        let header = null;
+        if (this.props.header){
+          let allNone = this.props.header.allNone ? <span className={this.props.header.allNone.class}><a onClick={this.selectAll}>All</a> | <a onClick={this.selectNone}>None</a></span> : null;
+          header = <div className={this.props.header.class}>
+                      {this.props.header.content}
+                      {allNone}
+                    </div>
+        }
         return (
-            <div className="sidebar-item filter-pane">
+            <div>
                 <style type="text/css">{colorSettings}</style>
-                <div className="filter-pane-title sidebar-title">
-                    <span className="sidebar-title-left">Filter</span>
-                    <span className="sidebar-title-right"><a onClick={this.selectAll}>All</a> | <a onClick={this.selectNone}>None</a></span>
-                </div>
-                <div className="sidebar-item-content">
+                {header}
+                <div className={this.props.contentClass}>
                     <div className="filter-pane-labels-list">
                         {this.state.labelElems}
                     </div>
