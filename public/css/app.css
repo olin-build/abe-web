@@ -14,6 +14,10 @@ textarea::placeholder {
     background-color: #009BDF;
 }
 
+.align-right {
+    float: right;
+}
+
 /** ----- End Global ----- **/
 
 .app-container {
@@ -41,22 +45,32 @@ textarea::placeholder {
     overflow-y: scroll;
 }
 
+.sidebar-item-content p {
+    font-size: 0.8em;
+    line-height: 1.3em;
+}
+
 .sidebar-item-content::-webkit-scrollbar {
     display: none;
 }
 
-.sidebar-item-content > button:last-child {
+.sidebar-item-content button:last-child:not(.label) {
     margin-bottom: 0;
 }
 
-.sidebar-title {
-    display: block;
+.sidebar-item-header {
+    display: flex;
     width: 100%;
     padding: 0.5em 1em;
+    font-size: 120%;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .sidebar-title-right {
     float: right;
+    font-size: 80%;
 }
 
 .sidebar-content {
@@ -66,6 +80,11 @@ textarea::placeholder {
 .sidebar-title,
 .sidebar-item {
     border-bottom: 2px solid #ddd;
+}
+
+.link-pane {
+    display: flex;
+    justify-content: space-around;
 }
 
 .link-pane button {
@@ -108,6 +127,10 @@ header nav {
     width: 100%;
     fill: white;
     padding: 0;
+}
+
+.olin-logo:hover {
+    fill: #e1e1e1;
 }
 
 header .title {
@@ -155,19 +178,10 @@ main,
     position: relative;
 }
 
-.filter-pane {
-    /*margin: 2em 0;*/
-}
-
-.filter-pane-labels-list {
+.label-selector-list {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-}
-
-.filter-pane-title {
-    font-size: 120%;
-    /*margin-bottom: 0.7em;*/
 }
 
 .label:not(.selected) {

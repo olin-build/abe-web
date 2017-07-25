@@ -1,9 +1,10 @@
 import React, {Component} from "react";
-import Footer from "./footer.jsx";
-import {PageHeaderTitle} from "./header.jsx";
-import FilterPane from "./filter-pane.jsx";
+import Footer from "../components/footer.jsx";
+import {PageHeaderTitle} from "../components/header.jsx";
+import SidebarItemContainer from "../sidebar/sidebar-item-container.jsx";
+import LabelPane from "../components/label-pane.jsx";
 import LinkPane from "./link-pane.jsx";
-import GenerateICSPane from './generate-ics-pane.jsx';
+import GenerateICSPane from '../components/generate-ics-pane.jsx';
 
 export default class Sidebar extends Component {
 
@@ -15,16 +16,17 @@ export default class Sidebar extends Component {
         }
         if (componentVisibility.FILTER_PANE) {
           let header = {
-            class : 'filter-pane-title sidebar-title',
+            class : 'filter-pane-title sidebar-item-header',
             allNone : {
               class : 'sidebar-title-right'
             },
             content: <span className="sidebar-title-left">Filter</span>,
           }
-            content.push(<div  key="filter" className="sidebar-item filter-pane"><FilterPane header={header} contentClass='sidebar-item-content' {...this.props}/></div>);
+            content.push(<div key="filter" className="sidebar-item filter-pane"><LabelPane header={header} contentClass='sidebar-item-content' {...this.props}/></div>);
         }
         if (componentVisibility.GENERATE_ICS_PANE) {
-            content.push(<GenerateICSPane key="gen-ics" {...this.props}/>);
+            let header = 'Subscribe';
+            content.push(<SidebarItemContainer key="gen-ics" header={header}><GenerateICSPane {...this.props}/></SidebarItemContainer>);
         }
         return (
             <div className="app-sidebar">

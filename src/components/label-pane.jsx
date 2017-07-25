@@ -1,6 +1,6 @@
 import * as React from "react";
 
-export default class FilterPane extends React.Component {
+export default class LabelPane extends React.Component {
 
     constructor(props) {
         super(props);
@@ -72,10 +72,9 @@ export default class FilterPane extends React.Component {
                 <style type="text/css">{colorSettings}</style>
                 {header}
                 <div className={this.props.contentClass}>
-                    <div className="filter-pane-labels-list">
+                    <div className="label-selector-list">
                         {this.state.labelElems}
                     </div>
-                    <input type="checkbox" checked={this.state.checked} />
                 </div>
             </div>
         )

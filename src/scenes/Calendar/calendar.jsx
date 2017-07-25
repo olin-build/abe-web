@@ -1,5 +1,4 @@
 import * as React from "react";
-import MaterialButton from "../../components/material-button.jsx";
 import SidebarModes from "../../data/sidebar-modes";
 import * as fullCalendar from 'fullcalendar/dist/fullcalendar';
 import * as qtip from '../../../public/js/vendor/jquery.qtip.js'
