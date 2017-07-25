@@ -81,7 +81,7 @@ export default class FilterPane extends React.Component {
     render() {
         let colorSettings = '';
         for (let key in this.props.labels) {
-            colorSettings += '.button.' + key + ':not(.selected){background-color: darkgray;}.'+key+',.button.' + key + ':hover,.button.'+key+'.selected{background-color:' + this.props.labels[key].color + ';}'
+            colorSettings += '.button.' +key+',.button.' + key + ':hover,.button.'+key+'.selected{background-color:' + this.props.labels[key].color + ';}'
         }
         return (
             <div className="sidebar-item filter-pane">

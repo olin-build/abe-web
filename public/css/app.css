@@ -170,8 +170,10 @@ main,
     /*margin-bottom: 0.7em;*/
 }
 
-.label:not(.selected) {
-    background-color: darkgray;
+.label:not(.selected):not(:hover) {
+  background-color: transparent;
+  color: black;
+  border-color: darkgray;
 }
 
 .button.label:hover {
@@ -216,7 +218,7 @@ main,
 .m-input-moment .btn-save,
 .m-input-moment .options button.is-active,
 .m-calendar .toolbar button,
-.content-container button:not(.im-btn) {
+.content-container button:not(.im-btn .label) {
     background-color: #009BDF;
 }
 
