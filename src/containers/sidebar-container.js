@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import Sidebar from '../components/sidebar.jsx';
+import Sidebar from '../sidebar/sidebar.jsx';
 import SidebarModes from '../data/sidebar-modes';
 import * as Actions from '../data/actions';
 import { push } from 'react-router-redux';

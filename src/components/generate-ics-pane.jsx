@@ -1,6 +1,4 @@
 import React from 'react';
-import CopyToClipboardIcon from 'svg-react-loader?name=Icon!../../assets/copy-to-clipboard.svg';
-
 
 export default class GenerateICSPane extends React.Component {
 
