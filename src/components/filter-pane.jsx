@@ -1,5 +1,4 @@
 import * as React from "react";
-import copy from 'copy-to-clipboard';
 
 export default class FilterPane extends React.Component {
 

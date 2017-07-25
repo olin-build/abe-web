@@ -3,6 +3,7 @@ import Footer from "./footer.jsx";
 import {PageHeaderTitle} from "./header.jsx";
 import FilterPane from "./filter-pane.jsx";
 import LinkPane from "./link-pane.jsx";
+import GenerateICSPane from './generate-ics-pane.jsx';
 
 export default class Sidebar extends Component {
 
@@ -22,7 +23,9 @@ export default class Sidebar extends Component {
           }
             content.push(<div  key="filter" className="sidebar-item filter-pane"><FilterPane header={header} contentClass='sidebar-item-content' {...this.props}/></div>);
         }
-
+        if (componentVisibility.GENERATE_ICS_PANE) {
+            content.push(<GenerateICSPane key="gen-ics" {...this.props}/>);
+        }
         return (
             <div className="app-sidebar">
                 <PageHeaderTitle homeClicked={this.props.homeClicked} />

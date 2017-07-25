@@ -1,21 +1,32 @@
 import fetch from 'isomorphic-fetch';
 
 export const ActionTypes = {
+    COPY_TO_CLIPBOARD: 'COPY_TO_CLIPBOARD',
     FETCH_EVENTS: 'FETCH_EVENTS',
     DISPLAY_ERROR: 'DISPLAY_ERROR',
+    DISPLAY_MESSAGE: 'DISPLAY_MESSAGE',
     ADD_EVENT: 'ADD_EVENT',
     FETCH_LABELS: 'FETCH_LABELS',
     REQUESTING_LABELS: 'REQUESTING_LABELS',
     SET_LABELS: 'SET_LABELS',
     LABEL_VISIBILITY_TOGGLED: 'LABEL_VISIBILITY_TOGGLED',
+    SET_LABEL_VISIBILITY: 'SET_LABEL_VISIBILITY',
     SET_SIDEBAR_MODE: 'SET_SIDEBAR_MODE',
     SET_SIDEBAR_COMPONENT_VISIBILITY: 'SET_SIDEBAR_COMPONENT_VISIBILITY',
     GENERATE_ICS_FEED: 'GENERATE_ICS_FEED',
     START_REDIRECT: 'START_REDIRECT',
 };
 
-export function displayError(error) {
-    return {type: ActionTypes.DISPLAY_ERROR, error};
+export function displayMessage(message) {
+    return {type: ActionTypes.DISPLAY_MESSAGE, message};
+}
+
+export function displayError(error, message) {
+    return {type: ActionTypes.DISPLAY_ERROR, error, message};
+}
+
+export function copyToClipboard(content) {
+    return {type: ActionTypes.COPY_TO_CLIPBOARD, content};
 }
 
 export function refreshLabels() {
@@ -51,11 +62,24 @@ export function setSidebarMode(mode) {
     return {type: ActionTypes.SET_SIDEBAR_MODE, mode};
 }
 
-// export function addEvent(event) {
-//     // TODO Make sure this is done correctly
-//     browserHistory.push('/edit');
-//     //return {type: ActionTypes.ADD_EVENT, data: event};
-// }
+export function generateICSFeed() {
+    return (dispatch, getState) => {
+        // Get the currently selected labels
+        let labels = Object.values(getState().labels);
+        let params = labels.filter(label => label.default);
+        params = params.map(label => label.name);
+        let url = window.abe_url + '/ics/?labels=' + params.join(',');
+        // Check with the server to make sure we've generated a valid feed URL
+        return fetch(url)
+            .then(() => {
+                // Copy the URL to the user's clipboard
+                dispatch(copyToClipboard(url));
+                dispatch(displayMessage('Your custom feed URL has automatically been copied to your clipboard. Paste it in your calendar application.\n\nYou will automatically receive new events matching your filter.'));
+            }).catch((error) => {
+                dispatch(displayError(error, 'Sorry, there was an error generating an ICS feed.'));
+            });
+    }
+}
 
 export function refreshEvents(start, end) {
     return (dispatch) => {
@@ -71,10 +95,6 @@ export function refreshEvents(start, end) {
 
 export function refreshingEvents() {
     return {type: ActionTypes.REQUESTING_LABELS};
-}
-
-export function generateICSFeed() {
-    return {type: ActionTypes.GENERATE_ICS_FEED}
 }
 
 export function startRedirect(url) {

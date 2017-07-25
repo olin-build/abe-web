@@ -1,6 +1,23 @@
-import { combineReducers } from 'redux';
 import { ActionTypes } from './actions';
 import SidebarModes from '../data/sidebar-modes';
+import copy from 'copy-to-clipboard';
+
+export function general(state = {}, action) {
+    switch (action.type) {
+        case ActionTypes.COPY_TO_CLIPBOARD:
+            copy(action.content);
+            return state;
+        case ActionTypes.DISPLAY_MESSAGE:
+            alert(action.message);
+            return state;
+        case ActionTypes.DISPLAY_ERROR:
+            alert((action.message) ? action.message : action.error);
+            console.error(action.error);
+            return state;
+        default:
+            return state;
+    }
+}
 
 export function events(state = [], action) {
     switch (action.type) {
@@ -32,7 +49,12 @@ export function labels(state = {}, action) {
             newState[action.labelName].default = !newState[action.labelName].default;
             return newState;
         case ActionTypes.SET_LABEL_VISIBILITY:
-            return action.mode;
+            // TODO Test this
+            return Object.assign({}, state, {
+                [action.labelName]: Object.assign({}, state[action.labelName], {
+                    default: action.visible
+                })
+            });
         default:
             return state
     }
