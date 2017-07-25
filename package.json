@@ -46,12 +46,10 @@
     "deepcopy": "^0.6.3",
     "expose": "^0.1.4",
     "expose-loader": "^0.7.3",
-    "flux": "^3.1.2",
     "express": "^4.15.3",
+    "flux": "^3.1.2",
     "fullcalendar": "^3.4.0",
-    "history": "^4.6.3",
     "http-server": "0.10.0",
-    "immutable": "^3.8.1",
     "input-moment": "git+https://github.com/kylecombes/input-moment.git",
     "isomorphic-fetch": "latest",
     "jquery": "^3.2.1",
@@ -70,13 +68,12 @@
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.2.0",
     "serve-static": "^1.12.3",
+    "svg-react-loader": "^0.4.4",
     "typescript": "^2.4.1",
     "webpack": "^2.6.1"
   },
   "devDependencies": {
-    "babel-plugin-transform-object-rest-spread": "^6.23.0",
     "redux-devtools": "^3.4.0",
-    "svg-react-loader": "^0.4.4",
     "webpack-dev-server": "^2.5.0"
   }
 }
