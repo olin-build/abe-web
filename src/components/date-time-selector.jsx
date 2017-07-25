@@ -49,9 +49,10 @@ export default class EventDateTimeSelector extends React.Component {
                 <div className="picker-popup-container">
                     <PickerPopup
                         visible={this.state.pickerVisible}
+                        lostFocus={this.lostFocus}
+                        moment={this.state.moment}
                         onChange={this.handleChange}
                         onSave={this.handleSave}
-                        {...this.props}
                     />
                 </div>
             </div>
