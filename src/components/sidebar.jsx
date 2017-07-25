@@ -17,7 +17,7 @@ export default class Sidebar extends Component {
         }
         return (
             <div className="app-sidebar">
-                <PageHeaderTitle/>
+                <PageHeaderTitle homeClicked={this.props.homeClicked} />
                 <div className="sidebar-content">
                     {content}
                 </div>

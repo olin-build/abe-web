@@ -32,7 +32,7 @@ export default class CalendarScene extends React.Component {
            }
         });
     }
-    
+
     componentDidUpdate() {
         this.refreshViewFromCache();
     }

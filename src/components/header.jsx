@@ -6,7 +6,7 @@ export class PageHeaderTitle extends React.Component {
     render() {
         return (
             <div className="header-content">
-                <OlinLogo className="olin-logo"/>
+                <a onClick={this.props.homeClicked} alt="Home" title="Home"><OlinLogo className="olin-logo"/></a>
             </div>
         )
     }

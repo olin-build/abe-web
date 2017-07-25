@@ -34,6 +34,9 @@ const mapDispatchToProps = dispatch => {
         labelVisibilityToggled: (labelName) => {
             dispatch(Actions.labelVisibilityToggled(labelName));
         },
+        homeClicked: () => {
+            dispatch(push('/'));
+        },
         addEvent: () => {
             dispatch(push('/edit'));
         },

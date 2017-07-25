@@ -88,7 +88,7 @@ header nav {
 }
 
 .header-content {
-    /*padding: 2em;*/
+    padding: 2em;
     text-align: center;
     background-color: #009BDF;
     flex-basis: content;
@@ -102,9 +102,8 @@ header nav {
 
 .olin-logo {
     width: 100%;
-    padding: 2rem 2rem 0;
     fill: white;
-    padding: 2rem;
+    padding: 0;
 }
 
 header .title {
