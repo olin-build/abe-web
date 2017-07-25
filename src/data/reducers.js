@@ -23,7 +23,7 @@ export function sidebar(state = SidebarModes.LOADING, action) {
     }
 }
 
-export function labels(state = {raw: [], markedUp: []}, action) {
+export function labels(state = {}, action) {
     switch (action.type) {
         case ActionTypes.SET_LABELS:
             return action.data;

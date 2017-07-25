@@ -6,7 +6,6 @@ export default class FilterPane extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-          labels : props.labels,
           labelElems: []
         };
         this.labelClicked = this.labelClicked.bind(this);
@@ -60,13 +59,17 @@ export default class FilterPane extends React.Component {
     }
 
     render() {
-        let labelElems = this.state.labelElems;
+        let colorSettings = '';
+        for (let key in this.props.labels) {
+            colorSettings += '.button.' + key + ':not(.selected){background-color: darkgray;}.'+key+',.button.' + key + ':hover,.button.'+key+'.selected{background-color:' + this.props.labels[key].color + ';}'
+        }
         return (
             <div className="sidebar-item filter-pane">
+                <style type="text/css">{colorSettings}</style>
                 <span className="filter-pane-title sidebar-title">Filter</span>
                 <div className="sidebar-item-content">
                     <div className="filter-pane-labels-list">
-                        {labelElems}
+                        {this.state.labelElems}
                     </div>
                     <button className="button submit" onClick={this.submitExport}>Export ICS</button>
                     <input type="checkbox" checked={this.state.checked} />
