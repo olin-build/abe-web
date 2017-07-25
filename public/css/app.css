@@ -55,6 +55,10 @@ textarea::placeholder {
     padding: 0.5em 1em;
 }
 
+.sidebar-title-right {
+    float: right;
+}
+
 .sidebar-content {
     flex-grow: 1;
 }

@@ -12,6 +12,8 @@ export default class FilterPane extends React.Component {
         this.labelClicked = this.labelClicked.bind(this);
         this.submitExport = this.submitExport.bind(this);
         this.processLabels = this.processLabels.bind(this);
+        this.selectAll = this.selectAll.bind(this);
+        this.selectNone = this.selectNone.bind(this);
     }
 
     labelClicked(labelName) {
@@ -33,6 +35,24 @@ export default class FilterPane extends React.Component {
             labelElems.push(<button id={'label-'+name} key={name} type="button" className={classes} onClick={() => this.labelClicked(name)}>{name}</button>);
         });
         this.setState({labelElems : labelElems})
+    }
+
+    selectAll(){
+      let labels = this.props.labels;
+      for (let label in labels){
+        if (labels[label].default == false){
+          this.props.labelVisibilityToggled(labels[label].name)
+        }
+      }
+    }
+
+    selectNone(){
+      let labels = this.props.labels;
+      for (let label in labels){
+        if (labels[label].default == true){
+          this.props.labelVisibilityToggled(labels[label].name)
+        }
+      }
     }
 
     submitExport(e){
@@ -63,7 +83,10 @@ export default class FilterPane extends React.Component {
         let labelElems = this.state.labelElems;
         return (
             <div className="sidebar-item filter-pane">
-                <span className="filter-pane-title sidebar-title">Filter</span>
+                <div className="filter-pane-title sidebar-title">Filter
+                  <span className="sidebar-title-right"><a onClick={this.selectAll}>All</a> | <a onClick={this.selectNone}>None</a></span>
+                  </div>
+
                 <div className="sidebar-item-content">
                     <div className="filter-pane-labels-list">
                         {labelElems}
