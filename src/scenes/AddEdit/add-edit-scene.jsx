@@ -7,6 +7,7 @@ import EventDateTimeSelector from '../../components/date-time-selector.jsx';
 import EventRecurrenceSelector from './recurrence-selector.jsx';
 import TagEntry from '../../components/tag-entry.jsx';
 import MarkdownEditor from '../../components/markdown-editor.jsx';
+import FilterPane from '../../components/filter-pane.jsx'
 import moment from 'moment';
 import deepcopy from 'deepcopy';
 import axios from 'axios';
@@ -41,13 +42,7 @@ export default class AddEditEventScene extends React.Component {
         if (this.state.eventData.id || this.state.eventData.sid)
             this.updateEventData();
 
-        let labels = this.getLabels((labels)=>{
-            let possibleLabels = [];
-            for (let i in labels){
-                possibleLabels.push(labels[i].name)
-            }
-            this.state.possibleLabels = possibleLabels;
-        })
+
     }
 
     getInitialState() {
@@ -58,6 +53,7 @@ export default class AddEditEventScene extends React.Component {
             interval: '1',
             by_day: [defaultStart.format('dd').toUpperCase()]
         };
+
         return {
             eventData: {
                 title: '',
@@ -74,12 +70,22 @@ export default class AddEditEventScene extends React.Component {
             month_option: 'week',
             end_option: 'forever',
             redirect: false,
-            possibleLabels: [],
+            possibleLabels: {},
         };
     }
 
     componentDidMount() {
         this.props.setSidebarMode(SidebarModes.ADD_EDIT_EVENT);
+        let possibleLabels = {};
+        let labels = this.getLabels((labels)=>{
+            for (let i in labels){
+                let label = labels[i];
+                label.default = false;
+                possibleLabels[label.name] = label
+            }
+            this.setState({possibleLabels : possibleLabels})
+          });
+
     }
 
     getIdFromURL(props) {
@@ -300,11 +306,18 @@ export default class AddEditEventScene extends React.Component {
         this.setState({eventData: data});
     }
 
-    labelsChanged(labels) {
+    labelsChanged(label) {
         if (this.state) {
-            let data = this.state.eventData;
-            data.labels = labels;
-            this.setState({eventData: data});
+            let state = this.state;
+            state.possibleLabels[label].default = !state.possibleLabels[label].default
+            let i = state.eventData.labels.indexOf(label)
+            if (i > -1){
+              state.eventData.labels.splice(i, 1)
+            }
+            else{
+              state.eventData.labels.push(label)
+            }
+            this.setState(state);
         }
     }
 
@@ -333,7 +346,7 @@ export default class AddEditEventScene extends React.Component {
                         </div>
                         <MarkdownEditor source={this.state.eventData.description} onChange={this.descriptionChanged} />
                         <EventVisibilitySelector visibility={this.state.eventData.visibility} onChange={this.visibilityChanged}/>
-                        <TagEntry tags={this.state.eventData.labels} onChange={this.labelsChanged} possibleLabels={this.state.possibleLabels}/>
+                        <FilterPane contentClass='add-edit-filters' labelVisibilityToggled={this.labelsChanged} labels={this.state.possibleLabels}/>
                         <SaveCancelButtons onCancel={this.cancelButtonClicked} onDelete={this.deleteButtonClicked} showDelete={'id' in this.state.eventData || 'sid' in this.state.eventData} onSubmit={this.saveButtonClicked} disabled={'UID' in this.state.eventData} submitButtonText={submitButtonText}/>
                 </div>
             </div>
@@ -341,3 +354,5 @@ export default class AddEditEventScene extends React.Component {
         );
     }
 }
+
+//<TagEntry tags={this.state.eventData.labels} onChange={this.labelsChanged} possibleLabels={this.state.possibleLabels}/>

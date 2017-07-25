@@ -9,7 +9,6 @@ export default class FilterPane extends React.Component {
           labelElems: []
         };
         this.labelClicked = this.labelClicked.bind(this);
-        this.submitExport = this.submitExport.bind(this);
         this.processLabels = this.processLabels.bind(this);
         this.selectAll = this.selectAll.bind(this);
         this.selectNone = this.selectNone.bind(this);
@@ -20,7 +19,8 @@ export default class FilterPane extends React.Component {
     }
 
     componentDidMount(){
-        this.props.refreshLabels();
+      if (this.props.refreshLabels)
+        {this.props.refreshLabels();}
     }
 
     componentWillReceiveProps(nextProps){
@@ -54,29 +54,6 @@ export default class FilterPane extends React.Component {
       }
     }
 
-    submitExport(e){
-      let request = {
-        activeLabels: [],
-      }
-      for (let label in this.props.labels){
-        if (this.props.labels[label].default){
-          request.activeLabels.push(label)
-        }
-      }
-      request.activeLabels=request.activeLabels.toString()
-      let url = window.abe_url + '/ics/?labels=' + request.activeLabels
-      copy(url);
-      $.ajax({
-          url: url,
-          method: 'GET',
-          success: function(){
-            alert('This link was automatically copied to your clipboard: \n \n'+url + '\n \nPut it in your calendar application to subscribe to a custom feed.');
-            },
-          error: function( jqXHR, textStatus, errorThrown ){
-              alert("Error: " + errorThrown);
-          }
-      });
-    }
 
     render() {
         let colorSettings = '';
@@ -99,7 +76,6 @@ export default class FilterPane extends React.Component {
                     <div className="filter-pane-labels-list">
                         {this.state.labelElems}
                     </div>
-                    <button className="button submit" onClick={this.submitExport}>Export ICS</button>
                     <input type="checkbox" checked={this.state.checked} />
                 </div>
             </div>
