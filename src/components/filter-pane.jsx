@@ -9,7 +9,6 @@ export default class FilterPane extends React.Component {
           labelElems: []
         };
         this.labelClicked = this.labelClicked.bind(this);
-        this.submitExport = this.submitExport.bind(this);
         this.processLabels = this.processLabels.bind(this);
         this.selectAll = this.selectAll.bind(this);
         this.selectNone = this.selectNone.bind(this);
@@ -20,7 +19,8 @@ export default class FilterPane extends React.Component {
     }
 
     componentDidMount(){
-        this.props.refreshLabels();
+      if (this.props.refreshLabels)
+        {this.props.refreshLabels();}
     }
 
     componentWillReceiveProps(nextProps){
@@ -54,47 +54,28 @@ export default class FilterPane extends React.Component {
       }
     }
 
-    submitExport(e){
-      let request = {
-        activeLabels: [],
-      }
-      for (let label in this.props.labels){
-        if (this.props.labels[label].default){
-          request.activeLabels.push(label)
-        }
-      }
-      request.activeLabels=request.activeLabels.toString()
-      let url = window.abe_url + '/ics/?labels=' + request.activeLabels
-      copy(url);
-      $.ajax({
-          url: url,
-          method: 'GET',
-          success: function(){
-            alert('This link was automatically copied to your clipboard: \n \n'+url + '\n \nPut it in your calendar application to subscribe to a custom feed.');
-            },
-          error: function( jqXHR, textStatus, errorThrown ){
-              alert("Error: " + errorThrown);
-          }
-      });
-    }
 
     render() {
         let colorSettings = '';
         for (let key in this.props.labels) {
             colorSettings += '.button.' + key + ':not(.selected){background-color: darkgray;}.'+key+',.button.' + key + ':hover,.button.'+key+'.selected{background-color:' + this.props.labels[key].color + ';}'
         }
+        let header = null;
+        if (this.props.header){
+          let allNone = this.props.header.allNone ? <span className={this.props.header.allNone.class}><a onClick={this.selectAll}>All</a> | <a onClick={this.selectNone}>None</a></span> : null;
+          header = <div className={this.props.header.class}>
+                      {this.props.header.content}
+                      {allNone}
+                    </div>
+        }
         return (
-            <div className="sidebar-item filter-pane">
+            <div>
                 <style type="text/css">{colorSettings}</style>
-                <div className="filter-pane-title sidebar-title">
-                    <span className="sidebar-title-left">Filter</span>
-                    <span className="sidebar-title-right"><a onClick={this.selectAll}>All</a> | <a onClick={this.selectNone}>None</a></span>
-                </div>
-                <div className="sidebar-item-content">
+                {header}
+                <div className={this.props.contentClass}>
                     <div className="filter-pane-labels-list">
                         {this.state.labelElems}
                     </div>
-                    <button className="button submit" onClick={this.submitExport}>Export ICS</button>
                     <input type="checkbox" checked={this.state.checked} />
                 </div>
             </div>

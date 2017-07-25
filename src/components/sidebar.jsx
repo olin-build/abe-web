@@ -13,8 +13,16 @@ export default class Sidebar extends Component {
             content.push(<LinkPane addEventClicked={this.props.addEvent} importICSClicked={this.props.importICSClicked} key="link" className="sidebar-item"/>)
         }
         if (componentVisibility.FILTER_PANE) {
-            content.push(<FilterPane key="filter" {...this.props}/>);
+          let header = {
+            class : 'filter-pane-title sidebar-title',
+            allNone : {
+              class : 'sidebar-title-right'
+            },
+            content: <span className="sidebar-title-left">Filter</span>,
+          }
+            content.push(<div  key="filter" className="sidebar-item filter-pane"><FilterPane header={header} contentClass='sidebar-item-content' {...this.props}/></div>);
         }
+
         return (
             <div className="app-sidebar">
                 <PageHeaderTitle homeClicked={this.props.homeClicked} />
