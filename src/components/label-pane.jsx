@@ -30,7 +30,7 @@ export default class LabelPane extends React.Component {
         let labelElems = [];
         Object.keys(labels).forEach( (name) => {
             let classes = labels[name].default ? 'button label selected '+ name: 'button label ' + name;
-            labelElems.push(<button id={'label-'+name} key={name} type="button" className={classes} onClick={() => this.labelClicked(name)}>{name}</button>);
+            labelElems.push(<button id={'label-'+name} key={name} title={labels[name].description} type="button" className={classes} onClick={() => this.labelClicked(name)}>{name}</button>);
         });
         this.setState({labelElems : labelElems})
     }
