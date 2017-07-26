@@ -154,7 +154,11 @@ export default class CalendarScene extends React.Component {
             },
             style: {classes: 'qtip-light'},
             show: 'click',
-            hide: {event: 'unfocus click'}
+            hide: {event: 'unfocus click'},
+            position: {
+              my: 'top left',
+              at: 'bottom left'
+            }
         });
         //set colors differently based on the label (will change in later iterations)
         element.css('background-color', event.color);
