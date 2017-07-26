@@ -39,18 +39,20 @@ ReactDOM.render(
     <Provider store={store}>
         <div className="app-container">
             <SidebarContainer/>
-            <Router history={history}>
-                <Switch>
-                    <Route exact path='/' component={CalendarContainer}/>
-                    <Route exact path='/edit' component={AddEditContainer}/>
-                    <Route exact path='/edit/:id' component={AddEditContainer}/>
-                    <Route path='/edit/:sid/:rec_id' component={AddEditContainer}/>
-                    <Route exact path='/import' component={ImportContainer}/>
-                    <Route exact path='/edit/:id' component={AddEditContainer}/>
-                    <Route path='/edit/:sid/:rec_id' component={AddEditContainer}/>
-                    <Route path='/view/:id' component={ViewEventContainer}/>
-                </Switch>
-            </Router>
+            <div className="scene-container">
+                <Router history={history}>
+                    <Switch>
+                        <Route exact path='/' component={CalendarContainer}/>
+                        <Route exact path='/edit' component={AddEditContainer}/>
+                        <Route exact path='/edit/:id' component={AddEditContainer}/>
+                        <Route path='/edit/:sid/:rec_id' component={AddEditContainer}/>
+                        <Route exact path='/import' component={ImportContainer}/>
+                        <Route exact path='/edit/:id' component={AddEditContainer}/>
+                        <Route path='/edit/:sid/:rec_id' component={AddEditContainer}/>
+                        <Route path='/view/:id' component={ViewEventContainer}/>
+                    </Switch>
+                </Router>
+            </div>
         </div>
     </Provider>,
     document.getElementById('app')

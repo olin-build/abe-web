@@ -167,11 +167,9 @@ export default class CalendarScene extends React.Component {
 
     render(){
         return (
-            <div className="wrapper">
-                <div className="calendar-container">
-                    <div style={{display: 'none'}}>{Object.values(this.props.labels).map(label => label.name)}</div>
-                    <div id='calendar' className="page-container calendar-container"></div>
-                </div>
+            <div className="calendar-container">
+                <div style={{display: 'none'}}>{Object.values(this.props.labels).map(label => label.name)}</div>
+                <div id='calendar' className="page-container calendar-container"></div>
             </div>
         );
     }
