@@ -15,6 +15,7 @@ export const ActionTypes = {
     SET_SIDEBAR_COMPONENT_VISIBILITY: 'SET_SIDEBAR_COMPONENT_VISIBILITY',
     GENERATE_ICS_FEED: 'GENERATE_ICS_FEED',
     START_REDIRECT: 'START_REDIRECT',
+    SET_MARKDOWN_GUIDE_VISIBILITY: 'SET_MARKDOWN_GUIDE_VISIBILITY',
 };
 
 export function displayMessage(message) {
@@ -97,6 +98,6 @@ export function refreshingEvents() {
     return {type: ActionTypes.REQUESTING_LABELS};
 }
 
-export function startRedirect(url) {
-    return {type: ActionTypes.START_REDIRECT, url};
+export function setMarkdownGuideVisibility(visible) {
+    return {type: ActionTypes.SET_MARKDOWN_GUIDE_VISIBILITY, visible};
 }

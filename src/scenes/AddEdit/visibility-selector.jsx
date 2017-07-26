@@ -13,7 +13,7 @@ export default class EventVisibilitySelector extends React.Component {
 
     render() {
         return (
-            <div className="radio-collection-container">
+            <div className={"radio-collection-container "+this.props.className}>
                 <span className="radio-collection-title">Visibility</span>
                 <div className="radio-collection-options-container">
                     <div className="radio-option">
