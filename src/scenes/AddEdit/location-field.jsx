@@ -22,7 +22,7 @@ export default class LocationField extends React.Component {
         this.LIBRARY_MATCHES = ['library', 'lib', 'l'];
         this.LIBRARY_UPPER_LEVEL_MATCHES = ['library upper level', 'lu', 'lul', 'library ul'];
         this.LIBRARY_LOWER_LEVEL_MATCHES = ['library lower level', 'll', 'lll', 'library ll'];
-        this.AUDITORIUM_MATCHES = ['auditorium', 'nordatorium', 'nord'];
+        this.AUDITORIUM_MATCHES = ['auditorium', 'nordatorium', 'nord', 'mh auditorium', 'milas hall auditorium', 'milas auditorium', 'mh nord', 'mh nordatorium'];
         this.DINING_HALL_MATCHES = ['dh', 'dining hall'];
         this.DINING_HALL_MEZZANINE_MATCHES = ['dh mezz', 'dhm', 'mezz', 'dining hall mezz', 'dining hall mezzanine', 'cc mezz', 'campus center mezz', 'campus center mezzanine'];
         this.MILAS_HALL_MEZZANINE_MATCHES = ['mh mezz', 'mhm', 'milas mezz', 'milas hall mezz', 'milas hall mezz', 'milas hall mezzanine'];
