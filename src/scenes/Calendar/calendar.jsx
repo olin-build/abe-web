@@ -37,7 +37,6 @@ export default class CalendarScene extends React.Component {
     }
 
     getEvents = (start, end, timezone, callback) => {
-        console.log('getEvents called...');
         // Hack to prevent a server query when toggling visibility of labels
         if (this.doingLabelRefresh) {
             this.doingLabelRefresh = false;
@@ -77,7 +76,7 @@ export default class CalendarScene extends React.Component {
     };
 
     getEventsFiltered = () => {
-        console.debug('getEventsFiltered called... Number of events: ' + this.state.events.length + ', number of labels: ' + this.props.labels.length);
+        console.debug('getEventsFiltered called... Number of events: ' + this.state.events.length + ', number of labels: ' + Object.keys(this.props.labels).length);
         let eventsToShow = [];
         // For each event
         for (let i = 0; i < this.state.events.length; ++i) {
@@ -92,6 +91,7 @@ export default class CalendarScene extends React.Component {
                 }
             }
         }
+        console.debug('Returning ' + eventsToShow.length + ' events to FullCalendar');;
         return eventsToShow;
     };
 
@@ -165,6 +165,7 @@ export default class CalendarScene extends React.Component {
         return (
             <div className="wrapper">
                 <div className="calendar-container">
+                    <div style={{display: 'none'}}>{Object.values(this.props.labels).map(label => label.name)}</div>
                     <div id='calendar' className="page-container calendar-container"></div>
                 </div>
             </div>
