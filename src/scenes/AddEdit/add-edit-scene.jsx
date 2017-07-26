@@ -38,10 +38,10 @@ export default class AddEditEventScene extends React.Component {
 
         // Load the ID(s) for the event
         Object.assign(this.state.eventData, this.getIdFromURL(props));
-
-        if (this.state.eventData.id || this.state.eventData.sid)
-            this.updateEventData();
-
+        //
+        // if (this.state.eventData.id || this.state.eventData.sid)
+        //     this.updateEventData();
+        //
 
     }
 
@@ -76,16 +76,30 @@ export default class AddEditEventScene extends React.Component {
 
     componentDidMount() {
         this.props.setSidebarMode(SidebarModes.ADD_EDIT_EVENT);
+
+        let getEventDataPromise = (this.state.eventData.id || this.state.eventData.sid) ? this.updateEventData() : null;
+
         let possibleLabels = {};
-        let labels = this.getLabels((labels)=>{
+        let response = this.getLabels().then((response)=>{
+            let labels = response.data
             for (let i in labels){
                 let label = labels[i];
                 label.default = false;
                 possibleLabels[label.name] = label
             }
-            this.setState({possibleLabels : possibleLabels})
+            this.setState({possibleLabels : possibleLabels}, () => {
+              if (getEventDataPromise){
+                getEventDataPromise.then(()=>{
+                  let state = this.state;
+                  for (let i in state.eventData.labels){
+                      let name = state.eventData.labels[i]
+                      if (name in state.possibleLabels){
+                        state.possibleLabels[name].default = true}
+                      };
+                  this.setState(state);
+              })}
+            })
           });
-
     }
 
     getIdFromURL(props) {
@@ -116,7 +130,7 @@ export default class AddEditEventScene extends React.Component {
 
     updateEventData() {
         // Make the request and register the response handlers
-        axios.get(this.getEventURL()).then(this.receivedSuccessfulResponse).catch(this.requestError);
+        return axios.get(this.getEventURL()).then(this.receivedSuccessfulResponse).catch(this.requestError);
     }
 
     getEventURL() {
@@ -157,16 +171,8 @@ export default class AddEditEventScene extends React.Component {
         alert('Error: ' + error.message);
     }
 
-    getLabels(callback){
-      let self = this
-      $.ajax({
-          url: window.abe_url + '/labels/',
-          method: 'GET',
-          success: callback,
-          error: function( jqXHR, textStatus, errorThrown ){
-              alert("Error: " + errorThrown);
-          }
-      });
+    getLabels = () => {
+      return axios.get(window.abe_url + '/labels/');
     }
 
     titleChanged(e) {
@@ -338,8 +344,8 @@ export default class AddEditEventScene extends React.Component {
                 <div className="event-info-container">
                     <input id="event-title" type="text" placeholder="Title" className="wide-text-box single-line-text-box medium-text-box" value={this.state.eventData.title} onChange={this.titleChanged}/>
                     <div className="date-time-container">
-                      <EventDateTimeSelector buttonPrefix="Start: " datetime={this.state.eventData.start} onChange={this.startChanged} show={this.state.eventData.allDay ? 'date' : 'both'}/>
-                      <EventDateTimeSelector buttonPrefix="End: " datetime={this.state.eventData.end} onChange={this.endChanged} show={this.state.eventData.allDay ? 'date' : 'both'}/>
+                      <EventDateTimeSelector buttonPrefix="Start: " datetime={moment(this.state.eventData.start)} onChange={this.startChanged} show={this.state.eventData.allDay ? 'date' : 'both'}/>
+                      <EventDateTimeSelector buttonPrefix="End: " datetime={moment(this.state.eventData.end)} onChange={this.endChanged} show={this.state.eventData.allDay ? 'date' : 'both'}/>
                       <input type="checkbox" id='all-day-check' title="All Day" checked={this.state.eventData.allDay} onChange={this.allDayChanged}/>
                       <label htmlFor="all-day-check">All Day</label>
                       <input type="checkbox" id='repeats-check' title="Repeats?" disabled={recurrence_disable} checked={this.state.eventData.recurrence} onChange={this.recurrenceSelected}/>
