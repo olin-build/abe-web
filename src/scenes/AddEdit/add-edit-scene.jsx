@@ -352,7 +352,7 @@ export default class AddEditEventScene extends React.Component {
                           {recurrence}
                           <LocationField location={this.state.eventData.location} onChange={this.locationChanged}/>
                         </div>
-                        <MarkdownEditor source={this.state.eventData.description} onChange={this.descriptionChanged} />
+                        <MarkdownEditor source={this.state.eventData.description} onChange={this.descriptionChanged} setMarkdownGuideVisibility={this.props.setMarkdownGuideVisibility} markdownGuideVisible={this.props.markdownGuideVisible} />
                         <EventVisibilitySelector visibility={this.state.eventData.visibility} onChange={this.visibilityChanged}/>
                         <LabelPane contentClass='add-edit-filters' labelVisibilityToggled={this.labelsChanged} labels={this.state.possibleLabels}/>
                         <SaveCancelButtons onCancel={this.cancelButtonClicked} onDelete={this.deleteButtonClicked} showDelete={'id' in this.state.eventData || 'sid' in this.state.eventData} onSubmit={this.saveButtonClicked} disabled={'UID' in this.state.eventData} submitButtonText={submitButtonText}/>

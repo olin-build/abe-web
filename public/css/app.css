@@ -18,6 +18,14 @@ textarea::placeholder {
     float: right;
 }
 
+.italic {
+    font-style: italic;
+}
+
+.bold {
+    font-weight: bold;
+}
+
 /** ----- End Global ----- **/
 
 .app-container {
@@ -238,7 +246,12 @@ main,
 
 .markdown-editor-container {
     overflow: auto;
-    margin-top: 1em;
+    margin: 1em 0;
+}
+
+.markdown-editor-editor-preview-container {
+    display: block;
+    overflow: auto;
 }
 
 .markdown-editor {
@@ -251,6 +264,38 @@ main,
 
 textarea.markdown-editor {
     resize: vertical;
+}
+
+.markdown-guide {
+    overflow: auto;
+    background-color: #efefef;
+    width: 100%;
+}
+
+.markdown-guide-title {
+    margin: 0.8em 0.8em 0;
+    display: block;
+    color: gray;
+    font-family: 'Courier New', Arial, sans-serif;
+}
+
+.markdown-guide-section-container {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.markdown-guide-section {
+    padding: 0.5em 1em;
+    max-width: 30%;
+}
+
+.markdown-guide-section-title {
+    display: inline-block;
+    font-size: large;
+    font-weight: bold;
+    margin-bottom: 0.5em;
+    border-bottom: 1px solid lightgray;
 }
 
 /** --- Begin Date/Time Selector --- **/

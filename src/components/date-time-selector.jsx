@@ -53,6 +53,7 @@ export default class EventDateTimeSelector extends React.Component {
                         moment={this.state.moment}
                         onChange={this.handleChange}
                         onSave={this.handleSave}
+                        show={this.props.show}
                     />
                 </div>
             </div>

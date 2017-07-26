@@ -17,7 +17,10 @@ import * as reducers from './data/reducers';
 import SidebarMode from "./data/sidebar-modes";
 const initialState = {
     sidebar: {
-        mode: SidebarMode.LOADING
+        mode: SidebarMode.LOADING,
+    },
+    addEdit: {
+        markdownGuideVisible: true,
     }
 };
 const history = createHistory();

@@ -31,6 +31,17 @@ export function events(state = [], action) {
     }
 }
 
+export function addEdit(state = {}, action) {
+    switch (action.type) {
+        case ActionTypes.SET_MARKDOWN_GUIDE_VISIBILITY:
+            return Object.assign({}, state, {
+                markdownGuideVisible: action.visible
+            });
+        default:
+            return state;
+    }
+}
+
 export function sidebar(state = SidebarModes.LOADING, action) {
     switch (action.type) {
         case ActionTypes.SET_SIDEBAR_MODE:
