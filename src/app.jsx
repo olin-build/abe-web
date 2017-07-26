@@ -39,7 +39,7 @@ ReactDOM.render(
     <Provider store={store}>
         <div className="app-container">
             <SidebarContainer/>
-            <div className="scene-container">
+            <div className="row expanded scene-container">
                 <Router history={history}>
                     <Switch>
                         <Route exact path='/' component={CalendarContainer}/>
