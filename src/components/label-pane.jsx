@@ -5,7 +5,7 @@ export default class LabelPane extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-          labelElems: []
+          labelElems: this.processLabels(props.labels)
         };
         this.labelClicked = this.labelClicked.bind(this);
         this.processLabels = this.processLabels.bind(this);
@@ -23,7 +23,8 @@ export default class LabelPane extends React.Component {
     }
 
     componentWillReceiveProps(nextProps){
-        this.processLabels(nextProps.labels);
+        let labelElems = this.processLabels(nextProps.labels);
+        this.setState({labelElems : labelElems})
     }
 
     processLabels(labels) {
@@ -32,7 +33,7 @@ export default class LabelPane extends React.Component {
             let classes = labels[name].default ? 'button label selected '+ name: 'button label ' + name;
             labelElems.push(<button id={'label-'+name} key={name} title={labels[name].description} type="button" className={classes} onClick={() => this.labelClicked(name)}>{name}</button>);
         });
-        this.setState({labelElems : labelElems})
+        return labelElems
     }
 
     selectAll(){
