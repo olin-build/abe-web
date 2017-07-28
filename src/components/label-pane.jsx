@@ -7,51 +7,48 @@ export default class LabelPane extends React.Component {
         this.state = {
           labelElems: []
         };
-        this.labelClicked = this.labelClicked.bind(this);
-        this.processLabels = this.processLabels.bind(this);
-        this.selectAll = this.selectAll.bind(this);
-        this.selectNone = this.selectNone.bind(this);
+        props.refreshLabelsIfNeeded();
     }
 
-    labelClicked(labelName) {
+    componentDidMount() {
+        if (this.props.labels)
+            this.processLabels(this.props.labels);
+    }
+
+    labelClicked = (labelName) => {
         this.props.labelVisibilityToggled(labelName);
-    }
+    };
 
-    componentDidMount(){
-      if (this.props.refreshLabels)
-        {this.props.refreshLabels();}
-    }
-
-    componentWillReceiveProps(nextProps){
+    componentWillReceiveProps = (nextProps) => {
         this.processLabels(nextProps.labels);
-    }
+    };
 
-    processLabels(labels) {
+    processLabels = (labels) => {
         let labelElems = [];
         Object.keys(labels).forEach( (name) => {
             let classes = labels[name].default ? 'button label selected '+ name: 'button label ' + name;
             labelElems.push(<button id={'label-'+name} key={name} title={labels[name].description} type="button" className={classes} onClick={() => this.labelClicked(name)}>{name}</button>);
         });
         this.setState({labelElems : labelElems})
-    }
+    };
 
-    selectAll(){
+    selectAll = () => {
       let labels = this.props.labels;
       for (let label in labels){
-        if (labels[label].default == false){
+        if (labels[label].default === false){
           this.props.labelVisibilityToggled(labels[label].name)
         }
       }
-    }
+    };
 
-    selectNone(){
+    selectNone = () => {
       let labels = this.props.labels;
       for (let label in labels){
-        if (labels[label].default == true){
+        if (labels[label].default === true){
           this.props.labelVisibilityToggled(labels[label].name)
         }
       }
-    }
+    };
 
 
     render() {

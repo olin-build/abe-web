@@ -2,10 +2,12 @@ import fetch from 'isomorphic-fetch';
 
 export const ActionTypes = {
     COPY_TO_CLIPBOARD: 'COPY_TO_CLIPBOARD',
+    REFRESH_EVENTS_IF_NEEDED: 'REFRESH_EVENTS_IF_NEEDED',
     FETCH_EVENTS: 'FETCH_EVENTS',
     DISPLAY_ERROR: 'DISPLAY_ERROR',
     DISPLAY_MESSAGE: 'DISPLAY_MESSAGE',
     ADD_EVENT: 'ADD_EVENT',
+    REFRESH_LABELS_IF_NEEDED: 'REFRESH_LABELS_IF_NEEDED',
     FETCH_LABELS: 'FETCH_LABELS',
     REQUESTING_LABELS: 'REQUESTING_LABELS',
     SET_LABELS: 'SET_LABELS',
@@ -28,6 +30,15 @@ export function displayError(error, message) {
 
 export function copyToClipboard(content) {
     return {type: ActionTypes.COPY_TO_CLIPBOARD, content};
+}
+
+export function refreshLabelsIfNeeded() {
+    return (dispatch, getState) => {
+        let labels = getState().labels;
+        if (Object.keys(labels).length === 0) {
+            dispatch(refreshLabels());
+        }
+    };
 }
 
 export function refreshLabels() {

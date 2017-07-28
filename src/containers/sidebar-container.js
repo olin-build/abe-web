@@ -25,8 +25,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        refreshLabels: () => {
-            dispatch(Actions.refreshLabels());
+        refreshLabelsIfNeeded: () => {
+            dispatch(Actions.refreshLabelsIfNeeded());
         },
         generateFeedClick: () => {
             dispatch(Actions.generateICSFeed());

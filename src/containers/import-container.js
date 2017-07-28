@@ -10,6 +10,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
+        refreshLabelsIfNeeded: () => {
+            dispatch(Actions.refreshLabelsIfNeeded());
+        },
         setSidebarMode: mode => {
             dispatch(setSidebarMode(mode));
         }

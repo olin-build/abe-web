@@ -53,6 +53,11 @@ export function sidebar(state = SidebarModes.LOADING, action) {
 
 export function labels(state = {}, action) {
     switch (action.type) {
+        case ActionTypes.REFRESH_LABELS_IF_NEEDED:
+            if (Object.keys(state.labels).length === 0) {
+
+            }
+            return state;
         case ActionTypes.SET_LABELS:
             return action.data;
         case ActionTypes.LABEL_VISIBILITY_TOGGLED:

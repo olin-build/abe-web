@@ -12,6 +12,7 @@ export default class ImportScene extends React.Component {
         labels : [],
         url : ''
       }
+      props.refreshLabelsIfNeeded();
     }
 
     componentDidMount() {

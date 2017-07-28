@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { setSidebarMode, setMarkdownGuideVisibility } from '../data/actions';
+import { setSidebarMode, setMarkdownGuideVisibility, refreshLabelsIfNeeded } from '../data/actions';
 import AddEditEventScene from '../scenes/AddEdit/add-edit-scene.jsx';
 
 const mapStateToProps = state => {
@@ -12,6 +12,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
+        refreshLabelsIfNeeded: () => {
+            dispatch(refreshLabelsIfNeeded());
+        },
         setSidebarMode: mode => {
             dispatch(setSidebarMode(mode));
         },

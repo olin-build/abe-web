@@ -355,7 +355,7 @@ export default class AddEditEventScene extends React.Component {
                     </div>
                     <MarkdownEditor source={this.state.eventData.description} onChange={this.descriptionChanged} setMarkdownGuideVisibility={this.props.setMarkdownGuideVisibility} markdownGuideVisible={this.props.markdownGuideVisible} />
                     <EventVisibilitySelector visibility={this.state.eventData.visibility} onChange={this.visibilityChanged}/>
-                    <LabelPane contentClass='add-edit-filters' labelVisibilityToggled={this.labelsChanged} labels={this.state.possibleLabels}/>
+                    <LabelPane contentClass='add-edit-filters' labelVisibilityToggled={this.labelsChanged} labels={this.state.possibleLabels} refreshLabelsIfNeeded={this.props.refreshLabelsIfNeeded}/>
                     <SaveCancelButtons onCancel={this.cancelButtonClicked} onDelete={this.deleteButtonClicked} showDelete={'id' in this.state.eventData || 'sid' in this.state.eventData} onSubmit={this.saveButtonClicked} disabled={'UID' in this.state.eventData} submitButtonText={submitButtonText}/>
             </div>
           </div>
