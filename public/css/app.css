@@ -183,6 +183,10 @@ header nav li.menu-text:hover a {
      padding-left: 1em;
  }
 
+ .fc-list-item {
+    color: white
+}
+
 .calendar-container {
     position: relative;
 }
