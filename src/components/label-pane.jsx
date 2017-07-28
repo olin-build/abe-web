@@ -7,7 +7,8 @@ export default class LabelPane extends React.Component {
         this.state = {
           labelElems: []
         };
-        props.refreshLabelsIfNeeded();
+        if (props.refreshLabelsIfNeeded)
+            props.refreshLabelsIfNeeded();
     }
 
     componentDidMount() {
@@ -29,7 +30,7 @@ export default class LabelPane extends React.Component {
             let classes = labels[name].default ? 'button label selected '+ name: 'button label ' + name;
             labelElems.push(<button id={'label-'+name} key={name} title={labels[name].description} type="button" className={classes} onClick={() => this.labelClicked(name)}>{name}</button>);
         });
-        this.setState({labelElems : labelElems})
+        this.setState({labelElems})
     };
 
     selectAll = () => {
@@ -54,7 +55,12 @@ export default class LabelPane extends React.Component {
     render() {
         let colorSettings = '';
         for (let key in this.props.labels) {
+          if( /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
+            colorSettings += '.button.' +key+',.button.'+key+'.selected{background-color:' + this.props.labels[key].color + ';}'
+          }
+          else{
             colorSettings += '.button.' +key+',.button.' + key + ':hover,.button.'+key+'.selected{background-color:' + this.props.labels[key].color + ';}'
+          }
         }
         let header = null;
         if (this.props.header){

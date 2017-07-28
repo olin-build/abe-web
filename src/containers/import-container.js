@@ -1,17 +1,17 @@
 import { connect } from 'react-redux';
-import { setSidebarMode } from '../data/actions';
+import { setSidebarMode, refreshLabelsIfNeeded } from '../data/actions';
 import ImportScene from '../scenes/Import/import.jsx';
 
 const mapStateToProps = state => {
     return {
-        labels: Object.values(state.labels).map((label) => {return label.name})
+        labels: state.labels
     }
 };
 
 const mapDispatchToProps = dispatch => {
     return {
         refreshLabelsIfNeeded: () => {
-            dispatch(Actions.refreshLabelsIfNeeded());
+            dispatch(refreshLabelsIfNeeded());
         },
         setSidebarMode: mode => {
             dispatch(setSidebarMode(mode));

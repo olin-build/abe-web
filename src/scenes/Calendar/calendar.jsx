@@ -152,7 +152,7 @@ export default class CalendarScene extends React.Component {
                 text: content
             },
             style: {classes: 'qtip-light'},
-            show: 'click',
+            show: 'click tap',
             hide: {event: 'unfocus click'},
             position: {
               my: 'top left',
