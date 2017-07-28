@@ -13,6 +13,7 @@ export default class CalendarScene extends React.Component {
             colorSettings: ''
         };
         this.doingLabelRefresh = false;
+        $('div').each(function(){this.onclick = function() {}});
     }
 
     componentDidMount(){
@@ -152,7 +153,7 @@ export default class CalendarScene extends React.Component {
                 text: content
             },
             style: {classes: 'qtip-light'},
-            show: 'click tap',
+            show: 'click',
             hide: {event: 'unfocus click'},
             position: {
               my: 'top left',
