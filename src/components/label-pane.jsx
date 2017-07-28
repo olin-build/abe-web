@@ -58,7 +58,7 @@ export default class LabelPane extends React.Component {
     render() {
         let colorSettings = '';
         for (let key in this.props.labels) {
-            colorSettings += '.button.' +key+',.button.' + key + ':hover,.button.'+key+'.selected{background-color:' + this.props.labels[key].color + ';}'
+            colorSettings += '.button.' +key+',.button.'+key+'.selected{background-color:' + this.props.labels[key].color + ';}'
         }
         let header = null;
         if (this.props.header){

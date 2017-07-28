@@ -193,7 +193,7 @@ header nav li.menu-text:hover a {
     justify-content: space-between;
 }
 
-.label:not(.selected):not(:hover) {
+.label:not(.selected) {
   background-color: transparent;
   color: black;
   border-color: darkgray;
