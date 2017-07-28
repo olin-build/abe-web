@@ -13,12 +13,13 @@ export default class CalendarScene extends React.Component {
             colorSettings: ''
         };
         this.doingLabelRefresh = false;
-        $('div').each(function(){this.onclick = function() {}});
     }
 
     componentDidMount(){
         this.props.setSidebarMode(SidebarModes.CALENDAR_VIEW);
-
+        let defaultView = 'month';
+        if( /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
+          defaultView = 'listWeek'};
         this.calendar = $('#calendar');
         this.calendar.fullCalendar({
             weekends: true,
@@ -27,9 +28,10 @@ export default class CalendarScene extends React.Component {
             eventRender: this.renderEvents,
             header: {
                left:   'title',
-               center: 'month, agendaWeek, agendaDay',
+               center: 'month, agendaWeek, agendaDay, listWeek',
                right:  'today prev,next'
-           }
+           },
+           defaultView: defaultView
         });
     }
 
