@@ -58,7 +58,8 @@ textarea::placeholder {
     line-height: 1.3em;
 }
 
-.sidebar-item-content::-webkit-scrollbar {
+.sidebar-item-content::-webkit-scrollbar,
+.scene-container::-webkit-scrollbar {
     display: none;
 }
 
@@ -99,14 +100,19 @@ textarea::placeholder {
     margin: 1rem;
 }
 
+main,
+.page-container {
+    height: 100%;
+}
+
 main {
     flex-grow: 1;
 }
 
-.wrapper {
+.scene-container {
     /*flex: 1 0 auto;*/
-    display: flex;
-    flex-direction: row;
+    /*display: flex;*/
+    /*flex-direction: row;*/
     height: 100%;
     width: 100%;
     overflow: scroll;
@@ -168,11 +174,6 @@ header nav li.menu-text:hover a {
 
 
 /** ----- Begin Calendar ----- **/
-
-main,
-.page-container {
-    height: 100%;
-}
 
 #calendar {
     padding: 1rem 0 0;

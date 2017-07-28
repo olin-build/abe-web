@@ -143,6 +143,7 @@ export default class AddEditEventScene extends React.Component {
 
     receivedSuccessfulResponse(response) {
         let eventData = response.data;
+
         // If the labels are null/undefined, create an empty list in our state
         if (!eventData.labels)
             eventData.labels = [];
@@ -160,7 +161,8 @@ export default class AddEditEventScene extends React.Component {
         if (!eventData.id) { // Recurring event
             eventData.rec_id = moment.utc(eventData.rec_id).local(); // rec_id is start time
         }
-        this.setState({eventData:eventData, seriesData:seriesData});
+
+        this.setState({eventData: eventData, seriesData: seriesData});
     }
 
     requestError(error) {
@@ -336,27 +338,25 @@ export default class AddEditEventScene extends React.Component {
         let recurrence = this.state.eventData.recurrence ? <EventRecurrenceSelector reccurs={this.state.eventData.recurrence} month={this.state.month_option} start = {this.state.eventData.start} end = {this.state.end_option} onChange={this.recurrenceChanged}/> : null;
         let redirect = this.state.redirect ? <Redirect to='/'/> : null;
         return (
-            <div className="row expanded page-container">
-                <div className="row content-container">
-                    <h1 className="page-title">{pageTitle}</h1>
-                    {redirect}
-                    <div className="event-info-container">
-                        <input id="event-title" type="text" placeholder="Title" className="wide-text-box single-line-text-box medium-text-box" value={this.state.eventData.title} onChange={this.titleChanged}/>
-                        <div className="date-time-container">
-                          <EventDateTimeSelector buttonPrefix="Start: " datetime={moment(this.state.eventData.start)} onChange={this.startChanged} show={this.state.eventData.allDay ? 'date' : 'both'}/>
-                          <EventDateTimeSelector buttonPrefix="End: " datetime={moment(this.state.eventData.end)} onChange={this.endChanged} show={this.state.eventData.allDay ? 'date' : 'both'}/>
-                          <input type="checkbox" id='all-day-check' title="All Day" checked={this.state.eventData.allDay} onChange={this.allDayChanged}/>
-                          <label htmlFor="all-day-check">All Day</label>
-                          <input type="checkbox" id='repeats-check' title="Repeats?" disabled={recurrence_disable} checked={this.state.eventData.recurrence} onChange={this.recurrenceSelected}/>
-                          <label htmlFor="repeats-check">Repeats?</label>
-                          {recurrence}
-                          <LocationField location={this.state.eventData.location} onChange={this.locationChanged}/>
-                        </div>
-                        <MarkdownEditor source={this.state.eventData.description} onChange={this.descriptionChanged} setMarkdownGuideVisibility={this.props.setMarkdownGuideVisibility} markdownGuideVisible={this.props.markdownGuideVisible} />
-                        <EventVisibilitySelector visibility={this.state.eventData.visibility} onChange={this.visibilityChanged}/>
-                        <LabelPane contentClass='add-edit-filters' labelVisibilityToggled={this.labelsChanged} labels={this.state.possibleLabels}/>
-                        <SaveCancelButtons onCancel={this.cancelButtonClicked} onDelete={this.deleteButtonClicked} showDelete={'id' in this.state.eventData || 'sid' in this.state.eventData} onSubmit={this.saveButtonClicked} disabled={'UID' in this.state.eventData} submitButtonText={submitButtonText}/>
-                </div>
+            <div className="row content-container">
+                <h1 className="page-title">{pageTitle}</h1>
+                {redirect}
+                <div className="event-info-container">
+                    <input id="event-title" type="text" placeholder="Title" className="wide-text-box single-line-text-box medium-text-box" value={this.state.eventData.title} onChange={this.titleChanged}/>
+                    <div className="date-time-container">
+                      <EventDateTimeSelector buttonPrefix="Start: " datetime={moment(this.state.eventData.start)} onChange={this.startChanged} show={this.state.eventData.allDay ? 'date' : 'both'}/>
+                      <EventDateTimeSelector buttonPrefix="End: " datetime={moment(this.state.eventData.end)} onChange={this.endChanged} show={this.state.eventData.allDay ? 'date' : 'both'}/>
+                      <input type="checkbox" id='all-day-check' title="All Day" checked={this.state.eventData.allDay} onChange={this.allDayChanged}/>
+                      <label htmlFor="all-day-check">All Day</label>
+                      <input type="checkbox" id='repeats-check' title="Repeats?" disabled={recurrence_disable} checked={this.state.eventData.recurrence} onChange={this.recurrenceSelected}/>
+                      <label htmlFor="repeats-check">Repeats?</label>
+                      {recurrence}
+                      <LocationField location={this.state.eventData.location} onChange={this.locationChanged}/>
+                    </div>
+                    <MarkdownEditor source={this.state.eventData.description} onChange={this.descriptionChanged} setMarkdownGuideVisibility={this.props.setMarkdownGuideVisibility} markdownGuideVisible={this.props.markdownGuideVisible} />
+                    <EventVisibilitySelector visibility={this.state.eventData.visibility} onChange={this.visibilityChanged}/>
+                    <LabelPane contentClass='add-edit-filters' labelVisibilityToggled={this.labelsChanged} labels={this.state.possibleLabels}/>
+                    <SaveCancelButtons onCancel={this.cancelButtonClicked} onDelete={this.deleteButtonClicked} showDelete={'id' in this.state.eventData || 'sid' in this.state.eventData} onSubmit={this.saveButtonClicked} disabled={'UID' in this.state.eventData} submitButtonText={submitButtonText}/>
             </div>
           </div>
         );
