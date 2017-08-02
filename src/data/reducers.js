@@ -44,6 +44,10 @@ export function addEdit(state = {}, action) {
 
 export function sidebar(state = SidebarModes.LOADING, action) {
     switch (action.type) {
+        case ActionTypes.TOGGLE_SIDEBAR_VISIBILITY:
+            return Object.assign({}, state, {
+               isCollapsed: !state.isCollapsed
+            });
         case ActionTypes.SET_SIDEBAR_MODE:
             return action.mode;
         default:
