@@ -2,6 +2,7 @@ import * as React from "react";
 import SidebarModes from "../../data/sidebar-modes";
 import * as fullCalendar from 'fullcalendar/dist/fullcalendar';
 import * as qtip from '../../../public/js/vendor/jquery.qtip.js'
+import MenuIconButton from '../../components/menu-icon-button.jsx';
 
 export default class CalendarScene extends React.Component {
 
@@ -171,6 +172,7 @@ export default class CalendarScene extends React.Component {
     render(){
         return (
             <div className="calendar-container">
+                <MenuIconButton onClick={this.props.toggleSidebarCollapsed} tooltip="Show/Hide Sidebar"/>
                 <div style={{display: 'none'}}>{Object.values(this.props.labels).map(label => label.name)}</div>
                 <div id='calendar' className="page-container calendar-container"></div>
             </div>

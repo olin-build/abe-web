@@ -18,7 +18,7 @@ const getVisibleEvents = (events, labels) => {
 
 const mapStateToProps = state => {
     return {
-        mode: state.sidebar,
+        sidebarState: state.sidebar,
         labels: state.labels
     }
 };
@@ -42,7 +42,10 @@ const mapDispatchToProps = dispatch => {
         },
         importICSClicked: () => {
             dispatch(push('/import'));
-        }
+        },
+        toggleSidebarCollapsed: () => {
+            dispatch(Actions.toggleSidebarCollapsed());
+        },
     }
 };
 
