@@ -42,6 +42,7 @@ ReactDOM.render(
         <div className="app-container">
             <SidebarContainer/>
             <div className="scene-container">
+                <div className="scene-overlay" onClick={() => store.dispatch(toggleSidebarCollapsed())}/>
                 <Router history={history}>
                     <Switch>
                         <Route exact path='/' component={CalendarContainer}/>

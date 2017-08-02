@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import Footer from "../components/footer.jsx";
-import {PageHeaderTitle} from "../components/header.jsx";
+import {SidebarHeader} from "../components/header.jsx";
 import SidebarItemContainer from "../sidebar/sidebar-item-container.jsx";
 import LabelPane from "../components/label-pane.jsx";
 import LinkPane from "./link-pane.jsx";
@@ -32,12 +32,12 @@ export default class Sidebar extends Component {
         let sidebarClasses = "app-sidebar" + ((state.isCollapsed) ? ' collapsed' : ' expanded');
         return (
             <div className={sidebarClasses}>
-                <PageHeaderTitle homeClicked={this.props.homeClicked} toggleSidebarCollapsed={this.props.toggleSidebarCollapsed} />
-                <div className="sidebar-content-footer-container">
+                <div className="sidebar-container">
+                    <SidebarHeader homeClicked={this.props.homeClicked} toggleSidebarCollapsed={this.props.toggleSidebarCollapsed} />
                     <div className="sidebar-content">
                         {content}
                     </div>
-                    <Footer/>
+                    <Footer class="sidebar-footer"/>
                 </div>
             </div>
         )

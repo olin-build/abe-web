@@ -351,8 +351,8 @@ export default class AddEditEventScene extends React.Component {
                       <input type="checkbox" id='repeats-check' title="Repeats?" disabled={recurrence_disable} checked={this.state.eventData.recurrence} onChange={this.recurrenceSelected}/>
                       <label htmlFor="repeats-check">Repeats?</label>
                       {recurrence}
-                      <LocationField location={this.state.eventData.location} onChange={this.locationChanged}/>
                     </div>
+                    <LocationField location={this.state.eventData.location} onChange={this.locationChanged}/>
                     <MarkdownEditor source={this.state.eventData.description} onChange={this.descriptionChanged} setMarkdownGuideVisibility={this.props.setMarkdownGuideVisibility} markdownGuideVisible={this.props.markdownGuideVisible} />
                     <EventVisibilitySelector visibility={this.state.eventData.visibility} onChange={this.visibilityChanged}/>
                     <LabelPane contentClass='add-edit-filters' labelVisibilityToggled={this.labelsChanged} labels={this.state.possibleLabels} refreshLabelsIfNeeded={this.props.refreshLabelsIfNeeded}/>

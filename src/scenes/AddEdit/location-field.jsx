@@ -219,7 +219,7 @@ export default class LocationField extends React.Component {
         let svgSrc = (this.state.isOlin) ? '/assets/olin-o.svg' : '/assets/olin-o-slash.svg';
         let oTooltip = (this.state.isOlin) ? 'Recognized Olin location' : 'Location not at Olin';
         return (
-            <div className="row expanded location-field-container">
+            <div className="location-field-container">
                 <div className="location-input-container">
                     <input id="location" type="text" title="Location" className="wide-text-box single-line-text-box medium-text-box" placeholder="Location" value={this.props.location} onChange={this.textChanged}/>
                     <img src={svgSrc} className="location-indicator-img" title={oTooltip}/>
