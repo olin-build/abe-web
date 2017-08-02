@@ -18,6 +18,7 @@ export const ActionTypes = {
     GENERATE_ICS_FEED: 'GENERATE_ICS_FEED',
     START_REDIRECT: 'START_REDIRECT',
     SET_MARKDOWN_GUIDE_VISIBILITY: 'SET_MARKDOWN_GUIDE_VISIBILITY',
+    TOGGLE_SIDEBAR_VISIBILITY: 'TOGGLE_SIDEBAR_VISIBILITY',
 };
 
 export function displayMessage(message) {
@@ -111,4 +112,8 @@ export function refreshingEvents() {
 
 export function setMarkdownGuideVisibility(visible) {
     return {type: ActionTypes.SET_MARKDOWN_GUIDE_VISIBILITY, visible};
+}
+
+export function toggleSidebarCollapsed() {
+    return {type: ActionTypes.TOGGLE_SIDEBAR_VISIBILITY};
 }

@@ -7,6 +7,7 @@ import thunkMiddleware from 'redux-thunk'
 import { Router, Route, IndexRoute, browserHistory, Switch } from 'react-router'
 import createHistory from 'history/createBrowserHistory';
 import { ConnectedRouter, routerReducer, routerMiddleware } from 'react-router-redux'
+import { toggleSidebarCollapsed } from './data/actions';
 
 import CalendarContainer from "./containers/calendar-container";
 import SidebarContainer from "./containers/sidebar-container";
@@ -18,6 +19,7 @@ import SidebarMode from "./data/sidebar-modes";
 const initialState = {
     sidebar: {
         mode: SidebarMode.LOADING,
+        isCollapsed: false
     },
     addEdit: {
         markdownGuideVisible: true,
@@ -39,7 +41,7 @@ ReactDOM.render(
     <Provider store={store}>
         <div className="app-container">
             <SidebarContainer/>
-            <div className="row expanded scene-container">
+            <div className="scene-container">
                 <Router history={history}>
                     <Switch>
                         <Route exact path='/' component={CalendarContainer}/>
