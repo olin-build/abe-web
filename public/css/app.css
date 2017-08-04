@@ -267,6 +267,26 @@ header nav li.menu-text:hover a {
     margin: 1rem;
 }
 
+/** --- Begin ICS Feed Generation Pane --- **/
+
+.ics-feed-instructions-icon {
+    height: 3em;
+    fill: #aaaaaa;
+}
+
+.ics-copy-to-clipboard {
+    display: block;
+    margin: 0.3em 0;
+}
+
+.ics-instructions {
+    display: block;
+    font-size: 90%;
+    color: gray;
+}
+
+/** --- End ICS Feed Generation Pane --- **/
+
 /** --- Begin Sidebar Footer --- **/
 
 footer {
@@ -325,8 +345,8 @@ footer {
 }
 
 .fc-toolbar.fc-header-toolbar {
-     padding-left: 5em;
- }
+    padding-left: 5em;
+}
 
 .fc-list-item {
     color: white

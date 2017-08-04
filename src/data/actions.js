@@ -1,7 +1,6 @@
 import fetch from 'isomorphic-fetch';
 
 export const ActionTypes = {
-    COPY_TO_CLIPBOARD: 'COPY_TO_CLIPBOARD',
     REFRESH_EVENTS_IF_NEEDED: 'REFRESH_EVENTS_IF_NEEDED',
     FETCH_EVENTS: 'FETCH_EVENTS',
     DISPLAY_ERROR: 'DISPLAY_ERROR',
@@ -27,10 +26,6 @@ export function displayMessage(message) {
 
 export function displayError(error, message) {
     return {type: ActionTypes.DISPLAY_ERROR, error, message};
-}
-
-export function copyToClipboard(content) {
-    return {type: ActionTypes.COPY_TO_CLIPBOARD, content};
 }
 
 export function refreshLabelsIfNeeded() {
@@ -77,25 +72,6 @@ export function labelVisibilityToggled(labelName) {
 
 export function setSidebarMode(mode) {
     return {type: ActionTypes.SET_SIDEBAR_MODE, mode};
-}
-
-export function generateICSFeed() {
-    return (dispatch, getState) => {
-        // Get the currently selected labels
-        let labels = Object.values(getState().labels);
-        let params = labels.filter(label => label.default);
-        params = params.map(label => label.name);
-        let url = window.abe_url + '/ics/?labels=' + params.join(',');
-        // Check with the server to make sure we've generated a valid feed URL
-        return fetch(url)
-            .then(() => {
-                // Copy the URL to the user's clipboard
-                dispatch(copyToClipboard(url));
-                dispatch(displayMessage('Your custom feed URL has automatically been copied to your clipboard. Paste it in your calendar application.\n\nYou will automatically receive new events matching your filter.'));
-            }).catch((error) => {
-                dispatch(displayError(error, 'Sorry, there was an error generating an ICS feed.'));
-            });
-    }
 }
 
 export function refreshEvents(start, end) {

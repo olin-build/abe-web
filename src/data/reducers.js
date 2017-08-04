@@ -1,12 +1,8 @@
 import { ActionTypes } from './actions';
 import SidebarModes from '../data/sidebar-modes';
-import copy from 'copy-to-clipboard';
 
 export function general(state = {}, action) {
     switch (action.type) {
-        case ActionTypes.COPY_TO_CLIPBOARD:
-            copy(action.content);
-            return state;
         case ActionTypes.DISPLAY_MESSAGE:
             alert(action.message);
             return state;
