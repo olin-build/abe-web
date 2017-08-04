@@ -106,7 +106,7 @@ export default class CalendarScene extends React.Component {
 
     isLabelVisible = (label) => {
         try {
-            return this.props.labels[label].default === "True" || this.props.labels[label].default === true;
+            return this.props.labels[label].selected === "True" || this.props.labels[label].selected === true;
         } catch (e) {
             return false;
         }
@@ -115,8 +115,8 @@ export default class CalendarScene extends React.Component {
     labelVisibilityToggled = (labelName) => {
         // Update the label visibility in our state
         let labels = this.props.labels;
-        let currentVisibility = this.props.labels[labelName].default;
-        labels[labelName].default = !currentVisibility;
+        let currentVisibility = this.props.labels[labelName].selected;
+        labels[labelName].selected = !currentVisibility;
         this.setState({labels: labels}, () => {
             // Update the calendar view
             this.doingLabelRefresh = true;

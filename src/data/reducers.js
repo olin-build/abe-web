@@ -63,16 +63,23 @@ export function labels(state = {}, action) {
             }
             return state;
         case ActionTypes.SET_LABELS:
-            return action.data;
+            let labels = action.data;
+            let labelsArray = Object.values(labels);
+            if (labelsArray.length > 0 && labelsArray[0].selected === undefined) {
+                for (let labelName in labels) {
+                    labels[labelName].selected = labels[labelName].default;
+                }
+            }
+            return labels;
         case ActionTypes.LABEL_VISIBILITY_TOGGLED:
             let newState = Object.assign({}, state);
-            newState[action.labelName].default = !newState[action.labelName].default;
+            newState[action.labelName].selected = !newState[action.labelName].selected;
             return newState;
         case ActionTypes.SET_LABEL_VISIBILITY:
             // TODO Test this
             return Object.assign({}, state, {
                 [action.labelName]: Object.assign({}, state[action.labelName], {
-                    default: action.visible
+                    selected: action.visible
                 })
             });
         default:

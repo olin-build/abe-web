@@ -200,7 +200,7 @@ header nav li.menu-text:hover a {
 
 .sidebar-item-content {
     background-color: white;
-    padding: 1em;
+    padding: 0.6em 1em;
     overflow: auto;
 }
 
@@ -221,7 +221,7 @@ header nav li.menu-text:hover a {
 .sidebar-item-header {
     display: flex;
     width: 100%;
-    padding: 0.5em 1em;
+    padding: 0.5em 1rem;
     font-size: 120%;
     flex-direction: row;
     justify-content: space-between;
@@ -230,11 +230,23 @@ header nav li.menu-text:hover a {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    border-bottom: 4px solid #e2dddd;
 }
 
 .sidebar-title-right {
     float: right;
     font-size: 80%;
+}
+
+.sidebar-item-subsection-header {
+    margin-bottom: 1em;
+    border-bottom: 1px solid #c5c5c5;
+    padding-bottom: 0.5em;
+    font-size: 90%;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 .sidebar-content {

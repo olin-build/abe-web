@@ -60,11 +60,15 @@ export function refreshingLabels() {
 }
 
 export function setLabels(labels) {
-    let labelsMap = {};
-    labels.forEach(label => {
-        labelsMap[label.name] = label;
-    });
-    return {type: ActionTypes.SET_LABELS, data: labelsMap};
+    if (Object.prototype.toString.call( labels ) === '[object Array]') {
+        // Convert array to object
+        let labelsMap = {};
+        labels.forEach(label => {
+            labelsMap[label.name] = label;
+        });
+        labels = labelsMap;
+    }
+    return {type: ActionTypes.SET_LABELS, data: labels};
 }
 
 export function labelVisibilityToggled(labelName) {

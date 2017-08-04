@@ -84,7 +84,7 @@ export default class AddEditEventScene extends React.Component {
             let labels = response.data
             for (let i in labels){
                 let label = labels[i];
-                label.default = false;
+                label.selected = false;
                 possibleLabels[label.name] = label
             }
             this.setState({possibleLabels : possibleLabels}, () => {
@@ -94,7 +94,7 @@ export default class AddEditEventScene extends React.Component {
                   for (let i in state.eventData.labels){
                       let name = state.eventData.labels[i]
                       if (name in state.possibleLabels){
-                        state.possibleLabels[name].default = true}
+                        state.possibleLabels[name].selected = true}
                       };
                   this.setState(state);
               })}
@@ -319,7 +319,7 @@ export default class AddEditEventScene extends React.Component {
     labelsChanged(label) {
         if (this.state) {
             let state = this.state;
-            state.possibleLabels[label].default = !state.possibleLabels[label].default
+            state.possibleLabels[label].selected = !state.possibleLabels[label].selected
             let i = state.eventData.labels.indexOf(label)
             if (i > -1){
               state.eventData.labels.splice(i, 1)

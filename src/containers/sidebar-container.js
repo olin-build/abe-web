@@ -46,6 +46,9 @@ const mapDispatchToProps = dispatch => {
         toggleSidebarCollapsed: () => {
             dispatch(Actions.toggleSidebarCollapsed());
         },
+        setLabels: (labels) => {
+            dispatch(Actions.setLabels(labels));
+        }
     }
 };
 
