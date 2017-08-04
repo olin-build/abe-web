@@ -64,7 +64,7 @@ export default class MarkdownEditor extends React.Component {
         let markdownGuideVisible = this.props.markdownGuideVisible;
 
         return (
-            <div className="markdown-editor-container row">
+            <div className="markdown-editor-container">
                 <div className="markdown-editor-editor-preview-container">
                     <textarea onChange={this.updateCode} value={this.props.source}  className="markdown-editor column medium-6" placeholder="Description (Markdown enabled)"/>
                     {/*<CodeMirror className="markdown-editor" value={this.state.source} onChange={this.updateCode} options={this.state.editorOptions} />*/}
