@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { setSidebarMode, toggleSidebarCollapsed } from '../data/actions';
+import { setSidebarMode, toggleSidebarCollapsed, setVisibleLabels, setRoute } from '../data/actions';
 import CalendarScene from '../scenes/Calendar/calendar.jsx';
 import { push } from 'react-router-redux';
 
@@ -36,6 +36,12 @@ const mapDispatchToProps = dispatch => {
         toggleSidebarCollapsed: () => {
             dispatch(toggleSidebarCollapsed());
         },
+        setVisibleLabels: (labels) => {
+            dispatch(setVisibleLabels(labels));
+        },
+        setRoute(route) {
+            dispatch(setRoute(route));
+        }
     }
 };
 

@@ -1,3 +1,4 @@
+import { push } from 'react-router-redux';
 import fetch from 'isomorphic-fetch';
 
 export const ActionTypes = {
@@ -10,6 +11,7 @@ export const ActionTypes = {
     FETCH_LABELS: 'FETCH_LABELS',
     REQUESTING_LABELS: 'REQUESTING_LABELS',
     SET_LABELS: 'SET_LABELS',
+    SET_VISIBLE_LABELS: 'SET_VISIBLE_LABELS',
     LABEL_VISIBILITY_TOGGLED: 'LABEL_VISIBILITY_TOGGLED',
     SET_LABEL_VISIBILITY: 'SET_LABEL_VISIBILITY',
     SET_SIDEBAR_MODE: 'SET_SIDEBAR_MODE',
@@ -30,8 +32,7 @@ export function displayError(error, message) {
 
 export function refreshLabelsIfNeeded() {
     return (dispatch, getState) => {
-        let labels = getState().labels;
-        if (Object.keys(labels).length === 0) {
+        if (!getState().labels.labelList) {
             dispatch(refreshLabels());
         }
     };
@@ -66,6 +67,10 @@ export function setLabels(labels) {
     return {type: ActionTypes.SET_LABELS, data: labels};
 }
 
+export function setVisibleLabels(visibleLabels) {
+    return {type: ActionTypes.SET_VISIBLE_LABELS, data: visibleLabels};
+}
+
 export function labelVisibilityToggled(labelName) {
     return {type: ActionTypes.LABEL_VISIBILITY_TOGGLED, labelName};
 }
@@ -96,4 +101,10 @@ export function setMarkdownGuideVisibility(visible) {
 
 export function toggleSidebarCollapsed() {
     return {type: ActionTypes.TOGGLE_SIDEBAR_VISIBILITY};
+}
+
+export function setRoute(route) {
+    return dispatch => {
+        dispatch(push(route));
+    }
 }

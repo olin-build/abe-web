@@ -18,6 +18,18 @@ export default class CalendarScene extends React.Component {
 
     componentDidMount(){
         this.props.setSidebarMode(SidebarModes.CALENDAR_VIEW);
+
+        // Load the visible labels from the URL (if defined)
+        const labelsStr = this.props.match.params.labels;
+        if (labelsStr && labelsStr.length > 0) {
+            let labelsArr = labelsStr.split(',');
+            let labels = this.props.labels.labelList;
+            for (let labelName in labels) {
+                labels[labelName].selected = labelName in labelsArr;
+            }
+            this.props.setVisibleLabels(labelsArr);
+        }
+
         let defaultView = 'month';
         if( /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
           defaultView = 'listWeek'};
@@ -38,6 +50,17 @@ export default class CalendarScene extends React.Component {
 
     componentDidUpdate() {
         this.refreshViewFromCache();
+
+        if (this.props.labels.visibleLabels) {
+            let labelsStr = this.props.labels.visibleLabels
+                                .sort((a,b) => a.toLowerCase().localeCompare(b.toLowerCase())) // sort alphabetically ignoring case
+                                .join(',');
+            let url = '/calendar/' + encodeURI(labelsStr);
+            if (url !== this.props.location.pathname) {
+                // Update URL to reflect selected labels
+                this.props.setRoute(url);
+            }
+        }
     }
 
     getEvents = (start, end, timezone, callback) => {
@@ -82,16 +105,19 @@ export default class CalendarScene extends React.Component {
     getEventsFiltered = () => {
         console.debug('getEventsFiltered called... Number of events: ' + this.state.events.length + ', number of labels: ' + Object.keys(this.props.labels).length);
         let eventsToShow = [];
-        // For each event
-        for (let i = 0; i < this.state.events.length; ++i) {
-            let event = this.state.events[i];
-            // Check for a label that is visible
-            for (let j = 0; j < event.labels.length; ++j) {
-                if (this.isLabelVisible(event.labels[j])) {
-                    // This event should be visible
-                    event.color = this.props.labels[event.labels[j]].color
-                    eventsToShow.push(event);
-                    break;
+        let visibleLabels = this.props.labels.visibleLabels;
+        if (this.props.labels.labelList && this.props.labels.visibleLabels.length > 0) {
+            // For each event
+            for (let i = 0; i < this.state.events.length; ++i) {
+                let event = this.state.events[i];
+                // Check for a label that is visible
+                for (let j = 0; j < event.labels.length; ++j) {
+                    if (visibleLabels && visibleLabels.includes(event.labels[j])) {
+                        // This event should be visible
+                        event.color = this.props.labels.labelList[event.labels[j]].color
+                        eventsToShow.push(event);
+                        break;
+                    }
                 }
             }
         }
@@ -102,14 +128,6 @@ export default class CalendarScene extends React.Component {
     refreshViewFromCache = () => {
         this.doingLabelRefresh = true;
         this.calendar.fullCalendar('refetchEvents');
-    };
-
-    isLabelVisible = (label) => {
-        try {
-            return this.props.labels[label].selected === "True" || this.props.labels[label].selected === true;
-        } catch (e) {
-            return false;
-        }
     };
 
     labelVisibilityToggled = (labelName) => {
@@ -170,10 +188,12 @@ export default class CalendarScene extends React.Component {
     };
 
     render(){
+        // Temporary workaround with FullCalendar. Remove once FullCalendar is gone.
+        let hackInsert = this.props.labels.labelList ? Object.values(this.props.labels.labelList).map(label => label.name) : null;
         return (
             <div className="calendar-container">
                 <MenuIconButton onClick={this.props.toggleSidebarCollapsed} tooltip="Show/Hide Sidebar"/>
-                <div style={{display: 'none'}}>{Object.values(this.props.labels).map(label => label.name)}</div>
+                <div style={{display: 'none'}}>{hackInsert}</div>
                 <div id='calendar' className="page-container calendar-container"></div>
             </div>
         );
