@@ -8,6 +8,8 @@ app.use(express.static(__dirname ));
 
 var routes = [
   '/',
+  '/calendar',
+  '/calendar/:id',
   '/edit',
   '/import',
   '/edit/:id',

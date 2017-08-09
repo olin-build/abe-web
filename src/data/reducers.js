@@ -82,7 +82,7 @@ export function labels(state = {}, action) {
         case ActionTypes.LABEL_VISIBILITY_TOGGLED:
             newState = Object.assign({}, state);
             if (newState.visibleLabels.includes(action.labelName)) {
-                delete newState.visibleLabels[newState.visibleLabels.indexOf(action.labelName)];
+                newState.visibleLabels.splice(newState.visibleLabels.indexOf(action.labelName),1);
             } else {
                 newState.visibleLabels.push(action.labelName);
             }
