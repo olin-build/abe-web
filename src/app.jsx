@@ -4,9 +4,9 @@ import { Provider } from 'react-redux'
 import { createLogger } from 'redux-logger'
 import { createStore, applyMiddleware, combineReducers } from 'redux'
 import thunkMiddleware from 'redux-thunk'
-import { Router, Route, IndexRoute, browserHistory, Switch } from 'react-router'
+import { Router, Route, Switch } from 'react-router'
 import createHistory from 'history/createBrowserHistory';
-import { ConnectedRouter, routerReducer, routerMiddleware } from 'react-router-redux'
+import { routerReducer, routerMiddleware } from 'react-router-redux'
 import { toggleSidebarCollapsed } from './data/actions';
 
 import CalendarContainer from "./containers/calendar-container";
@@ -23,7 +23,11 @@ const initialState = {
     },
     addEdit: {
         markdownGuideVisible: true,
-    }
+    },
+    labels: {
+        labelList: null,
+        visibleLabels: null,
+    },
 };
 const history = createHistory();
 const rMiddleware = routerMiddleware(history);
@@ -46,6 +50,9 @@ ReactDOM.render(
                 <Router history={history}>
                     <Switch>
                         <Route exact path='/' component={CalendarContainer}/>
+                        <Route exact path='/calendar' component={CalendarContainer}/>
+                        <Route exact path='/calendar/' component={CalendarContainer}/>
+                        <Route path='/calendar/:labels' component={CalendarContainer}/>
                         <Route exact path='/edit' component={AddEditContainer}/>
                         <Route exact path='/edit/:id' component={AddEditContainer}/>
                         <Route path='/edit/:sid/:rec_id' component={AddEditContainer}/>

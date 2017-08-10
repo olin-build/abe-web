@@ -4,12 +4,22 @@ import LabelPane from "../components/label-pane.jsx";
 export default class FilterPane extends React.Component {
 
     selectTags = (allNoneDefault) => {
-        let labels = Object.assign({}, this.props.labels);
-        let newValue = (allNoneDefault === 'all') ? true : ((allNoneDefault === 'none') ? false : undefined);
-        for (let labelName in labels) {
-            labels[labelName].selected = (newValue !== undefined) ? newValue : labels[labelName].default;
+
+        let visibleLabels;
+        switch (allNoneDefault) {
+            case 'all':
+                visibleLabels = Object.values(this.props.labels.labelList).map(l => l.name);
+                break;
+            case 'none':
+                visibleLabels = [];
+                break;
+            case 'default':
+                visibleLabels = Object.values(this.props.labels.labelList).filter(l => l.default).map(l => l.name);
+                break;
+            default:
+                // Do nothing
         }
-        this.props.setLabels(labels);
+        this.props.setVisibleLabels(visibleLabels);
     };
 
     render() {

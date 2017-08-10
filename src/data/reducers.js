@@ -52,25 +52,42 @@ export function sidebar(state = SidebarModes.LOADING, action) {
 }
 
 export function labels(state = {}, action) {
+    let newState;
     switch (action.type) {
         case ActionTypes.REFRESH_LABELS_IF_NEEDED:
-            if (Object.keys(state.labels).length === 0) {
+            if (Object.keys(state.labels.labelList).length === 0) {
 
             }
             return state;
+
         case ActionTypes.SET_LABELS:
-            let labels = action.data;
-            let labelsArray = Object.values(labels);
-            if (labelsArray.length > 0 && labelsArray[0].selected === undefined) {
-                for (let labelName in labels) {
-                    labels[labelName].selected = labels[labelName].default;
-                }
+            newState = Object.assign({}, state);
+            let labelList = action.data;
+            newState.labelList = labelList;
+
+            // If the visible labels array hasn't been set yet, set it to be the default
+            if (!state.visibleLabels) {
+                let labelsArray = Object.values(labelList);
+                newState.visibleLabels = (labelsArray.length > 0)
+                                    ? labelsArray.filter(l => l.default).map(l => l.name)
+                                    : [];
             }
-            return labels;
-        case ActionTypes.LABEL_VISIBILITY_TOGGLED:
-            let newState = Object.assign({}, state);
-            newState[action.labelName].selected = !newState[action.labelName].selected;
             return newState;
+
+        case ActionTypes.SET_VISIBLE_LABELS:
+            return Object.assign({}, state, {
+                visibleLabels: action.data
+            });
+
+        case ActionTypes.LABEL_VISIBILITY_TOGGLED:
+            newState = Object.assign({}, state);
+            if (newState.visibleLabels.includes(action.labelName)) {
+                newState.visibleLabels.splice(newState.visibleLabels.indexOf(action.labelName),1);
+            } else {
+                newState.visibleLabels.push(action.labelName);
+            }
+            return newState;
+
         case ActionTypes.SET_LABEL_VISIBILITY:
             // TODO Test this
             return Object.assign({}, state, {
@@ -78,6 +95,7 @@ export function labels(state = {}, action) {
                     selected: action.visible
                 })
             });
+
         default:
             return state
     }

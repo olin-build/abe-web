@@ -6,15 +6,19 @@ export default class GenerateICSPane extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = {url: this.generateURL(props.labels)};
+        if (props.labels.visibleLabels) {
+            this.state = {url: this.generateURL(props.labels.visibleLabels)};
+        }
     }
 
     componentWillReceiveProps(nextProps) {
-        this.setState({url: this.generateURL(nextProps.labels)});
+        if (nextProps.labels.visibleLabels) {
+            this.setState({url: this.generateURL(nextProps.labels.visibleLabels)});
+        }
     }
 
     generateURL(labels) {
-        labels = Object.values(labels).filter(label => label.selected).map(label => label.name);
+        labels = labels.filter(label => label.selected).map(label => label.name);
         return window.abe_url + '/ics/?labels=' + labels.join(',');
     }
 
