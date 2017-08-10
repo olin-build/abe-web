@@ -156,7 +156,7 @@ textarea::placeholder {
 /** --- Begin Sidebar Header --- **/
 
 .header-content {
-    padding: 1.2em 1.8em;
+    padding: 1.2em 0.5em 1.2em 0;
     text-align: center;
     background-color: #009BDF;
     flex-basis: content;
@@ -300,6 +300,18 @@ footer {
     font-size: small;
 }
 
+.footer-message a {
+    color: #9c9c9c;
+}
+
+.footer-message a:hover {
+    color: #1779ba;
+}
+
+.footer-message p {
+    margin-bottom: 0.2em;
+}
+
 @media screen and (max-width:400px) {
 
     .app-sidebar {
@@ -426,7 +438,7 @@ textarea.markdown-editor {
 
 .markdown-guide {
     overflow: auto;
-    background-color: #efefef;
+    /*background-color: #efefef;*/
     width: 100%;
 }
 
@@ -439,13 +451,22 @@ textarea.markdown-editor {
 
 .markdown-guide-section-container {
     display: flex;
+    flex-direction: column;
     width: 100%;
-    justify-content: space-between;
+    /*justify-content: space-between;*/
+}
+
+.markdown-guide-section-container h1 {
+    font-size: xx-large;
+}
+
+.markdown-guide-section-container h2 {
+    font-size: x-large;
 }
 
 .markdown-guide-section {
-    padding: 0.5em 1em;
-    max-width: 30%;
+    /*padding: 0.5em 1em;*/
+    /*max-width: 30%;*/
 }
 
 .markdown-guide-section-title {

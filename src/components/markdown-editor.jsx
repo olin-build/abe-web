@@ -71,7 +71,7 @@ export default class MarkdownEditor extends React.Component {
                     <Markdown source={this.props.source} className="markdown-preview column medium-6" />
                 </div>
                 {/*<a className="markdown-guide-visibility-toggle" onClick={() => this.props.setMarkdownGuideVisibility(!markdownGuideVisible)}>{((markdownGuideVisible) ? 'Hide' : 'Show') + ' Markdown Guide'}</a>*/}
-                {(markdownGuideVisible) ? markdownGuide : null}
+                {/*{(markdownGuideVisible) ? markdownGuide : null}*/}
             </div>
         )
     }
