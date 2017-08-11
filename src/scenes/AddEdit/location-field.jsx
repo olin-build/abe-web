@@ -67,13 +67,8 @@ export default class LocationField extends React.Component {
             isOlin: parsed.isOlin,
             value: value
         };
-        // this.setState(locationObj, () => {
-        //     if (this.props.onChange) {
-        //         this.props.onChange(this.state.building + this.state.room + this.state.suffix;
-        //     }
-        // });
         if (this.props.onChange)
-            this.props.onChange(value);
+            this.props.onChange(locationObj);
     }
 
     tryParseLocationInput(string) {
@@ -105,66 +100,66 @@ export default class LocationField extends React.Component {
                     result.building = 'EH';
                 } else if (this.stringMatches(buildingString, this.WEST_HALL_KITCHEN_MATCHES)) {
                     result.building = 'WH';
-                    result.room = 'kitchen';
+                    result.room = 'Kitchen';
                     result.isOlin = true;
                     return result;
                 } else if (this.stringMatches(buildingString, this.EAST_HALL_KITCHEN_MATCHES)) {
                     result.building = 'EH';
-                    result.room = 'kitchen';
+                    result.room = 'Kitchen';
                     result.isOlin = true;
                     return result;
                 } else if (this.stringMatches(buildingString, this.WEST_HALL_GYM_MATCHES)) {
                     result.building = 'WH';
-                    result.room = 'gym';
+                    result.room = 'Gym';
                     result.isOlin = true;
                     return result;
                 } else if (this.stringMatches(buildingString, this.EAST_HALL_GYM_MATCHES)) {
                     result.building = 'EH';
-                    result.room = 'gym';
+                    result.room = 'Gym';
                     result.isOlin = true;
                     return result;
                 } else if (this.stringMatches(buildingString, this.LIBRARY_MATCHES)) {
                     result.building = 'MH';
-                    result.room = 'library';
+                    result.room = 'Library';
                     result.isOlin = true;
                     return result;
                 } else if (this.stringMatches(buildingString, this.LIBRARY_UPPER_LEVEL_MATCHES)) {
                     result.building = 'MH';
-                    result.room = 'library';
+                    result.room = 'Library';
                     result.suffix = 'UL';
                     result.isOlin = true;
                     return result;
                 } else if (this.stringMatches(buildingString, this.LIBRARY_LOWER_LEVEL_MATCHES)) {
                     result.building = 'MH';
-                    result.room = 'library';
+                    result.room = 'Library';
                     result.suffix = 'LL';
                     result.isOlin = true;
                     return result;
                 } else if (this.stringMatches(buildingString, this.AUDITORIUM_MATCHES)) {
                     result.building = 'MH';
-                    result.room = 'auditorium';
+                    result.room = 'Auditorium';
                     result.isOlin = true;
                     return result;
                 } else if (this.stringMatches(buildingString, this.O_MATCHES)) {
-                    result.room = 'o';
+                    result.room = 'O';
                     result.isOlin = true;
                     return result;
                 } else if (this.stringMatches(buildingString, this.GREAT_LAWN_MATCHES)) {
-                    result.room = 'great lawn';
+                    result.room = 'Great Lawn';
                     result.isOlin = true;
                     return result;
                 } else if (this.stringMatches(buildingString, this.DINING_HALL_MATCHES)) {
                     result.building = 'CC';
-                    result.room = 'dining hall';
+                    result.room = 'Dining Hall';
                 } else if (this.stringMatches(buildingString, this.DINING_HALL_MEZZANINE_MATCHES)) {
                     result.building = 'CC';
-                    result.room = 'dining hall';
-                    result.suffix = 'mezzanine';
+                    result.room = 'Dining Hall';
+                    result.suffix = 'Mezzanine';
                     result.isOlin = true;
                     return result;
                 } else if (this.stringMatches(buildingString, this.MILAS_HALL_MEZZANINE_MATCHES)) {
                     result.building = 'MH';
-                    result.suffix = 'mezzanine';
+                    result.suffix = 'Mezzanine';
                     result.isOlin = true;
                     return result;
                 } else if (this.stringMatches(buildingString, this.LARGE_PROJECT_BUILDING_MATCHES)) {

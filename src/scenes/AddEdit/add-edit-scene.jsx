@@ -51,6 +51,8 @@ export default class AddEditEventScene extends React.Component {
                 allDay: false,
             },
             seriesData: {},
+            olin_location: false,
+            parsed_location: '',
             recurrence: recurrence,
             month_option: 'week',
             end_option: 'forever',
@@ -187,9 +189,18 @@ export default class AddEditEventScene extends React.Component {
      };
 
     locationChanged = (newValue) => {
-        let data = this.state.eventData;
-        data.location = newValue;
-        this.setState({eventData: data});
+        let state = this.state;
+        state.eventData.location = newValue.value;
+        state.olin_location = newValue.isOlin;
+        let parsed = (({ building, room, suffix }) => ({ building, room, suffix }))(newValue);
+        let parsed_array = [];
+        for (let key in parsed){
+          if (parsed[key]){
+            parsed_array.push(parsed[key])
+          }
+        }
+        state.parsed_location = parsed_array.join(' ');
+        this.setState(state);
      };
 
     descriptionChanged = (newDesc) => {
@@ -224,6 +235,9 @@ export default class AddEditEventScene extends React.Component {
         if (data.allDay){
           data.start.startOf('day');
           data.end.endOf('day');
+        }
+        if (this.state.olin_location){
+          data.location = this.state.parsed_location;
         }
         var newEvent = new Object
         var url
