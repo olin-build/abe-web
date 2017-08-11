@@ -80,23 +80,15 @@ export function labels(state = {}, action) {
             });
 
         case ActionTypes.LABEL_VISIBILITY_TOGGLED:
-            newState = Object.assign({}, state);
-            if (newState.visibleLabels.includes(action.labelName)) {
-                newState.visibleLabels.splice(newState.visibleLabels.indexOf(action.labelName),1);
+            let visibleLabels = state.visibleLabels.slice();
+            if (visibleLabels.includes(action.labelName)) {
+                visibleLabels.splice(visibleLabels.indexOf(action.labelName),1);
             } else {
-                newState.visibleLabels.push(action.labelName);
+                visibleLabels.push(action.labelName);
             }
-            return newState;
-
-        case ActionTypes.SET_LABEL_VISIBILITY:
-            // TODO Test this
-            return Object.assign({}, state, {
-                [action.labelName]: Object.assign({}, state[action.labelName], {
-                    selected: action.visible
-                })
-            });
+            return Object.assign({}, state, {visibleLabels});
 
         default:
-            return state
+            return state;
     }
 }

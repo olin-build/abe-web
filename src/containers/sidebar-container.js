@@ -19,7 +19,8 @@ const getVisibleEvents = (events, labels) => {
 const mapStateToProps = state => {
     return {
         sidebarState: state.sidebar,
-        labels: state.labels
+        possibleLabels: state.labels.labelList,
+        selectedLabels: state.labels.visibleLabels,
     }
 };
 
@@ -28,10 +29,7 @@ const mapDispatchToProps = dispatch => {
         refreshLabelsIfNeeded: () => {
             dispatch(Actions.refreshLabelsIfNeeded());
         },
-        generateFeedClick: () => {
-            dispatch(Actions.generateICSFeed());
-        },
-        labelVisibilityToggled: (labelName) => {
+        labelToggled: (labelName) => {
             dispatch(Actions.labelVisibilityToggled(labelName));
         },
         homeClicked: () => {

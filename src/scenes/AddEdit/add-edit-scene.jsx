@@ -19,33 +19,18 @@ export default class AddEditEventScene extends React.Component {
 
     constructor(props) {
         super(props);
-        this.receivedSuccessfulResponse = this.receivedSuccessfulResponse.bind(this);
-        this.titleChanged = this.titleChanged.bind(this);
-        this.locationChanged = this.locationChanged.bind(this);
-        this.startChanged = this.startChanged.bind(this);
-        this.endChanged = this.endChanged.bind(this);
-        this.descriptionChanged = this.descriptionChanged.bind(this);
-        this.labelsChanged = this.labelsChanged.bind(this);
-        this.visibilityChanged = this.visibilityChanged.bind(this);
-        this.deleteButtonClicked = this.deleteButtonClicked.bind(this);
-        this.saveButtonClicked = this.saveButtonClicked.bind(this);
-        this.recurrenceSelected = this.recurrenceSelected.bind(this);
-        this.recurrenceChanged = this.recurrenceChanged.bind(this);
-        this.getEventURL = this.getEventURL.bind(this);
-        this.getLabels = this.getLabels.bind(this);
-        this.allDayChanged = this.allDayChanged.bind(this);
         this.state = this.getInitialState();
 
         // Load the ID(s) for the event
         Object.assign(this.state.eventData, this.getIdFromURL(props));
         //
-        // if (this.state.eventData.id || this.state.eventData.sid)
-        //     this.updateEventData();
+        if (this.state.eventData.id || this.state.eventData.sid)
+            this.updateEventData();
         //
 
     }
 
-    getInitialState() {
+    getInitialState = () => {
         let defaultStart = moment().minutes(0).milliseconds(0);
         let defaultEnd = defaultStart.clone().add(1, 'h');
         let recurrence = {
@@ -72,37 +57,16 @@ export default class AddEditEventScene extends React.Component {
             redirect: false,
             possibleLabels: {},
         };
-    }
+     };
 
     componentDidMount() {
-        this.props.setSidebarMode(SidebarModes.ADD_EDIT_EVENT);
+        this.props.setSidebarMode(SidebarModes.ADD_EDIT_EVENT)
 
-        let getEventDataPromise = (this.state.eventData.id || this.state.eventData.sid) ? this.updateEventData() : null;
-
-        let possibleLabels = {};
-        let response = this.getLabels().then((response)=>{
-            let labels = response.data
-            for (let i in labels){
-                let label = labels[i];
-                label.selected = false;
-                possibleLabels[label.name] = label
-            }
-            this.setState({possibleLabels : possibleLabels}, () => {
-              if (getEventDataPromise){
-                getEventDataPromise.then(()=>{
-                  let state = this.state;
-                  for (let i in state.eventData.labels){
-                      let name = state.eventData.labels[i]
-                      if (name in state.possibleLabels){
-                        state.possibleLabels[name].selected = true}
-                      };
-                  this.setState(state);
-              })}
-            })
-          });
+        if (this.props.refreshLabelsIfNeeded)
+            this.props.refreshLabelsIfNeeded();
     }
 
-    getIdFromURL(props) {
+    getIdFromURL = (props) => {
         if ('match' in props && 'id' in props.match.params) {
             return {id: props.match.params.id};
         }
@@ -110,7 +74,7 @@ export default class AddEditEventScene extends React.Component {
             return {sid: props.match.params.sid, rec_id: props.match.params.rec_id};
         }
         return null;
-    }
+    };
 
     componentWillReceiveProps(nextProps) {
         // Check to see if the ID parameter in the URL has changed
@@ -126,22 +90,22 @@ export default class AddEditEventScene extends React.Component {
             }
 
         }
-    }
+     };
 
-    updateEventData() {
+    updateEventData = () => {
         // Make the request and register the response handlers
         return axios.get(this.getEventURL()).then(this.receivedSuccessfulResponse).catch(this.requestError);
-    }
+     };
 
-    getEventURL() {
+    getEventURL = () => {
         let id = this.state.eventData.id;
         let sid = this.state.eventData.sid;
         let rec_id = moment.utc(Number(this.state.eventData.rec_id)).toString(); // Reformat as ms since UNIX epoch
 
         return window.abe_url + '/events/' + ((id) ? id.toString() : (sid + '/' + rec_id));
-    }
+     };
 
-    receivedSuccessfulResponse(response) {
+    receivedSuccessfulResponse = (response) => {
         let eventData = response.data;
 
         // If the labels are null/undefined, create an empty list in our state
@@ -163,49 +127,49 @@ export default class AddEditEventScene extends React.Component {
         }
 
         this.setState({eventData: eventData, seriesData: seriesData});
-    }
+     };
 
-    requestError(error) {
+    requestError = (error) => {
         console.error('Error making request for event data:');
         console.error(error);
         alert('Error: ' + error.message);
-    }
+     };
 
     getLabels = () => {
       return axios.get(window.abe_url + '/labels/');
-    }
+     };
 
-    titleChanged(e) {
+    titleChanged = (e) => {
         let data = this.state.eventData;
         data = Object.assign(data, {title: e.currentTarget.value});
         this.setState({eventData: data});
-    }
+     };
 
-    startChanged(value) {
+    startChanged = (value) => {
         let data = this.state.eventData;
         let diff = value.diff(data.start);
         data.start = value;
         data.end = data.end.add(diff, 'ms');
         data = Object.assign(this.state.eventData, data);
         this.setState({eventData: data});
-    }
-    endChanged(value) {
+     };
+    endChanged = (value) => {
       let data = this.state.eventData;
       data.end = value;
       data = Object.assign(this.state.eventData, data);
       this.setState({eventData: data});
-    }
+     };
 
-    recurrenceChanged(value) {
+    recurrenceChanged = (value) => {
         let state = this.state;
         state.eventData.recurrence = value.recurrence;
         state.month_option = value.month_option;
         state.end_option = value.end_option;
         state = Object.assign(this.state, state);
         this.setState(state);
-    }
+     };
 
-    recurrenceSelected(){
+    recurrenceSelected = () =>{
       let data = this.state.eventData;
       if(data.recurrence){
         delete data.recurrence;
@@ -214,48 +178,44 @@ export default class AddEditEventScene extends React.Component {
         data.recurrence = this.state.recurrence
       }
       this.setState({eventData: data})
-    }
+     };
 
-    allDayChanged(){
+    allDayChanged = () =>{
       let data = this.state.eventData;
       data.allDay = !data.allDay;
       this.setState({eventData: data});
-    }
+     };
 
-    locationChanged(newValue) {
+    locationChanged = (newValue) => {
         let data = this.state.eventData;
         data.location = newValue;
         this.setState({eventData: data});
-    }
+     };
 
-    descriptionChanged(newDesc) {
+    descriptionChanged = (newDesc) => {
         let data = this.state.eventData;
         data.description = newDesc;
         this.setState({eventData: data});
-    }
+     };
 
-    eventSavedSuccessfully(data) {
-        // data.start = moment.utc(data.start);
-        // data.start = data.start.local();
-        // data.end = moment.utc(data.end);
-        // data.end = data.end.local();
+    eventSavedSuccessfully = (data) => {
         this.setState({redirect: true});
-    }
+     };
 
-    cancelButtonClicked() {
+    cancelButtonClicked = () => {
         window.history.back();
-    }
+     };
 
-    deleteButtonClicked() {
+    deleteButtonClicked = () => {
         if (confirm('Are you sure you want to delete this event?')) {
           axios.delete(this.getEventURL()).then(() => {
               alert('Event deleted successfully');
               this.setState({redirect: true});
           }).catch(this.requestError);
         }
-    }
+     };
 
-    saveButtonClicked() {
+    saveButtonClicked = () => {
         let data = this.state.eventData;
         if (!data.title){
           alert('Event Title is required')
@@ -307,29 +267,29 @@ export default class AddEditEventScene extends React.Component {
                 alert("Error: " + errorThrown);
             }
         });
-    }
+     };
 
-    visibilityChanged(value) {
+    visibilityChanged = (value) => {
         let data = this.state.eventData;
         data.visibility = value;
         data = Object.assign(this.state.eventData, data);
         this.setState({eventData: data});
-    }
+     };
 
-    labelsChanged(label) {
-        if (this.state) {
-            let state = this.state;
-            state.possibleLabels[label].selected = !state.possibleLabels[label].selected
-            let i = state.eventData.labels.indexOf(label)
-            if (i > -1){
-              state.eventData.labels.splice(i, 1)
-            }
-            else{
-              state.eventData.labels.push(label)
-            }
-            this.setState(state);
+    labelToggled = (labelName) => {
+
+        let labels = this.state.eventData.labels.slice();
+        if (labels.includes(labelName)) {
+            labels.splice(labels.indexOf(labelName),1);
+        } else {
+            labels.push(labelName);
         }
-    }
+        this.setState({
+            eventData: Object.assign({}, this.state.eventData, {
+                labels
+            })
+        });
+    };
 
     render() {
         let pageTitle = this.state.eventData.id || this.state.eventData.sid ?  'Edit Event' : 'Add Event';
@@ -355,7 +315,7 @@ export default class AddEditEventScene extends React.Component {
                     <LocationField location={this.state.eventData.location} onChange={this.locationChanged}/>
                     <MarkdownEditor source={this.state.eventData.description} onChange={this.descriptionChanged} setMarkdownGuideVisibility={this.props.setMarkdownGuideVisibility} markdownGuideVisible={this.props.markdownGuideVisible} />
                     <EventVisibilitySelector visibility={this.state.eventData.visibility} onChange={this.visibilityChanged}/>
-                    <LabelPane contentClass='add-edit-filters' labelVisibilityToggled={this.labelsChanged} labels={this.state.possibleLabels} refreshLabelsIfNeeded={this.props.refreshLabelsIfNeeded}/>
+                    <LabelPane contentClass='add-edit-filters' possibleLabels={this.props.possibleLabels} selectedLabels={this.state.eventData.labels} labelToggled={this.labelToggled} refreshLabelsIfNeeded={this.props.refreshLabelsIfNeeded}/>
                     <span>Need a new label? <a href="https://goo.gl/forms/2cqVijokICZ5S20R2" target="_blank">Request one here</a>.</span>
                     <SaveCancelButtons onCancel={this.cancelButtonClicked} onDelete={this.deleteButtonClicked} showDelete={'id' in this.state.eventData || 'sid' in this.state.eventData} onSubmit={this.saveButtonClicked} disabled={'UID' in this.state.eventData} submitButtonText={submitButtonText}/>
             </div>

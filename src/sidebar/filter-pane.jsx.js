@@ -8,13 +8,13 @@ export default class FilterPane extends React.Component {
         let visibleLabels;
         switch (allNoneDefault) {
             case 'all':
-                visibleLabels = Object.values(this.props.labels.labelList).map(l => l.name);
+                visibleLabels = Object.values(this.props.possibleLabels).map(l => l.name);
                 break;
             case 'none':
                 visibleLabels = [];
                 break;
             case 'default':
-                visibleLabels = Object.values(this.props.labels.labelList).filter(l => l.default).map(l => l.name);
+                visibleLabels = Object.values(this.props.possibleLabels).filter(l => l.default).map(l => l.name);
                 break;
             default:
                 // Do nothing

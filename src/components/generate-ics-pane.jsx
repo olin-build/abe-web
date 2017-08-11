@@ -5,27 +5,18 @@ export default class GenerateICSPane extends React.Component {
 
     constructor(props) {
         super(props);
+        this.copyToClipboard = this.copyToClipboard.bind(this);
+    }
 
-        if (props.labels.visibleLabels) {
-            this.state = {url: this.generateURL(props.labels.visibleLabels)};
+    copyToClipboard() {
+        if (this.props.selectedLabels.length > 0) {
+            let url = window.abe_url + '/ics/?labels=' + this.props.selectedLabels.join(',');
+            copy(url);
+            alert("Link copied to clipboard");
+        } else {
+            alert('You must select at least one event tag.')
         }
     }
-
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.labels.visibleLabels) {
-            this.setState({url: this.generateURL(nextProps.labels.visibleLabels)});
-        }
-    }
-
-    generateURL(labels) {
-        labels = labels.filter(label => label.selected).map(label => label.name);
-        return window.abe_url + '/ics/?labels=' + labels.join(',');
-    }
-
-    copyToClipboard = () => {
-        copy(this.state.url);
-        alert("Link copied to clipboard");
-    };
 
     render() {
         return (

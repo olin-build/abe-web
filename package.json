@@ -7,7 +7,8 @@
     "webpack:deploy": "webpack --config=webpack.config.js -p",
     "heroku-postbuild": "npm run webpack:deploy",
     "start": "node build/bundle.js",
-    "dev": "webpack-dev-server --inline --hot"
+    "dev": "webpack-dev-server --inline --hot",
+    "stats": "webpack --json > stats.json"
   },
   "engines": {
     "node": "6.11.1"
@@ -55,7 +56,6 @@
     "jquery": "^3.2.1",
     "moment": "^2.18.1",
     "react": "^15.6.1",
-    "react-codemirror": "^1.0.0",
     "react-dnd": "^2.4.0",
     "react-dom": "^15.6.1",
     "react-markdown": "^2.5.0",
@@ -63,7 +63,6 @@
     "react-router": "^4.1.2",
     "react-router-dom": "^4.1.1",
     "react-router-redux": "^5.0.0-alpha.6",
-    "react-tag-input": "git+https://github.com/kylecombes/react-tags.git",
     "redux": "^3.7.2",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.2.0",
@@ -73,6 +72,8 @@
     "webpack": "^2.6.1"
   },
   "devDependencies": {
+    "react-codemirror": "^1.0.0",
+    "react-tag-input": "git+https://github.com/kylecombes/react-tags.git",
     "redux-devtools": "^3.4.0",
     "webpack-dev-server": "^2.5.0"
   }
