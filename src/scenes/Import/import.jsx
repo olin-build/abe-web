@@ -1,6 +1,6 @@
 import * as React from "react";
 import SidebarModes from "../../data/sidebar-modes";
-import LabelPane from "../../components/label-pane.jsx";
+import TagPane from "../../components/tag-pane.jsx";
 
 export default class ImportScene extends React.Component {
     constructor(props) {
@@ -10,26 +10,28 @@ export default class ImportScene extends React.Component {
                 labels : [],
                 url : '',
             },
-            possibleLabels : this.setLabels(props.labels),
+            possibleLabels : this.setLabels(props.labels.labelList),
         };
         props.refreshLabelsIfNeeded();
     }
 
     componentWillReceiveProps(nextProps) {
-        let labels = this.setLabels(nextProps.labels);
+        let labels = this.setLabels(nextProps.labels.labelList);
         this.setState({possibleLabels: labels});
     }
 
     componentDidMount() {
-        this.props.setSidebarMode(SidebarModes.VIEW_EVENT);
+        this.props.setSidebarMode(SidebarModes.IMPORT);
     }
 
     setLabels = (labels) => {
         let possibleLabels = {};
-        for (let labelName in labels){
-            let label = labels[labelName];
-            label.default = false;
-            possibleLabels[labelName] = label
+        if (labels) {
+            for (let labelName in labels) {
+                let label = labels[labelName];
+                label.default = false;
+                possibleLabels[labelName] = label
+            }
         }
         return possibleLabels
     };
@@ -73,7 +75,7 @@ export default class ImportScene extends React.Component {
               <div className="row content-container">
                   <h1 className="page-title">Import</h1>
                   <input required="required" type="url" placeholder=".../example_calendar.ics" className="wide-text-box single-line-text-box medium-text-box" onChange={this.urlChanged}/>
-                  <LabelPane contentClass='import-filters' labelVisibilityToggled={this.labelsChanged} labels={this.state.possibleLabels}/>
+                  <TagPane contentClass='import-filters' {...this.props} labelVisibilityToggled={this.labelsChanged} labels={this.state.possibleLabels}/>
                   <br/>
                   <input type="submit" className="button submit" value="Submit" onClick={this.submitICS}/>
               </div>

@@ -22,6 +22,11 @@ export function events(state = [], action) {
         case ActionTypes.GENERATE_ICS_FEED:
             console.debug('Generate ICS Feed button clicked...');
             return state;
+
+        case ActionTypes.SET_CURRENT_EVENT:
+            return Object.assign({}, state, {
+                current: action.id
+            });
         default:
             return state;
     }

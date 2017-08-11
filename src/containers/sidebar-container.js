@@ -1,6 +1,5 @@
 import { connect } from 'react-redux';
 import Sidebar from '../sidebar/sidebar.jsx';
-import SidebarModes from '../data/sidebar-modes';
 import * as Actions from '../data/actions';
 import { push } from 'react-router-redux';
 
@@ -18,6 +17,8 @@ const getVisibleEvents = (events, labels) => {
 
 const mapStateToProps = state => {
     return {
+        general: state.general,
+        currentEvent: state.events.current,
         sidebarState: state.sidebar,
         possibleLabels: state.labels.labelList,
         selectedLabels: state.labels.visibleLabels,
@@ -37,6 +38,9 @@ const mapDispatchToProps = dispatch => {
         },
         addEvent: () => {
             dispatch(push('/edit'));
+        },
+        editEvent: (idSuffix) => {
+            dispatch(push('/edit/' + idSuffix));
         },
         importICSClicked: () => {
             dispatch(push('/import'));

@@ -1,5 +1,5 @@
 import React from "react";
-import LabelPane from "../components/label-pane.jsx";
+import TagPane from "../components/tag-pane.jsx";
 
 export default class FilterPane extends React.Component {
 
@@ -36,7 +36,7 @@ export default class FilterPane extends React.Component {
                         <a onClick={() => this.selectTags('none')}>None</a>
                     </div>
                 </div>
-                <LabelPane {...this.props}/>
+                <TagPane {...this.props}/>
             </div>
         )
     }

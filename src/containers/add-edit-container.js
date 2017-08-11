@@ -4,6 +4,7 @@ import AddEditEventScene from '../scenes/AddEdit/add-edit-scene.jsx';
 
 const mapStateToProps = state => {
     return {
+        general: state.general,
         // events: getVisibleEvents(state.events, state.labels),
         possibleLabels: state.labels.labelList,
         markdownGuideVisible: state.addEdit.markdownGuideVisible

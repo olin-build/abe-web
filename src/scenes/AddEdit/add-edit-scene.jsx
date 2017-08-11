@@ -5,9 +5,9 @@ import SaveCancelButtons from './save-cancel-buttons.jsx';
 import LocationField from './location-field.jsx';
 import EventDateTimeSelector from '../../components/date-time-selector.jsx';
 import EventRecurrenceSelector from './recurrence-selector.jsx';
-import TagEntry from '../../components/tag-entry.jsx';
+// import TagEntry from '../../components/tag-entry.jsx';
 import MarkdownEditor from '../../components/markdown-editor.jsx';
-import LabelPane from '../../components/label-pane.jsx'
+import TagPane from '../../components/tag-pane.jsx'
 import moment from 'moment';
 import deepcopy from 'deepcopy';
 import axios from 'axios';
@@ -60,7 +60,7 @@ export default class AddEditEventScene extends React.Component {
      };
 
     componentDidMount() {
-        this.props.setSidebarMode(SidebarModes.ADD_EDIT_EVENT)
+        this.props.setSidebarMode(SidebarModes.ADD_EDIT_EVENT);
 
         if (this.props.refreshLabelsIfNeeded)
             this.props.refreshLabelsIfNeeded();
@@ -98,12 +98,15 @@ export default class AddEditEventScene extends React.Component {
      };
 
     getEventURL = () => {
-        let id = this.state.eventData.id;
-        let sid = this.state.eventData.sid;
-        let rec_id = moment.utc(Number(this.state.eventData.rec_id)).toString(); // Reformat as ms since UNIX epoch
-
-        return window.abe_url + '/events/' + ((id) ? id.toString() : (sid + '/' + rec_id));
+        return window.abe_url + '/events/' + this.resolveID(this.state.eventData);
      };
+
+    resolveID = (eventData) => {
+        let id = eventData.id;
+        let sid = eventData.sid;
+        let rec_id = moment.utc(Number(eventData.rec_id)).toString(); // Reformat as ms since UNIX epoch
+        return id ? id.toString() : (sid + '/' + rec_id);
+    };
 
     receivedSuccessfulResponse = (response) => {
         let eventData = response.data;
@@ -127,6 +130,7 @@ export default class AddEditEventScene extends React.Component {
         }
 
         this.setState({eventData: eventData, seriesData: seriesData});
+        // this.props.setCurrentEvent(this.resolveID(eventData));
      };
 
     requestError = (error) => {
@@ -291,6 +295,10 @@ export default class AddEditEventScene extends React.Component {
         });
     };
 
+    // componentWillUnmount() {
+    //     this.props.setCurrentEvent(null);
+    // }
+
     render() {
         let pageTitle = this.state.eventData.id || this.state.eventData.sid ?  'Edit Event' : 'Add Event';
         let submitButtonText = this.state.eventData.id || this.state.eventData.sid ?  'Update Event' : 'Add Event';
@@ -315,8 +323,8 @@ export default class AddEditEventScene extends React.Component {
                     <LocationField location={this.state.eventData.location} onChange={this.locationChanged}/>
                     <MarkdownEditor source={this.state.eventData.description} onChange={this.descriptionChanged} setMarkdownGuideVisibility={this.props.setMarkdownGuideVisibility} markdownGuideVisible={this.props.markdownGuideVisible} />
                     <EventVisibilitySelector visibility={this.state.eventData.visibility} onChange={this.visibilityChanged}/>
-                    <LabelPane contentClass='add-edit-filters' possibleLabels={this.props.possibleLabels} selectedLabels={this.state.eventData.labels} labelToggled={this.labelToggled} refreshLabelsIfNeeded={this.props.refreshLabelsIfNeeded}/>
-                    <span>Need a new label? <a href="https://goo.gl/forms/2cqVijokICZ5S20R2" target="_blank">Request one here</a>.</span>
+                    <TagPane contentClass='add-edit-filters' selectedLabels={this.state.eventData.labels} {...this.props}/>
+                    <span style={{'margin-top': '1em',display: 'block'}}>Need a new label? <a href="https://goo.gl/forms/2cqVijokICZ5S20R2" target="_blank">Request one here</a>.</span>
                     <SaveCancelButtons onCancel={this.cancelButtonClicked} onDelete={this.deleteButtonClicked} showDelete={'id' in this.state.eventData || 'sid' in this.state.eventData} onSubmit={this.saveButtonClicked} disabled={'UID' in this.state.eventData} submitButtonText={submitButtonText}/>
             </div>
           </div>

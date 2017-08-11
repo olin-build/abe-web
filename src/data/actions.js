@@ -4,6 +4,7 @@ import fetch from 'isomorphic-fetch';
 export const ActionTypes = {
     REFRESH_EVENTS_IF_NEEDED: 'REFRESH_EVENTS_IF_NEEDED',
     FETCH_EVENTS: 'FETCH_EVENTS',
+    SET_CURRENT_EVENT: 'SET_CURRENT_EVENT',
     DISPLAY_ERROR: 'DISPLAY_ERROR',
     DISPLAY_MESSAGE: 'DISPLAY_MESSAGE',
     ADD_EVENT: 'ADD_EVENT',
@@ -28,6 +29,19 @@ export function displayMessage(message) {
 
 export function displayError(error, message) {
     return {type: ActionTypes.DISPLAY_ERROR, error, message};
+}
+
+export function setCurrentEvent(eventId) {
+    return {type: ActionTypes.SET_CURRENT_EVENT, id: eventId};
+}
+
+export function deleteCurrentEvent() {
+    return (dispatch, getState) => {
+        if (confirm('Are you sure you want to delete this event?')) {
+            let idSuffix = getState().events.current;
+            // TODO Delete the event
+        }
+    };
 }
 
 export function refreshLabelsIfNeeded() {

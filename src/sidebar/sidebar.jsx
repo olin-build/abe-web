@@ -6,6 +6,8 @@ import FilterPane from "./filter-pane.jsx";
 import LinkPane from "./link-pane.jsx";
 import GenerateICSPane from '../components/generate-ics-pane.jsx';
 import MarkdownGuide from "../scenes/AddEdit/markdown-guide.jsx";
+import EventActionsPane from "../scenes/AddEdit/actions-pane.jsx";
+import TagPane from "../components/tag-pane.jsx";
 
 export default class Sidebar extends Component {
 
@@ -16,7 +18,16 @@ export default class Sidebar extends Component {
         if (state.LINK_PANE) {
             content.push(<LinkPane addEventClicked={this.props.addEvent} importICSClicked={this.props.importICSClicked} key="link" className="sidebar-item"/>)
         }
-        if (state.FILTER_PANE) {
+
+        if (state.EVENT_ACTIONS) {
+            content.push(<EventActionsPane key="event-actions" className="sidebar-item" {...this.props}/>);
+        }
+
+        if (state.EVENT_LABELS_PANE) { // For viewing a single event
+            content.push(<SidebarItemContainer key="event-labels" header="Tags"><TagPane editable={false} showUnselected={false} {...this.props} selectedLabels={this.props.currentEvent.labels}/></SidebarItemContainer>);
+        }
+
+        if (state.FILTER_PANE) { // For viewing the calendar
             content.push(<SidebarItemContainer key="filter-pane" header="Filter"><FilterPane {...this.props}/></SidebarItemContainer>);
         }
         if (state.GENERATE_ICS_PANE) {
