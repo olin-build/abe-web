@@ -17,12 +17,6 @@ export function general(state = {}, action) {
 
 export function events(state = [], action) {
     switch (action.type) {
-        case ActionTypes.ADD_EVENT:
-            return [...state, action.data]; // TODO Make this better
-        case ActionTypes.GENERATE_ICS_FEED:
-            console.debug('Generate ICS Feed button clicked...');
-            return state;
-
         case ActionTypes.SET_CURRENT_EVENT:
             return Object.assign({}, state, {
                 current: action.id

@@ -323,8 +323,8 @@ export default class AddEditEventScene extends React.Component {
                     <LocationField location={this.state.eventData.location} onChange={this.locationChanged}/>
                     <MarkdownEditor source={this.state.eventData.description} onChange={this.descriptionChanged} setMarkdownGuideVisibility={this.props.setMarkdownGuideVisibility} markdownGuideVisible={this.props.markdownGuideVisible} />
                     <EventVisibilitySelector visibility={this.state.eventData.visibility} onChange={this.visibilityChanged}/>
-                    <TagPane contentClass='add-edit-filters' selectedLabels={this.state.eventData.labels} {...this.props}/>
-                    <span style={{'margin-top': '1em',display: 'block'}}>Need a new label? <a href="https://goo.gl/forms/2cqVijokICZ5S20R2" target="_blank">Request one here</a>.</span>
+                    <TagPane contentClass='add-edit-filters' selectedLabels={this.state.eventData.labels} labelToggled={this.labelToggled} {...this.props}/>
+                    <span style={{marginTop: '1em',display: 'block'}}>Need a new label? <a href="https://goo.gl/forms/2cqVijokICZ5S20R2" target="_blank">Request one here</a>.</span>
                     <SaveCancelButtons onCancel={this.cancelButtonClicked} onDelete={this.deleteButtonClicked} showDelete={'id' in this.state.eventData || 'sid' in this.state.eventData} onSubmit={this.saveButtonClicked} disabled={'UID' in this.state.eventData} submitButtonText={submitButtonText}/>
             </div>
           </div>
