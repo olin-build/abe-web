@@ -200,7 +200,7 @@ header nav li.menu-text:hover a {
 
 .sidebar-item-content {
     background-color: white;
-    padding: 0.6em 1em;
+    padding: 0.6em 1em 1em;
     overflow: auto;
 }
 
@@ -212,10 +212,6 @@ header nav li.menu-text:hover a {
 .sidebar-item-content::-webkit-scrollbar,
 .scene-container::-webkit-scrollbar {
     display: none;
-}
-
-.sidebar-item-content button:last-child:not(.label) {
-    margin-bottom: 0;
 }
 
 .sidebar-item-header {
@@ -239,7 +235,7 @@ header nav li.menu-text:hover a {
 }
 
 .sidebar-item-subsection-header {
-    margin-bottom: 1em;
+    margin-bottom: 0.5em;
     border-bottom: 1px solid #c5c5c5;
     padding-bottom: 0.5em;
     font-size: 90%;
@@ -336,6 +332,43 @@ footer {
 
 /** ----- End Sidebar ----- **/
 
+/** ----- Begin Tags ----- **/
+
+.tag {
+    display: inline-block;
+    padding: 0.33333rem 0.5rem;
+    border-radius: 0;
+    font-size: 0.8rem;
+    line-height: 1;
+    white-space: nowrap;
+    cursor: default;
+    color: #fefefe;
+
+}
+
+span.tag {
+    margin: 1rem 0.1rem 0;
+}
+
+.button.tag {
+    margin-bottom: 0;
+    margin-top: 1rem;
+}
+
+.button.tag:hover {
+     background-color: #14679e;
+     color: #fefefe;
+ }
+
+.tag-selector-list {
+    margin-top: -0.6rem;
+}
+
+/** ----- End Tags ----- **/
+
+
+/** ----- Begin Calendar ----- **/
+
 .calendar-container > .menu-icon-button {
     position: absolute;
     margin: 1.4em 0.9em;
@@ -348,9 +381,6 @@ footer {
     height: 3em;
     fill: gray;
 }
-
-
-/** ----- Begin Calendar ----- **/
 
 #calendar {
     padding: 1rem 0 0;
@@ -368,19 +398,19 @@ footer {
     position: relative;
 }
 
-.label-selector-list {
+.tag-selector-list {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
 }
 
-.label:not(.selected):not(:hover) {
+.tag:not(.selected) {
     background-color: transparent;
     color: black;
-    border-color: darkgray;
+    border: 1px solid darkgray;
 }
 
-.button.label:hover {
+.button.tag:hover {
     cursor: pointer;
 }
 
@@ -410,7 +440,7 @@ footer {
 .m-input-moment .btn-save,
 .m-input-moment .options button.is-active,
 .m-calendar .toolbar button,
-.content-container button:not(.im-btn .label) {
+.content-container button:not(.im-btn .tag) {
     background-color: #009BDF;
 }
 

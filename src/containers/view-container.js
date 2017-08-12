@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { setSidebarMode } from '../data/actions';
+import { setSidebarMode, setCurrentEvent } from '../data/actions';
 import ViewEventScene from '../scenes/View/view-event-scene.jsx';
 
 const mapStateToProps = state => {
@@ -14,7 +14,10 @@ const mapDispatchToProps = dispatch => {
         },
         editEvent: (linkSuffix) => {
             dispatch(push('/edit/'+linkSuffix));
-        }
+        },
+        setCurrentEvent: (eventId) => {
+            dispatch(setCurrentEvent(eventId));
+        },
     }
 };
 

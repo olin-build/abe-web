@@ -4,7 +4,8 @@ import ImportScene from '../scenes/Import/import.jsx';
 
 const mapStateToProps = state => {
     return {
-        labels: state.labels
+        general: state.general,
+        labels: state.labels.labelList
     }
 };
 

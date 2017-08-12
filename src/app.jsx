@@ -17,6 +17,12 @@ import ImportContainer from "./containers/import-container";
 import * as reducers from './data/reducers';
 import SidebarMode from "./data/sidebar-modes";
 const initialState = {
+    general: {
+        isMobile: /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent),
+    },
+    events: {
+        current: null,
+    },
     sidebar: {
         mode: SidebarMode.LOADING,
         isCollapsed: false

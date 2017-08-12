@@ -1,6 +1,6 @@
 import * as React from "react";
 import SidebarModes from "../../data/sidebar-modes";
-import LabelPane from "../../components/label-pane.jsx";
+import TagPane from "../../components/tag-pane.jsx";
 
 export default class ImportScene extends React.Component {
     constructor(props) {
@@ -10,43 +10,19 @@ export default class ImportScene extends React.Component {
                 labels : [],
                 url : '',
             },
-            possibleLabels : this.setLabels(props.labels),
         };
+        this.props.setSidebarMode(SidebarModes.IMPORT);
         props.refreshLabelsIfNeeded();
     }
 
-    componentWillReceiveProps(nextProps) {
-        let labels = this.setLabels(nextProps.labels);
-        this.setState({possibleLabels: labels});
-    }
-
-    componentDidMount() {
-        this.props.setSidebarMode(SidebarModes.VIEW_EVENT);
-    }
-
-    setLabels = (labels) => {
-        let possibleLabels = {};
-        for (let labelName in labels){
-            let label = labels[labelName];
-            label.default = false;
-            possibleLabels[labelName] = label
+    labelToggled = (labelName) => {
+        let labels = this.state.importData.labels.slice();
+        if (labels.includes(labelName)) {
+            labels.splice(labels.indexOf(labelName),1);
+        } else {
+            labels.push(labelName);
         }
-        return possibleLabels
-    };
-
-    labelsChanged = (label) => {
-        if (this.state) {
-            let state = this.state;
-            state.possibleLabels[label].default = !state.possibleLabels[label].default
-            let i = state.importData.labels.indexOf(label)
-            if (i > -1){
-              state.importData.labels.splice(i, 1)
-            }
-            else{
-              state.importData.labels.push(label)
-            }
-            this.setState(state);
-        }
+        this.setState({importData: Object.assign({}, this.state.importData, {labels})});
       };
 
       urlChanged = (e) => {
@@ -73,7 +49,7 @@ export default class ImportScene extends React.Component {
               <div className="row content-container">
                   <h1 className="page-title">Import</h1>
                   <input required="required" type="url" placeholder=".../example_calendar.ics" className="wide-text-box single-line-text-box medium-text-box" onChange={this.urlChanged}/>
-                  <LabelPane contentClass='import-filters' labelVisibilityToggled={this.labelsChanged} labels={this.state.possibleLabels}/>
+                  <TagPane contentClass='import-filters' {...this.props} possibleLabels={this.props.labels} selectedLabels={this.state.importData.labels} labelToggled={this.labelToggled}/>
                   <br/>
                   <input type="submit" className="button submit" value="Submit" onClick={this.submitICS}/>
               </div>
