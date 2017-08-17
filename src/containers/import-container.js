@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { setSidebarMode, refreshLabelsIfNeeded } from '../data/actions';
+import { setSidebarMode, refreshLabelsIfNeeded, toggleSidebarCollapsed } from '../data/actions';
 import ImportScene from '../scenes/Import/import.jsx';
 
 const mapStateToProps = state => {
@@ -16,7 +16,10 @@ const mapDispatchToProps = dispatch => {
         },
         setSidebarMode: mode => {
             dispatch(setSidebarMode(mode));
-        }
+        },
+        toggleSidebarCollapsed: () => {
+            dispatch(toggleSidebarCollapsed());
+        },
     }
 };
 

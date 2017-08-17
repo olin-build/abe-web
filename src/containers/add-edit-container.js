@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { setSidebarMode, setMarkdownGuideVisibility, refreshLabelsIfNeeded } from '../data/actions';
+import { setSidebarMode, setMarkdownGuideVisibility, refreshLabelsIfNeeded, toggleSidebarCollapsed } from '../data/actions';
 import AddEditEventScene from '../scenes/AddEdit/add-edit-scene.jsx';
 
 const mapStateToProps = state => {
@@ -21,6 +21,9 @@ const mapDispatchToProps = dispatch => {
         },
         setMarkdownGuideVisibility: visible => {
             dispatch(setMarkdownGuideVisibility(visible));
+        },
+        toggleSidebarCollapsed: () => {
+            dispatch(toggleSidebarCollapsed());
         },
     }
 };

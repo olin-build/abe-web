@@ -31,19 +31,28 @@ export default class CalendarScene extends React.Component {
         }
 
         let defaultView = 'month';
+        let aspectRatio= 2;
+        let header = {
+           left:   'title',
+           center: 'month agendaWeek agendaDay listWeek',
+           right:  'today prev,next'
+       };
         if( /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
-          defaultView = 'listWeek'};
+          defaultView = 'listWeek';
+          aspectRatio = .5;
+          header =  {
+            left: 'title',
+            right: 'month,agendaWeek,agendaDay,listWeek,today,prev,next',
+            center: '',
+          }
+        };
         this.calendar = $('#calendar');
         this.calendar.fullCalendar({
             weekends: true,
             events: this.getEvents,
-            aspectRatio: 2,
+            aspectRatio: aspectRatio,
             eventRender: this.renderEvents,
-            header: {
-               left:   'title',
-               center: 'month, agendaWeek, agendaDay, listWeek',
-               right:  'today prev,next'
-           },
+            header: header,
            defaultView: defaultView
         });
     }

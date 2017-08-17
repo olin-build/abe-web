@@ -390,8 +390,14 @@ span.tag {
     padding-left: 5em;
 }
 
-.fc-list-item {
+.fc-list-item{
     color: white
+}
+
+.fc-list-item:hover,
+.fc-list-item:focus,
+.fc-list-item-title:hover a{
+    color: black
 }
 
 .calendar-container {
@@ -442,6 +448,19 @@ span.tag {
 .m-calendar .toolbar button,
 .content-container button:not(.im-btn .tag) {
     background-color: #009BDF;
+}
+
+.page-title > .menu-icon-button {
+  position: relative;
+  z-index: 20;
+  cursor: pointer;
+  margin-right: .5em;
+}
+
+.page-title > .menu-icon-button > .menu-icon {
+    width: 1em;
+    height: 1em;
+    fill: gray;
 }
 
 .markdown-editor-container {

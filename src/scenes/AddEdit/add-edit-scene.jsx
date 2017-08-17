@@ -7,6 +7,7 @@ import EventDateTimeSelector from '../../components/date-time-selector.jsx';
 import EventRecurrenceSelector from './recurrence-selector.jsx';
 // import TagEntry from '../../components/tag-entry.jsx';
 import MarkdownEditor from '../../components/markdown-editor.jsx';
+import MenuIconButton from '../../components/menu-icon-button.jsx';
 import TagPane from '../../components/tag-pane.jsx'
 import moment from 'moment';
 import deepcopy from 'deepcopy';
@@ -321,8 +322,10 @@ export default class AddEditEventScene extends React.Component {
         let redirect = this.state.redirect ? <Redirect to='/'/> : null;
         return (
             <div className="row content-container">
-                <h1 className="page-title">{pageTitle}</h1>
+                <span className="content-container">
+                <h1 className="page-title"><MenuIconButton onClick={this.props.toggleSidebarCollapsed} tooltip="Show/Hide Sidebar"/>{pageTitle}</h1>
                 {redirect}
+                </span>
                 <div className="event-info-container">
                     <input id="event-title" type="text" placeholder="Title" className="wide-text-box single-line-text-box medium-text-box" value={this.state.eventData.title} onChange={this.titleChanged}/>
                     <div className="date-time-container">

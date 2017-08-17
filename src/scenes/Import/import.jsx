@@ -1,6 +1,7 @@
 import * as React from "react";
 import SidebarModes from "../../data/sidebar-modes";
 import TagPane from "../../components/tag-pane.jsx";
+import MenuIconButton from '../../components/menu-icon-button.jsx';
 
 export default class ImportScene extends React.Component {
     constructor(props) {
@@ -47,7 +48,7 @@ export default class ImportScene extends React.Component {
         return(
           <div className="row expanded page-container">
               <div className="row content-container">
-                  <h1 className="page-title">Import</h1>
+                  <h1 className="page-title"><MenuIconButton onClick={this.props.toggleSidebarCollapsed} tooltip="Show/Hide Sidebar"/>Import</h1>
                   <input required="required" type="url" placeholder=".../example_calendar.ics" className="wide-text-box single-line-text-box medium-text-box" onChange={this.urlChanged}/>
                   <TagPane contentClass='import-filters' {...this.props} possibleLabels={this.props.labels} selectedLabels={this.state.importData.labels} labelToggled={this.labelToggled}/>
                   <br/>
