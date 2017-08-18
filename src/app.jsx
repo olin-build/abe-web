@@ -55,17 +55,17 @@ ReactDOM.render(
                 <div className="scene-overlay" onClick={() => store.dispatch(toggleSidebarCollapsed())}/>
                 <Router history={history}>
                     <Switch>
-                        <Route exact path='/' component={CalendarContainer}/>
-                        <Route exact path='/calendar' component={CalendarContainer}/>
-                        <Route exact path='/calendar/' component={CalendarContainer}/>
-                        <Route path='/calendar/:labels' component={CalendarContainer}/>
-                        <Route exact path='/edit' component={AddEditContainer}/>
-                        <Route exact path='/edit/:id' component={AddEditContainer}/>
-                        <Route path='/edit/:sid/:rec_id' component={AddEditContainer}/>
-                        <Route exact path='/import' component={ImportContainer}/>
-                        <Route exact path='/edit/:id' component={AddEditContainer}/>
-                        <Route path='/edit/:sid/:rec_id' component={AddEditContainer}/>
-                        <Route path='/view/:id' component={ViewEventContainer}/>
+                      <Route exact path='/' component={CalendarContainer}/>
+                      <Route exact path='/calendar' component={CalendarContainer}/>
+                      <Route exact path='/calendar/' component={CalendarContainer}/>
+                      <Route path='/calendar/:labels' component={CalendarContainer}/>
+                      <Route exact path='/edit' component={AddEditContainer}/>
+                      <Route exact path='/edit/:id' component={AddEditContainer}/>
+                      <Route path='/edit/:sid/:rec_id' component={AddEditContainer}/>
+                      <Route exact path='/import' component={ImportContainer}/>
+                      <Route exact path='/edit/:id' component={AddEditContainer}/>
+                      <Route path='/edit/:sid/:rec_id' component={AddEditContainer}/>
+                      <Route path='/view/:id' component={ViewEventContainer}/>
                     </Switch>
                 </Router>
             </div>

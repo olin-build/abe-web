@@ -1,6 +1,5 @@
-<!DOCTYPE html>
-<!-- NOTE: This file is used during development ONLY. On production, index.html.js is used in conjunction with Express.
-     Any changes made to this file should be made to the HTML in index.html.js as well. -->
+const getHTML = (abeUrl, isDev) => {
+    return `<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -10,11 +9,15 @@
 <body>
 <div id="app"></div>
 <script type="text/javascript">
-    window.abe_url = 'https://abe.olin.build';
+    window.abe_url = "${abeUrl}";
+    window.debug = ${isDev.toString()};
 </script>
 <script src="/public/build/bundle.js" type="text/javascript"></script>
 <link rel="stylesheet" href="/node_modules/input-moment/dist/input-moment.css"/>
 <link rel="stylesheet" type="text/css" href="//code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
 <link rel='stylesheet' href='/public/css/app.css'/>
 </body>
-</html>
+</html>`
+};
+
+module.exports = getHTML;
