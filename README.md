@@ -41,3 +41,8 @@ Then visit [http://localhost:8080](http://localhost:8080) in your browser.
 
 Changes should be reflected in your browser every time you save a file (except, it seems, CSS files, which require a manual refresh),
 but it may take a couple seconds for Webpack to recompile everything.
+
+**Note**: When developing, `index.html` is served using `webpack-dev-server`. You can change the URL of your ABE instance
+(and we implore you to please set up a dev instance when testing something new) in `index.html`. When deploying (on Heroku, for instance),
+`server.js` will run and serve the contents of `index.html.js`, which allows environment variables to be set to specify
+the path to your ABE instance.
