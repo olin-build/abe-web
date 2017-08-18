@@ -44,7 +44,7 @@ export function sidebar(state = SidebarModes.LOADING, action) {
                isCollapsed: !state.isCollapsed
             });
         case ActionTypes.SET_SIDEBAR_MODE:
-            return action.mode;
+            return Object.assign({}, state, { mode: action.mode });
         default:
             return state
     }

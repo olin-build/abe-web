@@ -19,7 +19,8 @@ const mapStateToProps = state => {
     return {
         general: state.general,
         currentEvent: state.events.current,
-        sidebarState: state.sidebar,
+        isCollapsed: state.sidebar.isCollapsed,
+        sidebarMode: state.sidebar.mode,
         possibleLabels: state.labels.labelList,
         selectedLabels: state.labels.visibleLabels,
     }
