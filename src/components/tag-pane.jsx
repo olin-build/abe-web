@@ -13,6 +13,8 @@ export default class TagPane extends React.Component {
     };
 
     render() {
+        let enableHoverStyle = !this.props.general.isMobile && this.props.editable;
+        const noHoverText = enableHoverStyle ? '' : 'no-hover ';
         let tagElems = [];
         if (this.props.possibleLabels && this.props.selectedLabels) {
             Object.keys(this.props.possibleLabels).forEach((name) => {
@@ -22,7 +24,7 @@ export default class TagPane extends React.Component {
                     let classes = 'tag ' + name + (selected ? ' selected' : '');
                     if (this.props.editable) {
                         tagElems.push(<button id={'tag-' + name} key={name} title={tooltip} type="button"
-                                              className={'button ' + classes}
+                                              className={`button ${noHoverText}${classes}`}
                                               onClick={() => this.tagClicked(name)}>{name}</button>);
                     } else {
                         tagElems.push(<span id={'tag-' + name} key={name} title={tooltip}
@@ -32,10 +34,9 @@ export default class TagPane extends React.Component {
             });
         }
         let colorSettings = '';
-        let enableHoverStyle = !this.props.general.isMobile && this.props.editable;
         for (let name in this.props.possibleLabels) {
             let bgColor = this.props.possibleLabels[name].color;
-            colorSettings += (enableHoverStyle?'.tag.button.'+name+':hover,':'')+'.tag.'+name+'.selected{background-color:'+bgColor + ';}';
+            colorSettings += `.tag.button.${name}:not(.no-hover):hover,.tag.${name}.selected{background-color:${bgColor};}`;
         }
         return (
             <div className={this.props.contentClass}>

@@ -355,9 +355,10 @@ span.tag {
     margin-top: 1rem;
 }
 
-.button.tag:hover {
-     background-color: #14679e;
-     color: #fefefe;
+.button.tag:hover:not(.no-hover) {
+    background-color: #14679e;
+    color: #fefefe;
+    cursor: pointer;
  }
 
 .tag-selector-list {
@@ -414,10 +415,6 @@ span.tag {
     background-color: transparent;
     color: black;
     border: 1px solid darkgray;
-}
-
-.button.tag:hover {
-    cursor: pointer;
 }
 
 .add-button {
