@@ -16,16 +16,18 @@ import ViewEventContainer from "./containers/view-container";
 import ImportContainer from "./containers/import-container";
 import * as reducers from './data/reducers';
 import SidebarMode from "./data/sidebar-modes";
+const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent);
 const initialState = {
     general: {
-        isMobile: /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent),
+        isMobile,
+        debug: window.debug,
     },
     events: {
         current: null,
     },
     sidebar: {
         mode: SidebarMode.LOADING,
-        isCollapsed: false
+        isCollapsed: isMobile,
     },
     addEdit: {
         markdownGuideVisible: true,
@@ -38,14 +40,21 @@ const initialState = {
 const history = createHistory();
 const rMiddleware = routerMiddleware(history);
 const loggerMiddleware = createLogger();
-let store = createStore(
-    combineReducers({...reducers, router: routerReducer}),
-    initialState,
-    applyMiddleware(
+const middleware = window.debug
+    ? applyMiddleware(
         thunkMiddleware, // lets us dispatch() functions
         loggerMiddleware, // neat middleware that logs actions
         rMiddleware
-    ));
+    )
+    : applyMiddleware(
+        thunkMiddleware, // lets us dispatch() functions
+        rMiddleware
+    );
+let store = createStore(
+    combineReducers({...reducers, router: routerReducer}),
+    initialState,
+    middleware
+);
 
 ReactDOM.render(
     <Provider store={store}>

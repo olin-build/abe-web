@@ -12,34 +12,34 @@ import TagPane from "../components/tag-pane.jsx";
 export default class Sidebar extends Component {
 
     render() {
-        let state = this.props.sidebarState;
+        let mode = this.props.sidebarMode;
         let content = [];
 
-        if (state.LINK_PANE) {
+        if (mode.LINK_PANE) {
             content.push(<LinkPane addEventClicked={this.props.addEvent} importICSClicked={this.props.importICSClicked} key="link" className="sidebar-item"/>)
         }
 
-        if (state.EVENT_ACTIONS) {
+        if (mode.EVENT_ACTIONS) {
             content.push(<EventActionsPane key="event-actions" className="sidebar-item" {...this.props}/>);
         }
 
-        if (state.EVENT_LABELS_PANE) { // For viewing a single event
+        if (mode.EVENT_LABELS_PANE) { // For viewing a single event
             content.push(<SidebarItemContainer key="event-labels" header="Tags"><TagPane editable={false} showUnselected={false} {...this.props} selectedLabels={this.props.currentEvent.labels}/></SidebarItemContainer>);
         }
 
-        if (state.FILTER_PANE) { // For viewing the calendar
+        if (mode.FILTER_PANE) { // For viewing the calendar
             content.push(<SidebarItemContainer key="filter-pane" header="Filter"><FilterPane {...this.props}/></SidebarItemContainer>);
         }
-        if (state.GENERATE_ICS_PANE) {
+        if (mode.GENERATE_ICS_PANE) {
             let header = 'Subscribe';
             content.push(<SidebarItemContainer key="gen-ics" header={header}><GenerateICSPane {...this.props}/></SidebarItemContainer>);
         }
 
-        if (state.MARKDOWN_GUIDE) {
+        if (mode.MARKDOWN_GUIDE) {
             content.push(<SidebarItemContainer key="markdown-guide" header="Markdown Guide"><MarkdownGuide/></SidebarItemContainer>);
         }
 
-        let sidebarClasses = "app-sidebar" + ((state.isCollapsed) ? ' collapsed' : ' expanded');
+        let sidebarClasses = "app-sidebar" + ((this.props.isCollapsed) ? ' collapsed' : ' expanded');
         return (
             <div className={sidebarClasses}>
                 <div className="sidebar-container">
