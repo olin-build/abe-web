@@ -4,6 +4,7 @@
   "scripts": {
   },
   "env": {
+    "ABE_URL": "https://abe.olin.build"
   },
   "formation": {
   },
