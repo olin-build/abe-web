@@ -69,6 +69,7 @@
     "serve-static": "^1.12.3",
     "svg-react-loader": "^0.4.4",
     "typescript": "^2.4.1",
+    "ultra-responsive-calendar": "git+https://github.com/kylecombes/ultra-responsive-calendar.git",
     "webpack": "^2.6.1"
   },
   "devDependencies": {

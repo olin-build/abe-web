@@ -4,6 +4,7 @@ import fetch from 'isomorphic-fetch';
 export const ActionTypes = {
     REFRESH_EVENTS_IF_NEEDED: 'REFRESH_EVENTS_IF_NEEDED',
     FETCH_EVENTS: 'FETCH_EVENTS',
+    REQUESTING_EVENTS: 'REQUESTING_EVENTS',
     SET_CURRENT_EVENT: 'SET_CURRENT_EVENT',
     DISPLAY_ERROR: 'DISPLAY_ERROR',
     DISPLAY_MESSAGE: 'DISPLAY_MESSAGE',
@@ -96,9 +97,12 @@ export function setSidebarMode(mode) {
 
 export function refreshEvents(start, end) {
     return (dispatch) => {
-        // Update the state to know that we're fetching labels
-        dispatch(refreshingLabels());
-        return fetch(window.abe_url + '/events/')
+        // Update the state to know that we're fetching events
+        dispatch(refreshingEvents());
+
+        const startString = `${start.getFullYear()}-${start.getMonth()+1}-${start.getDate()}`;
+        const endString = `${end.getFullYear()}-${end.getMonth()+1}-${end.getDate()}`;
+        return fetch(`${window.abe_url}/events/?start=${startString}&end=${endString}`)
             .then(
                 response => response.json(),
                 error => dispatch(displayError(error)))
@@ -107,7 +111,7 @@ export function refreshEvents(start, end) {
 }
 
 export function refreshingEvents() {
-    return {type: ActionTypes.REQUESTING_LABELS};
+    return {type: ActionTypes.REQUESTING_EVENTS};
 }
 
 export function setMarkdownGuideVisibility(visible) {

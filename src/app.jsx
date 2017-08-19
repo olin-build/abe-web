@@ -26,6 +26,8 @@ const initialState = {
     },
     events: {
         current: null,
+        allEvents: null,
+        eventsToDisplay: [],
     },
     sidebar: {
         mode: SidebarMode.LOADING,

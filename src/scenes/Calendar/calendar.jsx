@@ -3,6 +3,7 @@ import SidebarModes from "../../data/sidebar-modes";
 import * as fullCalendar from 'fullcalendar/dist/fullcalendar';
 import * as qtip from '../../../public/js/vendor/jquery.qtip.js'
 import MenuIconButton from '../../components/menu-icon-button.jsx';
+import UltraResponsiveCalendar from "ultra-responsive-calendar";
 
 export default class CalendarScene extends React.Component {
 
@@ -13,7 +14,8 @@ export default class CalendarScene extends React.Component {
             events: [],
             colorSettings: ''
         };
-        this.doingLabelRefresh = false;
+        // this.doingLabelRefresh = false;
+        console.log(require('util').inspect(UltraResponsiveCalendar))
     }
 
     componentDidMount(){
@@ -31,35 +33,35 @@ export default class CalendarScene extends React.Component {
             this.props.setVisibleLabels(labelsArr);
         }
 
-        let defaultView = 'month';
-        let aspectRatio= 2;
-        let header = {
-           left:   'title',
-           center: 'month agendaWeek agendaDay listWeek',
-           right:  'today prev,next'
-       };
-        if( /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
-          defaultView = 'listWeek';
-          aspectRatio = .5;
-          header =  {
-            left: 'title',
-            right: 'month,agendaWeek,agendaDay,listWeek,today,prev,next',
-            center: '',
-          }
-        };
-        this.calendar = $('#calendar');
-        this.calendar.fullCalendar({
-            weekends: true,
-            events: this.getEvents,
-            aspectRatio: aspectRatio,
-            eventRender: this.renderEvents,
-            header: header,
-           defaultView: defaultView
-        });
+       //  let defaultView = 'month';
+       //  let aspectRatio= 2;
+       //  let header = {
+       //     left:   'title',
+       //     center: 'month agendaWeek agendaDay listWeek',
+       //     right:  'today prev,next'
+       // };
+       //  if( /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
+       //    defaultView = 'listWeek';
+       //    aspectRatio = .5;
+       //    header =  {
+       //      left: 'title',
+       //      right: 'month,agendaWeek,agendaDay,listWeek,today,prev,next',
+       //      center: '',
+       //    }
+       //  };
+       //  this.calendar = $('#calendar');
+       //  this.calendar.fullCalendar({
+       //      weekends: true,
+       //      events: this.getEvents,
+       //      aspectRatio: aspectRatio,
+       //      eventRender: this.renderEvents,
+       //      header: header,
+       //     defaultView: defaultView
+       //  });
     }
 
     componentDidUpdate() {
-        this.refreshViewFromCache();
+        // this.refreshViewFromCache();
 
         if (this.props.labels.visibleLabels) {
             let labelsStr = this.props.labels.visibleLabels
@@ -73,83 +75,81 @@ export default class CalendarScene extends React.Component {
         }
     }
 
-    getEvents = (start, end, timezone, callback) => {
-        // Hack to prevent a server query when toggling visibility of labels
-        if (this.doingLabelRefresh) {
-            this.doingLabelRefresh = false;
-            callback(this.getEventsFiltered());
-        } else {
-            this.getEventsFromServer(start, end, timezone, callback);
-        }
-    };
+    // getEvents = (start, end, timezone, callback) => {
+    //     // Hack to prevent a server query when toggling visibility of labels
+    //     if (this.doingLabelRefresh) {
+    //         this.doingLabelRefresh = false;
+    //         callback(this.getEventsFiltered());
+    //     } else {
+    //         this.getEventsFromServer(start, end, timezone, callback);
+    //     }
+    // };
 
-    getEventsFromServer = (start, end, timezone, callback) => {
-        let self = this;
-        let startDate = start._d;
-        let endDate = end._d;
-        let startString = startDate.getFullYear() + '-' + (startDate.getMonth()+1) + '-' + startDate.getDate();
-        let endString = endDate.getFullYear() + '-' + (endDate.getMonth()+1) + '-' + endDate.getDate();
-        $.ajax({
-            url: window.abe_url + '/events/?start=' + startString + '&end=' + endString, // TODO Handle caching
-            type: 'GET',
-            error: function() {
-                alert('There was an error while fetching events!');
-            },
-            success: function (events) {
-                for (let i in events){
-                  start = moment.utc(events[i].start);
-                  start = start.local()
-                  end = moment.utc(events[i].end);
-                  end = end.local()
-                  events[i].start = start
-                  events[i].end = end
-                }
-                self.setState({events: events}, ()=> {
-                    let events = self.getEventsFiltered();
-                    callback(events);
-                });
-              }
-            })
-    };
+    // getEventsFromServer = (start, end, timezone, callback) => {
+    //     let self = this;
+    //     let startDate = start._d;
+    //     let endDate = end._d;
+    //     $.ajax({
+    //         url: window.abe_url + '/events/?start=' + startString + '&end=' + endString, // TODO Handle caching
+    //         type: 'GET',
+    //         error: function() {
+    //             alert('There was an error while fetching events!');
+    //         },
+    //         success: function (events) {
+    //             for (let i in events){
+    //               start = moment.utc(events[i].start);
+    //               start = start.local()
+    //               end = moment.utc(events[i].end);
+    //               end = end.local()
+    //               events[i].start = start
+    //               events[i].end = end
+    //             }
+    //             self.setState({events: events}, ()=> {
+    //                 let events = self.getEventsFiltered();
+    //                 callback(events);
+    //             });
+    //           }
+    //         })
+    // };
 
-    getEventsFiltered = () => {
-        console.debug('getEventsFiltered called... Number of events: ' + this.state.events.length + ', number of labels: ' + Object.keys(this.props.labels).length);
-        let eventsToShow = [];
-        let visibleLabels = this.props.labels.visibleLabels;
-        if (this.props.labels.labelList && this.props.labels.visibleLabels.length > 0) {
-            // For each event
-            for (let i = 0; i < this.state.events.length; ++i) {
-                let event = this.state.events[i];
-                // Check for a label that is visible
-                for (let j = 0; j < event.labels.length; ++j) {
-                    if (visibleLabels && visibleLabels.includes(event.labels[j])) {
-                        // This event should be visible
-                        event.color = this.props.labels.labelList[event.labels[j]].color
-                        eventsToShow.push(event);
-                        break;
-                    }
-                }
-            }
-        }
-        console.debug('Returning ' + eventsToShow.length + ' events to FullCalendar');;
-        return eventsToShow;
-    };
-
-    refreshViewFromCache = () => {
-        this.doingLabelRefresh = true;
-        this.calendar.fullCalendar('refetchEvents');
-    };
+    // getEventsFiltered = () => {
+    //     console.debug('getEventsFiltered called... Number of events: ' + this.state.events.length + ', number of labels: ' + Object.keys(this.props.labels).length);
+    //     let eventsToShow = [];
+    //     let visibleLabels = this.props.labels.visibleLabels;
+    //     if (this.props.labels.labelList && this.props.labels.visibleLabels.length > 0) {
+    //         // For each event
+    //         for (let i = 0; i < this.state.events.length; ++i) {
+    //             let event = this.state.events[i];
+    //             // Check for a label that is visible
+    //             for (let j = 0; j < event.labels.length; ++j) {
+    //                 if (visibleLabels && visibleLabels.includes(event.labels[j])) {
+    //                     // This event should be visible
+    //                     event.color = this.props.labels.labelList[event.labels[j]].color
+    //                     eventsToShow.push(event);
+    //                     break;
+    //                 }
+    //             }
+    //         }
+    //     }
+    //     console.debug('Returning ' + eventsToShow.length + ' events to FullCalendar');;
+    //     return eventsToShow;
+    // };
+    //
+    // refreshViewFromCache = () => {
+    //     this.doingLabelRefresh = true;
+    //     this.calendar.fullCalendar('refetchEvents');
+    // };
 
     labelVisibilityToggled = (labelName) => {
         // Update the label visibility in our state
         let labels = this.props.labels;
         let currentVisibility = this.props.labels[labelName].selected;
         labels[labelName].selected = !currentVisibility;
-        this.setState({labels: labels}, () => {
-            // Update the calendar view
-            this.doingLabelRefresh = true;
-            this.calendar.fullCalendar('refetchEvents');
-        });
+        // this.setState({labels: labels}, () => {
+        //     // Update the calendar view
+        //     this.doingLabelRefresh = true;
+        //     this.calendar.fullCalendar('refetchEvents');
+        // });
     };
 
     eventEditClicked = (event) => {
@@ -199,12 +199,13 @@ export default class CalendarScene extends React.Component {
 
     render(){
         // Temporary workaround with FullCalendar. Remove once FullCalendar is gone.
-        let hackInsert = this.props.labels.labelList ? Object.values(this.props.labels.labelList).map(label => label.name) : null;
+        // let hackInsert = this.props.labels.labelList ? Object.values(this.props.labels.labelList).map(label => label.name) : null;
+        const urc = require('ultra-responsive-calendar');
         return (
             <div className="calendar-container">
-                <MenuIconButton onClick={this.props.toggleSidebarCollapsed} tooltip="Show/Hide Sidebar"/>
-                <div style={{display: 'none'}}>{hackInsert}</div>
-                <div id='calendar' className="page-container calendar-container"></div>
+                {/*<MenuIconButton onClick={this.props.toggleSidebarCollapsed} tooltip="Show/Hide Sidebar"/>*/}
+                {/*<div style={{display: 'none'}}>{hackInsert}</div>*/}
+                <UltraResponsiveCalendar id="calendar" className="page-container calendar-container"/>
             </div>
         );
     }
