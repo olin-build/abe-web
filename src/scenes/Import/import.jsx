@@ -14,6 +14,7 @@ export default class ImportScene extends React.Component {
         };
         this.props.setSidebarMode(SidebarModes.IMPORT);
         props.refreshLabelsIfNeeded();
+        props.setPageTitlePrefix('Import Calendar');
     }
 
     labelToggled = (labelName) => {

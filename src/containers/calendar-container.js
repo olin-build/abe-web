@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { setSidebarMode, toggleSidebarCollapsed, setVisibleLabels, setRoute } from '../data/actions';
+import { setSidebarMode, toggleSidebarCollapsed, setVisibleLabels, setPageTitlePrefix, setRoute } from '../data/actions';
 import CalendarScene from '../scenes/Calendar/calendar.jsx';
 import { push } from 'react-router-redux';
 
@@ -38,6 +38,9 @@ const mapDispatchToProps = dispatch => {
         },
         setVisibleLabels: (labels) => {
             dispatch(setVisibleLabels(labels));
+        },
+        setPageTitlePrefix: (title) => {
+            dispatch(setPageTitlePrefix(title));
         },
         setRoute(route) {
             dispatch(setRoute(route));

@@ -24,7 +24,8 @@ export default class Sidebar extends Component {
         }
 
         if (mode.EVENT_LABELS_PANE) { // For viewing a single event
-            content.push(<SidebarItemContainer key="event-labels" header="Tags"><TagPane editable={false} showUnselected={false} {...this.props} selectedLabels={this.props.currentEvent.labels}/></SidebarItemContainer>);
+            const currentEventLabels = this.props.currentEvent ? this.props.currentEvent.labels : null;
+            content.push(<SidebarItemContainer key="event-labels" header="Tags"><TagPane editable={false} showUnselected={false} {...this.props} selectedLabels={currentEventLabels}/></SidebarItemContainer>);
         }
 
         if (mode.FILTER_PANE) { // For viewing the calendar

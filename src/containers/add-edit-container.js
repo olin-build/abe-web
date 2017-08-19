@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { setSidebarMode, setMarkdownGuideVisibility, refreshLabelsIfNeeded, toggleSidebarCollapsed } from '../data/actions';
+import { setSidebarMode, setMarkdownGuideVisibility, refreshLabelsIfNeeded, toggleSidebarCollapsed, setPageTitlePrefix } from '../data/actions';
 import AddEditEventScene from '../scenes/AddEdit/add-edit-scene.jsx';
 
 const mapStateToProps = state => {
@@ -24,6 +24,9 @@ const mapDispatchToProps = dispatch => {
         },
         toggleSidebarCollapsed: () => {
             dispatch(toggleSidebarCollapsed());
+        },
+        setPageTitlePrefix: (title) => {
+            dispatch(setPageTitlePrefix(title));
         },
     }
 };

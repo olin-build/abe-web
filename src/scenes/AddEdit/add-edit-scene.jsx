@@ -67,6 +67,8 @@ export default class AddEditEventScene extends React.Component {
 
         if (this.props.refreshLabelsIfNeeded)
             this.props.refreshLabelsIfNeeded();
+
+        this.props.setPageTitlePrefix(this.state.eventData.id ? 'Edit Event' : 'Add Event');
     }
 
     getIdFromURL = (props) => {
