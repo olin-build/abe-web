@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { setSidebarMode, refreshLabelsIfNeeded, toggleSidebarCollapsed } from '../data/actions';
+import { setSidebarMode, refreshLabelsIfNeeded, toggleSidebarCollapsed, setPageTitlePrefix } from '../data/actions';
 import ImportScene from '../scenes/Import/import.jsx';
 
 const mapStateToProps = state => {
@@ -19,6 +19,9 @@ const mapDispatchToProps = dispatch => {
         },
         toggleSidebarCollapsed: () => {
             dispatch(toggleSidebarCollapsed());
+        },
+        setPageTitlePrefix: (title) => {
+            dispatch(setPageTitlePrefix(title));
         },
     }
 };

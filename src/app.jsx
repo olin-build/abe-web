@@ -21,6 +21,8 @@ const initialState = {
     general: {
         isMobile,
         debug: window.debug,
+        pageTitlePrefix: null,
+        pageTitleSuffix: 'Olin College Events',
     },
     events: {
         current: null,

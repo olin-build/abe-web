@@ -25,6 +25,7 @@ export default class ViewEventScene extends React.Component {
                 data.start = data.start.local();
                 data.end = moment.utc(data.end);
                 data.end = data.end.local();
+                this.props.setPageTitlePrefix(data.title);
                 this.props.setCurrentEvent(data);
                 this.setState({eventData: data});
             }).catch(error => alert('Error retrieving event data from server:\n' + error));

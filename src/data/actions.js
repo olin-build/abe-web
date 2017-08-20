@@ -21,6 +21,7 @@ export const ActionTypes = {
     START_REDIRECT: 'START_REDIRECT',
     SET_MARKDOWN_GUIDE_VISIBILITY: 'SET_MARKDOWN_GUIDE_VISIBILITY',
     TOGGLE_SIDEBAR_VISIBILITY: 'TOGGLE_SIDEBAR_VISIBILITY',
+    SET_PAGE_TITLE: 'SET_PAGE_TITLE',
 };
 
 export function displayMessage(message) {
@@ -115,6 +116,21 @@ export function setMarkdownGuideVisibility(visible) {
 
 export function toggleSidebarCollapsed() {
     return {type: ActionTypes.TOGGLE_SIDEBAR_VISIBILITY};
+}
+
+export function setPageTitlePrefix(newTitle) {
+    return (dispatch, getState) => {
+        let fullTitle;
+        const pageTitleSuffix = getState().general.pageTitleSuffix;
+        if (!newTitle || newTitle.length === 0) {
+            fullTitle = pageTitleSuffix;
+        } else if (newTitle.length > 50) {
+            fullTitle = `${newTitle.substring(0, 50)}... | ${pageTitleSuffix}`;
+        } else {
+            fullTitle = `${newTitle} | ${pageTitleSuffix}`;
+        }
+        dispatch({ type: ActionTypes.SET_PAGE_TITLE, title: fullTitle });
+    }
 }
 
 export function setRoute(route) {

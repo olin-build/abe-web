@@ -2,6 +2,8 @@ import { ActionTypes } from './actions';
 import SidebarModes from '../data/sidebar-modes';
 
 export function general(state = {}, action) {
+    let newState = Object.assign({}, state);
+
     switch (action.type) {
         case ActionTypes.DISPLAY_MESSAGE:
             alert(action.message);
@@ -10,6 +12,10 @@ export function general(state = {}, action) {
             alert((action.message) ? action.message : action.error);
             console.error(action.error);
             return state;
+        case ActionTypes.SET_PAGE_TITLE:
+            window.document.title = action.title;
+            newState.general = Object.assign({}, newState.general, { pageTitlePrefix: action.title });
+            return newState;
         default:
             return state;
     }

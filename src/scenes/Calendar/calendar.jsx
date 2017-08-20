@@ -18,6 +18,7 @@ export default class CalendarScene extends React.Component {
 
     componentDidMount(){
         this.props.setSidebarMode(SidebarModes.CALENDAR_VIEW);
+        this.props.setPageTitlePrefix(null);
 
         // Load the visible labels from the URL (if defined)
         const labelsStr = this.props.match.params.labels;
