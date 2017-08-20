@@ -173,7 +173,7 @@ export default class CalendarScene extends React.Component {
           content.append($('<a>').attr('linkSuffix', linkSuffix).on('click',this.eventViewClicked).text('Details'))
         }
         else if (event.sid)
-          content.append($('<a>').attr('linkSuffix', linkSuffix).on('click',this.eventViewClicked).text('Details'),$('<span> | </span>'),$('<a>').attr('linkSuffix', linkSuffix).on('click',this.eventEditClicked).text('Edit'),$('<span> | </span>'),$('<a>').attr('linkSuffix', linkSuffix+'/'+rec_id).on('click',this.eventViewClicked).text('Edit Occurrence'));
+          content.append($('<a>').attr('linkSuffix', linkSuffix).on('click',this.eventViewClicked).text('Details'),$('<span> | </span>'),$('<a>').attr('linkSuffix', linkSuffix).on('click',this.eventEditClicked).text('Edit'),$('<span> | </span>'),$('<a>').attr('linkSuffix', linkSuffix+'/'+rec_id).on('click',this.eventEditClicked).text('Edit Occurrence'));
         else {
           content.append($('<a>').attr('linkSuffix', linkSuffix).on('click',this.eventViewClicked).text('Details'),$('<span> | </span>'),$('<a>').attr('linkSuffix', linkSuffix).on('click',this.eventEditClicked).text('Edit'));
         }
