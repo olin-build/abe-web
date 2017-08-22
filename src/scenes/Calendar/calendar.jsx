@@ -168,6 +168,9 @@ export default class CalendarScene extends React.Component {
         //add the label to masterLabels if it isn't there when we render
         let linkSuffix = (event.id) ? event.id : event.sid;
         let content = $('<div>').text(event.description);
+        if (event.description && event.description.length > 240){
+          content = $('<div>').text(event.description.slice(0,240) + '...');
+        }
         content.append($('<br>'));
         let rec_id = event.start.utc().valueOf()
         if (event.UID){
