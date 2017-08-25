@@ -272,7 +272,7 @@ header nav li.menu-text:hover a {
 
 .ics-copy-to-clipboard {
     display: block;
-    margin: 0.3em 0;
+    margin-top: 0.5em;
 }
 
 .ics-instructions {
