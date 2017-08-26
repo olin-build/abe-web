@@ -199,7 +199,6 @@ export function editEvent(id, sid, recId) {
     return dispatch => {
         const linkSuffix = id ? id : `${sid}/${recId}`;
         const path = `/edit/${linkSuffix}`;
-        ReactGA.pageview(path);
         dispatch(push(path));
     }
 }
@@ -208,13 +207,11 @@ export function viewEvent(id, sid, recId) {
     return dispatch => {
         const linkSuffix = id ? id : `${sid}/${recId}`;
         const path = `/view/${linkSuffix}`;
-        ReactGA.pageview(path);
         dispatch(push(path));
     }
 }
 
 export function setRoute(route) {
-    ReactGA.pageview(route);
     return dispatch => {
         dispatch(push(route));
     }
