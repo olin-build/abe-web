@@ -40,20 +40,23 @@ const initialState = {
     },
 };
 
+// React Router (with Redux middleware)
+const history = createHistory();
+
 // Google Analytics
 if (window.GA_ID) {
     ReactGA.initialize(window.GA_ID, {
         debug: window.debug
     });
+    history.listen((event) => {
+        // Dispatch page changes to Google Analytics
+        ReactGA.set({ page: event.pathname });
+        ReactGA.pageview(event.pathname);
+    });
+    ReactGA.set({ page: window.location.pathname });
+    ReactGA.pageview(window.location.pathname);
 }
 
-// React Router (with Redux middleware)
-const history = createHistory();
-history.listen((event) => {
-    // Dispatch page changes to Google Analytics
-    ReactGA.set({ page: event.pathname });
-    ReactGA.pageview(event.pathname);
-});
 const routeMiddleware = routerMiddleware(history);
 let store;
 if (window.debug && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) {

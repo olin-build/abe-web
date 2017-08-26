@@ -1,5 +1,4 @@
 import * as React from "react";
-import {browserHistory, Redirect} from 'react-router';
 import EventVisibilitySelector from './visibility-selector.jsx';
 import SaveCancelButtons from './save-cancel-buttons.jsx';
 import LocationField from './location-field.jsx';
@@ -143,10 +142,6 @@ export default class AddEditEventScene extends React.Component {
         alert('Error: ' + error.message);
      };
 
-    getLabels = () => {
-      return axios.get(window.abe_url + '/labels/');
-     };
-
     titleChanged = (e) => {
         let data = this.state.eventData;
         data = Object.assign(data, {title: e.currentTarget.value});
@@ -215,20 +210,15 @@ export default class AddEditEventScene extends React.Component {
         this.setState({eventData: data});
      };
 
-    eventSavedSuccessfully = (data) => {
-        this.setState({redirect: true});
-     };
-
     cancelButtonClicked = () => {
         window.history.back();
      };
 
     deleteButtonClicked = () => {
         if (confirm('Are you sure you want to delete this event?')) {
-          axios.delete(this.getEventURL()).then(() => {
-              alert('Event deleted successfully');
-              this.setState({redirect: true});
-          }).catch(this.requestError);
+            axios.delete(this.getEventURL())
+            .then(this.props.eventDeletedSuccessfully(this.resolveID(this.state.eventData)))
+            .catch(response => this.props.eventDeleteFailed(this.resolveID(this.state.eventData), response));
         }
      };
 
@@ -277,15 +267,14 @@ export default class AddEditEventScene extends React.Component {
           newEvent.end = this.state.eventData.end.toString();
           delete newEvent.recurrence;
         }
+        const fullId = this.state.eventData.id || `${this.state.eventData.sid}/${this.state.eventData.rec_id}`;
         $.ajax({
             url: url,
             method: method,
             contentType: 'application/json',
             data: JSON.stringify(newEvent),
-            success: response => this.eventSavedSuccessfully(response),
-            error: function( jqXHR, textStatus, errorThrown ){
-                alert("Error: " + errorThrown);
-            }
+            success: response => this.props.eventSavedSuccessfully(fullId),
+            error: (jqXHR, textStatus, errorThrown) => this.props.eventSaveFailed(newEvent, errorThrown),
         });
      };
 
@@ -320,12 +309,10 @@ export default class AddEditEventScene extends React.Component {
         let submitButtonText = this.state.eventData.id || this.state.eventData.sid ?  'Update Event' : 'Add Event';
         let recurrence_disable = this.state.eventData.sid ? 'disabled' : null;
         let recurrence = this.state.eventData.recurrence ? <EventRecurrenceSelector reccurs={this.state.eventData.recurrence} month={this.state.month_option} start = {this.state.eventData.start} end = {this.state.end_option} onChange={this.recurrenceChanged}/> : null;
-        let redirect = this.state.redirect ? <Redirect to='/'/> : null;
         return (
             <div className="row content-container">
                 <span className="content-container">
                 <h1 className="page-title"><MenuIconButton onClick={this.props.toggleSidebarCollapsed} tooltip="Show/Hide Sidebar"/>{pageTitle}</h1>
-                {redirect}
                 </span>
                 <div className="event-info-container">
                     <input id="event-title" type="text" placeholder="Title" className="wide-text-box single-line-text-box medium-text-box" value={this.state.eventData.title} onChange={this.titleChanged}/>

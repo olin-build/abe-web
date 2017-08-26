@@ -46,6 +46,47 @@ export function deleteCurrentEvent() {
     };
 }
 
+export function eventSavedSuccessfully(eventId) {
+    return (dispatch) => {
+        ReactGA.event({
+            category: 'Event Save',
+            action: 'success',
+            label: `Event ${eventId} saved successfully`,
+        });
+        dispatch(push('/'));
+    }
+}
+
+export function eventSaveFailed(eventData, error) {
+    const eventId = eventData.id || `${eventData.sid}/${eventData.recId}`;
+    ReactGA.event({
+        category: 'Event Save',
+        action: 'failure',
+        label: `Event ${eventId} save attempt unsuccessful.`,
+    });
+    alert('Saving event failed:\n' + error);
+}
+
+export function eventDeletedSuccessfully(eventId) {
+    return (dispatch) => {
+        ReactGA.event({
+            category: 'Event Delete',
+            action: 'success',
+            label: `Event ${eventId} deleted successfully`,
+        });
+        dispatch(push('/'));
+    }
+}
+
+export function eventDeleteFailed(eventId, error) {
+    ReactGA.event({
+        category: 'Event Delete',
+        action: 'failure',
+        label: `Event ${eventId} delete attempt unsuccessful`,
+    });
+    alert('Delete event failed:\n' + error);
+}
+
 export function refreshLabelsIfNeeded() {
     return (dispatch, getState) => {
         if (!getState().labels.labelList) {
