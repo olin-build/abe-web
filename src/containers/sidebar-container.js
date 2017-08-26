@@ -36,6 +36,11 @@ const mapDispatchToProps = dispatch => {
             dispatch(Actions.labelVisibilityToggled(labelName));
         },
         homeClicked: () => {
+            ReactGA.event({
+                category: 'Sidebar Logo',
+                action: 'click',
+                label: 'User clicked the Olin logo to return to the Home view',
+            });
             dispatch(push('/'));
         },
         addEvent: () => {
