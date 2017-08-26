@@ -56,12 +56,12 @@ history.listen((event) => {
 });
 const routeMiddleware = routerMiddleware(history);
 let store;
-if (window.debug) {
-    const composeEnchancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+if (window.debug && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) {
+    const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__;
     store = createStore(
         combineReducers({...reducers, router: routerReducer}),
         initialState,
-        composeEnchancers(applyMiddleware(
+        composeEnhancers(applyMiddleware(
             thunkMiddleware, // lets us dispatch() functions
             routeMiddleware,
         ))
