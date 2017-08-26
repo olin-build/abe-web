@@ -33,17 +33,21 @@ export default class ImportScene extends React.Component {
           this.setState({importData : importData});
       };
 
-      submitICS = () => {
+    submitICS = () => {
+        const importData = JSON.stringify(this.state.importData);
         $.ajax({
             url: window.abe_url + '/ics/',
             method: 'POST',
             contentType: 'application/json',
-            data: JSON.stringify(this.state.importData),
-            success: response => alert('ICS imported'),
-            error: function( jqXHR, textStatus, errorThrown ){
-                alert("Error: " + errorThrown)},
-        })
-      };
+            data: importData,
+            success: (response) => {
+                this.props.importSuccess(response, importData)
+            },
+            error: (jqXHR, textStatus, errorThrown) => {
+                this.props.importFailed(errorThrown, importData);
+            },
+        });
+    };
 
       render(){
         return(

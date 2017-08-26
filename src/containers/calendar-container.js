@@ -1,7 +1,6 @@
 import { connect } from 'react-redux';
-import { setSidebarMode, toggleSidebarCollapsed, setVisibleLabels, setPageTitlePrefix, setRoute } from '../data/actions';
+import { editEvent, viewEvent, setSidebarMode, toggleSidebarCollapsed, setVisibleLabels, setPageTitlePrefix, setRoute } from '../data/actions';
 import CalendarScene from '../scenes/Calendar/calendar.jsx';
-import { push } from 'react-router-redux';
 
 const getVisibleEvents = (events, labels) => {
     return 'Hey, some events might go here...';
@@ -27,11 +26,11 @@ const mapDispatchToProps = dispatch => {
         setSidebarMode: mode => {
             dispatch(setSidebarMode(mode));
         },
-        editEvent: (linkSuffix) => {
-            dispatch(push('/edit/'+linkSuffix));
+        editEvent: (idInfo) => {
+            dispatch(editEvent(idInfo.id, idInfo.sid, idInfo.recId));
         },
-        viewEvent: (linkSuffix) => {
-            dispatch(push('/view/'+linkSuffix));
+        viewEvent: (idInfo) => {
+            dispatch(viewEvent(idInfo.id, idInfo.sid, idInfo.recId));
         },
         toggleSidebarCollapsed: () => {
             dispatch(toggleSidebarCollapsed());

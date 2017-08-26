@@ -153,33 +153,36 @@ export default class CalendarScene extends React.Component {
     };
 
     eventEditClicked = (event) => {
-        let linkSuffix = event.target.getAttribute('linkSuffix');
-        this.props.editEvent(linkSuffix);
+        let idInfo = JSON.parse(event.target.getAttribute('idInfo'));
+        this.props.editEvent(idInfo);
         event.preventDefault();
     };
 
     eventViewClicked = (event) => {
-        let linkSuffix = event.target.getAttribute('linkSuffix');
-        this.props.viewEvent(linkSuffix);
+        let idInfo = JSON.parse(event.target.getAttribute('idInfo'));
+        this.props.viewEvent(idInfo);
         event.preventDefault();
     };
 
     renderEvents = (event, element) => {
         //add the label to masterLabels if it isn't there when we render
-        let linkSuffix = (event.id) ? event.id : event.sid;
+        const idInfo = JSON.stringify({
+            id: event.id,
+            sid: event.sid,
+            recId: event.start.utc().valueOf(),
+        });
         let content = $('<div>').text(event.description);
         if (event.description && event.description.length > 240){
           content = $('<div>').text(event.description.slice(0,240) + '...');
         }
         content.append($('<br>'));
-        let rec_id = event.start.utc().valueOf()
         if (event.UID){
-          content.append($('<a>').attr('linkSuffix', linkSuffix).on('click',this.eventViewClicked).text('Details'))
+          content.append($('<a>').attr('idevents.olInfo', idInfo).on('click',this.eventViewClicked).text('Details'))
         }
         else if (event.sid)
-          content.append($('<a>').attr('linkSuffix', linkSuffix).on('click',this.eventViewClicked).text('Details'),$('<span> | </span>'),$('<a>').attr('linkSuffix', linkSuffix).on('click',this.eventEditClicked).text('Edit'),$('<span> | </span>'),$('<a>').attr('linkSuffix', linkSuffix+'/'+rec_id).on('click',this.eventEditClicked).text('Edit Occurrence'));
+          content.append($('<a>').attr('idInfo', idInfo).on('click',this.eventViewClicked).text('Details'),$('<span> | </span>'),$('<a>').attr('idInfo', idInfo).on('click',this.eventEditClicked).text('Edit'),$('<span> | </span>'),$('<a>').attr('idInfo', idInfo).on('click',this.eventEditClicked).text('Edit Occurrence'));
         else {
-          content.append($('<a>').attr('linkSuffix', linkSuffix).on('click',this.eventViewClicked).text('Details'),$('<span> | </span>'),$('<a>').attr('linkSuffix', linkSuffix).on('click',this.eventEditClicked).text('Edit'));
+          content.append($('<a>').attr('idInfo', idInfo).on('click',this.eventViewClicked).text('Details'),$('<span> | </span>'),$('<a>').attr('idInfo', idInfo).on('click',this.eventEditClicked).text('Edit'));
         }
         element.qtip({
             content: {

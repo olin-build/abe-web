@@ -5,7 +5,6 @@ import SaveCancelButtons from './save-cancel-buttons.jsx';
 import LocationField from './location-field.jsx';
 import EventDateTimeSelector from '../../components/date-time-selector.jsx';
 import EventRecurrenceSelector from './recurrence-selector.jsx';
-// import TagEntry from '../../components/tag-entry.jsx';
 import MarkdownEditor from '../../components/markdown-editor.jsx';
 import MenuIconButton from '../../components/menu-icon-button.jsx';
 import TagPane from '../../components/tag-pane.jsx'
