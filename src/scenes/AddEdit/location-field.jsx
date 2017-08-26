@@ -41,6 +41,7 @@ export default class LocationField extends React.Component {
         this.WEST_HALL_GYM_MATCHES = ['whg', 'west hall gym', 'wh gym'];
         this.EAST_HALL_GYM_MATCHES = ['ehg', 'east hall gym', 'eh gym'];
         this.LARGE_PROJECT_BUILDING_MATCHES = ['lpb', 'large project building'];
+        this.CRESCENT_ROOM = ['crescent', 'crescent room', 'cr'];
     }
 
     componentWillReceiveProps(nextProps) {
@@ -166,6 +167,11 @@ export default class LocationField extends React.Component {
                     result.building = 'LPB';
                     result.isOlin = true;
                     return result;
+                } else if (this.stringMatches(buildingString, this.CRESCENT_ROOM)) {
+                    result.building = 'CC';
+                    result.room = 'Crescent Room';
+                    result.isOlin = true;
+                    return result;
                 }
             }
 
@@ -211,18 +217,15 @@ export default class LocationField extends React.Component {
     }
 
     render() {
-        let svgSrc = (this.state.isOlin) ? '/assets/olin-o.svg' : '/assets/olin-o-slash.svg';
-        let oTooltip = (this.state.isOlin) ? 'Recognized Olin location' : 'Location not at Olin';
+        // let svgSrc = (this.state.isOlin) ? '/assets/olin-o.svg' : '/assets/olin-o-slash.svg';
+        // let oTooltip = (this.state.isOlin) ? 'Recognized Olin location' : 'Location not at Olin';
         return (
             <div className="location-field-container">
                 <div className="location-input-container">
                     <input id="location" type="text" title="Location" className="wide-text-box single-line-text-box medium-text-box" placeholder="Location" value={this.props.location} onChange={this.textChanged}/>
-                    <img src={svgSrc} className="location-indicator-img" title={oTooltip}/>
-                </div>
-                <div className="location-parse-result-container">
-                    <span className="location-label">Building:</span><span className="location-parsed">{this.state.building}</span>
-                    <span className="location-label">Room:</span><span className="location-parsed">{this.state.room}</span>
-                    <span className="location-label">Suffix:</span><span className="location-parsed">{this.state.suffix}</span>
+                    <span hidden={!this.state.isOlin} title="Building" className="location-parsed">{this.state.building}</span>
+                    <span hidden={!this.state.isOlin} title="Room" className="location-parsed">{this.state.room}</span>
+                    <span hidden={!this.state.isOlin || !this.state.suffix} title="Suffix" className="location-parsed">{this.state.suffix}</span>
                 </div>
             </div>
         )
