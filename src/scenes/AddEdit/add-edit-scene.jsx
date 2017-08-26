@@ -267,13 +267,17 @@ export default class AddEditEventScene extends React.Component {
           newEvent.end = this.state.eventData.end.toString();
           delete newEvent.recurrence;
         }
-        const fullId = this.state.eventData.id || `${this.state.eventData.sid}/${this.state.eventData.rec_id}`;
+        const idInfo = {
+            id: this.state.eventData.id,
+            sid: this.state.eventData.sid,
+            recId: this.state.eventData.rec_id,
+        };
         $.ajax({
             url: url,
             method: method,
             contentType: 'application/json',
             data: JSON.stringify(newEvent),
-            success: response => this.props.eventSavedSuccessfully(fullId),
+            success: response => this.props.eventSavedSuccessfully(idInfo),
             error: (jqXHR, textStatus, errorThrown) => this.props.eventSaveFailed(newEvent, errorThrown),
         });
      };

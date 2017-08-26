@@ -46,23 +46,42 @@ export function deleteCurrentEvent() {
     };
 }
 
-export function eventSavedSuccessfully(eventId) {
+export function eventSavedSuccessfully(eventIdInfo) {
     return (dispatch) => {
+        let label;
+        let action = 'update success';
+        if (eventIdInfo.id) {
+            label = `Event ${eventIdInfo.id} saved successfully`;
+        } else if (eventIdInfo.sid) {
+            label = `Event ${eventIdInfo.sid}/${eventIdInfo.recId} saved successfully`;
+        } else {
+            label = 'Event created successfully';
+            action = 'create success';
+        }
         ReactGA.event({
             category: 'Event Save',
-            action: 'success',
-            label: `Event ${eventId} saved successfully`,
+            action,
+            label,
         });
         dispatch(push('/'));
     }
 }
 
 export function eventSaveFailed(eventData, error) {
-    const eventId = eventData.id || `${eventData.sid}/${eventData.recId}`;
+    let label;
+    let action = 'update failure';
+    if (eventData.id) {
+        label = `Event ${eventData.id} save attempt unsuccessful`;
+    } else if (eventData.sid) {
+        label = `Event ${eventData.sid}/${eventData.recId} save attempt unsuccessful`;
+    } else {
+        label = 'New event save attempt unsuccessful';
+        action = 'create failure';
+    }
     ReactGA.event({
         category: 'Event Save',
-        action: 'failure',
-        label: `Event ${eventId} save attempt unsuccessful.`,
+        action,
+        label,
     });
     alert('Saving event failed:\n' + error);
 }
