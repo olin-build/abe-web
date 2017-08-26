@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux'
-import { createLogger } from 'redux-logger'
 import { createStore, applyMiddleware, combineReducers } from 'redux'
 import thunkMiddleware from 'redux-thunk'
 import { Router, Route, Switch } from 'react-router'
+import ReactGA from 'react-ga';
 import createHistory from 'history/createBrowserHistory';
 import { routerReducer, routerMiddleware } from 'react-router-redux'
 import { toggleSidebarCollapsed } from './data/actions';
@@ -39,24 +39,43 @@ const initialState = {
         visibleLabels: null,
     },
 };
+
+// Google Analytics
+if (window.GA_ID) {
+    ReactGA.initialize(window.GA_ID, {
+        debug: window.debug
+    });
+}
+
+// React Router (with Redux middleware)
 const history = createHistory();
-const rMiddleware = routerMiddleware(history);
-const loggerMiddleware = createLogger();
-const middleware = window.debug
-    ? applyMiddleware(
-        thunkMiddleware, // lets us dispatch() functions
-        loggerMiddleware, // neat middleware that logs actions
-        rMiddleware
-    )
-    : applyMiddleware(
-        thunkMiddleware, // lets us dispatch() functions
-        rMiddleware
+history.listen((event) => {
+    // Dispatch page changes to Google Analytics
+    ReactGA.set({ page: event.pathname });
+    ReactGA.pageview(event.pathname);
+});
+const routeMiddleware = routerMiddleware(history);
+let store;
+if (window.debug && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) {
+    const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__;
+    store = createStore(
+        combineReducers({...reducers, router: routerReducer}),
+        initialState,
+        composeEnhancers(applyMiddleware(
+            thunkMiddleware, // lets us dispatch() functions
+            routeMiddleware,
+        ))
     );
-let store = createStore(
-    combineReducers({...reducers, router: routerReducer}),
-    initialState,
-    middleware
-);
+} else {
+    store = createStore(
+        combineReducers({...reducers, router: routerReducer}),
+        initialState,
+        applyMiddleware(
+            thunkMiddleware, // lets us dispatch() functions
+            routeMiddleware,
+        )
+    );
+}
 
 ReactDOM.render(
     <Provider store={store}>

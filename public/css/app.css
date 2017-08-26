@@ -343,7 +343,8 @@ footer {
     white-space: nowrap;
     cursor: default;
     color: #fefefe;
-
+    margin-left: 0.2em;
+    margin-right: 0.2em;
 }
 
 span.tag {

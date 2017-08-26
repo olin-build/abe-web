@@ -96,7 +96,7 @@ export default class PlainEnglishRecurrence extends React.Component {
       let On = this.getOn();
       let Until = this.getUntil();
       return (
-          <div className="row large-collapse">
+          <div className="large-collapse">
             <span>Repeats </span>
             {Every}
             {On}

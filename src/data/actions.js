@@ -1,5 +1,6 @@
 import { push } from 'react-router-redux';
 import fetch from 'isomorphic-fetch';
+import ReactGA from 'react-ga';
 
 export const ActionTypes = {
     REFRESH_EVENTS_IF_NEEDED: 'REFRESH_EVENTS_IF_NEEDED',
@@ -82,11 +83,23 @@ export function setLabels(labels) {
     return {type: ActionTypes.SET_LABELS, data: labels};
 }
 
-export function setVisibleLabels(visibleLabels) {
+export function setVisibleLabels(visibleLabels, allNoneDefault) {
+    if (allNoneDefault !== undefined) {
+        ReactGA.event({
+            category: 'Filter Tags All|None|Default',
+            action: allNoneDefault,
+            label: 'User used All | None | Default option in sidebar filter pane',
+        });
+    }
     return {type: ActionTypes.SET_VISIBLE_LABELS, data: visibleLabels};
 }
 
 export function labelVisibilityToggled(labelName) {
+    ReactGA.event({
+        category: 'Tag Toggled in Sidebar',
+        action: labelName,
+        label: 'User toggled visibility of label on calendar',
+    });
     return {type: ActionTypes.LABEL_VISIBILITY_TOGGLED, labelName};
 }
 
@@ -115,7 +128,15 @@ export function setMarkdownGuideVisibility(visible) {
 }
 
 export function toggleSidebarCollapsed() {
-    return {type: ActionTypes.TOGGLE_SIDEBAR_VISIBILITY};
+    return (dispatch, getState) => {
+        const action = getState().sidebar.isCollapsed ? 'expand' : 'collapse';
+        ReactGA.event({
+            category: 'Sidebar',
+            action,
+            label: 'User toggled the visibility of the sidebar',
+        });
+        dispatch({ type: ActionTypes.TOGGLE_SIDEBAR_VISIBILITY });
+    }
 }
 
 export function setPageTitlePrefix(newTitle) {
@@ -133,7 +154,26 @@ export function setPageTitlePrefix(newTitle) {
     }
 }
 
+export function editEvent(id, sid, recId) {
+    return dispatch => {
+        const linkSuffix = id ? id : `${sid}/${recId}`;
+        const path = `/edit/${linkSuffix}`;
+        ReactGA.pageview(path);
+        dispatch(push(path));
+    }
+}
+
+export function viewEvent(id, sid, recId) {
+    return dispatch => {
+        const linkSuffix = id ? id : `${sid}/${recId}`;
+        const path = `/view/${linkSuffix}`;
+        ReactGA.pageview(path);
+        dispatch(push(path));
+    }
+}
+
 export function setRoute(route) {
+    ReactGA.pageview(route);
     return dispatch => {
         dispatch(push(route));
     }
