@@ -26,8 +26,8 @@ const mapDispatchToProps = dispatch => {
         setSidebarMode: mode => {
             dispatch(setSidebarMode(mode));
         },
-        editEvent: (idInfo) => {
-            dispatch(editEvent(idInfo.id, idInfo.sid, idInfo.recId));
+        editEvent: (idInfo, editSingleOccurrence=false) => {
+            dispatch(editEvent(idInfo.id, idInfo.sid, idInfo.recId, editSingleOccurrence));
         },
         viewEvent: (idInfo) => {
             dispatch(viewEvent(idInfo.id, idInfo.sid, idInfo.recId));

@@ -214,9 +214,11 @@ export function setPageTitlePrefix(newTitle) {
     }
 }
 
-export function editEvent(id, sid, recId) {
+export function editEvent(id, sid, recId, editSingleOccurrence) {
     return dispatch => {
-        const linkSuffix = id ? id : `${sid}/${recId}`;
+        const linkSuffix = editSingleOccurrence ?
+            `${sid}/${recId}`
+            : (sid ? sid : id);
         const path = `/edit/${linkSuffix}`;
         dispatch(push(path));
     }
