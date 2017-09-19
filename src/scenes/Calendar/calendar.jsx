@@ -152,9 +152,9 @@ export default class CalendarScene extends React.Component {
         });
     };
 
-    eventEditClicked = (event) => {
+    eventEditClicked = (event, editSingle = false) => {
         let idInfo = JSON.parse(event.target.getAttribute('idInfo'));
-        this.props.editEvent(idInfo);
+        this.props.editEvent(idInfo, editSingle);
         event.preventDefault();
     };
 
@@ -180,7 +180,7 @@ export default class CalendarScene extends React.Component {
           content.append($('<a>').attr('idevents.olInfo', idInfo).on('click',this.eventViewClicked).text('Details'))
         }
         else if (event.sid)
-          content.append($('<a>').attr('idInfo', idInfo).on('click',this.eventViewClicked).text('Details'),$('<span> | </span>'),$('<a>').attr('idInfo', idInfo).on('click',this.eventEditClicked).text('Edit'),$('<span> | </span>'),$('<a>').attr('idInfo', idInfo).on('click',this.eventEditClicked).text('Edit Occurrence'));
+          content.append($('<a>').attr('idInfo', idInfo).on('click',this.eventViewClicked).text('Details'),$('<span> | </span>'),$('<a>').attr('idInfo', idInfo).on('click', this.eventEditClicked).text('Edit'),$('<span> | </span>'),$('<a>').attr('idInfo', idInfo).on('click',event => this.eventEditClicked(event, true)).text('Edit Occurrence'));
         else {
           content.append($('<a>').attr('idInfo', idInfo).on('click',this.eventViewClicked).text('Details'),$('<span> | </span>'),$('<a>').attr('idInfo', idInfo).on('click',this.eventEditClicked).text('Edit'));
         }
