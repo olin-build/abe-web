@@ -1,6 +1,7 @@
 import { push } from 'react-router-redux';
 import fetch from 'isomorphic-fetch';
 import moment from "moment";
+import ReactGA from 'react-ga';
 
 export const ActionTypes = {
     REFRESH_EVENTS_IF_NEEDED: 'REFRESH_EVENTS_IF_NEEDED',
@@ -50,6 +51,66 @@ export function deleteCurrentEvent() {
     };
 }
 
+export function eventSavedSuccessfully(eventIdInfo) {
+    return (dispatch) => {
+        let label;
+        let action = 'update success';
+        if (eventIdInfo.id) {
+            label = `Event ${eventIdInfo.id} saved successfully`;
+        } else if (eventIdInfo.sid) {
+            label = `Event ${eventIdInfo.sid}/${eventIdInfo.recId} saved successfully`;
+        } else {
+            label = 'Event created successfully';
+            action = 'create success';
+        }
+        ReactGA.event({
+            category: 'Event Save',
+            action,
+            label,
+        });
+        dispatch(push('/'));
+    }
+}
+
+export function eventSaveFailed(eventData, error) {
+    let label;
+    let action = 'update failure';
+    if (eventData.id) {
+        label = `Event ${eventData.id} save attempt unsuccessful`;
+    } else if (eventData.sid) {
+        label = `Event ${eventData.sid}/${eventData.recId} save attempt unsuccessful`;
+    } else {
+        label = 'New event save attempt unsuccessful';
+        action = 'create failure';
+    }
+    ReactGA.event({
+        category: 'Event Save',
+        action,
+        label,
+    });
+    alert('Saving event failed:\n' + error);
+}
+
+export function eventDeletedSuccessfully(eventId) {
+    return (dispatch) => {
+        ReactGA.event({
+            category: 'Event Delete',
+            action: 'success',
+            label: `Event ${eventId} deleted successfully`,
+        });
+        dispatch(push('/'));
+    }
+}
+
+export function eventDeleteFailed(eventId, error) {
+    ReactGA.event({
+        category: 'Event Delete',
+        action: 'failure',
+        label: `Event ${eventId} delete attempt unsuccessful`,
+    });
+    alert('Delete event failed:\n' + error);
+}
+
 export function refreshLabelsIfNeeded() {
     return (dispatch, getState) => {
         if (!getState().labels.labelList) {
@@ -85,6 +146,17 @@ export function setLabels(labels) {
         labels = labelsMap;
     }
     return {type: ActionTypes.SET_LABELS, data: labels};
+}
+
+export function setVisibleLabels(visibleLabels, allNoneDefault) {
+    if (allNoneDefault !== undefined) {
+        ReactGA.event({
+            category: 'Filter Tags All|None|Default',
+            action: allNoneDefault,
+            label: 'User used All | None | Default option in sidebar filter pane',
+        });
+    }
+    return {type: ActionTypes.SET_VISIBLE_LABELS, data: visibleLabels};
 }
 
 export function setCurrentlyViewingDate(date) { // Set the first date visible on the calendar
@@ -124,11 +196,12 @@ export function setEvents(events) {
     }
 }
 
-export function setVisibleLabels(visibleLabels) {
-    return {type: ActionTypes.SET_VISIBLE_LABELS, data: visibleLabels};
-}
-
 export function labelVisibilityToggled(labelName) {
+    ReactGA.event({
+        category: 'Tag Toggled in Sidebar',
+        action: labelName,
+        label: 'User toggled visibility of label on calendar',
+    });
     return {type: ActionTypes.LABEL_VISIBILITY_TOGGLED, labelName};
 }
 
@@ -166,7 +239,15 @@ export function setMarkdownGuideVisibility(visible) {
 }
 
 export function toggleSidebarCollapsed() {
-    return {type: ActionTypes.TOGGLE_SIDEBAR_VISIBILITY};
+    return (dispatch, getState) => {
+        const action = getState().sidebar.isCollapsed ? 'expand' : 'collapse';
+        ReactGA.event({
+            category: 'Sidebar',
+            action,
+            label: 'User toggled the visibility of the sidebar',
+        });
+        dispatch({ type: ActionTypes.TOGGLE_SIDEBAR_VISIBILITY });
+    }
 }
 
 export function setPageTitlePrefix(newTitle) {
@@ -181,6 +262,24 @@ export function setPageTitlePrefix(newTitle) {
             fullTitle = `${newTitle} | ${pageTitleSuffix}`;
         }
         dispatch({ type: ActionTypes.SET_PAGE_TITLE, title: fullTitle });
+    }
+}
+
+export function editEvent(id, sid, recId, editSingleOccurrence) {
+    return dispatch => {
+        const linkSuffix = editSingleOccurrence ?
+            `${sid}/${recId}`
+            : (sid ? sid : id);
+        const path = `/edit/${linkSuffix}`;
+        dispatch(push(path));
+    }
+}
+
+export function viewEvent(id, sid, recId) {
+    return dispatch => {
+        const linkSuffix = id ? id : `${sid}/${recId}`;
+        const path = `/view/${linkSuffix}`;
+        dispatch(push(path));
     }
 }
 

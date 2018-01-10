@@ -1,14 +1,16 @@
 import { connect } from 'react-redux';
 import {
+    editEvent,
     setSidebarMode,
     toggleSidebarCollapsed,
     setVisibleLabels,
     setPageTitlePrefix,
     setRoute,
-    setCurrentEvent,
+    setCurrentEventId,
     setCurrentlyViewingDate,
     page,
     setViewMode,
+    viewEvent,
 } from '../data/actions';
 import CalendarScene from '../scenes/Calendar/calendar.jsx';
 import { push } from 'react-router-redux';
@@ -43,16 +45,16 @@ const mapDispatchToProps = dispatch => {
         setSidebarMode: mode => {
             dispatch(setSidebarMode(mode));
         },
-        editEvent: (linkSuffix) => {
-            dispatch(push('/edit/'+linkSuffix));
+        editEvent: (idInfo, editSingleOccurrence=false) => {
+            dispatch(editEvent(idInfo.id, idInfo.sid, idInfo.recId, editSingleOccurrence));
         },
         eventClick(calendarEvent) {
             dispatch(setCurrentEvent(calendarEvent));
             const linkSuffix = (calendarEvent.id) ? calendarEvent.id : calendarEvent.sid;
             dispatch(push('/view/'+linkSuffix));
         },
-        viewEvent: (linkSuffix) => {
-            dispatch(push('/view/'+linkSuffix));
+        viewEvent: (idInfo) => { // TODO Pass data to this better
+            dispatch(viewEvent(idInfo.id, idInfo.sid, idInfo.recId));
         },
         toggleSidebarCollapsed: () => {
             dispatch(toggleSidebarCollapsed());

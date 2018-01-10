@@ -27,7 +27,6 @@ export default class CalendarScene extends React.Component {
     }
 
     componentDidUpdate() {
-        // this.refreshViewFromCache();
 
         if (this.props.labels.visibleLabels) {
             let labelsStr = this.props.labels.visibleLabels
@@ -53,10 +52,7 @@ export default class CalendarScene extends React.Component {
         event.preventDefault();
     };
 
-    render(){
-        // Temporary workaround with FullCalendar. Remove once FullCalendar is gone.
-        // let hackInsert = this.props.labels.labelList ? Object.values(this.props.labels.labelList).map(label => label.name) : null;
-
+    render() {
         const currDate = this.props.currentlyViewingDate
             ? this.props.currentlyViewingDate.format('MMMM')
             : '';

@@ -2,6 +2,7 @@ import { connect } from 'react-redux';
 import Sidebar from '../sidebar/sidebar.jsx';
 import * as Actions from '../data/actions';
 import { push } from 'react-router-redux';
+import ReactGA from 'react-ga';
 
 const getVisibleEvents = (events, labels) => {
     return 'Hey, some events might go here...';
@@ -35,6 +36,11 @@ const mapDispatchToProps = dispatch => {
             dispatch(Actions.labelVisibilityToggled(labelName));
         },
         homeClicked: () => {
+            ReactGA.event({
+                category: 'Sidebar Logo',
+                action: 'click',
+                label: 'User clicked the Olin logo to return to the Home view',
+            });
             dispatch(push('/'));
         },
         addEvent: () => {
@@ -49,9 +55,15 @@ const mapDispatchToProps = dispatch => {
         toggleSidebarCollapsed: () => {
             dispatch(Actions.toggleSidebarCollapsed());
         },
-        setVisibleLabels: (labels) => {
-            dispatch(Actions.setVisibleLabels(labels));
-        }
+        setVisibleLabels: (labels, allNoneDefault) => {
+            dispatch(Actions.setVisibleLabels(labels, allNoneDefault));
+        },
+        icsUrlCopiedToClipboard: (url) => {
+            ReactGA.event({
+                category: 'ICS Feed URL Copied to Clipboard',
+                action: url,
+            });
+        },
     }
 };
 

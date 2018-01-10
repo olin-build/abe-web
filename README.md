@@ -1,6 +1,6 @@
 # A Web Front-End for ABE
 This is a Web front-end for the
-[Olin College of Engineering Library](http://www.olin.build')'s
+[Olin College of Engineering Library](http://www.olin.build)'s
 [Amorphous Blob of Events](https://github.com/olinlibrary/ABE).
 
 ## Setup on Ubuntu
@@ -46,3 +46,6 @@ but it may take a couple seconds for Webpack to recompile everything.
 (and we implore you to please set up a dev instance when testing something new) in `index.html`. When deploying (on Heroku, for instance),
 `server.js` will run and serve the contents of `index.html.js`, which allows environment variables to be set to specify
 the path to your ABE instance.
+
+## Supporters
+<a target="_blank" href="http://browserstack.com/" alt="BrowserStack"><img align="right" src="https://bstacksupport.zendesk.com/attachments/token/GVENo6DR01sT3B5jsNRfU0II7/?name=Logo-01.svg" width="40%"></a>We'd like to extend a special thank you to [BrowserStack](http://browserstack.com/) for providing us with their testing service free of charge. BrowserStack allows us to test our project in a multitude of browsers on various platforms, including IE, Safari, Android and iOS, to ensure compatibility with as many as possible.

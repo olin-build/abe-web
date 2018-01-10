@@ -19,7 +19,7 @@ export default class FilterPane extends React.Component {
             default:
                 // Do nothing
         }
-        this.props.setVisibleLabels(visibleLabels);
+        this.props.setVisibleLabels(visibleLabels, allNoneDefault);
     };
 
     render() {
