@@ -1,3 +1,5 @@
+// This component allows the user to save or cancel editing an event
+
 import * as React from "react";
 
 export default class SaveCancelButtons extends React.Component {

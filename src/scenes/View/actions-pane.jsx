@@ -1,3 +1,5 @@
+// This sidebar pane allows the user to perform actions on an event currently being viewed
+
 import React from 'react';
 
 export default class EventActionsPane extends React.Component {

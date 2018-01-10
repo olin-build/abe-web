@@ -1,6 +1,4 @@
-@import "../../node_modules/fullcalendar/dist/fullcalendar.css";
-@import "../css/jquery.qtip.css";
-@import "../css/foundation.css";
+@import "https://cdnjs.cloudflare.com/ajax/libs/foundation/6.4.3/css/foundation.min.css";
 /*@import "../../node_modules/codemirror/lib/codemirror.css";*/
 
 /** ----- Begin Global ----- **/
@@ -78,7 +76,7 @@ textarea::placeholder {
     top: 0;
     bottom: 0;
     right: 0;
-    overflow: scroll;
+    overflow-y: scroll;
     transition: left 0.3s;
 }
 
@@ -370,6 +368,29 @@ span.tag {
 
 /** ----- Begin Calendar ----- **/
 
+.calendar-header {
+    text-align: center;
+    padding: 1em;
+    background-color: white;
+    border-bottom: 4px solid #dcd9d9;
+}
+
+.calendar-header .title{
+    font-size: 2em;
+}
+
+.calendar-header-pagination {
+    float: right;
+    display: inline-block;
+}
+
+.calendar-header-pagination button {
+    padding: 0.2em;
+    margin: 0.7em 0.5em;
+    font-weight: bold;
+    cursor: pointer;
+}
+
 .calendar-container > .menu-icon-button {
     position: absolute;
     margin: 1.4em 0.9em;
@@ -403,6 +424,7 @@ span.tag {
 
 .calendar-container {
     position: relative;
+    height: 100%;
 }
 
 .tag-selector-list {

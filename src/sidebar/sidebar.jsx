@@ -1,12 +1,12 @@
 import React, {Component} from "react";
-import Footer from "../components/footer.jsx";
-import {SidebarHeader} from "../components/header.jsx";
+import Footer from "./footer.jsx";
+import {SidebarHeader} from "../components/sidebar-header.jsx";
 import SidebarItemContainer from "../sidebar/sidebar-item-container.jsx";
 import FilterPane from "./filter-pane.jsx";
 import LinkPane from "./link-pane.jsx";
-import GenerateICSPane from '../components/generate-ics-pane.jsx';
-import MarkdownGuide from "../scenes/AddEdit/markdown-guide.jsx";
-import EventActionsPane from "../scenes/AddEdit/actions-pane.jsx";
+import GenerateICSPane from './generate-ics-pane.jsx';
+import MarkdownGuide from "./markdown-guide.jsx";
+import EventActionsPane from "../scenes/View/actions-pane.jsx";
 import TagPane from "../components/tag-pane.jsx";
 
 export default class Sidebar extends Component {

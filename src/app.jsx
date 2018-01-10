@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux'
-import { createLogger } from 'redux-logger'
 import { createStore, applyMiddleware, combineReducers } from 'redux'
 import thunkMiddleware from 'redux-thunk'
 import { Router, Route, Switch } from 'react-router'
@@ -16,18 +15,22 @@ import ViewEventContainer from "./containers/view-container";
 import ImportContainer from "./containers/import-container";
 import * as reducers from './data/reducers';
 import SidebarMode from "./data/sidebar-modes";
+
 const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent);
 const initialState = {
     general: {
-        isMobile,
+        currentlyViewingDate: null,
+        currentEvent: null,
         debug: window.debug,
+        isMobile,
         pageTitlePrefix: null,
         pageTitleSuffix: 'Olin College Events',
+        viewMode: isMobile ? '3-day' : 'month',
+        viewColumns: 3,
     },
     events: {
         current: null,
-        allEvents: null,
-        eventsToDisplay: [],
+        events: null,
     },
     sidebar: {
         mode: SidebarMode.LOADING,
@@ -42,23 +45,28 @@ const initialState = {
     },
 };
 const history = createHistory();
-const rMiddleware = routerMiddleware(history);
-const loggerMiddleware = createLogger();
-const middleware = window.debug
-    ? applyMiddleware(
-        thunkMiddleware, // lets us dispatch() functions
-        loggerMiddleware, // neat middleware that logs actions
-        rMiddleware
-    )
-    : applyMiddleware(
-        thunkMiddleware, // lets us dispatch() functions
-        rMiddleware
+const routeMiddleware = routerMiddleware(history);
+let store;
+if (window.debug && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) {
+    const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__;
+    store = createStore(
+        combineReducers({...reducers, router: routerReducer}),
+        initialState,
+        composeEnhancers(applyMiddleware(
+            thunkMiddleware, // lets us dispatch() functions
+            routeMiddleware,
+        ))
     );
-let store = createStore(
-    combineReducers({...reducers, router: routerReducer}),
-    initialState,
-    middleware
-);
+} else {
+    store = createStore(
+        combineReducers({...reducers, router: routerReducer}),
+        initialState,
+        applyMiddleware(
+            thunkMiddleware, // lets us dispatch() functions
+            routeMiddleware,
+        )
+    );
+}
 
 ReactDOM.render(
     <Provider store={store}>

@@ -1,3 +1,5 @@
+// This component provides the user with a quick-start guide on Markdown
+
 import React from 'react';
 
 export default class MarkdownGuide extends React.Component {

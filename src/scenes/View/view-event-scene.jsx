@@ -11,14 +11,19 @@ export default class ViewEventScene extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = {id: ('match' in props && 'id' in props.match.params) ? props.match.params.id : null,
-          redirect: false
+        this.state = {
+            id: ('match' in props && 'id' in props.match.params) ? props.match.params.id : null,
         };
+
+        if (this.state.id) {
+            // TODO Do this all in the container
+            this.state.eventData = this.props.events[this.state.id];
+        }
     }
 
     componentDidMount() {
         this.props.setSidebarMode(SidebarModes.VIEW_EVENT);
-        if ('id' in this.state) {
+        if ('id' in this.state && !this.state.eventData) {
             axios.get(window.abe_url + '/events/' + this.state.id).then(response => {
                 let data = response.data;
                 data.start = moment.utc(data.start);
@@ -33,7 +38,7 @@ export default class ViewEventScene extends React.Component {
     }
 
     componentWillUnmount() {
-        this.props.setCurrentEvent(null);
+        this.props.unsetCurrentEventId();
     }
 
     render() {

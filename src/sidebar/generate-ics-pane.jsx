@@ -1,3 +1,6 @@
+// The component provides information to the user about ICS feed generation. It also gives
+// them a button to click to generate an ICS feed.
+
 import React from 'react';
 import copy from 'copy-to-clipboard';
 

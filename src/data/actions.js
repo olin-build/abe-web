@@ -1,11 +1,15 @@
 import { push } from 'react-router-redux';
 import fetch from 'isomorphic-fetch';
+import moment from "moment";
 
 export const ActionTypes = {
     REFRESH_EVENTS_IF_NEEDED: 'REFRESH_EVENTS_IF_NEEDED',
     FETCH_EVENTS: 'FETCH_EVENTS',
     REQUESTING_EVENTS: 'REQUESTING_EVENTS',
-    SET_CURRENT_EVENT: 'SET_CURRENT_EVENT',
+    SET_CURRENT_EVENT_ID: 'SET_CURRENT_EVENT_ID',
+    SET_CURRENTLY_VIEWING_DATE: 'SET_CURRENTLY_VIEWING_DATE',
+    SET_EVENTS: 'SET_EVENTS',
+    SET_VIEW_MODE: 'SET_VIEW_MODE',
     DISPLAY_ERROR: 'DISPLAY_ERROR',
     DISPLAY_MESSAGE: 'DISPLAY_MESSAGE',
     ADD_EVENT: 'ADD_EVENT',
@@ -33,8 +37,8 @@ export function displayError(error, message) {
     return {type: ActionTypes.DISPLAY_ERROR, error, message};
 }
 
-export function setCurrentEvent(eventId) {
-    return {type: ActionTypes.SET_CURRENT_EVENT, id: eventId};
+export function setCurrentEventId(event) {
+    return {type: ActionTypes.SET_CURRENT_EVENT_ID, event};
 }
 
 export function deleteCurrentEvent() {
@@ -83,6 +87,43 @@ export function setLabels(labels) {
     return {type: ActionTypes.SET_LABELS, data: labels};
 }
 
+export function setCurrentlyViewingDate(date) { // Set the first date visible on the calendar
+    date.hour(0).minute(0).second(0); // Set to the start of the day to avoid any potential weirdness when manipulating later
+    // TODO Cache request responses (so don't need to make request on every page change)
+    return (dispatch) => {
+        // Find the first day of the first week of the month
+        const firstDay = moment(date).date(0).day(0);
+        // Find the last day of the last week of the month
+        const lastDay = moment(date).date(0).add(1, 'M').subtract(1, 'd').day(6);
+        dispatch(refreshEvents(firstDay, lastDay));
+        dispatch({ type: ActionTypes.SET_CURRENTLY_VIEWING_DATE, data: date });
+    };
+}
+
+export function setViewMode(mode) { // Calendar, week, day, etc
+    return {type: ActionTypes.SET_VIEW_MODE, data: mode};
+}
+
+export function page(direction) {
+    return (dispatch, getState) => {
+        const state = getState();
+        const delta = getPageDelta(state);
+        const newDate = moment(state.general.currentlyViewingDate).add(direction * delta[0], delta[1]);
+        dispatch(setCurrentlyViewingDate(newDate));
+    }
+}
+
+export function setEvents(events) {
+    return (dispatch) => {
+        const res = {};
+        events.forEach((event) => {
+            const key = event.id || event.sid;
+            res[key] = event;
+        });
+        dispatch({type: ActionTypes.SET_EVENTS, data: res });
+    }
+}
+
 export function setVisibleLabels(visibleLabels) {
     return {type: ActionTypes.SET_VISIBLE_LABELS, data: visibleLabels};
 }
@@ -100,13 +141,19 @@ export function refreshEvents(start, end) {
         // Update the state to know that we're fetching events
         dispatch(refreshingEvents());
 
-        const startString = `${start.getFullYear()}-${start.getMonth()+1}-${start.getDate()}`;
-        const endString = `${end.getFullYear()}-${end.getMonth()+1}-${end.getDate()}`;
+        const startString = `${start.year()}-${start.month()+1}-${start.date()}`;
+        const endString = `${end.year()}-${end.month()+1}-${end.date()}`;
         return fetch(`${window.abe_url}/events/?start=${startString}&end=${endString}`)
             .then(
                 response => response.json(),
                 error => dispatch(displayError(error)))
-            .then(events => dispatch(setLabels(events)));
+            .then((events) => {
+                events.forEach((event) => {
+                    event.start = moment(event.start).utcOffset(-8);
+                    event.end = moment(event.end).utcOffset(-8);
+                });
+                dispatch(setEvents(events))
+            });
     };
 }
 
@@ -140,5 +187,21 @@ export function setPageTitlePrefix(newTitle) {
 export function setRoute(route) {
     return dispatch => {
         dispatch(push(route));
+    }
+}
+
+
+function getPageDelta(state) {
+    switch (state.general.viewMode) {
+        case 'month':
+            return [1, 'M'];
+        case '3-day':
+            return [3, 'd'];
+        case '2-day':
+            return [2, 'd'];
+        case 'week':
+            return [1, 'w'];
+        default: // Daily
+            return [1, 'd'];
     }
 }

@@ -1,3 +1,5 @@
+// This component allows the user to select a single date and time
+
 import * as React from "react";
 import ReactDOM from "react-dom";
 import InputMoment from 'input-moment';

@@ -5,6 +5,12 @@ export function general(state = {}, action) {
     let newState = Object.assign({}, state);
 
     switch (action.type) {
+        case ActionTypes.SET_VIEW_MODE:
+            newState.viewMode = action.data;
+            return newState;
+        case ActionTypes.SET_CURRENTLY_VIEWING_DATE:
+            newState.currentlyViewingDate = action.data;
+            return newState;
         case ActionTypes.DISPLAY_MESSAGE:
             alert(action.message);
             return state;
@@ -21,11 +27,15 @@ export function general(state = {}, action) {
     }
 }
 
-export function events(state = [], action) {
+export function events(state = {}, action) {
     switch (action.type) {
-        case ActionTypes.SET_CURRENT_EVENT:
+        case ActionTypes.SET_CURRENT_EVENT_ID:
             return Object.assign({}, state, {
-                current: action.id
+                current: action.event,
+            });
+        case ActionTypes.SET_EVENTS:
+            return Object.assign({}, state, {
+                events: action.data,
             });
         default:
             return state;

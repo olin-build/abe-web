@@ -1,3 +1,5 @@
+// This component is the sidebar footer
+
 import * as React from "react";
 
 export default class Footer extends React.Component {

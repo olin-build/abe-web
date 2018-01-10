@@ -1,14 +1,18 @@
 import { connect } from 'react-redux';
-import { setSidebarMode, setCurrentEvent, setPageTitlePrefix } from '../data/actions';
+import { setSidebarMode, setCurrentEventId, setPageTitlePrefix } from '../data/actions';
 import ViewEventScene from '../scenes/View/view-event-scene.jsx';
 
 const mapStateToProps = state => {
     return {
+        events: state.events.events,
     }
 };
 
 const mapDispatchToProps = dispatch => {
     return {
+        unsetCurrentEventId: () => {
+            dispatch(setCurrentEventId(null));
+        },
         setSidebarMode: mode => {
             dispatch(setSidebarMode(mode));
         },
