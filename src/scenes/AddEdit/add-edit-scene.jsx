@@ -173,7 +173,7 @@ export default class AddEditEventScene extends React.Component {
      };
 
     recurrenceSelected = () =>{
-      let data = this.state.eventData;
+      let data = Object.assign({}, this.state.eventData);
       if(data.recurrence){
         delete data.recurrence;
       }
