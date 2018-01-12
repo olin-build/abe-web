@@ -1,3 +1,6 @@
+// This component is used to select the visibility (public, Olin-only, etc) of an event
+// (This information is currently unused)
+
 import * as React from "react";
 
 export default class EventVisibilitySelector extends React.Component {

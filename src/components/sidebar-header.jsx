@@ -1,5 +1,6 @@
 import * as React from "react";
 import OlinLogo from 'svg-react-loader?name=Icon!../../assets/olin-logo-beta.svg';
+import PropTypes from 'prop-types';
 
 export class SidebarHeader extends React.Component {
     render() {
@@ -10,3 +11,8 @@ export class SidebarHeader extends React.Component {
         )
     }
 }
+
+// Define React prop types for type checking during development
+SidebarHeader.propTypes = {
+    homeClicked: PropTypes.func,
+};

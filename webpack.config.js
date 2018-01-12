@@ -25,7 +25,10 @@ var config = {
     },
     devServer: {
         historyApiFallback: true
-    }
+    },
+    resolve: {
+        extensions: ['.js', '.jsx'],
+    },
   };
 
 module.exports = config;

@@ -1,6 +1,8 @@
+// This component "wraps" sidebar panes in a standard header (for consistent UI)
+
 import React from "react";
 
-export default class SidebarItemContainer extends React.Component {
+export default class SidebarItemWrapper extends React.Component {
 
     render() {
         return (

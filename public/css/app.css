@@ -76,7 +76,7 @@ textarea::placeholder {
     top: 0;
     bottom: 0;
     right: 0;
-    overflow-y: scroll;
+    overflow-y: auto;
     transition: left 0.3s;
 }
 
@@ -330,9 +330,9 @@ footer {
 
 /** ----- End Sidebar ----- **/
 
-/** ----- Begin Tags ----- **/
+/** ----- Begin Labels ----- **/
 
-.tag {
+.label {
     display: inline-block;
     padding: 0.33333rem 0.5rem;
     border-radius: 0;
@@ -345,26 +345,26 @@ footer {
     margin-right: 0.2em;
 }
 
-span.tag {
+span.label {
     margin: 1rem 0.1rem 0;
 }
 
-.button.tag {
+.button.label {
     margin-bottom: 0;
     margin-top: 1rem;
 }
 
-.button.tag:hover:not(.no-hover) {
+.button.label:hover:not(.no-hover) {
     background-color: #14679e;
     color: #fefefe;
     cursor: pointer;
  }
 
-.tag-selector-list {
+.label-selector-list {
     margin-top: -0.6rem;
 }
 
-/** ----- End Tags ----- **/
+/** ----- End Labels ----- **/
 
 
 /** ----- Begin Calendar ----- **/
@@ -428,13 +428,13 @@ span.tag {
     height: 100%;
 }
 
-.tag-selector-list {
+.label-selector-list {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
 }
 
-.tag:not(.selected) {
+.label:not(.selected) {
     background-color: transparent;
     color: black;
     border: 1px solid darkgray;
@@ -466,7 +466,7 @@ span.tag {
 .m-input-moment .btn-save,
 .m-input-moment .options button.is-active,
 .m-calendar .toolbar button,
-.content-container button:not(.im-btn .tag) {
+.content-container button:not(.im-btn .label) {
     background-color: #009BDF;
 }
 

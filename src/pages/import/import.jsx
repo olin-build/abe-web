@@ -1,9 +1,11 @@
+// This component allows the user to import a calendar from an ICS feed
+
 import * as React from "react";
 import SidebarModes from "../../data/sidebar-modes";
-import TagPane from "../../components/tag-pane.jsx";
+import TagPane from "../../components/label-pane.jsx";
 import MenuIconButton from '../../components/menu-icon-button.jsx';
 
-export default class ImportScene extends React.Component {
+export default class ImportPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {

@@ -4,47 +4,53 @@ import * as React from "react";
 import ReactDOM from "react-dom";
 import InputMoment from 'input-moment';
 import moment from 'moment';
+import PropTypes from 'prop-types';
 
 export default class EventDateTimeSelector extends React.Component {
 
     constructor(props) {
         super(props);
-        this.lostFocus = this.lostFocus.bind(this);
-        this.buttonClicked = this.buttonClicked.bind(this);
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSave = this.handleSave.bind(this);
+
+        // Initialize the state
         this.state = {
-            moment: moment(),
-            pickerVisible: false
+            moment: moment(), // Current date and time
+            pickerVisible: false, // Date/time picker not visible
         };
     }
 
+    // This function is called whenever the props on this component change (including during initialization)
     componentWillReceiveProps(nextProps) {
       this.setState({
-          moment: nextProps.datetime
+          moment: nextProps.datetime,
       });
     }
 
-    lostFocus(e) {
+    // Called when the picker loses focus
+    lostFocus = () => {
         this.setState({ pickerVisible: false });
-    }
+    };
 
-    buttonClicked(e) {
+    // Called when the button with (the date and time as its label) is clicked
+    buttonClicked = () => {
         this.setState({ pickerVisible: !this.state.pickerVisible });
-    }
+    };
 
-    handleChange(m) {
+    // Called when the user changes the date or time with the picker
+    handleChange = (m) => {
         this.setState({ moment: m });
         this.props.onChange(m);
-    }
+    };
 
-    handleSave(e) {
+    // Called when the user clicks the "Save" button in the picker
+    // (We don't need to actually save the time because handleChange() was already called)
+    handleSave = () => {
         this.setState({ pickerVisible: false });
-    }
+    };
 
     render() {
-        let buttonText = (this.props.buttonPrefix) ? this.props.buttonPrefix : '';
-        buttonText += (this.props.show == 'date') ? this.state.moment.format('MMM D, YYYY') : this.state.moment.format('MMM D, YYYY h:mm A');
+        let buttonText = this.props.buttonPrefix + ((this.props.show === 'date')
+            ? this.state.moment.format('MMM D, YYYY')
+            : this.state.moment.format('MMM D, YYYY h:mm A'));
         return (
             <div className="date-time-container">
                 <button className="button" onClick={this.buttonClicked}>{buttonText}</button>
@@ -63,12 +69,23 @@ export default class EventDateTimeSelector extends React.Component {
     }
 }
 
+// Define React prop types for type checking during development
+EventDateTimeSelector.propTypes = {
+    buttonPrefix: PropTypes.string,
+    moment: PropTypes.instanceOf(moment),
+    onChange: PropTypes.func.isRequired,
+};
+
+// Define default prop values
+EventDateTimeSelector.defaultProps = {
+    buttonPrefix: '',
+};
+
 class PickerPopup extends React.Component {
 
     constructor(props) {
         super(props);
 
-        this.handleClick = this.handleClick.bind(this);
         this.finishedLoading = false;
     }
 
@@ -82,7 +99,7 @@ class PickerPopup extends React.Component {
         document.removeEventListener('click', this.handleClick, false);
     }
 
-    handleClick(e) {
+    handleClick = (e) => {
         // Check if the user clicked outside the calendar selector
         if (this.props.visible){
             if (this.finishedLoading) { // Don't process the click triggering the display of this component
@@ -97,20 +114,33 @@ class PickerPopup extends React.Component {
         } else {
             this.finishedLoading = false;
         }
-    }
+    };
 
     render() {
-        if (this.props.visible) {
-            return (
-                <InputMoment
+        return (this.props.visible)
+            ? <InputMoment
                     prevMonthIcon="ion-ios-arrow-left" // default
                     nextMonthIcon="ion-ios-arrow-right" // default
                     {...this.props}
                 />
-            )
-        } else {
-            return null
-        }
+            : null;
     }
 
 }
+
+// Define React prop types for type checking during development
+PickerPopup.propTypes = {
+    visible: PropTypes.bool,
+    lostFocus: PropTypes.func,
+    moment: PropTypes.instanceOf(moment),
+    onChange: PropTypes.func,
+    onSave: PropTypes.func,
+    show: PropTypes.oneOf(['both', 'date', 'time']),
+};
+
+// Define default prop values
+PickerPopup.defaultProps = {
+    visible: false,
+    moment: moment(),
+    show: 'both',
+};

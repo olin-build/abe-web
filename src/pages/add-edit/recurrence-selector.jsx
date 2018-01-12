@@ -1,3 +1,5 @@
+// This component is used to set event recurrence info
+
 import * as React from "react";
 import EventDateTimeSelector from '../../components/date-time-selector.jsx';
 import PlainEnglishRecurrence from '../../components/plain-english-recurrence.jsx'

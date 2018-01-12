@@ -1,3 +1,6 @@
+// This component is a text box for event locations. It tries to parse locations on the Olin campus (input in various
+// formats) and stores them in a standard format to aid in analytics later.
+
 import * as React from "react";
 
 export default class LocationField extends React.Component {

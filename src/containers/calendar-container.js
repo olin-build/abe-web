@@ -1,3 +1,5 @@
+// This container is a sort of middleware between the React page and the Redux data store
+
 import { connect } from 'react-redux';
 import {
     editEvent,
@@ -6,14 +8,15 @@ import {
     setVisibleLabels,
     setPageTitlePrefix,
     setRoute,
-    setCurrentEventId,
+    setCurrentEvent,
     setCurrentlyViewingDate,
     page,
     setViewMode,
     viewEvent,
 } from '../data/actions';
-import CalendarScene from '../scenes/Calendar/calendar.jsx';
+import CalendarPage from '../pages/calendar/calendar-page';
 import { push } from 'react-router-redux';
+import moment from 'moment';
 
 const getVisibleEvents = (events, visibleLabels, allLabels) => {
     // Filter out events that are not labeled with currently visible labels
@@ -30,6 +33,7 @@ const getVisibleEvents = (events, visibleLabels, allLabels) => {
     });
 };
 
+// This function passes values/objects from the Redux state to the React component as props
 const mapStateToProps = state => {
     return {
         events: getVisibleEvents(state.events.events, state.labels.visibleLabels, state.labels.labelList),
@@ -40,6 +44,7 @@ const mapStateToProps = state => {
     }
 };
 
+// This function passes functions from /srcs/data/actions.jsx to the React component as props
 const mapDispatchToProps = dispatch => {
     return {
         setSidebarMode: mode => {
@@ -53,8 +58,9 @@ const mapDispatchToProps = dispatch => {
             const linkSuffix = (calendarEvent.id) ? calendarEvent.id : calendarEvent.sid;
             dispatch(push('/view/'+linkSuffix));
         },
-        viewEvent: (idInfo) => { // TODO Pass data to this better
-            dispatch(viewEvent(idInfo.id, idInfo.sid, idInfo.recId));
+        viewEvent: (event) => {
+            dispatch(setCurrentEvent(event));
+            dispatch(viewEvent(event));
         },
         toggleSidebarCollapsed: () => {
             dispatch(toggleSidebarCollapsed());
@@ -81,6 +87,6 @@ const mapDispatchToProps = dispatch => {
 };
 
 // Connect props to Redux state and actions
-const CalendarContainer = connect(mapStateToProps, mapDispatchToProps)(CalendarScene);
+const CalendarContainer = connect(mapStateToProps, mapDispatchToProps)(CalendarPage);
 
 export default CalendarContainer;

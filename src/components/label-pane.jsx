@@ -1,6 +1,9 @@
-import * as React from "react";
+// This component shows a list of event labels
 
-export default class TagPane extends React.Component {
+import * as React from "react";
+import PropTypes from 'prop-types';
+
+export default class LabelPane extends React.Component {
 
     constructor(props) {
         super(props);
@@ -8,26 +11,24 @@ export default class TagPane extends React.Component {
             props.refreshLabelsIfNeeded();
     }
 
-    tagClicked = (tagName) => {
-        this.props.labelToggled(tagName);
-    };
+    labelClicked = (labelName) => this.props.labelToggled(labelName);
 
     render() {
         let enableHoverStyle = !this.props.general.isMobile && this.props.editable;
         const noHoverText = enableHoverStyle ? '' : 'no-hover ';
-        let tagElems = [];
+        let labelElems = [];
         if (this.props.possibleLabels && this.props.selectedLabels) {
             Object.keys(this.props.possibleLabels).forEach((name) => {
                 let tooltip = this.props.possibleLabels[name].description;
                 let selected = this.props.selectedLabels.includes(name);
                 if (selected || this.props.showUnselected) {
-                    let classes = 'tag ' + name + (selected ? ' selected' : '');
+                    let classes = 'label ' + name + (selected ? ' selected' : '');
                     if (this.props.editable) {
-                        tagElems.push(<button id={'tag-' + name} key={name} title={tooltip} type="button"
+                        labelElems.push(<button id={'label-' + name} key={name} title={tooltip} type="button"
                                               className={`button ${noHoverText}${classes}`}
-                                              onClick={() => this.tagClicked(name)}>{name}</button>);
+                                              onClick={() => this.labelClicked(name)}>{name}</button>);
                     } else {
-                        tagElems.push(<span id={'tag-' + name} key={name} title={tooltip}
+                        labelElems.push(<span id={'label-' + name} key={name} title={tooltip}
                                             className={classes}>{name}</span>);
                     }
                 }
@@ -36,13 +37,13 @@ export default class TagPane extends React.Component {
         let colorSettings = '';
         for (let name in this.props.possibleLabels) {
             let bgColor = this.props.possibleLabels[name].color;
-            colorSettings += `.tag.button.${name}:not(.no-hover):hover,.tag.${name}.selected{background-color:${bgColor};}`;
+            colorSettings += `.label.button.${name}:not(.no-hover):hover,.label.${name}.selected{background-color:${bgColor};}`;
         }
         return (
             <div className={this.props.contentClass}>
                 <style type="text/css">{colorSettings}</style>
-                <div className="tag-selector-list">
-                    {tagElems}
+                <div className="label-selector-list">
+                    {labelElems}
                 </div>
             </div>
         )
@@ -50,7 +51,17 @@ export default class TagPane extends React.Component {
 
 }
 
-TagPane.defaultProps = {
+// Define React prop types for type checking during development
+LabelPane.propTypes = {
+    editable: PropTypes.bool,
+    showUnselected: PropTypes.bool,
+    possibleLabels: PropTypes.object,
+    selectedLabels: PropTypes.array,
+    contentClass: PropTypes.string,
+};
+
+// Define default values for React props
+LabelPane.defaultProps = {
     editable: true,
     showUnselected: true,
 };

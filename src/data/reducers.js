@@ -1,3 +1,5 @@
+// This file contains a bunch of Redux reducers
+
 import { ActionTypes } from './actions';
 import SidebarModes from '../data/sidebar-modes';
 
@@ -8,7 +10,7 @@ export function general(state = {}, action) {
         case ActionTypes.SET_VIEW_MODE:
             newState.viewMode = action.data;
             return newState;
-        case ActionTypes.SET_CURRENTLY_VIEWING_DATE:
+        case ActionTypes.SET_FOCUSED_DATE:
             newState.currentlyViewingDate = action.data;
             return newState;
         case ActionTypes.DISPLAY_MESSAGE:
@@ -18,7 +20,7 @@ export function general(state = {}, action) {
             alert((action.message) ? action.message : action.error);
             console.error(action.error);
             return state;
-        case ActionTypes.SET_PAGE_TITLE:
+        case ActionTypes.SET_PAGE_TITLE_PREFIX:
             window.document.title = action.title;
             newState.general = Object.assign({}, newState.general, { pageTitlePrefix: action.title });
             return newState;
@@ -29,7 +31,7 @@ export function general(state = {}, action) {
 
 export function events(state = {}, action) {
     switch (action.type) {
-        case ActionTypes.SET_CURRENT_EVENT_ID:
+        case ActionTypes.SET_CURRENT_EVENT:
             return Object.assign({}, state, {
                 current: action.event,
             });
@@ -69,7 +71,7 @@ export function sidebar(state = SidebarModes.LOADING, action) {
 export function labels(state = {}, action) {
     let newState;
     switch (action.type) {
-        case ActionTypes.REFRESH_LABELS_IF_NEEDED:
+        case ActionTypes.FETCH_LABELS_IF_NEEDED:
             if (Object.keys(state.labels.labelList).length === 0) {
 
             }
@@ -89,12 +91,12 @@ export function labels(state = {}, action) {
             }
             return newState;
 
-        case ActionTypes.SET_VISIBLE_LABELS:
+        case ActionTypes.SET_FILTER_LABELS:
             return Object.assign({}, state, {
                 visibleLabels: action.data
             });
 
-        case ActionTypes.LABEL_VISIBILITY_TOGGLED:
+        case ActionTypes.FILTER_LABEL_TOGGLED:
             let visibleLabels = state.visibleLabels.slice();
             if (visibleLabels.includes(action.labelName)) {
                 visibleLabels.splice(visibleLabels.indexOf(action.labelName),1);

@@ -1,5 +1,8 @@
+// This component is a button for hiding and showing the sidebar
+
 import React from 'react';
 import MenuIconSVG from 'svg-react-loader?name=Icon!../../assets/menu-icon.svg';
+import PropTypes from 'prop-types';
 
 export default class MenuIconButton extends React.Component {
 
@@ -10,3 +13,8 @@ export default class MenuIconButton extends React.Component {
     }
 
 }
+
+// Define React prop types for type checking during development
+MenuIconButton.propTypes = {
+    onClick: PropTypes.func.isRequired,
+};

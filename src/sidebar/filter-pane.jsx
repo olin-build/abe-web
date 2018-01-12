@@ -1,9 +1,11 @@
+// This component is a sidebar pane/section for filtering events.
+
 import React from "react";
-import TagPane from "../components/tag-pane.jsx";
+import LabelPane from "../components/label-pane.jsx";
 
 export default class FilterPane extends React.Component {
 
-    selectTags = (allNoneDefault) => {
+    selectLabels = (allNoneDefault) => {
 
         let visibleLabels;
         switch (allNoneDefault) {
@@ -27,16 +29,16 @@ export default class FilterPane extends React.Component {
         return (
             <div className={"filter-pane " + this.props.className}>
                 <div className="sidebar-item-subsection-header">
-                    <span className="sidebar-item-subsection-title">Tags</span>
+                    <span className="sidebar-item-subsection-title">Labels</span>
                     <div className="align-right">
-                        <a onClick={() => this.selectTags('all')}>All</a>
+                        <a onClick={() => this.selectLabels('all')}>All</a>
                         &nbsp;|&nbsp;
-                        <a onClick={() => this.selectTags('default')}>Default</a>
+                        <a onClick={() => this.selectLabels('default')}>Default</a>
                         &nbsp;|&nbsp;
-                        <a onClick={() => this.selectTags('none')}>None</a>
+                        <a onClick={() => this.selectLabels('none')}>None</a>
                     </div>
                 </div>
-                <TagPane {...this.props}/>
+                <LabelPane {...this.props}/>
             </div>
         )
     }

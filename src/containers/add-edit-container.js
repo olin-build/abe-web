@@ -1,3 +1,5 @@
+// This container is a sort of middleware between the React page and the Redux data store
+
 import { connect } from 'react-redux';
 import {
     setSidebarMode,
@@ -10,8 +12,9 @@ import {
     eventDeletedSuccessfully,
     eventDeleteFailed,
 } from '../data/actions';
-import AddEditEventScene from '../scenes/AddEdit/add-edit-scene.jsx';
+import AddEditEventPage from '../pages/add-edit/add-edit-page';
 
+// This function passes values/objects from the Redux state to the React component as props
 const mapStateToProps = state => {
     return {
         general: state.general,
@@ -21,6 +24,7 @@ const mapStateToProps = state => {
     }
 };
 
+// This function passes functions from /srcs/data/actions.jsx to the React component as props
 const mapDispatchToProps = dispatch => {
     return {
         refreshLabelsIfNeeded: () => {
@@ -54,6 +58,6 @@ const mapDispatchToProps = dispatch => {
 };
 
 // Connect props to Redux state and actions
-const AddEditContainer = connect(mapStateToProps, mapDispatchToProps)(AddEditEventScene);
+const AddEditContainer = connect(mapStateToProps, mapDispatchToProps)(AddEditEventPage);
 
 export default AddEditContainer;

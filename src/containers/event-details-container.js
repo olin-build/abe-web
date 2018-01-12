@@ -1,13 +1,17 @@
+// This container is a sort of middleware between the React page and the Redux data store
+
 import { connect } from 'react-redux';
 import { setSidebarMode, setCurrentEventId, setPageTitlePrefix } from '../data/actions';
-import ViewEventScene from '../scenes/View/view-event-scene.jsx';
+import EventDetailsPage from '../pages/details/event-details-page';
 
+// This function passes values/objects from the Redux state to the React component as props
 const mapStateToProps = state => {
     return {
         events: state.events.events,
     }
 };
 
+// This function passes functions from /srcs/data/actions.jsx to the React component as props
 const mapDispatchToProps = dispatch => {
     return {
         unsetCurrentEventId: () => {
@@ -29,6 +33,6 @@ const mapDispatchToProps = dispatch => {
 };
 
 // Connect props to Redux state and actions
-const ViewEventContainer = connect(mapStateToProps, mapDispatchToProps)(ViewEventScene);
+const ViewEventContainer = connect(mapStateToProps, mapDispatchToProps)(EventDetailsPage);
 
 export default ViewEventContainer;

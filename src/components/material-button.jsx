@@ -1,4 +1,8 @@
+// This component is an add (+) button following the Material Design style, like the button to create an event in
+// Google Calendar
+
 import React, {Component} from "react";
+import PropTypes from 'prop-types';
 // import AddIcon from 'svg-react-loader?name=Icon!../../assets/icons/ic-add-circle.svg';
 
 export default class AddButton extends Component {
@@ -22,3 +26,8 @@ export default class AddButton extends Component {
     }
 
 }
+
+// Define React prop types for type checking during development
+AddButton.propTypes = {
+    onClick: PropTypes.func.isRequired,
+};

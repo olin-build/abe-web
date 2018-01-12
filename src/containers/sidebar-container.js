@@ -1,21 +1,12 @@
+// This container is a sort of middleware between the React sidebar and the Redux data store
+
 import { connect } from 'react-redux';
 import Sidebar from '../sidebar/sidebar.jsx';
 import * as Actions from '../data/actions';
 import { push } from 'react-router-redux';
 import ReactGA from 'react-ga';
 
-const getVisibleEvents = (events, labels) => {
-    return 'Hey, some events might go here...';
-    switch (filter) {
-        case 'SHOW_ALL':
-            return events;
-        case 'SHOW_COMPLETED':
-            return events.filter(event => event.completed); // TODO
-        case 'SHOW_ACTIVE':
-            return events.completed(event => !event.completed) // TODO
-    }
-};
-
+// This function passes values/objects from the Redux state to the React component as props
 const mapStateToProps = state => {
     return {
         general: state.general,
@@ -27,6 +18,7 @@ const mapStateToProps = state => {
     }
 };
 
+// This function passes functions from /srcs/data/actions.jsx to the React component as props
 const mapDispatchToProps = dispatch => {
     return {
         refreshLabelsIfNeeded: () => {

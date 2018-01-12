@@ -1,3 +1,5 @@
+// This page is used for displaying/viewing event details, location, attachments, etc
+
 import * as React from "react";
 import {Redirect} from 'react-router';
 import moment from "moment";
@@ -6,7 +8,7 @@ import SidebarModes from "../../data/sidebar-modes";
 import PlainEnglishRecurrence from '../../components/plain-english-recurrence.jsx'
 import axios from 'axios';
 
-export default class ViewEventScene extends React.Component {
+export default class EventDetailsPage extends React.Component {
 
     constructor(props) {
         super(props);

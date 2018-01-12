@@ -1,13 +1,16 @@
+// This component is the sidebar, which is displayed across the entire app. Its content merely changes when pages are
+// changed.
+
 import React, {Component} from "react";
 import Footer from "./footer.jsx";
 import {SidebarHeader} from "../components/sidebar-header.jsx";
-import SidebarItemContainer from "../sidebar/sidebar-item-container.jsx";
+import SidebarItemContainer from "./sidebar-item-wrapper.jsx";
 import FilterPane from "./filter-pane.jsx";
 import LinkPane from "./link-pane.jsx";
 import GenerateICSPane from './generate-ics-pane.jsx';
 import MarkdownGuide from "./markdown-guide.jsx";
-import EventActionsPane from "../scenes/View/actions-pane.jsx";
-import TagPane from "../components/tag-pane.jsx";
+import EventActionsPane from "./event-actions-pane.jsx";
+import LabelPane from "../components/label-pane.jsx";
 
 export default class Sidebar extends Component {
 
@@ -25,7 +28,7 @@ export default class Sidebar extends Component {
 
         if (mode.EVENT_LABELS_PANE) { // For viewing a single event
             const currentEventLabels = this.props.currentEvent ? this.props.currentEvent.labels : null;
-            content.push(<SidebarItemContainer key="event-labels" header="Tags"><TagPane editable={false} showUnselected={false} {...this.props} selectedLabels={currentEventLabels}/></SidebarItemContainer>);
+            content.push(<SidebarItemContainer key="event-labels" header="Labels"><LabelPane editable={false} showUnselected={false} {...this.props} selectedLabels={currentEventLabels}/></SidebarItemContainer>);
         }
 
         if (mode.FILTER_PANE) { // For viewing the calendar

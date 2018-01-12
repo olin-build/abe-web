@@ -1,3 +1,5 @@
+// This component is displayed at the top of the calendar
+
 import React from 'react';
 
 export default class CalendarHeader extends React.Component {

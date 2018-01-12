@@ -1,3 +1,5 @@
+// This page is used to add or edit an event
+
 import * as React from "react";
 import EventVisibilitySelector from './visibility-selector.jsx';
 import SaveCancelButtons from './save-cancel-buttons.jsx';
@@ -6,13 +8,13 @@ import EventDateTimeSelector from '../../components/date-time-selector.jsx';
 import EventRecurrenceSelector from './recurrence-selector.jsx';
 import MarkdownEditor from '../../components/markdown-editor.jsx';
 import MenuIconButton from '../../components/menu-icon-button.jsx';
-import TagPane from '../../components/tag-pane.jsx'
+import TagPane from '../../components/label-pane.jsx'
 import moment from 'moment';
 import deepcopy from 'deepcopy';
 import axios from 'axios';
 import SidebarModes from "../../data/sidebar-modes";
-moment.fn.toJSON = function() { return this.format(); };
-moment.fn.toString = function() {return this.format();};
+moment.fn.toJSON = function() { return this.format(); }; // Don't think this is used anymore
+moment.fn.toString = function() {return this.format();}; // Don't think this is used anymore
 
 export default class AddEditEventScene extends React.Component {
 
@@ -22,10 +24,10 @@ export default class AddEditEventScene extends React.Component {
 
         // Load the ID(s) for the event
         Object.assign(this.state.eventData, this.getIdFromURL(props));
-        //
+
+        // If we're editing an event (determined by checking the URL), then make a server request for its data
         if (this.state.eventData.id || this.state.eventData.sid)
             this.updateEventData();
-        //
 
     }
 

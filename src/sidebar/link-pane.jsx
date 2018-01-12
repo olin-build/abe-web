@@ -1,6 +1,9 @@
-import React from 'react';
+// This component contains a collection of buttons for starting various general tasks
 
-export default class LinkPane extends React.Component {
+import React from 'react';
+import PropTypes from 'prop-types';
+
+export default class ButtonPane extends React.Component {
 
 
     render() {
@@ -13,3 +16,9 @@ export default class LinkPane extends React.Component {
     }
 
 }
+
+// Define React property types for type checking during development
+ButtonPane.propTypes = {
+    addEventClicked: PropTypes.func,
+    importICSClicked: PropTypes.func,
+};

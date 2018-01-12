@@ -12,7 +12,7 @@ import { toggleSidebarCollapsed } from './data/actions';
 import CalendarContainer from "./containers/calendar-container";
 import SidebarContainer from "./containers/sidebar-container";
 import AddEditContainer from "./containers/add-edit-container";
-import ViewEventContainer from "./containers/view-container";
+import ViewEventContainer from "./containers/event-details-container";
 import ImportContainer from "./containers/import-container";
 import * as reducers from './data/reducers';
 import SidebarMode from "./data/sidebar-modes";

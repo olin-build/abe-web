@@ -1,9 +1,11 @@
+// This page displays the calendar (it's the home page)
+
 import * as React from "react";
 import SidebarModes from "../../data/sidebar-modes";
 import UltraResponsiveCalendar from "ultra-responsive-calendar";
 import CalendarHeader from './calendar-header.jsx';
 
-export default class CalendarScene extends React.Component {
+export default class CalendarPage extends React.Component {
 
     componentDidMount() {
         this.props.setSidebarMode(SidebarModes.CALENDAR_VIEW);
@@ -40,18 +42,6 @@ export default class CalendarScene extends React.Component {
         }
     }
 
-    eventEditClicked = (event) => {
-        let linkSuffix = event.target.getAttribute('linkSuffix');
-        this.props.editEvent(linkSuffix);
-        event.preventDefault();
-    };
-
-    eventViewClicked = (event) => {
-        let linkSuffix = event.target.getAttribute('linkSuffix');
-        this.props.viewEvent(event);
-        event.preventDefault();
-    };
-
     render() {
         const currDate = this.props.currentlyViewingDate
             ? this.props.currentlyViewingDate.format('MMMM')
@@ -74,7 +64,7 @@ export default class CalendarScene extends React.Component {
                     viewType={this.props.viewMode}
                     header={header}
                     startDate={this.props.currentlyViewingDate}
-                    onEventClick={this.props.eventClick}
+                    onEventClick={this.props.viewEvent}
                     dayStartHour={9}
                     dayEndHour={24}
                     events={this.props.events}
