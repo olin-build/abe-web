@@ -73,9 +73,11 @@
     "webpack": "^2.6.1"
   },
   "devDependencies": {
+    "dotenv": "^5.0.0",
     "react-codemirror": "^1.0.0",
     "react-tag-input": "git+https://github.com/kylecombes/react-tags.git",
     "redux-devtools": "^3.4.0",
+    "webpack-dev-middleware": "^2.0.4",
     "webpack-dev-server": "^2.5.0"
   }
 }

@@ -1,7 +1,7 @@
 var webpack = require('webpack');
 var path = require('path');
 
-var BUILD_DIR = path.resolve(__dirname, 'public/build');
+var BUILD_DIR = path.resolve(__dirname);
 var APP_DIR = path.resolve(__dirname, 'src');
 
 var config = {
@@ -19,8 +19,6 @@ var config = {
                 include : APP_DIR,
                 loader : 'babel-loader'
             },
-            { test: require.resolve('jquery'), loader: 'expose-loader?$!expose-loader?jQuery' },
-            { test: require.resolve('moment'), loader: 'expose-loader?moment' }
         ]
     },
     devServer: {

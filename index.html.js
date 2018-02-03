@@ -1,3 +1,5 @@
+const googleAnalyticsId = process.env.GA_ID ? `window.GA_ID = ${process.env.GA_ID};` : '';
+
 const getHTML = (abeUrl, isDev) => {
     return `<!DOCTYPE html>
 <html lang="en">
@@ -11,9 +13,9 @@ const getHTML = (abeUrl, isDev) => {
 <script type="text/javascript">
     window.abe_url = "${abeUrl}";
     window.debug = ${isDev.toString()};
-    window.GA_ID = "${process.env.GA_ID}";
+    ${googleAnalyticsId}
 </script>
-<script src="/public/build/bundle.js" type="text/javascript"></script>
+<script src="/bundle.js" type="text/javascript"></script>
 <link rel="stylesheet" href="/node_modules/input-moment/dist/input-moment.css"/>
 <link rel="stylesheet" type="text/css" href="//code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
 <link rel='stylesheet' href='/public/css/app.css'/>
