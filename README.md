@@ -47,14 +47,14 @@ Certain environment variables need to be set before running the server:
 * DEBUG (optional) - set to `true` if you'd like to use the Redux devtools
 * GA_ID (optional) - set to your Google Analytics tracking ID
 
-This can be done through Node environment variables (if you know how), or by creating a text file called `.env` in the root of the repository.
+This can be done through Node environment variables, or by creating a text file
+called `.env` in the root of the repository.
+
+To run against a local instance of ABE that is running on port, copy
+`.env.template` to `.env`.
+
 If you are a member of Hacking the Library, use [this starter .env file](https://docs.google.com/document/d/1CZ45xYT33sTi5xpFJF8BkEeniCRszaxcfwiBmvMdmbk/edit).
 Otherwise, make your own. Its contents should be in the following format:
-
-```
-ABE_URL = https://my-abe-instance.com/
-DEBUG = true
-```
 
 ## Build and Run
 
