@@ -20,6 +20,14 @@ You first need to clone the code from this repository to your computer. To do th
 
 Then you'll need to install the Node.js server and a package manager (yarn).
 
+Install nodejs [from here](https://nodejs.org/en/), and yarn
+[here](https://yarnpkg.com/en/).
+
+On macOS running [Homebrew](https://brew.sh/), you can install both nodejs and
+yarn via `brew install yarn`.
+
+On Ubuntu:
+
     curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
     echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
     sudo apt-get update && sudo apt-get install nodejs yarn
