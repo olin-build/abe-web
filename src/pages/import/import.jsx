@@ -36,19 +36,11 @@ export default class ImportPage extends React.Component {
       };
 
     submitICS = () => {
-        const importData = JSON.stringify(this.state.importData);
-        $.ajax({
-            url: window.abe_url + '/ics/',
-            method: 'POST',
-            contentType: 'application/json',
-            data: importData,
-            success: (response) => {
-                this.props.importSuccess(response, importData)
-            },
-            error: (jqXHR, textStatus, errorThrown) => {
-                this.props.importFailed(errorThrown, importData);
-            },
-        });
+        axios.post(window.abe_url + '/ics/', this.state.importData)
+          .then(
+            (response) => this.props.importSuccess(response, this.state.importData),
+            (jqXHR, textStatus, errorThrown) => this.props.importFailed(errorThrown, jqXHR.message)
+          );
     };
 
       render(){

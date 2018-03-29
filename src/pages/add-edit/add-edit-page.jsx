@@ -237,13 +237,13 @@ export default class AddEditEventScene extends React.Component {
         if (this.state.olin_location){
           data.location = this.state.parsed_location;
         }
-        var newEvent = new Object
+        var newEvent = {};
         var url
-        var method
+        let requestMethod;
         if (!this.state.eventData.id && !this.state.eventData.sid){
           url = window.abe_url + '/events/';
           newEvent = this.state.eventData;
-          method = 'POST'
+          requestMethod = axios.post;
         }
         else{
           for (let key in this.state.eventData){
@@ -256,7 +256,7 @@ export default class AddEditEventScene extends React.Component {
               newEvent[key] = this.state.eventData[key]
             }
           }
-          method = 'PUT'
+          requestMethod = axios.put;
         }
         if (this.state.eventData.id){
           url = window.abe_url + '/events/' + this.state.eventData.id;
@@ -274,14 +274,11 @@ export default class AddEditEventScene extends React.Component {
             sid: this.state.eventData.sid,
             recId: this.state.eventData.rec_id,
         };
-        $.ajax({
-            url: url,
-            method: method,
-            contentType: 'application/json',
-            data: JSON.stringify(newEvent),
-            success: response => this.props.eventSavedSuccessfully(idInfo),
-            error: (jqXHR, textStatus, errorThrown) => this.props.eventSaveFailed(newEvent, errorThrown),
-        });
+        requestMethod(url, newEvent)
+          .then(
+            response => this.props.eventSavedSuccessfully(idInfo),
+            (jqXHR, textStatus, errorThrown) => this.props.eventSaveFailed(newEvent, jqXHR.message)
+          );
      };
 
     visibilityChanged = (value) => {
