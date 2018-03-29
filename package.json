@@ -1,7 +1,8 @@
 {
   "name": "abe-web-frontend",
   "version": "1.0.0",
-  "description": "Web frontend utilizing React for Olin College of Engineering's Amorphous Blob of Events (ABE).",
+  "description":
+    "Web frontend utilizing React for Olin College of Engineering's Amorphous Blob of Events (ABE).",
   "main": "app.js",
   "scripts": {
     "webpack:deploy": "webpack --config=webpack.config.js -p",
@@ -11,7 +12,7 @@
     "stats": "webpack --json > stats.json"
   },
   "engines": {
-    "node": "6.11.1"
+    "node": "^9"
   },
   "repository": {
     "type": "git",
@@ -69,7 +70,8 @@
     "serve-static": "^1.12.3",
     "svg-react-loader": "^0.4.4",
     "typescript": "^2.4.1",
-    "ultra-responsive-calendar": "git+https://github.com/kylecombes/ultra-responsive-calendar.git",
+    "ultra-responsive-calendar":
+      "git+https://github.com/kylecombes/ultra-responsive-calendar.git",
     "webpack": "^2.6.1"
   },
   "devDependencies": {
