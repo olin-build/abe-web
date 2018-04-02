@@ -69,7 +69,7 @@ on port 3000 (go to https://github.com/olinlibrary/ABE for instructions on how t
 
     yarn run dev
 
-Then visit <http://localhost:8080> in your browser.
+Then visit <http://localhost:8080/public/> in your browser.
 
 Changes should be reflected in your browser every time you save a file (except CSS files, which currently require a manual refresh),
 but it may take a couple seconds for Webpack to recompile everything.
