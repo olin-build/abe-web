@@ -61,9 +61,10 @@ Otherwise, make your own. Its contents should be in the following format:
 
 ## Build and Run
 
-To launch the web app, run the following:
+To launch the web app, make sure you have a local ABE instance running
+on port 3000 and run the following:
 
-    node server.js
+    yarn run dev
 
 Then visit <http://localhost:8080> in your browser.
 
