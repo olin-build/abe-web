@@ -40,9 +40,14 @@ On Ubuntu:
 
 Once you have Node installed, you can use `yarn` to install the necessary packages (read from `package.json`).
 
+cd into the abe-web directory first, then run yarn install
+
+    cd abe-web
     yarn install
 
 ### Environment variables
+If you are a member of Hacking the Library, use [this starter .env file](https://docs.google.com/document/d/1CZ45xYT33sTi5xpFJF8BkEeniCRszaxcfwiBmvMdmbk/edit).
+Otherwise, make your own. Its contents should be in the following format:
 
 Certain environment variables need to be set before running the server:
 
@@ -56,13 +61,11 @@ called `.env` in the root of the repository.
 To run against a local instance of ABE that is running on port, copy
 `.env.template` to `.env`.
 
-If you are a member of Hacking the Library, use [this starter .env file](https://docs.google.com/document/d/1CZ45xYT33sTi5xpFJF8BkEeniCRszaxcfwiBmvMdmbk/edit).
-Otherwise, make your own. Its contents should be in the following format:
 
 ## Build and Run
 
 To launch the web app, make sure you have a local ABE instance running
-on port 3000 and run the following:
+on port 3000 (go to https://github.com/olinlibrary/ABE for instructions on how to run ABE) and run the following:
 
     yarn run dev
 
