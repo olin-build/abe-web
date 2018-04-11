@@ -46,6 +46,7 @@ cd into the abe-web directory first, then run yarn install
     yarn install
 
 ### Environment variables
+
 If you are a member of Hacking the Library, use [this starter .env file](https://docs.google.com/document/d/1CZ45xYT33sTi5xpFJF8BkEeniCRszaxcfwiBmvMdmbk/edit).
 Otherwise, make your own. Its contents should be in the following format:
 
@@ -61,15 +62,14 @@ called `.env` in the root of the repository.
 To run against a local instance of ABE that is running on port, copy
 `.env.template` to `.env`.
 
-
 ## Build and Run
 
 To launch the web app, make sure you have a local ABE instance running
 on port 3000 (go to https://github.com/olinlibrary/ABE for instructions on how to run ABE) and run the following:
 
-    yarn run dev
+    yarn dev
 
-Then visit <http://localhost:8080/public/> in your browser.
+Then visit <http://localhost:8080/> in your browser.
 
 Changes should be reflected in your browser every time you save a file (except CSS files, which currently require a manual refresh),
 but it may take a couple seconds for Webpack to recompile everything.
