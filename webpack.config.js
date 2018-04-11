@@ -22,6 +22,7 @@ var config = {
         ]
     },
     devServer: {
+        contentBase: ['./public', '.'],
         historyApiFallback: true
     },
     resolve: {
