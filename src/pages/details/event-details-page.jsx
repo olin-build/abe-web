@@ -40,7 +40,7 @@ export default class EventDetailsPage extends React.Component {
     }
 
     componentWillUnmount() {
-        this.props.unsetCurrentEventId();
+        this.props.setCurrentEvent(null);
     }
 
     render() {

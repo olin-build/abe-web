@@ -139,7 +139,7 @@ export function page(direction) {
     return (dispatch, getState) => {
         const state = getState();
         const delta = getPageDelta(state);
-        const newDate = moment(state.general.currentlyViewingDate).add(direction * delta[0], delta[1]);
+        const newDate = moment(state.calendar.currentlyViewingDate).add(direction * delta[0], delta[1]);
         dispatch(setCurrentlyViewingDate(newDate));
     }
 }
@@ -149,18 +149,9 @@ export function page(direction) {
  * what display mode (month, week, day, etc) the calendar is in
  */
 function getPageDelta(state) {
-    switch (state.general.viewMode) {
-        case 'month':
-            return [1, 'M'];
-        case '3-day':
-            return [3, 'd'];
-        case '2-day':
-            return [2, 'd'];
-        case 'week':
-            return [1, 'w'];
-        default: // Daily
-            return [1, 'd'];
-    }
+    return state.calendar.currentViewMode.daysVisible > 0
+      ? [state.calendar.currentViewMode.daysVisible, 'd']
+      : [1, 'M'];
 }
 
 /**
@@ -187,7 +178,14 @@ export function setCurrentlyViewingDate(date) { // Set the first date visible on
 
 /** Sets which view format to display the calendar in (month, week, day, etc) */
 export function setViewMode(mode) {
-    return {type: ActionTypes.SET_VIEW_MODE, data: mode};
+    return (dispatch, getStore) => {
+      const state = getStore();
+      if (mode === state.calendar.possibleViewModes['Week']) {
+          const firstOfWeek = moment(state.calendar.currentlyViewingDate).day(7);
+          dispatch({ type: ActionTypes.SET_FOCUSED_DATE, data: firstOfWeek });
+      }
+      dispatch({type: ActionTypes.SET_VIEW_MODE, data: mode});
+    };
 }
 
 // ----- End calendar view mode ----- //
@@ -241,8 +239,9 @@ export function setEvents(events) {
     return (dispatch) => {
         const res = {};
         events.forEach((event) => {
-            const key = event.id || event.sid;
-            res[key] = event;
+            // Resolve unique ID for single-occurrence event or recurring event occurrence
+            const eventKey = event.id || (event.sid + event.start.format('YYYYDDD'));
+            res[eventKey] = event;
         });
         dispatch({type: ActionTypes.SET_EVENTS, data: res });
     }

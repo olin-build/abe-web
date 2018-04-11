@@ -44,13 +44,14 @@ export default class CalendarPage extends React.Component {
 
     render() {
         const currDate = this.props.currentlyViewingDate
-            ? this.props.currentlyViewingDate.format('MMMM')
+            ? this.props.currentlyViewingDate.format('MMMM D, YYYY')
             : '';
         const header = <CalendarHeader
             title={currDate}
             onLeftClick={this.props.pageLeft}
             onRightClick={this.props.pageRight}
             onTodayClick={this.props.showToday}
+            {...this.props}
         />;
 
         return (
@@ -60,8 +61,8 @@ export default class CalendarPage extends React.Component {
                 <UltraResponsiveCalendar
                     id="calendar"
                     className="page-container calendar-container"
-                    numColumns={this.props.viewColumns}
-                    viewType={this.props.viewMode}
+                    viewType={this.props.currentViewMode.calendarModeProp}
+                    days={this.props.currentViewMode.daysVisible}
                     header={header}
                     startDate={this.props.currentlyViewingDate}
                     onEventClick={this.props.viewEvent}

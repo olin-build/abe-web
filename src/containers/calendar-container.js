@@ -35,13 +35,11 @@ const getVisibleEvents = (events, visibleLabels, allLabels) => {
 
 // This function passes values/objects from the Redux state to the React component as props
 const mapStateToProps = state => {
-    return {
-        events: getVisibleEvents(state.events.events, state.labels.visibleLabels, state.labels.labelList),
-        labels: state.labels,
-        currentlyViewingDate: state.general.currentlyViewingDate,
-        viewMode: state.general.viewMode,
-        viewColumns: state.general.viewColumns,
-    }
+  return {
+    events: getVisibleEvents(state.events.events, state.labels.visibleLabels, state.labels.labelList),
+    labels: state.labels,
+    ...state.calendar,
+  }
 };
 
 // This function passes functions from /srcs/data/actions.jsx to the React component as props
@@ -82,7 +80,10 @@ const mapDispatchToProps = dispatch => {
         },
         showToday: () => {
             dispatch(setCurrentlyViewingDate(moment()));
-        }
+        },
+        setViewMode: (mode) => {
+            dispatch(setViewMode(mode));
+        },
     }
 };
 
