@@ -1,7 +1,7 @@
 // This container is a sort of middleware between the React page and the Redux data store
 
 import { connect } from 'react-redux';
-import { setSidebarMode, setCurrentEventId, setPageTitlePrefix } from '../data/actions';
+import { setSidebarMode, setCurrentEvent, setPageTitlePrefix } from '../data/actions';
 import EventDetailsPage from '../pages/details/event-details-page';
 
 // This function passes values/objects from the Redux state to the React component as props
@@ -14,9 +14,6 @@ const mapStateToProps = state => {
 // This function passes functions from /srcs/data/actions.jsx to the React component as props
 const mapDispatchToProps = dispatch => {
     return {
-        unsetCurrentEventId: () => {
-            dispatch(setCurrentEventId(null));
-        },
         setSidebarMode: mode => {
             dispatch(setSidebarMode(mode));
         },
@@ -28,7 +25,7 @@ const mapDispatchToProps = dispatch => {
         },
         setPageTitlePrefix: (title) => {
             dispatch(setPageTitlePrefix(title));
-        }
+        },
     }
 };
 

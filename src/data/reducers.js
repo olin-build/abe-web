@@ -7,12 +7,6 @@ export function general(state = {}, action) {
     let newState = Object.assign({}, state);
 
     switch (action.type) {
-        case ActionTypes.SET_VIEW_MODE:
-            newState.viewMode = action.data;
-            return newState;
-        case ActionTypes.SET_FOCUSED_DATE:
-            newState.currentlyViewingDate = action.data;
-            return newState;
         case ActionTypes.DISPLAY_MESSAGE:
             alert(action.message);
             return state;
@@ -27,6 +21,21 @@ export function general(state = {}, action) {
         default:
             return state;
     }
+}
+
+export function calendar(state = {}, action) {
+  let newState = Object.assign({}, state);
+
+  switch (action.type) {
+    case ActionTypes.SET_FOCUSED_DATE:
+      newState.currentlyViewingDate = action.data;
+      return newState;
+    case ActionTypes.SET_VIEW_MODE:
+      newState.currentViewMode = action.data;
+      return newState;
+    default:
+        return state;
+  }
 }
 
 export function events(state = {}, action) {

@@ -20,14 +20,38 @@ import SidebarMode from "./data/sidebar-modes";
 const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent);
 const initialState = {
     general: {
-        currentlyViewingDate: null,
         currentEvent: null,
         debug: window.debug,
         isMobile,
         pageTitlePrefix: null,
         pageTitleSuffix: 'Olin College Events',
-        viewMode: isMobile ? '3-day' : 'month',
         viewColumns: 3,
+    },
+    calendar: {
+      currentlyViewingDate: null,
+      currentViewMode: null, // Set below
+      possibleViewModes: {
+        'Day': {
+          displayName: 'Day',
+          daysVisible: 1,
+          calendarModeProp: 'multi-day',
+        },
+        '3-Day': {
+          displayName: '3-Day',
+          daysVisible: 3,
+          calendarModeProp: 'multi-day',
+        },
+        'Week': {
+          displayName: 'Week',
+          daysVisible: 7,
+          calendarModeProp: 'multi-day',
+        },
+        'Month': {
+          displayName: 'Month',
+          daysVisible: -1,
+          calendarModeProp: 'month',
+        },
+      },
     },
     events: {
         current: null,
@@ -45,6 +69,10 @@ const initialState = {
         visibleLabels: null,
     },
 };
+
+initialState.calendar.currentViewMode = isMobile
+  ? initialState.calendar.possibleViewModes['3-Day']
+  : initialState.calendar.possibleViewModes['Month'];
 
 // React Router (with Redux middleware)
 const history = createHistory();

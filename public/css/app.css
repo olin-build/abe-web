@@ -371,17 +371,42 @@ span.label {
 
 .calendar-header {
     text-align: center;
-    padding: 1em;
+    overflow: auto;
     background-color: white;
     border-bottom: 4px solid #dcd9d9;
 }
 
-.calendar-header .title{
+.calendar-header .title {
     font-size: 2em;
+    margin: 0.36em;
+    display: inline-block;
 }
 
-.calendar-header-pagination {
+.calendar-header-view-selector {
+    display: inline-block;
+}
+
+.calendar-header-view-option {
+    display: inline-block;
+    padding: 1.5em 1em;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.calendar-header-view-option.current {
+    background-color: #eee;
+}
+
+.calendar-header-view-option:hover {
+    background-color: #e9e9e9;
+}
+
+.calendar-header-options {
     float: right;
+    display: inline-block;
+}
+
+.calendar-header-options > * {
     display: inline-block;
 }
 
