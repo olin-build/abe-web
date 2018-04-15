@@ -177,13 +177,12 @@ export default class AddEditEventScene extends React.Component {
         this.setState(state);
      };
 
-    recurrenceSelected = () =>{
+    recurrenceSelected = (e) =>{
       let data = Object.assign({}, this.state.eventData);
-      if(data.recurrence){
+      if (e.target.checked){
+        data.recurrence = this.state.recurrence;
+      } else {
         delete data.recurrence;
-      }
-      else{
-        data.recurrence = this.state.recurrence
       }
       this.setState({eventData: data})
      };
@@ -235,8 +234,8 @@ export default class AddEditEventScene extends React.Component {
           data.start.startOf('day');
           data.end.endOf('day');
         }
-        var newEvent = {};
-        var url
+        let newEvent = {};
+        let url;
         let requestMethod;
         if (!this.state.eventData.id && !this.state.eventData.sid){
           url = window.abe_url + '/events/';
@@ -323,7 +322,7 @@ export default class AddEditEventScene extends React.Component {
                       <EventDateTimeSelector buttonPrefix="End: " datetime={moment(this.state.eventData.end)} onChange={this.endChanged} show={this.state.eventData.allDay ? 'date' : 'both'}/>
                       <input type="checkbox" id='all-day-check' title="All Day" checked={this.state.eventData.allDay} onChange={this.allDayChanged}/>
                       <label htmlFor="all-day-check">All Day</label>
-                      <input type="checkbox" id='repeats-check' title="Repeats?" disabled={recurrence_disable} checked={this.state.eventData.recurrence} onChange={this.recurrenceSelected}/>
+                      <input type="checkbox" id="repeats-check" title="Repeats?" disabled={recurrence_disable} checked={this.state.eventData.recurrence} onChange={this.recurrenceSelected}/>
                       <label htmlFor="repeats-check">Repeats?</label>
                       {recurrence}
                     </div>
