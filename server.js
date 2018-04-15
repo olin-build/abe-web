@@ -23,11 +23,6 @@ if (fs.existsSync('./.env')) { // Check if we're running on a local dev machine
 
 }
 
-let abeUrl = process.env.ABE_URL;
-if (!abeUrl) {
-  console.error('Unspecified environment variable "ABE_URL". Please define path to ABE instance.');
-  return;
-}
 const getHtml = require('./index.html.js'); // Ugly HTML template TODO Do this better
 const html = getHtml();
 

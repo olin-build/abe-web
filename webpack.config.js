@@ -23,7 +23,7 @@ var config = {
     },
     plugins: [
         new webpack.EnvironmentPlugin({
-            ABE_URL: 'http://localhost:5000/',
+            ABE_URL: 'http://localhost:3000/',
             DEBUG: false,
             GA_ID: null
         })

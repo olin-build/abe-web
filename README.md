@@ -52,8 +52,11 @@ Otherwise, make your own. Its contents should be in the following format:
 
 Certain environment variables need to be set before running the server:
 
-* ABE_URL (required) - to the URL of the ABE backend instance you'd like to connect to (please use a dev instance when developing)
-* DEBUG (optional) - set to `true` if you'd like to use the Redux devtools
+* ABE_URL (optional) - the URL of the ABE back-end instance you'd like to
+   connect to. (Please use a dev instance when developing.) This defaults to
+   <http://localhost:3000/>, which is the URL of a local
+   [ABE](https://github.com/olinlibrary/abe) instance.
+* DEBUG (optional) - set to `true` to use the Redux devtools
 * GA_ID (optional) - set to your Google Analytics tracking ID
 
 This can be done through Node environment variables, or by creating a text file
