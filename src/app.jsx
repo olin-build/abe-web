@@ -18,9 +18,11 @@ import * as reducers from './data/reducers';
 import SidebarMode from "./data/sidebar-modes";
 
 // Remove trailing slash, if present
+// TODO: change this from a global to a provider pattern.
 window.abe_url = process.env.ABE_URL.replace(/\/$/, '');
-window.debug = process.env.DEBUG || false;
-window.GA_ID = process.env.GA_ID;
+
+const DEBUG = process.env.DEBUG || false;
+const GA_ID = process.env.GA_ID;
 
 const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent);
 const initialState = {
@@ -83,9 +85,9 @@ initialState.calendar.currentViewMode = isMobile
 const history = createHistory();
 
 // Google Analytics
-if (window.GA_ID) {
-    ReactGA.initialize(window.GA_ID, {
-        debug: window.debug
+if (GA_ID) {
+    ReactGA.initialize(GA_ID, {
+        debug: DEBUG
     });
     history.listen((event) => {
         // Dispatch page changes to Google Analytics
@@ -98,7 +100,7 @@ if (window.GA_ID) {
 
 const routeMiddleware = routerMiddleware(history);
 let store;
-if (window.debug && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) {
+if (DEBUG && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) {
     const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__;
     store = createStore(
         combineReducers({...reducers, router: routerReducer}),
