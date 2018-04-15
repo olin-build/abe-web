@@ -16,6 +16,12 @@ import ViewEventContainer from "./containers/view-container";
 import ImportContainer from "./containers/import-container";
 import * as reducers from './data/reducers';
 import SidebarMode from "./data/sidebar-modes";
+
+// Remove trailing slash, if present
+window.abe_url = process.env.ABE_URL.replace(/\/$/, '');
+window.debug = process.env.DEBUG || false;
+window.GA_ID = process.env.GA_ID;
+
 const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent);
 const initialState = {
     general: {

@@ -23,6 +23,13 @@ var config = {
             { test: require.resolve('moment'), loader: 'expose-loader?moment' }
         ]
     },
+    plugins: [
+        new webpack.EnvironmentPlugin({
+            ABE_URL: 'http://localhost:5000/',
+            DEBUG: false,
+            GA_ID: null
+        })
+    ],
     devServer: {
         historyApiFallback: true
     }
