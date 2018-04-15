@@ -1,0 +1,65 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LabelPane editable 1`] = `
+<div
+  className="css-class"
+>
+  <style
+    type="text/css"
+  >
+    .label.button.first:not(.no-hover):hover,.label.first.selected{background-color:red;}.label.button.second:not(.no-hover):hover,.label.second.selected{background-color:green;}
+  </style>
+  <div
+    className="label-selector-list"
+  />
+</div>
+`;
+
+exports[`LabelPane matches snapshot 1`] = `
+<div
+  className="css-class"
+>
+  <style
+    type="text/css"
+  >
+    .label.button.first:not(.no-hover):hover,.label.first.selected{background-color:red;}.label.button.second:not(.no-hover):hover,.label.second.selected{background-color:green;}
+  </style>
+  <div
+    className="label-selector-list"
+  />
+</div>
+`;
+
+exports[`LabelPane with selected labels 1`] = `
+<div
+  className="css-class"
+>
+  <style
+    type="text/css"
+  >
+    .label.button.first:not(.no-hover):hover,.label.first.selected{background-color:red;}.label.button.second:not(.no-hover):hover,.label.second.selected{background-color:green;}
+  </style>
+  <div
+    className="label-selector-list"
+  >
+    <button
+      className="button label first selected"
+      id="label-first"
+      onClick={[Function]}
+      title="first label"
+      type="button"
+    >
+      first
+    </button>
+    <button
+      className="button label second"
+      id="label-second"
+      onClick={[Function]}
+      title="second label"
+      type="button"
+    >
+      second
+    </button>
+  </div>
+</div>
+`;
