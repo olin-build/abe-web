@@ -13,11 +13,7 @@ export default class LocationField extends React.Component {
             suffix: null,
             isOlin: false,
             value: this.props.location,
-
         };
-
-        this.tryParseLocationInput = this.tryParseLocationInput.bind(this);
-        this.textChanged = this.textChanged.bind(this);
 
         // Matching substrings for each building. Should be lowercase.
         // Could be done better
@@ -60,9 +56,8 @@ export default class LocationField extends React.Component {
         this.setState(locationObj);
     }
 
-    textChanged() {
-        let locationField = $('#location');
-        let value = locationField.val();
+    textChanged = (e) => {
+        let value = e.target.value;
         let parsed = this.tryParseLocationInput(value);
         let locationObj = {
             building: parsed.building,
@@ -73,9 +68,9 @@ export default class LocationField extends React.Component {
         };
         if (this.props.onChange)
             this.props.onChange(locationObj);
-    }
+    };
 
-    tryParseLocationInput(string) {
+    tryParseLocationInput = (string) => {
         let result = {isOlin: false, building: null, room: null};
 
         if (string && string.length > 0) {
@@ -208,7 +203,7 @@ export default class LocationField extends React.Component {
             result.isOlin = (result.building !== null && result.room !== null && result.suffix !== undefined);
         }
         return result;
-    }
+    };
 
     stringMatches(string, substrings) {
         string = string.trim();
