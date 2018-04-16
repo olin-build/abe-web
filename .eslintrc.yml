@@ -1,0 +1,20 @@
+env:
+  browser: true
+  jest: true
+
+parser: babel-eslint
+
+extends:
+  - eslint:recommended
+  - plugin:react/recommended
+
+# see https://eslint.org/docs/user-guide/configuring#specifying-globals
+globals:
+  $: false
+  moment: false # TODO: use `import` to import this, and remove this exception
+  process: false # for webpack process.env variables
+
+rules:
+  react/prop-types: off # TODO: #123
+  no-console: off  # TODO: remove use of console
+  react/jsx-no-target-blank: off # TODO: is this legit?

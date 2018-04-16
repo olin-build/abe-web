@@ -86,6 +86,12 @@ but it may take a couple seconds for Webpack to recompile everything.
 You can also run `jest` and `jest --watch`, if `./node_modules/.bin` is on your
 `PATH`.
 
+## Lint
+
+`yarn lint` runs [ESLint](https://eslint.org/) against the client code (in
+`./src`). It doesn't check the server code — but see #125 before putting too
+much time into that.
+
 ## Supporters
 
 <a target="_blank" href="http://browserstack.com/" alt="BrowserStack"><img align="right" src="https://bstacksupport.zendesk.com/attachments/token/GVENo6DR01sT3B5jsNRfU0II7/?name=Logo-01.svg" width="40%"></a>We'd like to extend a special thank you to [BrowserStack](http://browserstack.com/) for providing us with their testing service free of charge. BrowserStack allows us to test our project in a multitude of browsers on various platforms, including IE, Safari, Android and iOS, to ensure compatibility with as many as possible.
