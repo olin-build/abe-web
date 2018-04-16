@@ -377,7 +377,7 @@ export function viewEvent(event) {
 export function refreshLabelsIfNeeded() {
     return (dispatch, getState) => {
         if (!getState().labels.labelList) {
-            dispatch(refreshLabels());
+            dispatch(fetchLabels());
         }
     };
 }
@@ -385,7 +385,7 @@ export function refreshLabelsIfNeeded() {
 /**
  * Performs a server request to refresh the labels in the Redux store.
  */
-export function refreshLabels() {
+export function fetchLabels() {
     return (dispatch) => fetch(window.abe_url + '/labels/')
         .then(
             response => response.json(),

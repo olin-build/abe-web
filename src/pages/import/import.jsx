@@ -15,7 +15,6 @@ export default class ImportPage extends React.Component {
             },
         };
         this.props.setSidebarMode(SidebarModes.IMPORT);
-        props.refreshLabelsIfNeeded();
         props.setPageTitlePrefix('Import Calendar');
     }
 

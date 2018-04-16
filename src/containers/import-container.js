@@ -1,7 +1,11 @@
 // This container is a sort of middleware between the React import component and the Redux data store
 
 import { connect } from 'react-redux';
-import { setSidebarMode, refreshLabelsIfNeeded, toggleSidebarCollapsed, setPageTitlePrefix } from '../data/actions';
+import {
+  setSidebarMode,
+  toggleSidebarCollapsed,
+  setPageTitlePrefix,
+} from '../data/actions';
 import ImportPage from '../pages/import/import';
 import * as ga from 'react-ga';
 
@@ -16,9 +20,6 @@ const mapStateToProps = state => {
 // This function passes functions from /srcs/data/actions.jsx to the React component as props
 const mapDispatchToProps = (dispatch, getState) => {
     return {
-        refreshLabelsIfNeeded: () => {
-            dispatch(refreshLabelsIfNeeded());
-        },
         setSidebarMode: mode => {
             dispatch(setSidebarMode(mode));
         },

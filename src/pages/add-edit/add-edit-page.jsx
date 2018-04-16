@@ -64,10 +64,7 @@ export default class AddEditEventScene extends React.Component {
 
     componentDidMount() {
         this.props.setSidebarMode(SidebarModes.ADD_EDIT_EVENT);
-
-        if (this.props.refreshLabelsIfNeeded)
-            this.props.refreshLabelsIfNeeded();
-
+        
         this.props.setPageTitlePrefix(this.state.eventData.id || this.state.eventData.sid ? 'Edit Event' : 'Add Event');
     }
 

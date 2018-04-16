@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import {
     setSidebarMode,
     setMarkdownGuideVisibility,
-    refreshLabelsIfNeeded,
     toggleSidebarCollapsed,
     setPageTitlePrefix,
     eventSavedSuccessfully,
@@ -27,9 +26,6 @@ const mapStateToProps = state => {
 // This function passes functions from /srcs/data/actions.jsx to the React component as props
 const mapDispatchToProps = dispatch => {
     return {
-        refreshLabelsIfNeeded: () => {
-            dispatch(refreshLabelsIfNeeded());
-        },
         setSidebarMode: mode => {
             dispatch(setSidebarMode(mode));
         },
