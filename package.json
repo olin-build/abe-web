@@ -1,14 +1,14 @@
 {
   "name": "abe-web-frontend",
   "version": "1.0.0",
-  "description":
-    "Web frontend utilizing React for Olin College of Engineering's Amorphous Blob of Events (ABE).",
+  "description": "Web frontend utilizing React for Olin College of Engineering's Amorphous Blob of Events (ABE).",
   "main": "app.js",
   "scripts": {
     "webpack:deploy": "webpack --config=webpack.config.js -p",
     "heroku-postbuild": "$npm_execpath run webpack:deploy",
     "start": "node server.js",
     "dev": "webpack-dev-server --inline --hot",
+    "lint": "eslint --cache --ext .js,.jsx src",
     "test": "jest",
     "test:watch": "jest --watch",
     "stats": "webpack --json > stats.json"
@@ -72,12 +72,16 @@
     "serve-static": "^1.12.3",
     "svg-react-loader": "^0.4.4",
     "typescript": "^2.4.1",
-    "ultra-responsive-calendar":
-      "https://github.com/kylecombes/ultra-responsive-calendar.git",
+    "ultra-responsive-calendar": "https://github.com/kylecombes/ultra-responsive-calendar.git",
     "webpack": "^2.6.1"
   },
   "devDependencies": {
+    "babel-preset-env": "^1.6.1",
     "dotenv": "^5.0.0",
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-plugin-import": "^2.11.0",
+    "eslint-plugin-react": "^7.7.0",
     "jest": "^22.4.3",
     "react-codemirror": "^1.0.0",
     "react-tag-input": "git+https://github.com/kylecombes/react-tags.git",
