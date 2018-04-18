@@ -21,9 +21,6 @@ const mapStateToProps = state => {
 // This function passes functions from /srcs/data/actions.jsx to the React component as props
 const mapDispatchToProps = dispatch => {
     return {
-        refreshLabelsIfNeeded: () => {
-            dispatch(Actions.refreshLabelsIfNeeded());
-        },
         labelToggled: (labelName) => {
             dispatch(Actions.labelVisibilityToggled(labelName));
         },

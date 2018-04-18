@@ -1,17 +1,13 @@
 // This component is used to set event recurrence info
 
-import * as React from "react";
-import EventDateTimeSelector from '../../components/date-time-selector.jsx';
-import PlainEnglishRecurrence from '../../components/plain-english-recurrence.jsx'
+import * as React from 'react';
+import moment from 'moment';
+import EventDateTimeSelector from '../../components/date-time-selector';
+import PlainEnglishRecurrence from '../../components/plain-english-recurrence'
 
 class MonthOptions extends React.Component {
-  constructor(props){
-    super(props);
-    this.radioCheckedHandler = this.radioCheckedHandler.bind(this);
-  }
-  radioCheckedHandler(e) {
-      this.props.onChange(e.currentTarget.value);
-  }
+  radioCheckedHandler = (e) => this.props.onChange(e.currentTarget.value);
+
   render(){
     return(
       <div className="radio-collection-container">
