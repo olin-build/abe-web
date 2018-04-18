@@ -1,6 +1,7 @@
 // This component is displayed at the top of the calendar
 
 import React from 'react';
+import MenuIconButton from '../../components/menu-icon-button';
 
 export default class CalendarHeader extends React.Component {
 
@@ -21,6 +22,7 @@ export default class CalendarHeader extends React.Component {
 
     return (
       <div className="calendar-header">
+        <MenuIconButton onClick={this.props.toggleSidebarCollapsed}/>
         <span className="title">{this.props.title}</span>
         <div className="calendar-header-options">
           <div className="calendar-header-view-selector">
