@@ -15,6 +15,11 @@ var config = {
     module: {
         loaders: [
             {
+                test: /\.js$/,
+                use: ["source-map-loader"],
+                enforce: "pre"
+            },
+            {
                 test: /\.jsx?/,
                 include: APP_DIR,
                 loader: 'babel-loader'

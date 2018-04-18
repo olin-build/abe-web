@@ -79,7 +79,7 @@ const mapDispatchToProps = dispatch => {
             dispatch(page(1));
         },
         showToday: () => {
-            dispatch(setCurrentlyViewingDate(moment()));
+            dispatch(setCurrentlyViewingDate(moment().utcOffset(-480)));
         },
         setViewMode: (mode) => {
             dispatch(setViewMode(mode));
