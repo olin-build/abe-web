@@ -15,6 +15,8 @@ globals:
   process: false # for webpack process.env variables
 
 rules:
-  react/prop-types: off # TODO: #123
   no-console: off  # TODO: remove use of console
+  no-unused-vars: [error, { argsIgnorePattern: "^_" }]
+  react/no-find-dom-node: warn
+  react/prop-types: off # TODO: #123
   react/jsx-no-target-blank: off # TODO: is this legit?

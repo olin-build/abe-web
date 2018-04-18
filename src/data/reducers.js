@@ -81,12 +81,9 @@ export function labels(state = {}, action) {
     let newState;
     switch (action.type) {
         case ActionTypes.FETCH_LABELS_IF_NEEDED:
-            if (Object.keys(state.labels.labelList).length === 0) {
-
-            }
             return state;
 
-        case ActionTypes.SET_LABELS:
+        case ActionTypes.SET_LABELS: {
             newState = Object.assign({}, state);
             let labelList = action.data;
             newState.labelList = labelList;
@@ -99,13 +96,14 @@ export function labels(state = {}, action) {
                                     : [];
             }
             return newState;
+        }
 
         case ActionTypes.SET_FILTER_LABELS:
             return Object.assign({}, state, {
                 visibleLabels: action.data
             });
 
-        case ActionTypes.FILTER_LABEL_TOGGLED:
+        case ActionTypes.FILTER_LABEL_TOGGLED: {
             let visibleLabels = state.visibleLabels.slice();
             if (visibleLabels.includes(action.labelName)) {
                 visibleLabels.splice(visibleLabels.indexOf(action.labelName),1);
@@ -113,6 +111,7 @@ export function labels(state = {}, action) {
                 visibleLabels.push(action.labelName);
             }
             return Object.assign({}, state, {visibleLabels});
+        }
 
         default:
             return state;

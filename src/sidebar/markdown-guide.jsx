@@ -20,7 +20,7 @@ export default class MarkdownGuide extends React.Component {
                         <h2>## smaller header</h2>
                         <p>
                             And so on, adding more hashes to make the header smaller.<br/>
-                            <strong>Don't forget the space between the hash and the text.</strong>
+                            <strong>Don’t forget the space between the hash and the text.</strong>
                         </p>
                     </div>
                     <div className="markdown-guide-section">

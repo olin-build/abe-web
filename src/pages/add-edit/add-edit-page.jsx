@@ -95,7 +95,7 @@ export default class AddEditEventScene extends React.Component {
             }
 
         }
-     };
+     }
 
     updateEventData = () => {
         // Make the request and register the response handlers
@@ -276,8 +276,9 @@ export default class AddEditEventScene extends React.Component {
         };
         requestMethod(url, newEvent)
           .then(
-            response => this.props.eventSavedSuccessfully(idInfo),
-            (jqXHR, textStatus, errorThrown) => this.props.eventSaveFailed(newEvent, jqXHR.message)
+            _response => this.props.eventSavedSuccessfully(idInfo),
+            (jqXHR, _textStatus, _errorThrown) =>
+                this.props.eventSaveFailed(newEvent, jqXHR.message)
           );
      };
 
