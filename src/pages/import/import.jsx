@@ -1,6 +1,7 @@
 // This component allows the user to import a calendar from an ICS feed
 
 import * as React from "react";
+import axios from 'axios';
 import SidebarModes from "../../data/sidebar-modes";
 import TagPane from "../../components/label-pane.jsx";
 import MenuIconButton from '../../components/menu-icon-button.jsx';

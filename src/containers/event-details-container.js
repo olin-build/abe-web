@@ -1,6 +1,7 @@
 // This container is a sort of middleware between the React page and the Redux data store
 
 import { connect } from 'react-redux';
+import { push } from 'react-router-redux';
 import { setSidebarMode, setCurrentEvent, setPageTitlePrefix } from '../data/actions';
 import EventDetailsPage from '../pages/details/event-details-page';
 
