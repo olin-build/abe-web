@@ -370,16 +370,15 @@ span.label {
 /** ----- Begin Calendar ----- **/
 
 .calendar-header {
-    text-align: center;
-    overflow: auto;
     background-color: white;
     border-bottom: 4px solid #dcd9d9;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .calendar-header .title {
     font-size: 2em;
-    margin: 0.36em;
-    display: inline-block;
 }
 
 .calendar-header-view-selector {
@@ -417,14 +416,12 @@ span.label {
     cursor: pointer;
 }
 
-.calendar-container > .menu-icon-button {
-    position: absolute;
-    margin: 1.4em 0.9em;
-    z-index: 20;
+.calendar-container .menu-icon-button {
     cursor: pointer;
+    margin: 0 1em;
 }
 
-.calendar-container > .menu-icon-button > .menu-icon {
+.calendar-container .menu-icon-button > .menu-icon {
     width: 3em;
     height: 3em;
     fill: gray;
