@@ -13,10 +13,15 @@ export default class SubscriptionEditorPage extends React.Component {
             data: {
                 labels : [],
                 id : '',
+                ics_url : '',
             },
         };
 
-        Object.assign(this.state.data, this.getIdFromURL(props));
+        axios.get(window.abe_url + '/subscriptions/'+this.getIdFromURL(props))
+          .then(
+              (response) => this.setState({data: Object.assign({}, this.state.data, response.data)}),
+              (jqXHR, textStatus, errorThrown) => this.props.importFailed(errorThrown, jqXHR.message)
+            )
 
         this.props.setSidebarMode(SidebarModes.IMPORT);
         props.setPageTitlePrefix('Edit Subscription');
@@ -24,7 +29,7 @@ export default class SubscriptionEditorPage extends React.Component {
 
     getIdFromURL = (props) => {
         if ('match' in props && 'id' in props.match.params) {
-            return {id: props.match.params.id};
+            return props.match.params.id;
         }
         return null;
     };
@@ -46,10 +51,9 @@ export default class SubscriptionEditorPage extends React.Component {
       // };
 
     submitSubscription = () => {
-      console.log(this.state);
       axios.put(window.abe_url + '/subscriptions/'+this.state.data.id, this.state.data)
           .then(
-            (response) => this.props.importSuccess(response, this.state.importData),
+            (response) => window.alert('Successfully saved subscription preferences'),
             (jqXHR, textStatus, errorThrown) => this.props.importFailed(errorThrown, jqXHR.message)
           );
     };
