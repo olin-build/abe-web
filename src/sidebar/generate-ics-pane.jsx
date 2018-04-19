@@ -44,7 +44,9 @@ export default class GenerateICSPane extends React.Component {
                         target="_blank">
                         instructions
                     </OutboundLink>).</span>
-                <a className="ics-copy-to-clipboard" title="Copy feed URL" alt="Copy feed URL" onClick={this.getFeedUrl}>Copy link to clipboard</a>
+                {/*<a className="ics-copy-to-clipboard" title="Copy feed URL" alt="Copy feed URL" onClick={this.getFeedUrl}>Copy link to clipboard</a>*/}
+                <br/><br/>
+                <input type="submit" className="button submit" value="Copy feed URL" onClick={this.getFeedUrl}/>
 
             </div>
         )
