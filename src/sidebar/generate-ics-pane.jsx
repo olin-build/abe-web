@@ -13,6 +13,14 @@ export default class GenerateICSPane extends React.Component {
         super(props);
         this.copyToClipboard = this.copyToClipboard.bind(this);
         this.getFeedUrl = this.getFeedUrl.bind(this);
+
+        this.state = {
+            data: {
+                labels : [],
+                id : '',
+                ics_url : '',
+            },
+        };
     }
 
     getFeedUrl() {
@@ -20,13 +28,17 @@ export default class GenerateICSPane extends React.Component {
         var url = window.abe_url + '/subscriptions/'
         axios.post(url, {'labels': labels})
             .then(
-                _response => this.copyToClipboard(window.abe_url + _response.data.ics_url),
+                response => {
+                    this.setState({data: Object.assign({}, this.state.data, response.data)}); 
+                    this.copyToClipboard()
+                },
                 (jqXHR, _textStatus, _errorThrown) =>
                     alert('Failed to get Feed URL')
             )
     }
 
-    copyToClipboard(url) {
+    copyToClipboard() {
+        var url = window.abe_url + this.state.data.ics_url
         copy(url);
         this.props.icsUrlCopiedToClipboard(url);
         alert("Link copied to clipboard");
@@ -48,6 +60,8 @@ export default class GenerateICSPane extends React.Component {
                 <br/><br/>
                 <input type="submit" className="button submit" value="Copy feed URL" onClick={this.getFeedUrl}/>
 
+                {this.state.data.id.length > 0 && 
+                    <a href={'/subscription/'+this.state.data.id} className="ics-copy-to-clipboard" title="Edit feed preferences" alt="Edit feed preferences">Edit feed preferences</a>}
             </div>
         )
     }

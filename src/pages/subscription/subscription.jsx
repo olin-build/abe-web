@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import axios from 'axios';
+import copy from 'copy-to-clipboard';
 import SidebarModes from "../../data/sidebar-modes";
 import TagPane from "../../components/label-pane.jsx";
 import MenuIconButton from '../../components/menu-icon-button.jsx';
@@ -25,6 +26,8 @@ export default class SubscriptionEditorPage extends React.Component {
 
         this.props.setSidebarMode(SidebarModes.IMPORT);
         props.setPageTitlePrefix('Edit Subscription');
+
+        this.copyToClipboard = this.copyToClipboard.bind(this);
     }
 
     getIdFromURL = (props) => {
@@ -53,10 +56,20 @@ export default class SubscriptionEditorPage extends React.Component {
     submitSubscription = () => {
       axios.put(window.abe_url + '/subscriptions/'+this.state.data.id, this.state.data)
           .then(
-            (response) => window.alert('Successfully saved subscription preferences'),
+            (response) => {
+                  this.setState({data: Object.assign({}, this.state.data, response.data)}); 
+                  window.alert("Subscription preferences saved");
+                },
             (jqXHR, textStatus, errorThrown) => this.props.importFailed(errorThrown, jqXHR.message)
           );
     };
+
+    copyToClipboard() {
+        var url = window.abe_url + this.state.data.ics_url
+        copy(url);
+        // this.props.icsUrlCopiedToClipboard(url);
+        alert("Link copied to clipboard");
+    }
 
     render(){
       return(
@@ -68,6 +81,8 @@ export default class SubscriptionEditorPage extends React.Component {
                 <TagPane contentClass='import-filters' {...this.props} possibleLabels={this.props.labels} selectedLabels={this.state.data.labels} labelToggled={this.labelToggled}/>
                 <br/>
                 <input type="submit" className="button submit" value="Submit" onClick={this.submitSubscription}/>
+                <br/>
+                <input type="submit" className="button submit" value="Copy feed URL" onClick={this.copyToClipboard}/>
             </div>
         </div>
       )
