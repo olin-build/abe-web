@@ -1,6 +1,5 @@
 env:
   browser: true
-  jest: true
 
 parser: babel-eslint
 
@@ -12,11 +11,28 @@ extends:
 globals:
   $: false
   moment: false # TODO: use `import` to import this, and remove this exception
-  process: false # for webpack process.env variables
+  process: false # allow webpack `process.env[*]` variables
 
 rules:
-  no-console: off  # TODO: remove use of console
+  no-console: off  # TODO: change to `warn`?
   no-unused-vars: [error, { argsIgnorePattern: "^_" }]
   react/no-find-dom-node: warn
   react/prop-types: off # TODO: #123
   react/jsx-no-target-blank: off # TODO: is this legit?
+
+overrides:
+  # jest
+  - files: [ "**/__test__/**/*.js ", "**/*\\.test\\.js" ]
+    env:
+      jest: true
+  # server
+  - files: [ "server.js" ]
+    env:
+      browser: false
+      node: true
+    rules:
+      no-console: off
+  # TODO: remove this block once the named file is fixed
+  - files: [ "src/__test__/change-view.test.js" ]
+    rules:
+      no-unused-vars: [warn, { argsIgnorePattern: "^_" }]
