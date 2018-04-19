@@ -3,24 +3,33 @@
 
 import React from 'react';
 import copy from 'copy-to-clipboard';
+import axios from 'axios';
 import { OutboundLink } from 'react-ga';
+
 
 export default class GenerateICSPane extends React.Component {
 
     constructor(props) {
         super(props);
         this.copyToClipboard = this.copyToClipboard.bind(this);
+        this.getFeedUrl = this.getFeedUrl.bind(this);
     }
 
-    copyToClipboard() {
-        if (this.props.selectedLabels.length > 0) {
-            let url = window.abe_url + '/ics/?labels=' + this.props.selectedLabels.join(',');
-            copy(url);
-            this.props.icsUrlCopiedToClipboard(url);
-            alert("Link copied to clipboard");
-        } else {
-            alert('You must select at least one event tag.')
-        }
+    getFeedUrl() {
+        var labels = this.props.selectedLabels;
+        var url = window.abe_url + '/subscriptions/'
+        axios.post(url, {'labels': labels})
+            .then(
+                _response => this.copyToClipboard(window.abe_url + _response.data.ics_url),
+                (jqXHR, _textStatus, _errorThrown) =>
+                    alert('Failed to get Feed URL')
+            )
+    }
+
+    copyToClipboard(url) {
+        copy(url);
+        this.props.icsUrlCopiedToClipboard(url);
+        alert("Link copied to clipboard");
     }
 
     render() {
@@ -35,7 +44,7 @@ export default class GenerateICSPane extends React.Component {
                         target="_blank">
                         instructions
                     </OutboundLink>).</span>
-                <a className="ics-copy-to-clipboard" title="Copy feed URL" alt="Copy feed URL" onClick={this.copyToClipboard}>Copy link to clipboard</a>
+                <a className="ics-copy-to-clipboard" title="Copy feed URL" alt="Copy feed URL" onClick={this.getFeedUrl}>Copy link to clipboard</a>
 
             </div>
         )
