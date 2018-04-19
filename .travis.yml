@@ -3,3 +3,7 @@ node_js:
   - "9.3"
 
 cache: yarn
+
+script:
+  - yarn lint
+  - yarn test
