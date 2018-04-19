@@ -13,6 +13,7 @@ import SidebarContainer from "./containers/sidebar-container";
 import AddEditContainer from "./containers/add-edit-container";
 import ViewEventContainer from "./containers/event-details-container";
 import ImportContainer from "./containers/import-container";
+import SubscriptionContainer from "./containers/subscription-container";
 
 // Remove trailing slash, if present
 // TODO: change this from a global to a provider pattern.
@@ -51,6 +52,7 @@ class App extends React.Component {
                 <Route exact path='/edit/:id' component={AddEditContainer}/>
                 <Route path='/edit/:sid/:rec_id' component={AddEditContainer}/>
                 <Route path='/view/:id' component={ViewEventContainer}/>
+                <Route path='/subscription/:id' component={SubscriptionContainer}/>
               </Switch>
             </Router>
           </div>

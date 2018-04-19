@@ -34,7 +34,8 @@ const routes = [
   '/import',
   '/edit/:id',
   '/edit/:sid/:rec_id',
-  '/view/:id'
+  '/view/:id',
+  '/subscription/:id'
 ];
 
 app.get(routes, function(req, res) {
