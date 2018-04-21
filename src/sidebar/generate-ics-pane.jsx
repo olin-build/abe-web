@@ -24,24 +24,40 @@ export default class GenerateICSPane extends React.Component {
     }
 
     getFeedUrl() {
+        // In order to copy the URL as a direct response to the button click,
+        // a temporary ID is generated, and preemptively copied, but the success
+        // message is not displayed until the request returns. If the response
+        // has a different URL for some reason, it is copied again, requiring
+        // the user to press "control-C".
+
         var labels = this.props.selectedLabels;
-        var url = window.abe_url + '/subscriptions/'
+
+        var temp_id = Math.random().toString(16).substring(2, 15) + Math.random().toString(16).substring(2, 15);
+        var temp_url = '/subscriptions/'+temp_id+'/ics'
+        this.copyToClipboard(temp_url)
+
+        var url = window.abe_url + '/subscriptions/' + temp_id;
+
         axios.post(url, {'labels': labels})
             .then(
                 response => {
                     this.setState({data: Object.assign({}, this.state.data, response.data)}); 
-                    this.copyToClipboard()
+                    if (response.data.ics_url != temp_url){
+                        this.copyToClipboard(this.state.data.ics_url);   
+                        console.warn('Double copy needed because returned ics_url "'+
+                            response.data.ics_url+'" did not match expected "'+temp_url+'"')
+                    }
+                    alert("Link copied to clipboard");
                 },
                 (jqXHR, _textStatus, _errorThrown) =>
                     alert('Failed to get Feed URL')
             )
     }
 
-    copyToClipboard() {
-        var url = window.abe_url + this.state.data.ics_url
-        copy(url);
+    copyToClipboard(url) {
+        copy(window.abe_url + url);
+        
         this.props.icsUrlCopiedToClipboard(url);
-        alert("Link copied to clipboard");
     }
 
     render() {
