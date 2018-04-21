@@ -38,21 +38,21 @@ const mapDispatchToProps = (dispatch, getState) => {
         },
         importSuccess: (response, importData) => {
             ga.event({
-                category: 'ICS Feed Import',
+                category: 'Subscription Preferences',
                 variable: 'success',
                 value: importData,
-                label: 'User successfully imported ICS feed into ABE',
+                label: 'User successfully edited their subscription',
             });
-            alert('ICS imported successfully');
+            alert('Subscription preferences edited');
         },
         importFailed: (error, importData) => {
             ga.event({
-                category: 'ICS Feed Import',
+                category: 'Subscription Preferences',
                 variable: 'failure',
                 value: JSON.stringify({ error, importData }),
-                label: 'ICS feed import into ABE failed',
+                label: 'Editing subscription preferences failed',
             });
-            alert('ICS import failed:\n' + error);
+            alert('Subscription editing failed:\n' + error);
         },
     };
 };

@@ -58,7 +58,7 @@ export default class SubscriptionEditorPage extends React.Component {
           .then(
             (response) => {
                   this.setState({data: Object.assign({}, this.state.data, response.data)}); 
-                  window.alert("Subscription preferences saved");
+                  this.props.importSuccess(response, response.data);
                 },
             (jqXHR, textStatus, errorThrown) => this.props.importFailed(errorThrown, jqXHR.message)
           );
@@ -67,7 +67,6 @@ export default class SubscriptionEditorPage extends React.Component {
     copyToClipboard() {
         var url = window.abe_url + this.state.data.ics_url
         copy(url);
-        // this.props.icsUrlCopiedToClipboard(url);
         alert("Link copied to clipboard");
     }
 
