@@ -32,7 +32,9 @@ export default class GenerateICSPane extends React.Component {
 
         var labels = this.props.selectedLabels;
 
-        var temp_id = Math.random().toString(16).substring(2, 12) + Math.random().toString(16).substring(2, 12);
+        var temp_id = Math.random().toString(16).substring(2, 12)
+            + Math.random().toString(16).substring(2, 12)
+            + Math.random().toString(16).substring(2, 12);
         var temp_url = '/subscriptions/'+temp_id+'/ics'
         this.copyToClipboard(temp_url)
 
