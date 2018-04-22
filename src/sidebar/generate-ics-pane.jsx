@@ -32,7 +32,7 @@ export default class GenerateICSPane extends React.Component {
 
         var labels = this.props.selectedLabels;
 
-        var temp_id = Math.random().toString(16).substring(2, 15) + Math.random().toString(16).substring(2, 15);
+        var temp_id = Math.random().toString(16).substring(2, 12) + Math.random().toString(16).substring(2, 12);
         var temp_url = '/subscriptions/'+temp_id+'/ics'
         this.copyToClipboard(temp_url)
 
@@ -43,13 +43,22 @@ export default class GenerateICSPane extends React.Component {
                 response => {
                     this.setState({data: Object.assign({}, this.state.data, response.data)}); 
                     if (response.data.ics_url != temp_url){
+                        // The server has returned an ICS url that is different than
+                        // the one we preemptively generated. This could happen if the format
+                        // of the URL changes in some future version, or if the server objects
+                        // to our generated ID for some reason and generates its own.
+                        //
+                        // This should never happen, but handling it here allows future changes
+                        // to URL format to be pushed separately to the backend and frontend
+                        // repos, with only slight user inconvenience during the transition.
+
                         this.copyToClipboard(this.state.data.ics_url);   
                         console.warn('Double copy needed because returned ics_url "'+
                             response.data.ics_url+'" did not match expected "'+temp_url+'"')
                     }
                     alert("Link copied to clipboard");
                 },
-                (jqXHR, _textStatus, _errorThrown) =>
+                (_jqXHR, _textStatus, _errorThrown) =>
                     alert('Failed to get Feed URL')
             )
     }
