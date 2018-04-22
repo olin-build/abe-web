@@ -9,8 +9,6 @@ extends:
 
 # see https://eslint.org/docs/user-guide/configuring#specifying-globals
 globals:
-  $: false        # jQuery
-  moment: false   # TODO: use `import` to import this, and remove this exception
   process: false  # allow webpack `process.env[*]` variables
 
 rules:
@@ -21,7 +19,7 @@ rules:
   react/jsx-no-target-blank: off  # TODO: is this a legitimate error
 
 overrides:
-  # server
+  # server:
   - files: [ "server.js" ]
     env:
       browser: false
