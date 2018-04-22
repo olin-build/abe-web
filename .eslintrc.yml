@@ -9,22 +9,18 @@ extends:
 
 # see https://eslint.org/docs/user-guide/configuring#specifying-globals
 globals:
-  $: false
-  moment: false # TODO: use `import` to import this, and remove this exception
-  process: false # allow webpack `process.env[*]` variables
+  $: false        # jQuery
+  moment: false   # TODO: use `import` to import this, and remove this exception
+  process: false  # allow webpack `process.env[*]` variables
 
 rules:
-  no-console: off  # TODO: change to `warn`?
+  no-console: warn
   no-unused-vars: [error, { argsIgnorePattern: "^_" }]
   react/no-find-dom-node: warn
-  react/prop-types: off # TODO: #123
-  react/jsx-no-target-blank: off # TODO: is this legit?
+  react/prop-types: off           # TODO: #123
+  react/jsx-no-target-blank: off  # TODO: is this a legitimate error
 
 overrides:
-  # jest
-  - files: [ "**/__test__/**/*.js ", "**/*\\.test\\.js" ]
-    env:
-      jest: true
   # server
   - files: [ "server.js" ]
     env:
@@ -32,7 +28,7 @@ overrides:
       node: true
     rules:
       no-console: off
-  # TODO: remove this block once the named file is fixed
-  - files: [ "src/__test__/change-view.test.js" ]
-    rules:
-      no-unused-vars: [warn, { argsIgnorePattern: "^_" }]
+  # tests
+  - files: [ "**/__test__/**/*.js ", "**/*\\.test\\.js" ]
+    env:
+      jest: true
