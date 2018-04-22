@@ -1,5 +1,8 @@
 # A Web Frontend for ABE
 
+Dev: [![Build Status](https://travis-ci.org/olinlibrary/abe-web.svg?branch=dev)](https://travis-ci.org/olinlibrary/abe-web/branches)
+Master: [![Build Status](https://travis-ci.org/olinlibrary/abe-web.svg?branch=master)](https://travis-ci.org/olinlibrary/abe-web/branches)
+
 This is a Web front-end for the
 [Olin College of Engineering Library](http://www.olin.build)'s
 [Amorphous Blob of Events](https://github.com/olinlibrary/ABE).
@@ -14,8 +17,10 @@ You can install them by following the instructions below.
 
 You first need to clone the code from this repository to your computer. To do that, run the following:
 
-    git clone https://github.com/olinlibrary/abe-web.git
-    cd abe-web
+```shell
+git clone https://github.com/olinlibrary/abe-web.git
+cd abe-web
+```
 
 ### Node.js
 
@@ -42,8 +47,10 @@ Once you have Node installed, you can use `yarn` to install the necessary packag
 
 cd into the abe-web directory first, then run yarn install
 
-    cd abe-web
-    yarn install
+```shell
+cd abe-web
+yarn install
+```
 
 ### Environment variables
 
@@ -52,18 +59,19 @@ Otherwise, make your own. Its contents should be in the following format:
 
 Certain environment variables need to be set before running the server:
 
-* ABE_URL (optional) - the URL of the ABE back-end instance you'd like to
+* `ABE_URL` (optional) - the URL of the ABE back-end instance you'd like to
    connect to. (Please use a dev instance when developing.) This defaults to
    <http://localhost:3000/>, which is the URL of a local
    [ABE](https://github.com/olinlibrary/abe) instance.
-* DEBUG (optional) - set to `true` to use the Redux devtools
-* GA_ID (optional) - set to your Google Analytics tracking ID
+* `DEBUG` (optional) - set to `true` to use the [Redux
+  devtools](https://github.com/zalmoxisus/redux-devtools-extension)
+* `GA_ID` (optional) - set to your Google Analytics tracking ID
 
 This can be done through Node environment variables, or by creating a text file
 called `.env` in the root of the repository.
 
-To run against a local instance of ABE that is running on port, copy
-`.env.template` to `.env`.
+To run against a remote instance of ABE, set the `ABE_URL` environment variable,
+or copy `.env.template` to `.env` and edit the value of `ABE_URL` in that file.
 
 ## Build and Run
 
