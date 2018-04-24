@@ -13,6 +13,7 @@ describe('LabelPane', () => {
                 contentClass="css-class"
                 general={{}}
                 possibleLabels={labels}
+                selectedLabels={[]}
             />
         );
         const tree = component.toJSON();
@@ -31,16 +32,16 @@ describe('LabelPane', () => {
         const tree = component.toJSON();
         expect(tree).toMatchSnapshot();
     });
-    test('editable', () => {
+    test('not editable', () => {
         const component = renderer.create(
             <LabelPane
                 contentClass="css-class"
                 general={{}}
-                editable
+                editable={false}
                 possibleLabels={labels}
+                selectedLabels={['first']}
             />
         );
-        //  selectedLabels  labelToggled editable
         const tree = component.toJSON();
         expect(tree).toMatchSnapshot();
     });
