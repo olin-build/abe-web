@@ -23,7 +23,7 @@ if (fs.existsSync('./.env')) { // Check if we're running on a local dev machine
 
 }
 
-const getHtml = require('./index.html.js'); // Ugly HTML template TODO Do this better
+const getHtml = require('./index.html.js'); // Ugly HTML template TODO: Do this better
 const html = getHtml();
 
 const routes = [
@@ -42,6 +42,12 @@ app.get(routes, function(req, res) {
   res.send(html);
 });
 
-app.listen(port, function() {
-  console.log("Listening on " + port);
+var server = app.listen(port, function() {
+  var host = server.address().address;
+  var port = server.address().port;
+  // replace IPv6 wildcard by a recognizable URL, that can be used in a browser
+  // address bar
+  host = host.replace(/^::$/, '0.0.0.0');
+  // Printed thus, some terminals display a clickable link
+  console.log("Listening on http://%s:%s", host, port);
 });
