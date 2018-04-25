@@ -9,7 +9,9 @@
     "postinstall": "$npm_execpath run clean && $npm_execpath run build",
     "start": "node server.js",
     "dev": "webpack-dev-server --inline --hot",
-    "lint": "eslint --cache --ext .js,.jsx src *.js",
+    "lint": "$npm_execpath run lint:js && $npm_execpath run lint:markdown",
+    "lint:js": "eslint --cache --ext .js,.jsx src *.js",
+    "lint:markdown": "markdownlint *.md && markdownlint .github/PULL_REQUEST_TEMPLATE.md -c .github/.markdownlintrc",
     "test": "jest",
     "test:watch": "jest --watch",
     "stats": "webpack --json > stats.json"
@@ -81,6 +83,7 @@
     "eslint-plugin-import": "^2.11.0",
     "eslint-plugin-react": "^7.7.0",
     "jest": "^22.4.3",
+    "markdownlint-cli": "^0.8.1",
     "react-codemirror": "^1.0.0",
     "react-tag-input": "git+https://github.com/kylecombes/react-tags.git",
     "react-test-renderer": "^15.0.0",
