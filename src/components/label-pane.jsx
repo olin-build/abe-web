@@ -14,29 +14,31 @@ export default class LabelPane extends React.Component {
     labelClicked = (labelName) => this.props.labelToggled(labelName);
 
     render() {
-        let enableHoverStyle = !this.props.general.isMobile && this.props.editable;
-        const noHoverText = enableHoverStyle ? '' : 'no-hover ';
+        const {editable, possibleLabels, selectedLabels, showUnselected} = this.props;
+        const enableHoverStyle = !this.props.general.isMobile && this.props.editable;
+        const noHoverClass = enableHoverStyle ? '' : 'no-hover ';
         let labelElems = [];
-        if (this.props.possibleLabels && this.props.selectedLabels) {
-            Object.keys(this.props.possibleLabels).forEach((name) => {
-                let tooltip = this.props.possibleLabels[name].description;
-                let selected = this.props.selectedLabels.includes(name);
-                if (selected || this.props.showUnselected) {
-                    let classes = 'label ' + name + (selected ? ' selected' : '');
-                    if (this.props.editable) {
-                        labelElems.push(<button id={'label-' + name} key={name} title={tooltip} type="button"
-                                              className={`button ${noHoverText}${classes}`}
+        if (possibleLabels) {
+            Object.keys(possibleLabels).forEach((name) => {
+                const tooltip = possibleLabels[name].description;
+                const selected = selectedLabels.includes(name);
+                if (selected || showUnselected) {
+                    const classes = 'label ' + name + (selected ? ' selected' : '');
+                    const id = 'label-' + name;
+                    if (editable) {
+                        labelElems.push(<button id={id} key={name} title={tooltip} type="button"
+                                              className={`button ${noHoverClass}${classes}`}
                                               onClick={() => this.labelClicked(name)}>{name}</button>);
                     } else {
-                        labelElems.push(<span id={'label-' + name} key={name} title={tooltip}
+                        labelElems.push(<span id={id} key={name} title={tooltip}
                                             className={classes}>{name}</span>);
                     }
                 }
             });
         }
         let colorSettings = '';
-        for (let name in this.props.possibleLabels) {
-            let bgColor = this.props.possibleLabels[name].color;
+        for (let name in possibleLabels) {
+            const bgColor = possibleLabels[name].color;
             colorSettings += `.label.button.${name}:not(.no-hover):hover,.label.${name}.selected{background-color:${bgColor};}`;
         }
         return (
@@ -53,6 +55,7 @@ export default class LabelPane extends React.Component {
 
 // Define React prop types for type checking during development
 LabelPane.propTypes = {
+    general: PropTypes.object,
     editable: PropTypes.bool,
     showUnselected: PropTypes.bool,
     possibleLabels: PropTypes.object,
@@ -62,6 +65,9 @@ LabelPane.propTypes = {
 
 // Define default values for React props
 LabelPane.defaultProps = {
+    general: {},
     editable: true,
+    selectedLabels: [],
     showUnselected: true,
+    contentClass: '',
 };
