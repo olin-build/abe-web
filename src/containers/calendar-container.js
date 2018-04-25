@@ -2,20 +2,17 @@
 
 import { connect } from 'react-redux';
 import {
-    editEvent,
     setSidebarMode,
     toggleSidebarCollapsed,
     setVisibleLabels,
     setPageTitlePrefix,
     setRoute,
-    setCurrentEvent,
     setCurrentlyViewingDate,
     page,
     setViewMode,
     viewEvent,
 } from '../data/actions';
 import CalendarPage from '../pages/calendar/calendar-page';
-import { push } from 'react-router-redux';
 import moment from 'moment';
 
 const getVisibleEvents = (events, visibleLabels, allLabels) => {
@@ -48,16 +45,7 @@ const mapDispatchToProps = dispatch => {
         setSidebarMode: mode => {
             dispatch(setSidebarMode(mode));
         },
-        editEvent: (idInfo, editSingleOccurrence=false) => {
-            dispatch(editEvent(idInfo.id, idInfo.sid, idInfo.recId, editSingleOccurrence));
-        },
-        eventClick(calendarEvent) {
-            dispatch(setCurrentEvent(calendarEvent));
-            const linkSuffix = (calendarEvent.id) ? calendarEvent.id : calendarEvent.sid;
-            dispatch(push('/view/'+linkSuffix));
-        },
         viewEvent: (event) => {
-            dispatch(setCurrentEvent(event));
             dispatch(viewEvent(event));
         },
         toggleSidebarCollapsed: () => {

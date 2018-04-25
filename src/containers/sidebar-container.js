@@ -30,13 +30,20 @@ const mapDispatchToProps = dispatch => {
                 action: 'click',
                 label: 'User clicked the Olin logo to return to the Home view',
             });
+            dispatch(Actions.clearCurrentEvent());
             dispatch(push('/'));
         },
         addEvent: () => {
             dispatch(push('/edit'));
         },
-        editEvent: (idSuffix) => {
-            dispatch(push('/edit/' + idSuffix));
+        editCurrentEvent: () => {
+            dispatch(Actions.editCurrentEvent());
+        },
+        editEventSeries: () => {
+            dispatch(Actions.editCurrentEventSeries());
+        },
+        deleteCurrentEvent: () => {
+            // TODO handling recurrences properly
         },
         importICSClicked: () => {
             dispatch(push('/import'));

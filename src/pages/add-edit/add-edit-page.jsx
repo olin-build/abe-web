@@ -1,6 +1,6 @@
 // This page is used to add or edit an event
 
-import * as React from "react";
+import * as React from 'react';
 import EventVisibilitySelector from './visibility-selector.jsx';
 import SaveCancelButtons from './save-cancel-buttons.jsx';
 import LocationField from './location-field.jsx';
@@ -8,108 +8,64 @@ import EventDateTimeSelector from '../../components/date-time-selector.jsx';
 import EventRecurrenceSelector from './recurrence-selector.jsx';
 import MarkdownEditor from '../../components/markdown-editor.jsx';
 import MenuIconButton from '../../components/menu-icon-button.jsx';
-import TagPane from '../../components/label-pane.jsx'
+import LabelPane from '../../components/label-pane.jsx'
 import moment from 'moment';
 import deepcopy from 'deepcopy';
 import axios from 'axios';
-import SidebarModes from "../../data/sidebar-modes";
-moment.fn.toJSON = function() { return this.format(); }; // Don't think this is used anymore
-moment.fn.toString = function() {return this.format();}; // Don't think this is used anymore
+import SidebarModes from '../../data/sidebar-modes';
 
-export default class AddEditEventScene extends React.Component {
+export default class AddEditEventPage extends React.Component {
+  constructor(props) {
+    super(props);
 
-    constructor(props) {
-        super(props);
-        this.state = this.getInitialState();
+    let eventData = props.eventData
+      ? deepcopy(props.eventData)
+      : null;
 
-        // Load the ID(s) for the event
-        Object.assign(this.state.eventData, this.getIdFromURL(props));
-
-        // If we're editing an event (determined by checking the URL), then make a server request for its data
-        if (this.state.eventData.id || this.state.eventData.sid)
-            this.updateEventData();
-
+    // Check if we need to request data from the server
+    if (!eventData && props.match.params.id) {
+        props.getEventDataViaUrlParams(props.match.params);
+    } else { // Creating a new event
+      eventData = {
+        title: '',
+        start: moment().minutes(0).milliseconds(0),
+        end: moment().minutes(0).milliseconds(0).add(1, 'h'),
+        allDay: false,
+        location: '',
+        description: '',
+        visibility: 'public',
+        labels: [],
+      };
     }
 
-    getInitialState = () => {
-        let defaultStart = moment().minutes(0).milliseconds(0);
-        let defaultEnd = defaultStart.clone().add(1, 'h');
-        let recurrence = {
-            frequency: 'WEEKLY',
-            interval: '1',
-            by_day: [defaultStart.format('dd').toUpperCase()]
-        };
+    this.state = {
+      eventData,
+      seriesData: null, // Master/original event data in a series of recurring events
+      defaultRecurrence: {
+        frequency: 'WEEKLY',
+        interval: '1',
+        by_day: [moment().format('dd').toUpperCase()],
+        month_option: 'month',
+        week_option: 'week',
+      },
+      markdownGuideVisible: true,
+      locationRaw: '',
+      recurrenceRule: null,
+    };
 
-        return {
-            eventData: {
-                title: '',
-                start: defaultStart,
-                end: defaultEnd,
-                location: '',
-                description: '',
-                visibility: 'public',
-                labels: [],
-                allDay: false,
-            },
-            seriesData: {},
-            isOlinLocation: false,
-            locationRaw: '',
-            recurrence: recurrence,
-            month_option: 'week',
-            end_option: 'forever',
-            redirect: false,
-            possibleLabels: {},
-        };
-     };
+    this.props.setSidebarMode(SidebarModes.ADD_EDIT_EVENT);
 
-    componentDidMount() {
-        this.props.setSidebarMode(SidebarModes.ADD_EDIT_EVENT);
-        
-        this.props.setPageTitlePrefix(this.state.eventData.id || this.state.eventData.sid ? 'Edit Event' : 'Add Event');
+    this.props.setPageTitlePrefix(this.props.editingExisting ? 'Edit Event' : 'Add Event');
+  }
+
+  componentWillReceiveProps(newProps) {
+    if (newProps.eventData) {
+      this.setState({eventData: deepcopy(newProps.eventData)});
     }
+    // TODO If the event is recurring but newProps.match.params.recId is not defined, copy the data to seriesData
+  }
 
-    getIdFromURL = (props) => {
-        if ('match' in props && 'id' in props.match.params) {
-            return {id: props.match.params.id};
-        }
-        else if('match' in props && 'sid' in props.match.params){
-            return {sid: props.match.params.sid, rec_id: props.match.params.rec_id};
-        }
-        return null;
-    };
-
-    componentWillReceiveProps(nextProps) {
-        // Check to see if the ID parameter in the URL has changed
-        let oldId = (this.state.eventData.id) ? this.state.eventData.id : this.state.eventData.sid;
-        let newId = this.getIdFromURL(nextProps);
-        if (oldId !== newId) {
-            // URL has changed
-            if (newId === null) { // New event
-                this.setState(this.getInitialState());
-            } else { // Existing event
-                let eventData = Object.assign(newId, this.state.eventData);
-                this.setState({eventData: eventData}, () => this.updateEventData()); // Set ID and update once state has been set
-            }
-
-        }
-     }
-
-    updateEventData = () => {
-        // Make the request and register the response handlers
-        return axios.get(this.getEventURL()).then(this.receivedSuccessfulResponse).catch(this.requestError);
-     };
-
-    getEventURL = () => {
-        return window.abe_url + '/events/' + this.resolveID(this.state.eventData);
-     };
-
-    resolveID = (eventData) => {
-        let id = eventData.id;
-        let sid = eventData.sid;
-        let rec_id = moment.utc(Number(eventData.rec_id)).toString(); // Reformat as ms since UNIX epoch
-        return id ? id.toString() : (sid + '/' + rec_id);
-    };
-
+    // TODO Use the logic in here for dealing with recurring events (currently broken)
     receivedSuccessfulResponse = (response) => {
         let eventData = response.data;
 
@@ -138,199 +94,144 @@ export default class AddEditEventScene extends React.Component {
         });
      };
 
-    requestError = (error) => {
-        console.error('Error making request for event data:');
-        console.error(error);
-        alert('Error: ' + error.message);
-     };
-
-    titleChanged = (e) => {
-        let data = this.state.eventData;
-        data = Object.assign(data, {title: e.currentTarget.value});
-        this.setState({eventData: data});
-     };
-
-    startChanged = (value) => {
-        let data = this.state.eventData;
-        let diff = value.diff(data.start);
-        data.start = value;
-        data.end = data.end.add(diff, 'ms');
-        data = Object.assign(this.state.eventData, data);
-        this.setState({eventData: data});
-     };
-    endChanged = (value) => {
-      let data = this.state.eventData;
-      data.end = value;
-      data = Object.assign(this.state.eventData, data);
-      this.setState({eventData: data});
-     };
-
-    recurrenceChanged = (value) => {
-        let state = this.state;
-        state.eventData.recurrence = value.recurrence;
-        state.month_option = value.month_option;
-        state.end_option = value.end_option;
-        state = Object.assign(this.state, state);
-        this.setState(state);
-     };
-
-    recurrenceSelected = (e) =>{
-      let data = Object.assign({}, this.state.eventData);
-      if (e.target.checked){
-        data.recurrence = this.state.recurrence;
-      } else {
-        delete data.recurrence;
+    validateInput = () => {
+      if (this.state.eventData.title.length === 0){
+        alert('Event Title is required')
+        return false;
       }
-      this.setState({eventData: data})
-     };
 
-    allDayChanged = () =>{
-      let data = this.state.eventData;
-      data.allDay = !data.allDay;
-      this.setState({eventData: data});
-     };
-
-    locationChanged = (loc) => {
-      const state = Object.assign({}, this.state, {
-        isOlinLocation: loc.isOlin,
-        eventData: Object.assign({}, this.state.eventData, {
-          location:  loc.isOlin
-            ? [loc.building, loc.room, loc.suffix].join(' ').trim()
-            : loc.value.trim(),
-        }),
-        locationRaw: loc.value,
-      });
-      this.setState(state);
-     };
-
-    descriptionChanged = (newDesc) => {
-        let data = this.state.eventData;
-        data.description = newDesc;
-        this.setState({eventData: data});
-     };
-
-    cancelButtonClicked = () => {
-        window.history.back();
-     };
-
-    deleteButtonClicked = () => {
-        if (confirm('Are you sure you want to delete this event?')) {
-            axios.delete(this.getEventURL())
-            .then(this.props.eventDeletedSuccessfully(this.resolveID(this.state.eventData)))
-            .catch(response => this.props.eventDeleteFailed(this.resolveID(this.state.eventData), response));
-        }
-     };
-
-    saveButtonClicked = () => {
-        let data = this.state.eventData;
-        if (!data.title){
-          alert('Event Title is required')
-          return
-        }
-        if (data.allDay){
-          data.start.startOf('day');
-          data.end.endOf('day');
-        }
-        let newEvent = {};
-        let url;
-        let requestMethod;
-        if (!this.state.eventData.id && !this.state.eventData.sid){
-          url = window.abe_url + '/events/';
-          newEvent = data;
-          requestMethod = axios.post;
-        }
-        else{
-          for (let key in this.state.eventData){
-            if (this.state.seriesData[key]){
-              if (this.state.eventData[key].toString() != this.state.seriesData[key].toString()){
-                newEvent[key] = this.state.eventData[key]
-              }
-            }
-            else{
-              newEvent[key] = this.state.eventData[key]
-            }
-          }
-          requestMethod = axios.put;
-        }
-        if (this.state.eventData.id){
-          url = window.abe_url + '/events/' + this.state.eventData.id;
-        }
-        else if (this.state.eventData.sid){
-          url = window.abe_url + '/events/' + this.state.eventData.sid;
-          newEvent.sid = this.state.eventData.sid.toString();
-          newEvent.rec_id = this.state.eventData.rec_id.toString();
-          newEvent.start = this.state.eventData.start.toString();
-          newEvent.end = this.state.eventData.end.toString();
-          delete newEvent.recurrence;
-        }
-        const idInfo = {
-            id: this.state.eventData.id,
-            sid: this.state.eventData.sid,
-            recId: this.state.eventData.rec_id,
-        };
-        requestMethod(url, newEvent)
-          .then(
-            _response => this.props.eventSavedSuccessfully(idInfo),
-            (jqXHR, _textStatus, _errorThrown) =>
-                this.props.eventSaveFailed(newEvent, jqXHR.message)
-          );
-     };
-
-    visibilityChanged = (value) => {
-        let data = this.state.eventData;
-        data.visibility = value;
-        data = Object.assign(this.state.eventData, data);
-        this.setState({eventData: data});
-     };
-
-    labelToggled = (labelName) => {
-
-        let labels = this.state.eventData.labels.slice();
-        if (labels.includes(labelName)) {
-            labels.splice(labels.indexOf(labelName),1);
-        } else {
-            labels.push(labelName);
-        }
-        this.setState({
-            eventData: Object.assign({}, this.state.eventData, {
-                labels
-            })
-        });
+      return true;
     };
 
-    // componentWillUnmount() {
-    //     this.props.setCurrentEvent(null);
-    // }
+    saveButtonClicked = () => {
+      if (this.validateInput()) {
+
+        const eventData = this.state.eventData;
+
+        // Clean up the event data a bit
+        if (eventData.allDay) {
+          eventData.start.startOf('day');
+          eventData.end.endOf('day');
+        }
+
+        // Declare some variables for keeping track of exactly what kind of request we'll be making later
+        let url;
+        let requestMethod;
+
+        // Check if we're editing an existing event or creating a new one
+        if (eventData.id || eventData.sid) { // Existing
+          // Check if we're editing a single recurrence of a recurring event
+          if (this.state.seriesData) {
+            // Determine what's different for this event compared to the rest of the events in the series
+            for (let key in eventData) {
+              // Check if this attribute is the same for all events in the series
+              if (eventData[key] === this.state.seriesData[key]) {
+                delete eventData[key]; // If so, don't override it for this event
+              }
+            }
+
+            url = `${window.abe_url}/events/${eventData.id || eventData.sid}/${eventData.recId}`;
+          } else {
+            url = `${window.abe_url}/events/${eventData.id || eventData.sid}`;
+          }
+          requestMethod = axios.put;
+
+        } else { // We're adding a new event
+          url = `${window.abe_url}/events/`;
+          requestMethod = axios.post;
+        }
+
+        // Make the request
+        requestMethod(url, eventData)
+          .then(this.props.eventSavedSuccessfully)
+          .catch(jqXHR => this.props.eventSaveFailed(eventData, jqXHR.message));
+      }
+     };
+    
+    titleChanged = e => this.updateEventDatum({ title: e.currentTarget.value });
+    
+    locationChanged = loc => {
+      // Save the processed/cleaned version to the eventData object
+      this.updateEventDatum({
+        location: loc.isOlin
+          ? [loc.building, loc.room, loc.suffix].join(' ').trim()
+          : loc.value.trim()
+      });
+      // Save the dirty version to be passed on to the text field
+      this.setState({ locationRaw: loc.value });
+    };
+    
+    allDayToggled = e => this.updateEventDatum({ allDay: e.currentTarget.checked });
+    
+    setStart = (start) => {
+      let timeDelta = start.diff(this.state.eventData.start);
+      this.updateEventDatum({
+        start,
+        // Shift the end time to maintain the same duration
+        end: moment(this.state.eventData.end).add(timeDelta, 'ms'),
+      });
+    };
+
+    setEnd = end => this.updateEventDatum({ end });
+
+    doesRecurToggled = e => this.updateEventDatum({ doesRecur: e.currentTarget.checked });
+
+    recurrenceRuleChanged = recurrenceRule => this.setState({ recurrenceRule });
+
+    descriptionChanged = description => this.updateEventDatum({ description });
+
+    labelToggled = labelName => {
+      let labels = this.state.eventData.labels.slice(); // Make a copy of the list
+      const labelIndex = labels.indexOf(labelName);
+      if (labelIndex > 0) { // The label is already on the event
+        labels.splice(labelName, 1); // Remove the label
+      } else {
+        labels.push(labelName); // Add the label
+      }
+      this.updateEventDatum({ labels });
+    };
+
+    visibilityChanged = visibility => this.updateEventDatum({ visibility });
+
+    updateEventDatum = delta => this.setState({ eventData: Object.assign({}, this.state.eventData, delta)});
 
     render() {
-        let pageTitle = this.state.eventData.id || this.state.eventData.sid ?  'Edit Event' : 'Add Event';
-        let submitButtonText = this.state.eventData.id || this.state.eventData.sid ?  'Update Event' : 'Add Event';
-        let recurrence_disable = this.state.eventData.sid ? 'disabled' : null;
-        let recurrence = this.state.eventData.recurrence ? <EventRecurrenceSelector reccurs={this.state.eventData.recurrence} month={this.state.month_option} start = {this.state.eventData.start} end = {this.state.end_option} onChange={this.recurrenceChanged}/> : null;
+      if (!this.state.eventData) {
         return (
-            <div className="row content-container">
-                <span className="content-container">
-                <h1 className="page-title"><MenuIconButton onClick={this.props.toggleSidebarCollapsed} tooltip="Show/Hide Sidebar"/>{pageTitle}</h1>
-                </span>
-                <div className="event-info-container">
-                    <input id="event-title" type="text" placeholder="Title" className="wide-text-box single-line-text-box medium-text-box" value={this.state.eventData.title} onChange={this.titleChanged}/>
-                    <div className="date-time-container">
-                      <EventDateTimeSelector buttonPrefix="Start: " datetime={moment(this.state.eventData.start)} onChange={this.startChanged} show={this.state.eventData.allDay ? 'date' : 'both'}/>
-                      <EventDateTimeSelector buttonPrefix="End: " datetime={moment(this.state.eventData.end)} onChange={this.endChanged} show={this.state.eventData.allDay ? 'date' : 'both'}/>
-                      <input type="checkbox" id='all-day-check' title="All Day" checked={this.state.eventData.allDay} onChange={this.allDayChanged}/>
-                      <label htmlFor="all-day-check">All Day</label>
-                      <input type="checkbox" id="repeats-check" title="Repeats?" disabled={recurrence_disable} checked={this.state.eventData.recurrence} onChange={this.recurrenceSelected}/>
-                      <label htmlFor="repeats-check">Repeats?</label>
-                      {recurrence}
-                    </div>
-                    <LocationField location={this.state.locationRaw} onChange={loc => this.locationChanged(loc)}/>
-                    <MarkdownEditor source={this.state.eventData.description} onChange={this.descriptionChanged} setMarkdownGuideVisibility={this.props.setMarkdownGuideVisibility} markdownGuideVisible={this.props.markdownGuideVisible} />
-                    <EventVisibilitySelector visibility={this.state.eventData.visibility} onChange={this.visibilityChanged}/>
-                    <TagPane contentClass='add-edit-filters' selectedLabels={this.state.eventData.labels} labelToggled={this.labelToggled} {...this.props}/>
-                    <span style={{marginTop: '1em',display: 'block'}}>Need a new label? <a href="https://goo.gl/forms/2cqVijokICZ5S20R2" target="_blank">Request one here</a>.</span>
-                    <SaveCancelButtons onCancel={this.cancelButtonClicked} onDelete={this.deleteButtonClicked} showDelete={'id' in this.state.eventData || 'sid' in this.state.eventData} onSubmit={this.saveButtonClicked} disabled={'UID' in this.state.eventData} submitButtonText={submitButtonText}/>
-            </div>
+          <div>
+            <h1>Loading...</h1>
           </div>
         );
+      }
+
+      const editingExisting = this.state.eventData.id || this.state.eventData.sid;
+      let pageTitle = editingExisting ?  'Edit Event' : 'Add Event';
+      let submitButtonText = editingExisting ?  'Update Event' : 'Add Event';
+      return (
+          <div className="row content-container">
+              <span className="content-container">
+              <h1 className="page-title"><MenuIconButton onClick={this.props.toggleSidebarCollapsed} tooltip="Show/Hide Sidebar"/>{pageTitle}</h1>
+              </span>
+              <div className="event-info-container">
+                  <input id="event-title" type="text" placeholder="Title" className="wide-text-box single-line-text-box medium-text-box" value={this.state.eventData.title} onChange={this.titleChanged}/>
+                  <div className="date-time-container">
+                    <EventDateTimeSelector buttonPrefix="Start: " datetime={moment(this.state.eventData.start)} onChange={this.setStart} show={this.state.eventData.allDay ? 'date' : 'both'}/>
+                    <EventDateTimeSelector buttonPrefix="End: " datetime={moment(this.state.eventData.end)} onChange={this.setEnd} show={this.state.eventData.allDay ? 'date' : 'both'}/>
+                    <input type="checkbox" id='all-day-check' title="All Day" checked={this.state.eventData.allDay} onChange={this.allDayToggled}/>
+                    <label htmlFor="all-day-check">All Day</label>
+                    <input type="checkbox" id="repeats-check" title="Repeats?" disabled={this.state.seriesData} checked={this.state.eventData.doesRecur} onChange={this.doesRecurToggled}/>
+                    <label htmlFor="repeats-check">Repeats?</label>
+                    {this.state.eventData.doesRecur &&
+                    <EventRecurrenceSelector reccurs={this.state.eventData.recurrenceRule} start={this.state.eventData.start} onChange={this.state.eventData.recurrenceRuleChanged}/>}
+                  </div>
+                  <LocationField location={this.state.eventData.location} onChange={this.locationChanged}/>
+                  <MarkdownEditor source={this.state.eventData.description} onChange={this.descriptionChanged} />
+                  <EventVisibilitySelector visibility={this.state.eventData.visibility} onChange={this.visibilityChanged}/>
+                  <LabelPane contentClass='add-edit-filters' selectedLabels={this.state.eventData.labels} labelToggled={this.labelToggled} {...this.props}/>
+                  <span style={{marginTop: '1em',display: 'block'}}>Need a new label? <a href="https://goo.gl/forms/2cqVijokICZ5S20R2" target="_blank">Request one here</a>.</span>
+                  <SaveCancelButtons onCancel={this.props.cancelButtonClicked} onDelete={this.props.deleteCurrentEvent} showDelete={this.state.eventData.id} onSubmit={this.saveButtonClicked} submitButtonText={submitButtonText}/>
+          </div>
+        </div>
+      );
     }
 }

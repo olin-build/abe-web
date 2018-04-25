@@ -29,7 +29,7 @@ var config = {
     plugins: [
         new webpack.EnvironmentPlugin({
             ABE_URL: 'http://localhost:3000/',
-            DEBUG: false,
+            DEBUG: true,
             GA_ID: null
         })
     ],

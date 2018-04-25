@@ -1,7 +1,7 @@
 // This file contains a bunch of Redux actions
 
 import { push } from 'react-router-redux';
-import fetch from 'isomorphic-fetch';
+import axios from 'axios';
 import moment from "moment";
 import ReactGA from 'react-ga';
 
@@ -24,6 +24,8 @@ export const ActionTypes = {
     FETCH_EVENTS_IF_NEEDED: 'FETCH_EVENTS_IF_NEEDED', // Triggers FETCH_EVENTS if no event data is loaded
     FETCH_EVENTS: 'FETCH_EVENTS', // Fetches event data from the server
     SET_EVENTS: 'SET_EVENTS', // Sets the event data using data from a server response
+    // Editing an event
+    CLEAR_CURRENT_EVENT: 'CLEAR_CURRENT_EVENT',
     // Labels
     FETCH_LABELS: 'FETCH_LABELS', // Fetches all labels and their data from the server
     FETCH_LABELS_IF_NEEDED: 'FETCH_LABELS_IF_NEEDED', // Calls FETCH_LABELS if no label data is loaded
@@ -41,6 +43,10 @@ export const ActionTypes = {
 //   Event data actions
 //   Labels actions
 
+
+function processDate(date) {
+  return moment.utc(date).local();
+}
 
 // ########## Begin General UI Actions ########## //
 
@@ -200,12 +206,50 @@ export function setViewMode(mode) {
 
 /**
  * Sets the current event so that the entire app can know what's being viewed or edited (esp. the sidebar)
- * @param event: an event object
+ * @param {string} id: the ID or SID (series ID?) of the event
+ * @param {string|null} recId: the date of the recurrence instance (YYYYDDD), if applicable
  */
-export function setCurrentEvent(event) {
-    return {type: ActionTypes.SET_CURRENT_EVENT, event};
+export function setCurrentEventById(id, recId) {
+  return (dispatch, getStore) => {
+    // Try to get the event from our cache
+    const store = getStore();
+    const eventKey = recId ? `${id}${recId}` : id;
+    let eventData = store.events.events
+      ? store.events.events[eventKey]
+      : null;
+
+    // Make sure we have the event data
+    if (eventData) {
+      dispatch(setCurrentEventData(eventData));
+    } else {
+      // We don't have the data, so request it from the server
+      const url = recId
+        ? `${window.abe_url}/events/${id}/${recId}`
+        : `${window.abe_url}/events/${id}`;
+      axios.get(url)
+        .then(response => dispatch(setCurrentEventData(response.data)))
+        .catch(response => console.log(response)); // TODO Display an error message to the user
+    }
+  };
 }
 
+export function setCurrentEventData(data) {
+  if (data.start && !moment.isMoment(data.start)) {
+    data.start = processDate(data.start);
+  }
+  if (data.end && !moment.isMoment(data.end)) {
+    data.end = processDate(data.end);
+  }
+  return { type: ActionTypes.SET_CURRENT_EVENT, data };
+}
+
+export function getEventDataViaUrlParams(urlParams) {
+  return setCurrentEventById(urlParams.id || urlParams.sid, urlParams.recId);
+}
+
+export function clearCurrentEvent() {
+  return { type: ActionTypes.CLEAR_CURRENT_EVENT };
+}
 
 /**
  * Fetches events for the given period.
@@ -223,8 +267,8 @@ export function refreshEvents(start, end) {
                 error => dispatch(displayError(error)))
             .then((events) => {
                 events.forEach((event) => {
-                    event.start = moment(event.start).utcOffset(-8);
-                    event.end = moment(event.end).utcOffset(-8);
+                    event.start = processDate(event.start);
+                    event.end = processDate(event.end);
                 });
                 dispatch(setEvents(events))
             });
@@ -254,33 +298,56 @@ export function setEvents(events) {
 
 /**
  * Triggers switching to the event edit page.
- * @param {number} id - the ID of the event (if not recurring, undefined otherwise)
- * @param {number} sid - the ID of the recurring event (if event recurring, undefined otherwise)
- * @param {number} recId - the recurrence ID of this occurrence of an event (if event recurring, undefined otherwise)
- * @param {bool} editSingleOccurrence - whether or not only a single occurrence of the recurring series should be edited
+ * Note: store.events.current must be set before calling this to edit an existing event.
  */
-export function editEvent(id, sid, recId, editSingleOccurrence) {
-    return dispatch => {
-        const linkSuffix = editSingleOccurrence ?
-            `${sid}/${recId}`
-            : (sid ? sid : id);
+export function editCurrentEvent() {
+    return (dispatch, getStore) => {
+        const store = getStore();
+        const event = store.events.current;
+        const linkSuffix = event.recId ?
+            `${event.id || event.sid}/${event.recId}`
+            : event.id;
         const path = `/edit/${linkSuffix}`;
         dispatch(push(path));
     }
 }
 
 /**
- * Called when the server returns a success status code in response to a save request.
- * @param {object} eventIdInfo - info about the ID of the saved event
+ * Triggers switching to the event edit page.
+ * Note: store.events.current must be set before calling this to edit an existing event.
  */
-export function eventSavedSuccessfully(eventIdInfo) {
+export function editCurrentEventSeries() {
+  return (dispatch, getStore) => {
+    const store = getStore();
+    const event = store.events.current;
+    const path = `/edit/${event.id || event.sid}`;
+    dispatch(push(path));
+  };
+}
+
+export function deleteCurrentEvent() {
+  return (dispatch, getStore) => {
+    const store = getStore();
+    const event = store.events.current;
+    axios.delete(`${window.abe_url}/events/${event.id || event.sid}`)
+      .then(() => dispatch(eventDeletedSuccessfully(event.id || event.sid)))
+      .catch(response => eventDeleteFailed(event, response));
+
+  };
+}
+
+/**
+ * Called when the server returns a success status code in response to a save request.
+ * @param {object} event - the saved event
+ */
+export function eventSavedSuccessfully(event) {
     return (dispatch) => {
         let label;
         let action = 'update success';
-        if (eventIdInfo.id) {
-            label = `Event ${eventIdInfo.id} saved successfully`;
-        } else if (eventIdInfo.sid) {
-            label = `Event ${eventIdInfo.sid}/${eventIdInfo.recId} saved successfully`;
+        if (event.recId) {
+          label = `Event ${event.id || event.sid}/${event.recId} saved successfully`;
+        } else if (event.id || event.sid) {
+            label = `Event ${event.id || event.sid} saved successfully`;
         } else {
             label = 'Event created successfully';
             action = 'create success';
@@ -338,14 +405,14 @@ export function eventDeletedSuccessfully(eventId) {
 
 /**
  * Called when an attempted event deletion failed.
- * @param {object} eventId - the ID of the event that we attempted to delete
+ * @param {object} event - the event that we attempted to delete
  * @param {object} error - information about the error that occurred
  */
-export function eventDeleteFailed(eventId, error) {
+export function eventDeleteFailed(event, error) {
     ReactGA.event({
         category: 'Event Delete',
         action: 'failure',
-        label: `Event ${eventId} delete attempt unsuccessful`,
+        label: `Event ${event.id || event.sid} ${event.recId || ''} delete attempt unsuccessful`,
     });
     alert('Delete event failed:\n' + error);
 }
@@ -357,11 +424,15 @@ export function eventDeleteFailed(eventId, error) {
  * @param {object} event - the event data of the event to view
  */
 export function viewEvent(event) {
-    return dispatch => {
-        const linkSuffix = event.id || `${event.sid}/${event.recId}`;
-        const path = `/view/${linkSuffix}`;
-        dispatch(push(path));
+  return dispatch => {
+    if (event.sid && !event.recId) {
+      event.recId = event.start.valueOf(); // ISO 8601 date format
     }
+    const linkSuffix = event.id || `${event.sid}/${event.recId}`;
+    const path = `/view/${linkSuffix}`;
+    dispatch(setCurrentEventData(event));
+    dispatch(push(path));
+  }
 }
 
 // ----- End event viewing actions ----- //
