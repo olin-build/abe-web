@@ -2,10 +2,11 @@
   "name": "abe-web",
   "version": "1.0.0",
   "description": "Web frontend utilizing React for Olin College of Engineering's Amorphous Blob of Events (ABE).",
-  "main": "app.js",
+  "main": "server.js",
   "scripts": {
-    "webpack:deploy": "webpack --config=webpack.config.js -p",
-    "heroku-postbuild": "$npm_execpath run webpack:deploy",
+    "clean": "rimraf bundle.js bundle.js.map",
+    "build": "webpack --config=webpack.config.js -p",
+    "postinstall": "$npm_execpath run clean && $npm_execpath run build",
     "start": "node server.js",
     "dev": "webpack-dev-server --inline --hot",
     "lint": "eslint --cache --ext .js,.jsx src",
@@ -16,7 +17,7 @@
   "engines": {
     "node": "^9"
   },
-  "repository": "github.:olinlibrary/abe-web",
+  "repository": "github:olinlibrary/abe-web",
   "keywords": [
     "abe",
     "events",

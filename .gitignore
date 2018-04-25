@@ -251,6 +251,6 @@ ENV/
 
 # End of https://www.gitignore.io/api/linux,django,node,python,pycharm
 
-# `yarn webpack:deploy` creates these
+# webpack creates these
 bundle.js
 bundle.js.map
