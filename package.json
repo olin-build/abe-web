@@ -9,7 +9,7 @@
     "postinstall": "$npm_execpath run clean && $npm_execpath run build",
     "start": "node server.js",
     "dev": "webpack-dev-server --inline --hot",
-    "lint": "eslint --cache --ext .js,.jsx src",
+    "lint": "eslint --cache --ext .js,.jsx src *.js",
     "test": "jest",
     "test:watch": "jest --watch",
     "stats": "webpack --json > stats.json"
