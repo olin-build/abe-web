@@ -20,7 +20,7 @@ rules:
 
 overrides:
   # server:
-  - files: [ "server.js", "webpack.config.js" ]
+  - files: [ "index.html.js", "server.js", "webpack.config.js" ]
     env:
       browser: false
       node: true
