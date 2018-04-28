@@ -1,8 +1,7 @@
 parser: babel-eslint
 
 extends:
-  - eslint:recommended
-  - plugin:react/recommended
+  - airbnb
 
 env:
   browser: true
@@ -13,13 +12,54 @@ globals:
 
 rules:
   max-len: [warn, { code: 120 }]
-  no-console: warn
+  # exceptions from eslint:recommended:
   no-unused-vars: [error, { argsIgnorePattern: "^_" }]
+  # exceptions from plugin:react/recommended:
   react/no-find-dom-node: warn
   react/prop-types: off           # TODO: #123
-  react/jsx-no-target-blank: off  # TODO: is this a legitimate error?
-  # from Airbnb style <https://github.com/airbnb/javascript>:
-  comma-dangle: [warn, always-multiline]
+
+  # exceptions from airbnb style:
+  camelcase: warn
+  class-methods-use-this: warn
+  consistent-return: warn
+  eqeqeq: warn
+  func-names: warn
+  function-paren-newline: warn
+  global-require: warn
+  guard-for-in: warn
+  import/extensions: warn
+  import/first: warn
+  import/no-extraneous-dependencies: warn
+  import/no-unresolved: warn
+  import/no-webpack-loader-syntax: warn
+  import/prefer-default-export: warn
+  jsx-a11y/anchor-is-valid: warn
+  jsx-a11y/click-events-have-key-events: warn
+  jsx-a11y/label-has-for: warn
+  jsx-a11y/no-static-element-interactions: warn
+  no-alert: warn
+  no-mixed-operators: warn
+  no-param-reassign: warn
+  no-plusplus: warn
+  no-restricted-globals: warn
+  no-restricted-syntax: warn
+  no-underscore-dangle: warn
+  no-use-before-define: warn
+  prefer-destructuring: warn
+  react/forbid-prop-types: warn
+  react/jsx-filename-extension: warn
+  react/jsx-no-target-blank: warn
+  react/no-multi-comp: warn
+  react/no-unused-prop-types: warn
+  react/no-unused-state: warn
+  react/prefer-stateless-function: warn
+  react/require-default-props: warn
+  react/sort-comp: warn
+
+  # Fixable exceptions to Airbnb style guide.
+  indent: off
+  react/jsx-indent-props: off
+  react/jsx-indent: off
 
 overrides:
   # server:
@@ -29,7 +69,7 @@ overrides:
       node: true
     rules:
       no-console: off
-  # tests
+  # tests:
   - files: [ "**/__test__/**/*.js ", "**/*\\.test\\.js" ]
     env:
       jest: true
