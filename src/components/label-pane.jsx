@@ -52,16 +52,19 @@ export default class LabelPane extends React.Component {
             // Joining the list of strings, and then again the caller, is less
             // efficient, but I found it clearer, and this code is not run much
             // and hasn't shown up as a hot spot.
+            //
+            // Join w/ '\n', here and in caller, for more readable debugging and
+            // snapshots.
             return [
                 `.label.${name}.button:not(.selected){background-color:white;}`,
                 `.label.${name}:not(.button):not(.selected){border-color:${color};color:${color};}`,
                 // hovered button, or selected
                 `.label.button.${name}:not(.no-hover):hover,.label.${name}.selected{background-color:${color};}`
-            ].join('');
+            ].join('\n');
         }
         return (
             <div className={this.props.contentClass}>
-                <style type="text/css">{Object.keys(labels).map(getLabelCss).join('')}</style>
+                <style type="text/css">{Object.keys(labels).map(getLabelCss).join('\n')}</style>
                 <div className="label-selector-list">{labelElems}</div>
             </div>
         );
