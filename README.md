@@ -100,8 +100,9 @@ You can also run `jest` and `jest --watch`, if `./node_modules/.bin` is on your
 ## Lint
 
 `yarn lint` runs [ESLint](https://eslint.org/) against the client code (in
-`./src`). It doesn't check the server code — but see #125 before putting too
-much time into that.
+`./src`).
+
+`yarn format` fixes lint errors that `eslint --fix` can fix.
 
 ## Supporters
 
