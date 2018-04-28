@@ -12,11 +12,12 @@ globals:
   process: false  # allow webpack `process.env[*]` variables
 
 rules:
+  max-len: [warn, { code: 120 }]
   no-console: warn
   no-unused-vars: [error, { argsIgnorePattern: "^_" }]
   react/no-find-dom-node: warn
   react/prop-types: off           # TODO: #123
-  react/jsx-no-target-blank: off  # TODO: is this a legitimate error
+  react/jsx-no-target-blank: off  # TODO: is this a legitimate error?
 
 overrides:
   # server:

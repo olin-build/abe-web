@@ -32,9 +32,9 @@
   "author": "Olin College of Engineering Library",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/olinlibrary/abe-web-frontend/issues"
+    "url": "https://github.com/olinlibrary/abe-web/issues"
   },
-  "homepage": "https://github.com/olinlibrary/abe-web-frontend#readme",
+  "homepage": "https://github.com/olinlibrary/abe-web#readme",
   "dependencies": {
     "axios": "^0.16.2",
     "babel-core": "^6.26.0",
