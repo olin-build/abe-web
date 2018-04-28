@@ -51,6 +51,9 @@ exports[`LabelPane not editable 1`] = `
       id="label-first"
       title="first label"
     >
+      <ion-icon
+        name="pricetag"
+      />
       first
     </span>
     <span
@@ -58,6 +61,9 @@ exports[`LabelPane not editable 1`] = `
       id="label-second"
       title="second label"
     >
+      <ion-icon
+        name="pricetag"
+      />
       second
     </span>
   </div>
