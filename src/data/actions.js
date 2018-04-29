@@ -228,7 +228,7 @@ export function setCurrentEventById(id, recId) {
         : `${window.abe_url}/events/${id}`;
       axios.get(url)
         .then(response => dispatch(setCurrentEventData(response.data)))
-        .catch(response => console.log(response)); // TODO Display an error message to the user
+        .catch(response => console.error(response)); // TODO Display an error message to the user
     }
   };
 }

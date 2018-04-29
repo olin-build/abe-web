@@ -21,7 +21,7 @@ const mapStateToProps = state => {
   }
 };
 
-// This function passes functions from /src/data/actions.jsx to the React component as props
+// This function passes functions from /src/data/actions.js to the React component as props
 const mapDispatchToProps = dispatch => {
   return {
     setSidebarMode: mode => {
