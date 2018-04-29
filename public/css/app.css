@@ -456,6 +456,10 @@ span.label {
     justify-content: space-between;
 }
 
+.label-selector-list button {
+    border-radius: 8px;
+}
+
 .label:not(.selected) {
     background-color: transparent;
     color: black;
