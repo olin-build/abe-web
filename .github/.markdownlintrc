@@ -1,0 +1,8 @@
+{
+  "default": true,
+  "MD002": { "level": 2 },
+  "MD022": false,
+  "MD013": { "line_length": 120 },
+  "MD032": false,
+  "MD041": { "level": 2 }
+}

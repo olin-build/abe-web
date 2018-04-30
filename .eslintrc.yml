@@ -1,26 +1,30 @@
-env:
-  browser: true
-
 parser: babel-eslint
 
 extends:
   - eslint:recommended
   - plugin:react/recommended
 
+env:
+  browser: true
+
 # see https://eslint.org/docs/user-guide/configuring#specifying-globals
 globals:
   process: false  # allow webpack `process.env[*]` variables
 
 rules:
+  max-len: [warn, { code: 120 }]
   no-console: warn
   no-unused-vars: [error, { argsIgnorePattern: "^_" }]
   react/no-find-dom-node: warn
   react/prop-types: off           # TODO: #123
-  react/jsx-no-target-blank: off  # TODO: is this a legitimate error
+  react/jsx-no-target-blank: off  # TODO: is this a legitimate error?
+  # from airbnb style <https://github.com/airbnb/javascript>:
+  # TODO: change this to an error after the redux branch is merged
+  comma-dangle: [warn, always-multiline]
 
 overrides:
   # server:
-  - files: [ "server.js" ]
+  - files: [ "index.html.js", "server.js", "webpack.config.js" ]
     env:
       browser: false
       node: true

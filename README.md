@@ -26,8 +26,9 @@ cd abe-web
 
 Then you'll need to install the Node.js server and a package manager (yarn).
 
-Install nodejs [from here](http://nodesource.com/blog/installing-node-js-tutorial-using-nvm-on-mac-os-x-and-ubuntu/), and yarn
-[here](https://yarnpkg.com/en/).
+Install nodejs [from
+here](http://nodesource.com/blog/installing-node-js-tutorial-using-nvm-on-mac-os-x-and-ubuntu/),
+and yarn [here](https://yarnpkg.com/en/).
 
 On macOS running [Homebrew](https://brew.sh/), you can install both nodejs and
 yarn via `brew install yarn`.
@@ -75,15 +76,17 @@ or copy `.env.template` to `.env` and edit the value of `ABE_URL` in that file.
 
 ## Build and Run
 
-To launch the web app, make sure you have a local ABE instance running
-on port 3000 (go to https://github.com/olinlibrary/ABE for instructions on how to run ABE) and run the following:
+To launch the web app, make sure you have a local ABE instance running on port
+3000 (go to <https://github.com/olinlibrary/ABE> for instructions on how to run
+ABE) and run the following:
 
     yarn dev
 
 Then visit <http://localhost:8080/> in your browser.
 
-Changes should be reflected in your browser every time you save a file (except CSS files, which currently require a manual refresh),
-but it may take a couple seconds for Webpack to recompile everything.
+Changes should be reflected in your browser every time you save a file (except
+CSS files, which currently require a manual refresh), but it may take a couple
+seconds for Webpack to recompile everything.
 
 ## Test
 
@@ -97,9 +100,17 @@ You can also run `jest` and `jest --watch`, if `./node_modules/.bin` is on your
 ## Lint
 
 `yarn lint` runs [ESLint](https://eslint.org/) against the client code (in
-`./src`). It doesn't check the server code — but see #125 before putting too
-much time into that.
+`./src`).
+
+`yarn format` fixes lint errors that `eslint --fix` can fix.
 
 ## Supporters
 
-<a target="_blank" href="http://browserstack.com/" alt="BrowserStack"><img align="right" src="https://bstacksupport.zendesk.com/attachments/token/GVENo6DR01sT3B5jsNRfU0II7/?name=Logo-01.svg" width="40%"></a>We'd like to extend a special thank you to [BrowserStack](http://browserstack.com/) for providing us with their testing service free of charge. BrowserStack allows us to test our project in a multitude of browsers on various platforms, including IE, Safari, Android and iOS, to ensure compatibility with as many as possible.
+<a target="_blank" href="http://browserstack.com/" alt="BrowserStack"><img
+align="right"
+src="https://bstacksupport.zendesk.com/attachments/token/GVENo6DR01sT3B5jsNRfU0II7/?name=Logo-01.svg"
+width="40%"></a>We'd like to extend a special thank you to
+[BrowserStack](http://browserstack.com/) for providing us with their testing
+service free of charge. BrowserStack allows us to test our project in a
+multitude of browsers on various platforms, including IE, Safari, Android and
+iOS, to ensure compatibility with as many as possible.

@@ -10,21 +10,21 @@ var config = {
     output: {
         path: BUILD_DIR,
         publicPath: '/public/build/',
-        filename: 'bundle.js'
+        filename: 'bundle.js',
     },
     module: {
         loaders: [
             {
                 test: /\.js$/,
                 use: ["source-map-loader"],
-                enforce: "pre"
+                enforce: "pre",
             },
             {
                 test: /\.jsx?/,
                 include: APP_DIR,
-                loader: 'babel-loader'
-            }
-        ]
+                loader: 'babel-loader',
+            },
+        ],
     },
     plugins: [
         new webpack.EnvironmentPlugin({
@@ -35,11 +35,11 @@ var config = {
     ],
     devServer: {
         contentBase: ['./public', '.'],
-        historyApiFallback: true
+        historyApiFallback: true,
     },
     resolve: {
-        extensions: ['.js', '.jsx']
-    }
+        extensions: ['.js', '.jsx'],
+    },
 };
 
 module.exports = config;

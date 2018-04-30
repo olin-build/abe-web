@@ -1,67 +1,91 @@
 // This component shows a list of event labels
 
-import * as React from "react";
+import * as React from 'react';
 import PropTypes from 'prop-types';
 
 export default class LabelPane extends React.Component {
-
     constructor(props) {
         super(props);
-        if (props.refreshLabelsIfNeeded)
-            props.refreshLabelsIfNeeded();
+        if (props.refreshLabelsIfNeeded) props.refreshLabelsIfNeeded();
     }
 
-    labelClicked = (labelName) => this.props.labelToggled(labelName);
+    labelClicked = labelName => this.props.labelToggled(labelName);
 
     render() {
-        let enableHoverStyle = !this.props.general.isMobile && this.props.editable;
-        const noHoverText = enableHoverStyle ? '' : 'no-hover ';
+        const { editable, possibleLabels, selectedLabels, showUnselected } = this.props;
+        const labels = possibleLabels || [];
+        const enableHoverStyle = !this.props.general.isMobile && this.props.editable;
+        const noHoverClass = enableHoverStyle ? '' : 'no-hover ';
         let labelElems = [];
-        if (this.props.possibleLabels && this.props.selectedLabels) {
-            Object.keys(this.props.possibleLabels).forEach((name) => {
-                let tooltip = this.props.possibleLabels[name].description;
-                let selected = this.props.selectedLabels.includes(name);
-                if (selected || this.props.showUnselected) {
-                    let classes = 'label ' + name + (selected ? ' selected' : '');
-                    if (this.props.editable) {
-                        labelElems.push(<button id={'label-' + name} key={name} title={tooltip} type="button"
-                                              className={`button ${noHoverText}${classes}`}
-                                              onClick={() => this.labelClicked(name)}>{name}</button>);
-                    } else {
-                        labelElems.push(<span id={'label-' + name} key={name} title={tooltip}
-                                            className={classes}>{name}</span>);
-                    }
+        Object.keys(labels).forEach(name => {
+            const tooltip = labels[name].description;
+            const selected = selectedLabels.includes(name);
+            if (selected || showUnselected) {
+                const classes = 'label ' + name + (selected ? ' selected' : '');
+                const id = 'label-' + name;
+                if (editable) {
+                    labelElems.push(
+                        <button
+                            id={id}
+                            key={name}
+                            title={tooltip}
+                            type="button"
+                            className={`button ${noHoverClass}${classes}`}
+                            onClick={() => this.labelClicked(name)}
+                        >
+                            <span className="ion-pricetag">&nbsp;</span>
+                            {name}
+                        </button>
+                    );
+                } else {
+                    labelElems.push(
+                        <span id={id} key={name} title={tooltip} className={classes}>
+                            <span className="ion-pricetag">&nbsp;</span>
+                            {name}
+                        </span>
+                    );
                 }
-            });
-        }
-        let colorSettings = '';
-        for (let name in this.props.possibleLabels) {
-            let bgColor = this.props.possibleLabels[name].color;
-            colorSettings += `.label.button.${name}:not(.no-hover):hover,.label.${name}.selected{background-color:${bgColor};}`;
+            }
+        });
+        function getLabelCss(name) {
+            const { color } = labels[name];
+            // Joining the list of strings, and then again the caller, is less
+            // efficient, but I found it clearer, and this code is not run much
+            // and hasn't shown up as a hot spot.
+            //
+            // Join w/ '\n', here and in caller, for more readable debugging and
+            // snapshots.
+            return [
+                `.label.${name}.button:not(.selected){background-color:white;}`,
+                `.label.${name}:not(.button):not(.selected){border-color:${color};color:${color};}`,
+                // hovered button, or selected
+                `.label.button.${name}:not(.no-hover):hover,.label.${name}.selected{background-color:${color};}`
+            ].join('\n');
         }
         return (
             <div className={this.props.contentClass}>
-                <style type="text/css">{colorSettings}</style>
-                <div className="label-selector-list">
-                    {labelElems}
-                </div>
+                <style type="text/css">{Object.keys(labels).map(getLabelCss).join('\n')}</style>
+                <div className="label-selector-list">{labelElems}</div>
             </div>
-        )
+        );
     }
-
 }
 
 // Define React prop types for type checking during development
 LabelPane.propTypes = {
+    general: PropTypes.object,
     editable: PropTypes.bool,
     showUnselected: PropTypes.bool,
     possibleLabels: PropTypes.object,
     selectedLabels: PropTypes.array,
-    contentClass: PropTypes.string,
+    contentClass: PropTypes.string
 };
 
 // Define default values for React props
 LabelPane.defaultProps = {
+    general: {},
     editable: true,
+    selectedLabels: [],
     showUnselected: true,
+    contentClass: ''
 };

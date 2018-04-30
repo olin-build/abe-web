@@ -13,13 +13,13 @@ export default class PlainEnglishRecurrence extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            start: this.props.start
+            start: this.props.start,
         };
         this.frequencyFormat = {
             DAILY: 'day',
             WEEKLY: 'week',
             MONTHLY: 'month',
-            YEARLY: 'year'
+            YEARLY: 'year',
         };
         this.weekdayFormat = {
             SU: 'Sun',
@@ -28,14 +28,14 @@ export default class PlainEnglishRecurrence extends React.Component {
             WE: 'Wed',
             TH: 'Thu',
             FR: 'Fri',
-            SA: 'Sat'
+            SA: 'Sat',
         };
     }
-    
+
     getEvery = () => this.props.recurrence.interval === 1
             ? this.props.recurrence.frequency.toString().toLowerCase() + ' '
             : 'every ' + this.props.recurrence.interval + ' ' + this.frequencyFormat[this.props.recurrence.frequency] + 's ';
-    
+
     getOn = () => {
         if (this.props.recurrence.frequency === 'DAILY' || this.props.recurrence.frequency === 'YEARLY') {
             return ''

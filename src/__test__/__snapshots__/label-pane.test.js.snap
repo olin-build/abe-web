@@ -7,7 +7,12 @@ exports[`LabelPane matches snapshot 1`] = `
   <style
     type="text/css"
   >
-    .label.button.first:not(.no-hover):hover,.label.first.selected{background-color:red;}.label.button.second:not(.no-hover):hover,.label.second.selected{background-color:green;}
+    .label.first.button:not(.selected){background-color:white;}
+.label.first:not(.button):not(.selected){border-color:red;color:red;}
+.label.button.first:not(.no-hover):hover,.label.first.selected{background-color:red;}
+.label.second.button:not(.selected){background-color:white;}
+.label.second:not(.button):not(.selected){border-color:green;color:green;}
+.label.button.second:not(.no-hover):hover,.label.second.selected{background-color:green;}
   </style>
   <div
     className="label-selector-list"
@@ -19,6 +24,11 @@ exports[`LabelPane matches snapshot 1`] = `
       title="first label"
       type="button"
     >
+      <span
+        className="ion-pricetag"
+      >
+         
+      </span>
       first
     </button>
     <button
@@ -28,6 +38,11 @@ exports[`LabelPane matches snapshot 1`] = `
       title="second label"
       type="button"
     >
+      <span
+        className="ion-pricetag"
+      >
+         
+      </span>
       second
     </button>
   </div>
@@ -41,7 +56,12 @@ exports[`LabelPane not editable 1`] = `
   <style
     type="text/css"
   >
-    .label.button.first:not(.no-hover):hover,.label.first.selected{background-color:red;}.label.button.second:not(.no-hover):hover,.label.second.selected{background-color:green;}
+    .label.first.button:not(.selected){background-color:white;}
+.label.first:not(.button):not(.selected){border-color:red;color:red;}
+.label.button.first:not(.no-hover):hover,.label.first.selected{background-color:red;}
+.label.second.button:not(.selected){background-color:white;}
+.label.second:not(.button):not(.selected){border-color:green;color:green;}
+.label.button.second:not(.no-hover):hover,.label.second.selected{background-color:green;}
   </style>
   <div
     className="label-selector-list"
@@ -51,6 +71,11 @@ exports[`LabelPane not editable 1`] = `
       id="label-first"
       title="first label"
     >
+      <span
+        className="ion-pricetag"
+      >
+         
+      </span>
       first
     </span>
     <span
@@ -58,6 +83,11 @@ exports[`LabelPane not editable 1`] = `
       id="label-second"
       title="second label"
     >
+      <span
+        className="ion-pricetag"
+      >
+         
+      </span>
       second
     </span>
   </div>
@@ -71,7 +101,12 @@ exports[`LabelPane with selected labels 1`] = `
   <style
     type="text/css"
   >
-    .label.button.first:not(.no-hover):hover,.label.first.selected{background-color:red;}.label.button.second:not(.no-hover):hover,.label.second.selected{background-color:green;}
+    .label.first.button:not(.selected){background-color:white;}
+.label.first:not(.button):not(.selected){border-color:red;color:red;}
+.label.button.first:not(.no-hover):hover,.label.first.selected{background-color:red;}
+.label.second.button:not(.selected){background-color:white;}
+.label.second:not(.button):not(.selected){border-color:green;color:green;}
+.label.button.second:not(.no-hover):hover,.label.second.selected{background-color:green;}
   </style>
   <div
     className="label-selector-list"
@@ -83,6 +118,11 @@ exports[`LabelPane with selected labels 1`] = `
       title="first label"
       type="button"
     >
+      <span
+        className="ion-pricetag"
+      >
+         
+      </span>
       first
     </button>
     <button
@@ -92,6 +132,11 @@ exports[`LabelPane with selected labels 1`] = `
       title="second label"
       type="button"
     >
+      <span
+        className="ion-pricetag"
+      >
+         
+      </span>
       second
     </button>
   </div>

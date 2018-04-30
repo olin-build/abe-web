@@ -11,7 +11,7 @@ export default class Footer extends React.Component {
                     <p>
                         <a href="https://goo.gl/forms/2cqVijokICZ5S20R2" alt="Report a problem" target="_blank">Report a problem</a>
                         &nbsp;|&nbsp;
-                        <a href="https://github.com/olinlibrary/abe-web-frontend" alt="View on GitHub" target="_blank">View on GitHub</a></p>
+                        <a href="https://github.com/olinlibrary/abe-web" alt="View on GitHub" target="_blank">View on GitHub</a></p>
                 </div>
             </footer>
         )
