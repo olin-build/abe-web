@@ -90,8 +90,15 @@ export default class SubscriptionEditorPage extends React.Component {
           />
           <br/>
           <input type="submit" className="button submit" value="Submit" onClick={this.submitSubscription}/>
-          <br/>
-          <input type="submit" className="button submit" value="Copy feed URL" onClick={this.copyToClipboard}/>
+          <br/>          
+          <a href={`webcal:${window.abe_url.split(':')[1]}${this.state.data.ics_url}`} className="ics-copy-to-clipboard">
+            Import into Outlook
+          </a>
+          
+          <a href={`https://github.com/olinlibrary/abe-web/wiki/Integrate-with-Your-Calendar#step-2-b-google-calendar`}
+           className="ics-copy-to-clipboard" onClick={() => {this.copyToClipboard(this.state.data.ics_url)}}>
+            Import into Google Calendar
+          </a>
         </div>
       </div>
     );
