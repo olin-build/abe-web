@@ -46,10 +46,9 @@ app.get(routes, (req, res) => {
 
 const server = app.listen(port, () => {
   let host = server.address().address;
-  const port = server.address().port;
   // replace IPv6 wildcard by a recognizable URL, that can be used in a browser
   // address bar
   host = host.replace(/^::$/, '0.0.0.0');
   // Printed thus, some terminals display a clickable link
-  console.log('Listening on http://%s:%s', host, port);
+  console.log('Dev server is listening at http://%s:%s/', host, server.address().port);
 });
