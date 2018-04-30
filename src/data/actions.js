@@ -429,7 +429,7 @@ export function eventDeleteFailed(event, error) {
 export function viewEvent(event) {
   return (dispatch) => {
     if (event.sid && !event.recId) {
-      event.recId = event.start.valueOf(); // ISO 8601 date format
+      event.recId = event.start.format('YYYY-MM-DD'); // ISO 8601 date format
     }
     const linkSuffix = event.id || `${event.sid}/${event.recId}`;
     const path = `/view/${linkSuffix}`;

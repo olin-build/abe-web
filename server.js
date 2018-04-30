@@ -36,7 +36,7 @@ const routes = [
   '/import',
   '/edit/:id',
   '/edit/:sid/:rec_id',
-  '/view/:id',
+  '/view/:id/:rec_id?',
   '/subscription/:id',
 ];
 
@@ -44,7 +44,7 @@ app.get(routes, (req, res) => {
   res.send(html);
 });
 
-var server = app.listen(port, () => {
+const server = app.listen(port, () => {
   let host = server.address().address;
   const port = server.address().port;
   // replace IPv6 wildcard by a recognizable URL, that can be used in a browser
