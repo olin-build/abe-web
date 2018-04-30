@@ -96,7 +96,12 @@ export default class AddEditEventPage extends React.Component {
 
     validateInput = () => {
       if (this.state.eventData.title.length === 0){
-        alert('Event Title is required')
+        alert('Event must have a title');
+        return false;
+      }
+
+      if (this.state.eventData.labels.length === 0) {
+        alert('Event must have at least one label');
         return false;
       }
 
