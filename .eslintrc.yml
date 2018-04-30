@@ -18,8 +18,7 @@ rules:
   react/no-find-dom-node: warn
   react/prop-types: off           # TODO: #123
   react/jsx-no-target-blank: off  # TODO: is this a legitimate error?
-  # from airbnb style <https://github.com/airbnb/javascript>:
-  # TODO: change this to an error after the redux branch is merged
+  # from Airbnb style <https://github.com/airbnb/javascript>:
   comma-dangle: [warn, always-multiline]
 
 overrides:

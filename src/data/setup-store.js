@@ -1,7 +1,7 @@
-import { createStore, applyMiddleware, combineReducers } from 'redux'
-import thunkMiddleware from 'redux-thunk'
+import { createStore, applyMiddleware, combineReducers } from 'redux';
+import thunkMiddleware from 'redux-thunk';
 import ReactGA from 'react-ga';
-import { routerReducer, routerMiddleware } from 'react-router-redux'
+import { routerReducer, routerMiddleware } from 'react-router-redux';
 import * as reducers from './reducers';
 import SidebarMode from './sidebar-modes';
 
@@ -23,7 +23,7 @@ export default function setupStore(history) {
       currentlyViewingDate: null,
       currentViewMode: null, // Set below
       possibleViewModes: {
-        'Day': {
+        Day: {
           displayName: 'Day',
           daysVisible: 1,
           calendarModeProp: 'multi-day',
@@ -33,12 +33,12 @@ export default function setupStore(history) {
           daysVisible: 3,
           calendarModeProp: 'multi-day',
         },
-        'Week': {
+        Week: {
           displayName: 'Week',
           daysVisible: 7,
           calendarModeProp: 'multi-day',
         },
-        'Month': {
+        Month: {
           displayName: 'Month',
           daysVisible: -1,
           calendarModeProp: 'month',
@@ -61,7 +61,7 @@ export default function setupStore(history) {
 
   initialState.calendar.currentViewMode = isMobile
     ? initialState.calendar.possibleViewModes['3-Day']
-    : initialState.calendar.possibleViewModes['Month'];
+    : initialState.calendar.possibleViewModes.Month;
 
   // Google Analytics
   if (GA_ID) {
@@ -79,7 +79,7 @@ export default function setupStore(history) {
 
   // Load the Redux middleware if the Redux devtools extension is available
   const middleware = (DEBUG && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__)
-     ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__(applyMiddleware(
+    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__(applyMiddleware(
       thunkMiddleware, // lets us dispatch() functions
       routerMiddleware(history),
     ))
@@ -89,7 +89,7 @@ export default function setupStore(history) {
     );
 
   return createStore(
-    combineReducers({...reducers, router: routerReducer}),
+    combineReducers({ ...reducers, router: routerReducer }),
     initialState,
     middleware,
   );
