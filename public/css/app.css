@@ -1,6 +1,4 @@
-@import "../../node_modules/fullcalendar/dist/fullcalendar.css";
-@import "../css/jquery.qtip.css";
-@import "../css/foundation.css";
+@import "https://cdnjs.cloudflare.com/ajax/libs/foundation/6.4.3/css/foundation.min.css";
 /*@import "../../node_modules/codemirror/lib/codemirror.css";*/
 
 /** ----- Begin Global ----- **/
@@ -78,7 +76,7 @@ textarea::placeholder {
     top: 0;
     bottom: 0;
     right: 0;
-    overflow: scroll;
+    overflow-y: auto;
     transition: left 0.3s;
 }
 
@@ -332,9 +330,9 @@ footer {
 
 /** ----- End Sidebar ----- **/
 
-/** ----- Begin Tags ----- **/
+/** ----- Begin Labels ----- **/
 
-.tag {
+.label {
     display: inline-block;
     padding: 0.33333rem 0.5rem;
     border-radius: 0;
@@ -347,38 +345,83 @@ footer {
     margin-right: 0.2em;
 }
 
-span.tag {
+span.label {
     margin: 1rem 0.1rem 0;
 }
 
-.button.tag {
+.button.label {
     margin-bottom: 0;
     margin-top: 1rem;
 }
 
-.button.tag:hover:not(.no-hover) {
+.button.label:hover:not(.no-hover) {
     background-color: #14679e;
     color: #fefefe;
     cursor: pointer;
  }
 
-.tag-selector-list {
+.label-selector-list {
     margin-top: -0.6rem;
 }
 
-/** ----- End Tags ----- **/
+/** ----- End Labels ----- **/
 
 
 /** ----- Begin Calendar ----- **/
 
-.calendar-container > .menu-icon-button {
-    position: absolute;
-    margin: 1.4em 0.9em;
-    z-index: 20;
+.calendar-header {
+    background-color: white;
+    border-bottom: 4px solid #dcd9d9;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.calendar-header .title {
+    font-size: 2em;
+}
+
+.calendar-header-view-selector {
+    display: inline-block;
+}
+
+.calendar-header-view-option {
+    display: inline-block;
+    padding: 1.5em 1em;
+    transition: all 0.3s ease;
     cursor: pointer;
 }
 
-.calendar-container > .menu-icon-button > .menu-icon {
+.calendar-header-view-option.current {
+    background-color: #eee;
+}
+
+.calendar-header-view-option:hover {
+    background-color: #e9e9e9;
+}
+
+.calendar-header-options {
+    float: right;
+    display: inline-block;
+}
+
+.calendar-header-options > * {
+    display: inline-block;
+}
+
+.calendar-header-pagination button {
+    padding: 0.2em;
+    margin: 0.7em 0.5em;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.calendar-container .menu-icon-button {
+    cursor: pointer;
+    margin: 0 1em;
+}
+
+.calendar-container .menu-icon-button > .menu-icon {
     width: 3em;
     height: 3em;
     fill: gray;
@@ -404,15 +447,20 @@ span.tag {
 
 .calendar-container {
     position: relative;
+    height: 100%;
 }
 
-.tag-selector-list {
+.label-selector-list {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
 }
 
-.tag:not(.selected) {
+.label-selector-list button {
+    border-radius: 8px;
+}
+
+.label:not(.selected) {
     background-color: transparent;
     color: black;
     border: 1px solid darkgray;
@@ -444,7 +492,7 @@ span.tag {
 .m-input-moment .btn-save,
 .m-input-moment .options button.is-active,
 .m-calendar .toolbar button,
-.content-container button:not(.im-btn .tag) {
+.content-container button:not(.im-btn .label) {
     background-color: #009BDF;
 }
 

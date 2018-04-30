@@ -1,59 +1,55 @@
+// This container is a sort of middleware between the React page and the Redux data store
+
 import { connect } from 'react-redux';
 import {
-    setSidebarMode,
-    setMarkdownGuideVisibility,
-    refreshLabelsIfNeeded,
-    toggleSidebarCollapsed,
-    setPageTitlePrefix,
-    eventSavedSuccessfully,
-    eventSaveFailed,
-    eventDeletedSuccessfully,
-    eventDeleteFailed,
+  setSidebarMode,
+  toggleSidebarCollapsed,
+  setPageTitlePrefix,
+  getEventDataViaUrlParams,
+  deleteCurrentEvent,
+  eventSavedSuccessfully,
+  eventSaveFailed,
 } from '../data/actions';
-import AddEditEventScene from '../scenes/AddEdit/add-edit-scene.jsx';
+import AddEditEventPage from '../pages/add-edit/add-edit-page';
 
-const mapStateToProps = state => {
-    return {
-        general: state.general,
-        // events: getVisibleEvents(state.events, state.labels),
-        possibleLabels: state.labels.labelList,
-        markdownGuideVisible: state.addEdit.markdownGuideVisible
-    }
-};
+// This function passes values/objects from the Redux state to the React component as props
+const mapStateToProps = state => ({
+  general: state.general,
+  eventData: state.events.current,
+  possibleLabels: state.labels.labelList,
+});
 
-const mapDispatchToProps = dispatch => {
-    return {
-        refreshLabelsIfNeeded: () => {
-            dispatch(refreshLabelsIfNeeded());
-        },
-        setSidebarMode: mode => {
-            dispatch(setSidebarMode(mode));
-        },
-        setMarkdownGuideVisibility: visible => {
-            dispatch(setMarkdownGuideVisibility(visible));
-        },
-        toggleSidebarCollapsed: () => {
-            dispatch(toggleSidebarCollapsed());
-        },
-        setPageTitlePrefix: (title) => {
-            dispatch(setPageTitlePrefix(title));
-        },
-        eventSavedSuccessfully: (eventId) => {
-            dispatch(eventSavedSuccessfully(eventId));
-        },
-        eventSaveFailed: (eventData, error) => {
-            dispatch(eventSaveFailed(eventData, error));
-        },
-        eventDeletedSuccessfully: (eventId) => {
-            dispatch(eventDeletedSuccessfully(eventId));
-        },
-        eventDeleteFailed: (eventId, error) => {
-            dispatch(eventDeleteFailed(eventId, error));
-        },
+// This function passes functions from /src/data/actions.js to the React component as props
+const mapDispatchToProps = dispatch => ({
+  setSidebarMode: (mode) => {
+    dispatch(setSidebarMode(mode));
+  },
+  setPageTitlePrefix: (title) => {
+    dispatch(setPageTitlePrefix(title));
+  },
+  toggleSidebarCollapsed: () => {
+    dispatch(toggleSidebarCollapsed());
+  },
+  getEventDataViaUrlParams: (urlParams) => {
+    dispatch(getEventDataViaUrlParams(urlParams));
+  },
+  deleteCurrentEvent: () => {
+    if (confirm('Are you sure you want to delete this event?')) {
+      dispatch(deleteCurrentEvent());
     }
-};
+  },
+  cancelButtonClicked: () => {
+    window.history.back(); // TODO: Make sure this is done right
+  },
+  eventSavedSuccessfully: (event) => {
+    dispatch(eventSavedSuccessfully(event));
+  },
+  eventSaveFailed: (event, error) => {
+    dispatch(eventSaveFailed(event, error));
+  },
+});
 
 // Connect props to Redux state and actions
-const AddEditContainer = connect(mapStateToProps, mapDispatchToProps)(AddEditEventScene);
+const AddEditContainer = connect(mapStateToProps, mapDispatchToProps)(AddEditEventPage);
 
 export default AddEditContainer;

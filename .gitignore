@@ -1,3 +1,5 @@
+# dotenv
+.env
 
 # Bootstrap
 /bootstrap*
@@ -248,3 +250,7 @@ ENV/
 /site
 
 # End of https://www.gitignore.io/api/linux,django,node,python,pycharm
+
+# webpack creates these
+bundle.js
+bundle.js.map
