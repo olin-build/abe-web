@@ -163,8 +163,6 @@ export default class RecurrenceSelector extends React.Component {
         this.endOptionsChanged = this.endOptionsChanged.bind(this);
         this.state = {
           recurrence: this.props.reccurs,
-          month_option: this.props.month,
-          end_option: this.props.end,
           start: this.props.start,
         };
     }
@@ -194,15 +192,15 @@ export default class RecurrenceSelector extends React.Component {
 
     monthOptionsChanged(value) {
       let state = this.state
-      if (value === 'month'){
+      if (value === 'month'){ // By day of month
         state.recurrence.by_month_day = state.start.date().toString()
         delete state.recurrence.by_day;
       }
-      else if (value === 'week'){
+      else if (value === 'week'){ // By day of week
         state.recurrence.by_day = [state.start.format('dd').toUpperCase()]
         delete state.recurrence.by_month_day;
       }
-      state.month_option = value
+      state.recurrence.month_option = value
       this.setState(state, () => {
         this.props.onChange(this.state);
       });
@@ -222,14 +220,14 @@ export default class RecurrenceSelector extends React.Component {
         delete state.recurrence.count;
         delete state.recurrence.until;
       }
-      state.end_option = value.option;
+      state.recurrence.end_option = value.option;
       this.setState(state, () => {
         this.props.onChange(this.state);
       });
     }
 
     render() {
-        let  month_options = this.props.reccurs.frequency === 'MONTHLY' ? <MonthOptions option={this.state.month_option} onChange={this.monthOptionsChanged}/> : null;
+        let  month_options = this.props.reccurs.frequency === 'MONTHLY' ? <MonthOptions option={this.state.recurrence.month_option} onChange={this.monthOptionsChanged}/> : null;
         let  week_options = this.props.reccurs.frequency === 'WEEKLY' ? <WeekOptions days={this.state.recurrence.by_day} onChange={this.monthOptionsChanged}/> : null;
         return (
             <div className="recurrence-container">
@@ -255,7 +253,7 @@ export default class RecurrenceSelector extends React.Component {
               <input title="Interval" type='number' min="1" className="single-line-text-box super-short-text-box" placeholder="#" value={this.props.reccurs.interval} onChange={this.intervalChanged}/>
               {month_options}
               {week_options}
-              <EndOptions option={this.state.end_option} onChange={this.endOptionsChanged}/>
+              <EndOptions option={this.state.recurrence.end_option} onChange={this.endOptionsChanged}/>
               <PlainEnglishRecurrence recurrence={this.state.recurrence} start={this.state.start}/>
             </div>
         )

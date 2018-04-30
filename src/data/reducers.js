@@ -40,24 +40,17 @@ export function calendar(state = {}, action) {
 
 export function events(state = {}, action) {
     switch (action.type) {
+        case ActionTypes.CLEAR_CURRENT_EVENT:
+            return Object.assign({}, state, {
+              current: null,
+            });
         case ActionTypes.SET_CURRENT_EVENT:
             return Object.assign({}, state, {
-                current: action.event,
+                current: action.data,
             });
         case ActionTypes.SET_EVENTS:
             return Object.assign({}, state, {
                 events: action.data,
-            });
-        default:
-            return state;
-    }
-}
-
-export function addEdit(state = {}, action) {
-    switch (action.type) {
-        case ActionTypes.SET_MARKDOWN_GUIDE_VISIBILITY:
-            return Object.assign({}, state, {
-                markdownGuideVisible: action.visible
             });
         default:
             return state;

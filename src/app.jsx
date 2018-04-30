@@ -28,9 +28,6 @@ const store = setupStore(history);
 // Fetch the labels
 store.dispatch(fetchLabels());
 
-// TODO Load the rest of the required data
-
-
 class App extends React.Component {
   render() {
     return (
@@ -42,16 +39,10 @@ class App extends React.Component {
             <Router history={history}>
               <Switch>
                 <Route exact path='/' component={CalendarContainer}/>
-                <Route exact path='/calendar' component={CalendarContainer}/>
-                <Route exact path='/calendar/' component={CalendarContainer}/>
                 <Route path='/calendar/:labels' component={CalendarContainer}/>
-                <Route exact path='/edit' component={AddEditContainer}/>
-                <Route exact path='/edit/:id' component={AddEditContainer}/>
-                <Route path='/edit/:sid/:rec_id' component={AddEditContainer}/>
+                <Route path='/edit/:id?/:recId?' component={AddEditContainer}/>
+                <Route path='/view/:id/:recId?' component={ViewEventContainer}/>
                 <Route exact path='/import' component={ImportContainer}/>
-                <Route exact path='/edit/:id' component={AddEditContainer}/>
-                <Route path='/edit/:sid/:rec_id' component={AddEditContainer}/>
-                <Route path='/view/:id' component={ViewEventContainer}/>
                 <Route path='/subscription/:id' component={SubscriptionContainer}/>
               </Switch>
             </Router>

@@ -13,7 +13,6 @@ export default function setupStore(history) {
   const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent);
   const initialState = {
     general: {
-      currentEvent: null,
       debug: window.debug,
       isMobile,
       pageTitlePrefix: null,
@@ -53,9 +52,6 @@ export default function setupStore(history) {
     sidebar: {
       mode: SidebarMode.LOADING,
       isCollapsed: isMobile,
-    },
-    addEdit: {
-      markdownGuideVisible: true,
     },
     labels: {
       labelList: null,

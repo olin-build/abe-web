@@ -1,72 +1,43 @@
 // This page is used for displaying/viewing event details, location, attachments, etc
 
-import * as React from "react";
-import {Redirect} from 'react-router';
-import moment from "moment";
+import * as React from 'react';
 import Markdown from 'react-markdown';
-import SidebarModes from "../../data/sidebar-modes";
-import PlainEnglishRecurrence from '../../components/plain-english-recurrence.jsx'
-import axios from 'axios';
+import SidebarModes from '../../data/sidebar-modes';
+import PlainEnglishRecurrence from '../../components/plain-english-recurrence.jsx';
 
 export default class EventDetailsPage extends React.Component {
-
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            id: ('match' in props && 'id' in props.match.params) ? props.match.params.id : null,
-        };
-
-        if (this.state.id) {
-            // TODO Do this all in the container
-            this.state.eventData = this.props.events[this.state.id];
-        }
-    }
-
     componentDidMount() {
-        this.props.setSidebarMode(SidebarModes.VIEW_EVENT);
-        if ('id' in this.state && !this.state.eventData) {
-            axios.get(window.abe_url + '/events/' + this.state.id).then(response => {
-                let data = response.data;
-                data.start = moment.utc(data.start);
-                data.start = data.start.local();
-                data.end = moment.utc(data.end);
-                data.end = data.end.local();
-                this.props.setPageTitlePrefix(data.title);
-                this.props.setCurrentEvent(data);
-                this.setState({eventData: data});
-            }).catch(error => alert('Error retrieving event data from server:\n' + error));
+      // Check if we need to request data from the server
+      if (!this.props.eventData) {
+        if (this.props.match && this.props.match.params.id) {
+          this.props.getEventDataViaUrlParams(this.props.match.params);
         }
-    }
+        // TODO: Else: display message to the user that they need to specify an event ID
+      }
 
-    componentWillUnmount() {
-        this.props.setCurrentEvent(null);
+      this.props.setSidebarMode(SidebarModes.VIEW_EVENT);
     }
 
     render() {
-        if (this.state.eventData) {
-            let oneDay = this.state.eventData.start.diff(this.state.eventData.end, 'days') === 0;
-            let timeFormat = this.state.eventData.allDay ? '' : ' h:mm A';
+        if (this.props.eventData) {
+            let oneDay = this.props.eventData.start.diff(this.props.eventData.end, 'days') === 0;
+            let timeFormat = this.props.eventData.allDay ? '' : ' h:mm A';
             let startDateFormat = 'ddd, MMM D, YYYY' + timeFormat;
             let endDateFormat = (oneDay) ? timeFormat : ' ddd, MMM D, YYYY' + timeFormat;
-            let redirect = this.state.redirect ? <Redirect to={'/edit/'+ this.state.eventData.id}/> : null;
-            // let edit = this.state.eventData.UID ?  null : <button className="button cancel" onClick={()=>{this.setState({redirect: true})}}>Edit Event</button>;
-            let end = this.state.eventData.allDay && oneDay ? null : <span> to<span className="event-start">{this.state.eventData.end.format(endDateFormat)}</span></span>;
-            let recurrence = this.state.eventData.recurrence ? <PlainEnglishRecurrence recurrence={this.state.eventData.recurrence} start={this.state.eventData.start}/> : null;
+            let end = this.props.eventData.allDay && oneDay ? null : <span> to<span className="event-start">{this.props.eventData.end.format(endDateFormat)}</span></span>;
+            let recurrence = this.props.eventData.recurrence ? <PlainEnglishRecurrence recurrence={this.props.eventData.recurrence} start={this.props.eventData.start}/> : null;
             return (
                 <div className="row expanded page-container">
                     <div className="row content-container">
-                        <h1 className="page-title">{this.state.eventData.title}</h1>
-                        {redirect}
+                        <h1 className="page-title">{this.props.eventData.title}</h1>
                         <div className="event-info-container">
                             <div className="event-date-location-container">
-                                <span className="event-start">{this.state.eventData.start.format(startDateFormat)}</span>
+                                <span className="event-start">{this.props.eventData.start.format(startDateFormat)}</span>
                                 {end}
                                 {recurrence}
-                                <p className="event-location">{this.state.eventData.location}</p>
+                                <p className="event-location">{this.props.eventData.location}</p>
                             </div>
-                            <Markdown source={this.state.eventData.description} className="description-container" />
-                          {/*{edit}*/}
+                            <Markdown source={this.props.eventData.description} className="description-container" />
                         </div>
                     </div>
                 </div>
