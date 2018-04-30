@@ -167,7 +167,7 @@ function getPageDelta(state) {
  */
 export function setCurrentlyViewingDate(date) { // Set the first date visible on the calendar
     date.hour(0).minute(0).second(0); // Set to the start of the day to avoid any potential weirdness when manipulating later
-    // TODO Cache request responses (so don't need to make request on every page change)
+    // TODO: Cache request responses (so don't need to make request on every page change)
     return (dispatch) => {
         // Find the first day of the first week of the month
         const firstDay = moment(date).date(0).day(0);
@@ -228,7 +228,7 @@ export function setCurrentEventById(id, recId) {
         : `${window.abe_url}/events/${id}`;
       axios.get(url)
         .then(response => dispatch(setCurrentEventData(response.data)))
-        .catch(response => console.error(response)); // TODO Display an error message to the user
+        .catch(response => console.error(response)); // TODO: Display an error message to the user
     }
   };
 }

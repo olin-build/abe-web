@@ -42,7 +42,7 @@ const mapDispatchToProps = dispatch => {
       }
     },
     cancelButtonClicked: () => {
-      window.history.back(); // TODO Make sure this is done right
+      window.history.back(); // TODO: Make sure this is done right
     },
     eventSavedSuccessfully: (event) => {
       dispatch(eventSavedSuccessfully(event));

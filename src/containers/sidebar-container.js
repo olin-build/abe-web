@@ -43,7 +43,7 @@ const mapDispatchToProps = dispatch => {
             dispatch(Actions.editCurrentEventSeries());
         },
         deleteCurrentEvent: () => {
-            // TODO handling recurrences properly
+            // TODO: handling recurrences properly
         },
         importICSClicked: () => {
             dispatch(push('/import'));

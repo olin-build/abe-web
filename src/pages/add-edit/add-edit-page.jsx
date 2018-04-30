@@ -62,10 +62,10 @@ export default class AddEditEventPage extends React.Component {
     if (newProps.eventData) {
       this.setState({eventData: deepcopy(newProps.eventData)});
     }
-    // TODO If the event is recurring but newProps.match.params.recId is not defined, copy the data to seriesData
+    // TODO: If the event is recurring but newProps.match.params.recId is not defined, copy the data to seriesData
   }
 
-    // TODO Use the logic in here for dealing with recurring events (currently broken)
+    // TODO: Use the logic in here for dealing with recurring events (currently broken)
     receivedSuccessfulResponse = (response) => {
         let eventData = response.data;
 

@@ -9,10 +9,10 @@ export default class EventDetailsPage extends React.Component {
     componentDidMount() {
       // Check if we need to request data from the server
       if (!this.props.eventData) {
-        if (this.props.match && Object.keys(this.props.match.params).length > 0) {
+        if (this.props.match && this.props.match.params.id) {
           this.props.getEventDataViaUrlParams(this.props.match.params);
         }
-        // TODO Else: display message to the user that they need to specify an event ID
+        // TODO: Else: display message to the user that they need to specify an event ID
       }
 
       this.props.setSidebarMode(SidebarModes.VIEW_EVENT);

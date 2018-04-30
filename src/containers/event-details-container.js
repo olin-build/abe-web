@@ -1,7 +1,6 @@
 // This container is a sort of middleware between the React page and the Redux data store
 
 import { connect } from 'react-redux';
-import { push } from 'react-router-redux';
 import {
   setSidebarMode,
   setPageTitlePrefix,
@@ -24,9 +23,6 @@ const mapDispatchToProps = dispatch => {
         },
         getEventDataViaUrlParams: (urlParams) => {
             dispatch(getEventDataViaUrlParams(urlParams));
-        },
-        editCurrentEvent: (linkSuffix) => {
-            dispatch(push('/edit/'+linkSuffix));
         },
         setPageTitlePrefix: (title) => {
             dispatch(setPageTitlePrefix(title));
