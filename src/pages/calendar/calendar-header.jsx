@@ -4,11 +4,10 @@ import React from 'react';
 import MenuIconButton from '../../components/menu-icon-button';
 
 export default class CalendarHeader extends React.Component {
-
   render() {
     const viewOptions = Object.values(this.props.possibleViewModes).map((mode) => {
-      const className = 'calendar-header-view-option'
-        + (mode === this.props.currentViewMode ? ' current' : '');
+      const className = `calendar-header-view-option${
+        mode === this.props.currentViewMode ? ' current' : ''}`;
       return (
         <div
           key={mode.displayName}
@@ -35,6 +34,6 @@ export default class CalendarHeader extends React.Component {
           </div>
         </div>
       </div>
-    )
+    );
   }
 }

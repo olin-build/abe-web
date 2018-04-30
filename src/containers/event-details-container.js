@@ -9,26 +9,22 @@ import {
 import EventDetailsPage from '../pages/details/event-details-page';
 
 // This function passes values/objects from the Redux state to the React component as props
-const mapStateToProps = state => {
-  return {
-    eventData: state.events.current,
-  }
-};
+const mapStateToProps = state => ({
+  eventData: state.events.current,
+});
 
 // This function passes functions from /srcs/data/actions.jsx to the React component as props
-const mapDispatchToProps = dispatch => {
-    return {
-        setSidebarMode: mode => {
-            dispatch(setSidebarMode(mode));
-        },
-        getEventDataViaUrlParams: (urlParams) => {
-            dispatch(getEventDataViaUrlParams(urlParams));
-        },
-        setPageTitlePrefix: (title) => {
-            dispatch(setPageTitlePrefix(title));
-        },
-    }
-};
+const mapDispatchToProps = dispatch => ({
+  setSidebarMode: (mode) => {
+    dispatch(setSidebarMode(mode));
+  },
+  getEventDataViaUrlParams: (urlParams) => {
+    dispatch(getEventDataViaUrlParams(urlParams));
+  },
+  setPageTitlePrefix: (title) => {
+    dispatch(setPageTitlePrefix(title));
+  },
+});
 
 // Connect props to Redux state and actions
 const ViewEventContainer = connect(mapStateToProps, mapDispatchToProps)(EventDetailsPage);

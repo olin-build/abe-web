@@ -1,5 +1,4 @@
-const getHTML = () => {
-    return `<!DOCTYPE html>
+const getHTML = () => `<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -13,7 +12,6 @@ const getHTML = () => {
 <div id="app"></div>
 <script src="/bundle.js" type="text/javascript"></script>
 </body>
-</html>`
-};
+</html>`;
 
 module.exports = getHTML;

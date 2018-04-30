@@ -2,36 +2,40 @@
 
 import { push } from 'react-router-redux';
 import axios from 'axios';
-import moment from "moment";
+import moment from 'moment';
 import ReactGA from 'react-ga';
 
 export const ActionTypes = {
-    // General UI
-    DISPLAY_ERROR: 'DISPLAY_ERROR', // Displays an error message (red background) at the top of the screen TODO: Issue #54
-    DISPLAY_MESSAGE: 'DISPLAY_MESSAGE', // Displays a message at the top of the screen TODO: Issue #54
-    SET_PAGE_TITLE_PREFIX: 'SET_PAGE_TITLE_PREFIX', // Sets the prefix of the page title (before the app name)
-    SET_SIDEBAR_PANE_VISIBILITY: 'SET_SIDEBAR_PANE_VISIBILITY', // Sets which panes (components) are visible in the sidebar
-    SET_SIDEBAR_MODE: 'SET_SIDEBAR_MODE', // Sets which panes (components) are visible in the sidebar based on a layout template
-    TOGGLE_SIDEBAR_VISIBILITY: 'TOGGLE_SIDEBAR_VISIBILITY', // Toggles the visibility of the app sidebar
-    // Calendar view
-    SET_FOCUSED_DATE: 'SET_FOCUSED_DATE', // Sets the day the calendar view is ensuring is shown (changing this changes which time period is shown on the calendar)
-    SET_FILTER_LABELS: 'SET_FILTER_LABELS', // Sets which labels are selected as part of the event filter
-    FILTER_LABEL_TOGGLED: 'FILTER_LABEL_TOGGLED', // Toggles whether or not a specific label is selected as part of the event filter
-    SET_FILTER_LABEL_SELECTED: 'SET_FILTER_LABEL_SELECTED', // Sets whether or not a specific label is selected as part of the event filter
-    SET_VIEW_MODE: 'SET_VIEW_MODE', // Sets which view mode (month, week, day, etc) the calendar is in
-    // Event data
-    SET_CURRENT_EVENT: 'SET_CURRENT_EVENT', // Keeps track of the data for the event currently being viewed or edited
-    FETCH_EVENTS_IF_NEEDED: 'FETCH_EVENTS_IF_NEEDED', // Triggers FETCH_EVENTS if no event data is loaded
-    FETCH_EVENTS: 'FETCH_EVENTS', // Fetches event data from the server
-    SET_EVENTS: 'SET_EVENTS', // Sets the event data using data from a server response
-    // Editing an event
-    CLEAR_CURRENT_EVENT: 'CLEAR_CURRENT_EVENT',
-    // Labels
-    FETCH_LABELS: 'FETCH_LABELS', // Fetches all labels and their data from the server
-    FETCH_LABELS_IF_NEEDED: 'FETCH_LABELS_IF_NEEDED', // Calls FETCH_LABELS if no label data is loaded
-    SET_LABELS: 'SET_LABELS', // Sets the label data using data from a server response
-    // ICS
-    GENERATE_ICS_FEED: 'GENERATE_ICS_FEED', // Triggers generation of an ICS feed with current filter applied and copies URL to clipboard
+  // General UI
+  DISPLAY_ERROR: 'DISPLAY_ERROR', // Displays an error message (red background) at the top of the screen TODO: Issue #54
+  DISPLAY_MESSAGE: 'DISPLAY_MESSAGE', // Displays a message at the top of the screen TODO: Issue #54
+  SET_PAGE_TITLE_PREFIX: 'SET_PAGE_TITLE_PREFIX', // Sets the prefix of the page title (before the app name)
+  SET_SIDEBAR_PANE_VISIBILITY: 'SET_SIDEBAR_PANE_VISIBILITY', // Sets which components are visible in the sidebar
+  SET_SIDEBAR_MODE: 'SET_SIDEBAR_MODE', // Sets which components are visible in the sidebar based on a layout template
+  TOGGLE_SIDEBAR_VISIBILITY: 'TOGGLE_SIDEBAR_VISIBILITY', // Toggles the visibility of the app sidebar
+  // Calendar view
+  SET_FOCUSED_DATE: 'SET_FOCUSED_DATE', // Sets the day the calendar view is ensuring is shown (changing this changes
+                                        // which time period is shown on the calendar)
+  SET_FILTER_LABELS: 'SET_FILTER_LABELS', // Sets which labels are selected as part of the event filter
+  FILTER_LABEL_TOGGLED: 'FILTER_LABEL_TOGGLED', // Toggles whether or not a specific label is selected as part
+                                                // of the event filter
+  SET_FILTER_LABEL_SELECTED: 'SET_FILTER_LABEL_SELECTED', // Sets whether or not a specific label is selected as part
+                                                          // of the event filter
+  SET_VIEW_MODE: 'SET_VIEW_MODE', // Sets which view mode (month, week, day, etc) the calendar is in
+  // Event data
+  SET_CURRENT_EVENT: 'SET_CURRENT_EVENT', // Keeps track of the data for the event currently being viewed or edited
+  FETCH_EVENTS_IF_NEEDED: 'FETCH_EVENTS_IF_NEEDED', // Triggers FETCH_EVENTS if no event data is loaded
+  FETCH_EVENTS: 'FETCH_EVENTS', // Fetches event data from the server
+  SET_EVENTS: 'SET_EVENTS', // Sets the event data using data from a server response
+  // Editing an event
+  CLEAR_CURRENT_EVENT: 'CLEAR_CURRENT_EVENT',
+  // Labels
+  FETCH_LABELS: 'FETCH_LABELS', // Fetches all labels and their data from the server
+  FETCH_LABELS_IF_NEEDED: 'FETCH_LABELS_IF_NEEDED', // Calls FETCH_LABELS if no label data is loaded
+  SET_LABELS: 'SET_LABELS', // Sets the label data using data from a server response
+  // ICS
+  GENERATE_ICS_FEED: 'GENERATE_ICS_FEED', // Triggers generation of an ICS feed with current filter applied and copies
+                                          // URL to clipboard
 };
 
 // Sections:
@@ -56,14 +60,14 @@ function processDate(date) {
  * Display a message at the top of the window in a notification bar TODO: Issue #54
  */
 export function displayMessage(message) {
-    return {type: ActionTypes.DISPLAY_MESSAGE, message};
+  return { type: ActionTypes.DISPLAY_MESSAGE, message };
 }
 
 /**
  * Display an error message (red background) at the top of the window in a notification bar TODO: Issue #54
  */
 export function displayError(error, message) {
-    return {type: ActionTypes.DISPLAY_ERROR, error, message};
+  return { type: ActionTypes.DISPLAY_ERROR, error, message };
 }
 
 // ----- End notification/message bar actions ----- //
@@ -75,22 +79,22 @@ export function displayError(error, message) {
  * @param {object} mode - one of the modes defined in /src/data/sidebar-modes.js
  */
 export function setSidebarMode(mode) {
-    return {type: ActionTypes.SET_SIDEBAR_MODE, mode};
+  return { type: ActionTypes.SET_SIDEBAR_MODE, mode };
 }
 
 /**
  * Toggles the visibility of the app sidebar.
  */
 export function toggleSidebarCollapsed() {
-    return (dispatch, getState) => {
-        const action = getState().sidebar.isCollapsed ? 'expand' : 'collapse';
-        ReactGA.event({
-            category: 'Sidebar',
-            action,
-            label: 'User toggled the visibility of the sidebar',
-        });
-        dispatch({ type: ActionTypes.TOGGLE_SIDEBAR_VISIBILITY });
-    }
+  return (dispatch, getState) => {
+    const action = getState().sidebar.isCollapsed ? 'expand' : 'collapse';
+    ReactGA.event({
+      category: 'Sidebar',
+      action,
+      label: 'User toggled the visibility of the sidebar',
+    });
+    dispatch({ type: ActionTypes.TOGGLE_SIDEBAR_VISIBILITY });
+  };
 }
 
 // ----- End sidebar actions ----- //
@@ -102,18 +106,18 @@ export function toggleSidebarCollapsed() {
  * @param {string} newTitle - the title
  */
 export function setPageTitlePrefix(newTitle) {
-    return (dispatch, getState) => {
-        let fullTitle;
-        const pageTitleSuffix = getState().general.pageTitleSuffix;
-        if (!newTitle || newTitle.length === 0) {
-            fullTitle = pageTitleSuffix;
-        } else if (newTitle.length > 50) {
-            fullTitle = `${newTitle.substring(0, 50)}... | ${pageTitleSuffix}`;
-        } else {
-            fullTitle = `${newTitle} | ${pageTitleSuffix}`;
-        }
-        dispatch({ type: ActionTypes.SET_PAGE_TITLE_PREFIX, title: fullTitle });
+  return (dispatch, getState) => {
+    let fullTitle;
+    const pageTitleSuffix = getState().general.pageTitleSuffix;
+    if (!newTitle || newTitle.length === 0) {
+      fullTitle = pageTitleSuffix;
+    } else if (newTitle.length > 50) {
+      fullTitle = `${newTitle.substring(0, 50)}... | ${pageTitleSuffix}`;
+    } else {
+      fullTitle = `${newTitle} | ${pageTitleSuffix}`;
     }
+    dispatch({ type: ActionTypes.SET_PAGE_TITLE_PREFIX, title: fullTitle });
+  };
 }
 
 // ----- End miscellaneous UI actions ----- //
@@ -128,9 +132,9 @@ export function setPageTitlePrefix(newTitle) {
  * @param {string} route - the URL suffix to use ('/calendar/', '/view/<event_id>', etc)
  */
 export function setRoute(route) {
-    return dispatch => {
-        dispatch(push(route));
-    }
+  return (dispatch) => {
+    dispatch(push(route));
+  };
 }
 
 // ########## End Navigation Actions ########## //
@@ -142,12 +146,12 @@ export function setRoute(route) {
 
 /** Pages forward or backward (next week, prev week, next month, prev month, etc) */
 export function page(direction) {
-    return (dispatch, getState) => {
-        const state = getState();
-        const delta = getPageDelta(state);
-        const newDate = moment(state.calendar.currentlyViewingDate).add(direction * delta[0], delta[1]);
-        dispatch(setCurrentlyViewingDate(newDate));
-    }
+  return (dispatch, getState) => {
+    const state = getState();
+    const delta = getPageDelta(state);
+    const newDate = moment(state.calendar.currentlyViewingDate).add(direction * delta[0], delta[1]);
+    dispatch(setCurrentlyViewingDate(newDate));
+  };
 }
 
 /**
@@ -155,9 +159,9 @@ export function page(direction) {
  * what display mode (month, week, day, etc) the calendar is in
  */
 function getPageDelta(state) {
-    return state.calendar.currentViewMode.daysVisible > 0
-      ? [state.calendar.currentViewMode.daysVisible, 'd']
-      : [1, 'M'];
+  return state.calendar.currentViewMode.daysVisible > 0
+    ? [state.calendar.currentViewMode.daysVisible, 'd']
+    : [1, 'M'];
 }
 
 /**
@@ -166,16 +170,17 @@ function getPageDelta(state) {
  * show in a week or month view, etc.
  */
 export function setCurrentlyViewingDate(date) { // Set the first date visible on the calendar
-    date.hour(0).minute(0).second(0); // Set to the start of the day to avoid any potential weirdness when manipulating later
-    // TODO: Cache request responses (so don't need to make request on every page change)
-    return (dispatch) => {
-        // Find the first day of the first week of the month
-        const firstDay = moment(date).date(0).day(0);
-        // Find the last day of the last week of the month
-        const lastDay = moment(date).date(0).add(1, 'M').subtract(1, 'd').day(6);
-        dispatch(refreshEvents(firstDay, lastDay));
-        dispatch({ type: ActionTypes.SET_FOCUSED_DATE, data: date });
-    };
+  date.hour(0).minute(0).second(0); // Set to start of day to avoid any potential weirdness when manipulating later
+  // TODO: Cache request responses (so don't need to make request on every page change)
+  return (dispatch) => {
+    // Find the first day of the first week of the month
+    const firstDay = moment(date).date(0).day(0);
+    // Find the last day of the last week of the month
+    const lastDay = moment(date).date(0).add(1, 'M').subtract(1, 'd')
+      .day(6);
+    dispatch(refreshEvents(firstDay, lastDay));
+    dispatch({ type: ActionTypes.SET_FOCUSED_DATE, data: date });
+  };
 }
 
 // ----- End temporal nav of calendar ------ //
@@ -184,20 +189,19 @@ export function setCurrentlyViewingDate(date) { // Set the first date visible on
 
 /** Sets which view format to display the calendar in (month, week, day, etc) */
 export function setViewMode(mode) {
-    return (dispatch, getStore) => {
-      const state = getStore();
-      if (mode === state.calendar.possibleViewModes['Week']) {
-          const firstOfWeek = moment(state.calendar.currentlyViewingDate).day(7);
-          dispatch({ type: ActionTypes.SET_FOCUSED_DATE, data: firstOfWeek });
-      }
-      dispatch({type: ActionTypes.SET_VIEW_MODE, data: mode});
-    };
+  return (dispatch, getStore) => {
+    const state = getStore();
+    if (mode === state.calendar.possibleViewModes.Week) {
+      const firstOfWeek = moment(state.calendar.currentlyViewingDate).day(7);
+      dispatch({ type: ActionTypes.SET_FOCUSED_DATE, data: firstOfWeek });
+    }
+    dispatch({ type: ActionTypes.SET_VIEW_MODE, data: mode });
+  };
 }
 
 // ----- End calendar view mode ----- //
 
 // ########## End Calendar View Actions ########## //
-
 
 
 // ########## Begin Event Data Actions ########## //
@@ -214,7 +218,7 @@ export function setCurrentEventById(id, recId) {
     // Try to get the event from our cache
     const store = getStore();
     const eventKey = recId ? `${id}${recId}` : id;
-    let eventData = store.events.events
+    const eventData = store.events.events
       ? store.events.events[eventKey]
       : null;
 
@@ -257,22 +261,22 @@ export function clearCurrentEvent() {
  * @param {Moment} end - the last day to fetch events for
  */
 export function refreshEvents(start, end) {
-    return (dispatch) => {
-
-        const startString = `${start.year()}-${start.month()+1}-${start.date()}`;
-        const endString = `${end.year()}-${end.month()+1}-${end.date()}`;
-        return fetch(`${window.abe_url}/events/?start=${startString}&end=${endString}`)
-            .then(
-                response => response.json(),
-                error => dispatch(displayError(error)))
-            .then((events) => {
-                events.forEach((event) => {
-                    event.start = processDate(event.start);
-                    event.end = processDate(event.end);
-                });
-                dispatch(setEvents(events))
-            });
-    };
+  return (dispatch) => {
+    const startString = `${start.year()}-${start.month() + 1}-${start.date()}`;
+    const endString = `${end.year()}-${end.month() + 1}-${end.date()}`;
+    return fetch(`${window.abe_url}/events/?start=${startString}&end=${endString}`)
+      .then(
+        response => response.json(),
+        error => dispatch(displayError(error))
+      )
+      .then((events) => {
+        events.forEach((event) => {
+          event.start = processDate(event.start);
+          event.end = processDate(event.end);
+        });
+        dispatch(setEvents(events));
+      });
+  };
 }
 
 /**
@@ -280,15 +284,15 @@ export function refreshEvents(start, end) {
  * @param {object} events - the event data
  */
 export function setEvents(events) {
-    return (dispatch) => {
-        const res = {};
-        events.forEach((event) => {
-            // Resolve unique ID for single-occurrence event or recurring event occurrence
-            const eventKey = event.id || (event.sid + event.start.format('YYYYDDD'));
-            res[eventKey] = event;
-        });
-        dispatch({type: ActionTypes.SET_EVENTS, data: res });
-    }
+  return (dispatch) => {
+    const res = {};
+    events.forEach((event) => {
+      // Resolve unique ID for single-occurrence event or recurring event occurrence
+      const eventKey = event.id || (event.sid + event.start.format('YYYYDDD'));
+      res[eventKey] = event;
+    });
+    dispatch({ type: ActionTypes.SET_EVENTS, data: res });
+  };
 }
 
 // ----- End general event actions ----- //
@@ -301,15 +305,15 @@ export function setEvents(events) {
  * Note: store.events.current must be set before calling this to edit an existing event.
  */
 export function editCurrentEvent() {
-    return (dispatch, getStore) => {
-        const store = getStore();
-        const event = store.events.current;
-        const linkSuffix = event.recId ?
-            `${event.id || event.sid}/${event.recId}`
-            : event.id;
-        const path = `/edit/${linkSuffix}`;
-        dispatch(push(path));
-    }
+  return (dispatch, getStore) => {
+    const store = getStore();
+    const event = store.events.current;
+    const linkSuffix = event.recId ?
+      `${event.id || event.sid}/${event.recId}`
+      : event.id;
+    const path = `/edit/${linkSuffix}`;
+    dispatch(push(path));
+  };
 }
 
 /**
@@ -332,7 +336,6 @@ export function deleteCurrentEvent() {
     axios.delete(`${window.abe_url}/events/${event.id || event.sid}`)
       .then(() => dispatch(eventDeletedSuccessfully(event.id || event.sid)))
       .catch(response => eventDeleteFailed(event, response));
-
   };
 }
 
@@ -341,24 +344,24 @@ export function deleteCurrentEvent() {
  * @param {object} event - the saved event
  */
 export function eventSavedSuccessfully(event) {
-    return (dispatch) => {
-        let label;
-        let action = 'update success';
-        if (event.recId) {
-          label = `Event ${event.id || event.sid}/${event.recId} saved successfully`;
-        } else if (event.id || event.sid) {
-            label = `Event ${event.id || event.sid} saved successfully`;
-        } else {
-            label = 'Event created successfully';
-            action = 'create success';
-        }
-        ReactGA.event({
-            category: 'Event Save',
-            action,
-            label,
-        });
-        dispatch(push('/'));
+  return (dispatch) => {
+    let label;
+    let action = 'update success';
+    if (event.recId) {
+      label = `Event ${event.id || event.sid}/${event.recId} saved successfully`;
+    } else if (event.id || event.sid) {
+      label = `Event ${event.id || event.sid} saved successfully`;
+    } else {
+      label = 'Event created successfully';
+      action = 'create success';
     }
+    ReactGA.event({
+      category: 'Event Save',
+      action,
+      label,
+    });
+    dispatch(push('/'));
+  };
 }
 
 /**
@@ -367,22 +370,22 @@ export function eventSavedSuccessfully(event) {
  * @param {object} error - information about the error
  */
 export function eventSaveFailed(eventData, error) {
-    let label;
-    let action = 'update failure';
-    if (eventData.id) {
-        label = `Event ${eventData.id} save attempt unsuccessful`;
-    } else if (eventData.sid) {
-        label = `Event ${eventData.sid}/${eventData.recId} save attempt unsuccessful`;
-    } else {
-        label = 'New event save attempt unsuccessful';
-        action = 'create failure';
-    }
-    ReactGA.event({
-        category: 'Event Save',
-        action,
-        label,
-    });
-    alert('Saving event failed:\n' + error);
+  let label;
+  let action = 'update failure';
+  if (eventData.id) {
+    label = `Event ${eventData.id} save attempt unsuccessful`;
+  } else if (eventData.sid) {
+    label = `Event ${eventData.sid}/${eventData.recId} save attempt unsuccessful`;
+  } else {
+    label = 'New event save attempt unsuccessful';
+    action = 'create failure';
+  }
+  ReactGA.event({
+    category: 'Event Save',
+    action,
+    label,
+  });
+  alert(`Saving event failed:\n${error}`);
 }
 
 // ----- End event editing actions ----- //
@@ -393,14 +396,14 @@ export function eventSaveFailed(eventData, error) {
  * @param {object} eventId - the ID of the deleted event
  */
 export function eventDeletedSuccessfully(eventId) {
-    return (dispatch) => {
-        ReactGA.event({
-            category: 'Event Delete',
-            action: 'success',
-            label: `Event ${eventId} deleted successfully`,
-        });
-        dispatch(push('/'));
-    }
+  return (dispatch) => {
+    ReactGA.event({
+      category: 'Event Delete',
+      action: 'success',
+      label: `Event ${eventId} deleted successfully`,
+    });
+    dispatch(push('/'));
+  };
 }
 
 /**
@@ -409,12 +412,12 @@ export function eventDeletedSuccessfully(eventId) {
  * @param {object} error - information about the error that occurred
  */
 export function eventDeleteFailed(event, error) {
-    ReactGA.event({
-        category: 'Event Delete',
-        action: 'failure',
-        label: `Event ${event.id || event.sid} ${event.recId || ''} delete attempt unsuccessful`,
-    });
-    alert('Delete event failed:\n' + error);
+  ReactGA.event({
+    category: 'Event Delete',
+    action: 'failure',
+    label: `Event ${event.id || event.sid} ${event.recId || ''} delete attempt unsuccessful`,
+  });
+  alert(`Delete event failed:\n${error}`);
 }
 
 // ----- Begin event viewing actions ----- //
@@ -424,7 +427,7 @@ export function eventDeleteFailed(event, error) {
  * @param {object} event - the event data of the event to view
  */
 export function viewEvent(event) {
-  return dispatch => {
+  return (dispatch) => {
     if (event.sid && !event.recId) {
       event.recId = event.start.valueOf(); // ISO 8601 date format
     }
@@ -432,7 +435,7 @@ export function viewEvent(event) {
     const path = `/view/${linkSuffix}`;
     dispatch(setCurrentEventData(event));
     dispatch(push(path));
-  }
+  };
 }
 
 // ----- End event viewing actions ----- //
@@ -446,22 +449,23 @@ export function viewEvent(event) {
  * Updates the label list in the Redux store (if it is empty) by fetching it from the server.
  */
 export function refreshLabelsIfNeeded() {
-    return (dispatch, getState) => {
-        if (!getState().labels.labelList) {
-            dispatch(fetchLabels());
-        }
-    };
+  return (dispatch, getState) => {
+    if (!getState().labels.labelList) {
+      dispatch(fetchLabels());
+    }
+  };
 }
 
 /**
  * Performs a server request to refresh the labels in the Redux store.
  */
 export function fetchLabels() {
-    return (dispatch) => fetch(window.abe_url + '/labels/')
-        .then(
-            response => response.json(),
-            error => dispatch(displayError(error)))
-        .then(labels => dispatch(setLabels(labels)));
+  return dispatch => fetch(`${window.abe_url}/labels/`)
+    .then(
+      response => response.json(),
+      error => dispatch(displayError(error))
+    )
+    .then(labels => dispatch(setLabels(labels)));
 }
 
 /**
@@ -469,15 +473,15 @@ export function fetchLabels() {
  * @param {object} labels - a dictionary of label names and information
  */
 export function setLabels(labels) {
-    if (Object.prototype.toString.call( labels ) === '[object Array]') {
-        // Convert array to object
-        let labelsMap = {};
-        labels.forEach(label => {
-            labelsMap[label.name] = label;
-        });
-        labels = labelsMap;
-    }
-    return {type: ActionTypes.SET_LABELS, data: labels};
+  if (Object.prototype.toString.call(labels) === '[object Array]') {
+    // Convert array to object
+    const labelsMap = {};
+    labels.forEach((label) => {
+      labelsMap[label.name] = label;
+    });
+    labels = labelsMap;
+  }
+  return { type: ActionTypes.SET_LABELS, data: labels };
 }
 
 /**
@@ -488,14 +492,14 @@ export function setLabels(labels) {
  *      (triggers reporting of the action to Google Analytics)
  */
 export function setVisibleLabels(visibleLabels, allNoneDefault) {
-    if (allNoneDefault !== undefined) {
-        ReactGA.event({
-            category: 'Filter Tags All|None|Default',
-            action: allNoneDefault,
-            label: 'User used All | None | Default option in sidebar filter pane',
-        });
-    }
-    return {type: ActionTypes.SET_FILTER_LABELS, data: visibleLabels};
+  if (allNoneDefault !== undefined) {
+    ReactGA.event({
+      category: 'Filter Tags All|None|Default',
+      action: allNoneDefault,
+      label: 'User used All | None | Default option in sidebar filter pane',
+    });
+  }
+  return { type: ActionTypes.SET_FILTER_LABELS, data: visibleLabels };
 }
 
 /**
@@ -504,12 +508,12 @@ export function setVisibleLabels(visibleLabels, allNoneDefault) {
  * @param {string} labelName - the name of the label to toggle
  */
 export function labelVisibilityToggled(labelName) {
-    ReactGA.event({
-        category: 'Tag Toggled in Sidebar',
-        action: labelName,
-        label: 'User toggled visibility of label on calendar',
-    });
-    return {type: ActionTypes.FILTER_LABEL_TOGGLED, labelName};
+  ReactGA.event({
+    category: 'Tag Toggled in Sidebar',
+    action: labelName,
+    label: 'User toggled visibility of label on calendar',
+  });
+  return { type: ActionTypes.FILTER_LABEL_TOGGLED, labelName };
 }
 
 // ########## End Labels-Related Actions ########## //
