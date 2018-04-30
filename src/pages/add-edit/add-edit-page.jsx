@@ -267,14 +267,14 @@ export default class AddEditEventPage extends React.Component {
                       onChange={this.state.eventData.recurrenceRuleChanged}
                     />}
                   </div>
-                  <LocationField location={this.state.eventData.location} onChange={this.locationChanged}/>
+                  <LocationField location={this.state.eventData.location} onChange={this.locationChanged} />
                   <MarkdownEditor source={this.state.eventData.description} onChange={this.descriptionChanged} />
                   <EventVisibilitySelector
                     visibility={this.state.eventData.visibility}
                     onChange={this.visibilityChanged}
                   />
                   <LabelPane
-                    contentClass='add-edit-filters'
+                    contentClass="add-edit-filters"
                     selectedLabels={this.state.eventData.labels}
                     labelToggled={this.labelToggled}
                     {...this.props}
@@ -289,8 +289,8 @@ export default class AddEditEventPage extends React.Component {
                     onSubmit={this.saveButtonClicked}
                     submitButtonText={submitButtonText}
                   />
+              </div>
           </div>
-        </div>
       );
     }
 }

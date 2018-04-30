@@ -267,7 +267,7 @@ export function refreshEvents(start, end) {
     return fetch(`${window.abe_url}/events/?start=${startString}&end=${endString}`)
       .then(
         response => response.json(),
-        error => dispatch(displayError(error))
+        error => dispatch(displayError(error)),
       )
       .then((events) => {
         events.forEach((event) => {
@@ -463,7 +463,7 @@ export function fetchLabels() {
   return dispatch => fetch(`${window.abe_url}/labels/`)
     .then(
       response => response.json(),
-      error => dispatch(displayError(error))
+      error => dispatch(displayError(error)),
     )
     .then(labels => dispatch(setLabels(labels)));
 }

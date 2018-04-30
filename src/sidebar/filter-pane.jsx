@@ -35,7 +35,7 @@ export default class FilterPane extends React.Component {
             <a onClick={() => this.selectLabels('none')}>None</a>
           </div>
         </div>
-        <LabelPane {...this.props}/>
+        <LabelPane {...this.props} />
       </div>
     );
   }

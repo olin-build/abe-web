@@ -4,8 +4,8 @@ import LabelPane from '../components/label-pane';
 
 describe('LabelPane', () => {
   const labels = {
-    first: {color: 'red', description: 'first label'},
-    second: {color: 'green', description: 'second label'},
+    first: { color: 'red', description: 'first label' },
+    second: { color: 'green', description: 'second label' },
   };
   test('matches snapshot', () => {
     const component = renderer.create(<LabelPane

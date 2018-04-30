@@ -21,7 +21,7 @@ export default class CalendarHeader extends React.Component {
 
     return (
       <div className="calendar-header">
-        <MenuIconButton onClick={this.props.toggleSidebarCollapsed}/>
+        <MenuIconButton onClick={this.props.toggleSidebarCollapsed} />
         <span className="title">{this.props.title}</span>
         <div className="calendar-header-options">
           <div className="calendar-header-view-selector">

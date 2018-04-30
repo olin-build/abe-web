@@ -44,13 +44,13 @@ export default class CalendarPage extends React.Component {
     const currDate = this.props.currentlyViewingDate
       ? this.props.currentlyViewingDate.format('MMMM D, YYYY')
       : '';
-    const header = <CalendarHeader
+    const header = (<CalendarHeader
       title={currDate}
       onLeftClick={this.props.pageLeft}
       onRightClick={this.props.pageRight}
       onTodayClick={this.props.showToday}
       {...this.props}
-    />;
+    />);
 
     return (
       <div className="calendar-container">

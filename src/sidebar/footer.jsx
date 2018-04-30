@@ -8,7 +8,9 @@ export default class Footer extends React.Component {
       <footer>
         <div className="footer-message">
           <p>Made with &hearts; at <a href="http://www.olin.edu/" title="Olin College website" target="_blank">Olin
-            College of Engineering</a></p>
+            College of Engineering
+                                   </a>
+          </p>
           <p>
             <a href="https://goo.gl/forms/2cqVijokICZ5S20R2" title="Report a problem" target="_blank">
               Report a problem

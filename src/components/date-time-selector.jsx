@@ -120,7 +120,7 @@ class PickerPopup extends React.Component {
                     prevMonthIcon="ion-ios-arrow-left" // default
                     nextMonthIcon="ion-ios-arrow-right" // default
                     {...this.props}
-                />
+        />
         : null;
     }
 }

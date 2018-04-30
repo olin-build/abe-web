@@ -26,20 +26,20 @@ export default class ImportPage extends React.Component {
     } else {
       labels.push(labelName);
     }
-    this.setState({importData: Object.assign({}, this.state.importData, {labels})});
+    this.setState({ importData: Object.assign({}, this.state.importData, { labels }) });
   };
 
   urlChanged = (e) => {
     let importData = this.state.importData;
-    importData = Object.assign(importData, {url: e.currentTarget.value});
-    this.setState({importData});
+    importData = Object.assign(importData, { url: e.currentTarget.value });
+    this.setState({ importData });
   };
 
   submitICS = () => {
     axios.post(`${window.abe_url}/ics/`, this.state.importData)
       .then(
         response => this.props.importSuccess(response, this.state.importData),
-        (jqXHR, textStatus, errorThrown) => this.props.importFailed(errorThrown, jqXHR.message)
+        (jqXHR, textStatus, errorThrown) => this.props.importFailed(errorThrown, jqXHR.message),
       );
   };
 
@@ -48,15 +48,25 @@ export default class ImportPage extends React.Component {
       <div className="row expanded page-container">
         <div className="row content-container">
           <h1 className="page-title">
-            <MenuIconButton onClick={this.props.toggleSidebarCollapsed} tooltip="Show/Hide Sidebar"/>
+            <MenuIconButton onClick={this.props.toggleSidebarCollapsed} tooltip="Show/Hide Sidebar" />
             Import
           </h1>
-          <input required="required" type="url" placeholder=".../example_calendar.ics"
-                 className="wide-text-box single-line-text-box medium-text-box" onChange={this.urlChanged}/>
-          <TagPane contentClass='import-filters' {...this.props} possibleLabels={this.props.labels}
-                   selectedLabels={this.state.importData.labels} labelToggled={this.labelToggled}/>
-          <br/>
-          <input type="submit" className="button submit" value="Submit" onClick={this.submitICS}/>
+          <input
+required="required"
+type="url"
+placeholder=".../example_calendar.ics"
+                 className="wide-text-box single-line-text-box medium-text-box"
+onChange={this.urlChanged}
+          />
+          <TagPane
+contentClass="import-filters"
+{...this.props}
+possibleLabels={this.props.labels}
+                   selectedLabels={this.state.importData.labels}
+labelToggled={this.labelToggled}
+          />
+          <br />
+          <input type="submit" className="button submit" value="Submit" onClick={this.submitICS} />
         </div>
       </div>
     );
