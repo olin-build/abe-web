@@ -20,12 +20,7 @@ rules:
 
   # exceptions from airbnb style:
   camelcase: warn
-  class-methods-use-this: warn
   consistent-return: warn
-  eqeqeq: warn
-  func-names: warn
-  function-paren-newline: warn
-  global-require: warn
   guard-for-in: warn
   import/extensions: warn
   import/first: warn
@@ -58,7 +53,6 @@ rules:
 
   # Fixable exceptions to Airbnb style guide.
   indent: off
-  react/jsx-indent-props: off
   react/jsx-indent: off
 
 overrides:
