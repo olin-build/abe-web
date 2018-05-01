@@ -214,83 +214,83 @@ export default class AddEditEventPage extends React.Component {
       const submitButtonText = editingExisting ? 'Update Event' : 'Add Event';
       const formUrl = 'https://goo.gl/forms/2cqVijokICZ5S20R2';
       return (
-          <div className="row content-container">
-              <span className="content-container">
-                <h1 className="page-title">
-                  <MenuIconButton onClick={this.props.toggleSidebarCollapsed} tooltip="Show/Hide Sidebar" />
-                  {pageTitle}
-                </h1>
-              </span>
-              <div className="event-info-container">
-                  <input
-                    id="event-title"
-                    type="text"
-                    placeholder="Title"
-                    className="wide-text-box single-line-text-box medium-text-box"
-                    value={this.state.eventData.title}
-                    onChange={this.titleChanged}
-                  />
-                  <div className="date-time-container">
-                    <EventDateTimeSelector
-                      buttonPrefix="Start: "
-                      datetime={moment(this.state.eventData.start)}
-                      onChange={this.setStart}
-                      show={this.state.eventData.allDay ? 'date' : 'both'}
-                    />
-                    <EventDateTimeSelector
-                      buttonPrefix="End: "
-                      datetime={moment(this.state.eventData.end)}
-                      onChange={this.setEnd}
-                      show={this.state.eventData.allDay ? 'date' : 'both'}
-                    />
-                    <input
-                      type="checkbox"
-                      id="all-day-check"
-                      title="All Day"
-                      checked={this.state.eventData.allDay}
-                      onChange={this.allDayToggled}
-                    />
-                    <label htmlFor="all-day-check">All Day</label>
-                    <input
-                      type="checkbox"
-                      id="repeats-check"
-                      title="Repeats?"
-                      disabled={this.state.seriesData}
-                      checked={this.state.eventData.doesRecur}
-                      onChange={this.doesRecurToggled}
-                    />
-                    <label htmlFor="repeats-check">Repeats?</label>
-                    {this.state.eventData.doesRecur &&
-                    <EventRecurrenceSelector
-                      reccurs={this.state.eventData.recurrenceRule}
-                      start={this.state.eventData.start}
-                      onChange={this.state.eventData.recurrenceRuleChanged}
-                    />}
-                  </div>
-                  <LocationField location={this.state.eventData.location} onChange={this.locationChanged} />
-                  <MarkdownEditor source={this.state.eventData.description} onChange={this.descriptionChanged} />
-                  <EventVisibilitySelector
-                    visibility={this.state.eventData.visibility}
-                    onChange={this.visibilityChanged}
-                  />
-                  <LabelPane
-                    contentClass="add-edit-filters"
-                    selectedLabels={this.state.eventData.labels}
-                    labelToggled={this.labelToggled}
-                    {...this.props}
-                  />
-                  <span style={{ marginTop: '1em', display: 'block' }} >
+        <div className="row content-container">
+          <span className="content-container">
+            <h1 className="page-title">
+              <MenuIconButton onClick={this.props.toggleSidebarCollapsed} tooltip="Show/Hide Sidebar" />
+              {pageTitle}
+            </h1>
+          </span>
+          <div className="event-info-container">
+            <input
+              id="event-title"
+              type="text"
+              placeholder="Title"
+              className="wide-text-box single-line-text-box medium-text-box"
+              value={this.state.eventData.title}
+              onChange={this.titleChanged}
+            />
+            <div className="date-time-container">
+              <EventDateTimeSelector
+                buttonPrefix="Start: "
+                datetime={moment(this.state.eventData.start)}
+                onChange={this.setStart}
+                show={this.state.eventData.allDay ? 'date' : 'both'}
+              />
+              <EventDateTimeSelector
+                buttonPrefix="End: "
+                datetime={moment(this.state.eventData.end)}
+                onChange={this.setEnd}
+                show={this.state.eventData.allDay ? 'date' : 'both'}
+              />
+              <input
+                type="checkbox"
+                id="all-day-check"
+                title="All Day"
+                checked={this.state.eventData.allDay}
+                onChange={this.allDayToggled}
+              />
+              <label htmlFor="all-day-check">All Day</label>
+              <input
+                type="checkbox"
+                id="repeats-check"
+                title="Repeats?"
+                disabled={this.state.seriesData}
+                checked={this.state.eventData.doesRecur}
+                onChange={this.doesRecurToggled}
+              />
+              <label htmlFor="repeats-check">Repeats?</label>
+              {this.state.eventData.doesRecur &&
+                <EventRecurrenceSelector
+                  reccurs={this.state.eventData.recurrenceRule}
+                  start={this.state.eventData.start}
+                  onChange={this.state.eventData.recurrenceRuleChanged}
+                />}
+            </div>
+            <LocationField location={this.state.eventData.location} onChange={this.locationChanged} />
+            <MarkdownEditor source={this.state.eventData.description} onChange={this.descriptionChanged} />
+            <EventVisibilitySelector
+              visibility={this.state.eventData.visibility}
+              onChange={this.visibilityChanged}
+            />
+            <LabelPane
+              contentClass="add-edit-filters"
+              selectedLabels={this.state.eventData.labels}
+              labelToggled={this.labelToggled}
+              {...this.props}
+            />
+            <span style={{ marginTop: '1em', display: 'block' }} >
                     Need a new label? <a href={formUrl} target="_blank">Request one here</a>.
-                  </span>
-                  <SaveCancelButtons
-                    onCancel={this.props.cancelButtonClicked}
-                    onDelete={this.props.deleteCurrentEvent}
-                    showDelete={this.state.eventData.id}
-                    onSubmit={this.saveButtonClicked}
-                    submitButtonText={submitButtonText}
-                  />
-              </div>
+            </span>
+            <SaveCancelButtons
+              onCancel={this.props.cancelButtonClicked}
+              onDelete={this.props.deleteCurrentEvent}
+              showDelete={this.state.eventData.id}
+              onSubmit={this.saveButtonClicked}
+              submitButtonText={submitButtonText}
+            />
           </div>
+        </div>
       );
     }
 }

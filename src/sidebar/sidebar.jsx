@@ -36,12 +36,12 @@ export default class Sidebar extends Component {
         key="event-labels"
         header="Labels"
       >
-          <LabelPane
-            editable={false}
-            showUnselected={false}
-            selectedLabels={currentEventLabels}
-            {...this.props}
-          />
+        <LabelPane
+          editable={false}
+          showUnselected={false}
+          selectedLabels={currentEventLabels}
+          {...this.props}
+        />
                    </SidebarItemContainer>);
     }
 

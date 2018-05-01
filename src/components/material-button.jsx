@@ -19,7 +19,7 @@ export default class AddButton extends Component {
   render() {
     const classes = `btn-floating btn-large waves-effect waves-light blue ${this.props.className}`;
     return (
-            <a className={classes}><i className="material-icons" onClick={this.buttonClick}>{this.props.name}</i></a>
+      <a className={classes}><i className="material-icons" onClick={this.buttonClick}>{this.props.name}</i></a>
     );
   }
 }

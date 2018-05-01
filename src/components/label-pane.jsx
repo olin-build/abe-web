@@ -34,13 +34,13 @@ export default class LabelPane extends React.Component {
             className={`button ${noHoverClass}${classes}`}
             onClick={() => this.labelClicked(name)}
           >
-            <span className="ion-pricetag">&nbsp;</span>
-            {name}
+              <span className="ion-pricetag">&nbsp;</span>
+              {name}
                           </button>);
         } else {
           labelElems.push(<span id={id} key={name} title={tooltip} className={classes}>
-              <span className="ion-pricetag">&nbsp;</span>
-              {name}
+            <span className="ion-pricetag">&nbsp;</span>
+            {name}
                           </span>);
         }
       }
