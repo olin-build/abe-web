@@ -26,22 +26,28 @@ export default class LabelPane extends React.Component {
         const classes = `label ${name}${selected ? ' selected' : ''}`;
         const id = `label-${name}`;
         if (editable) {
-          labelElems.push(<button id={id} key={name} title={tooltip} type="button"
-            className={`button ${noHoverClass}${classes}`} onClick={() => this.labelClicked(name)}>
-            <span className="ion-pricetag">&nbsp;</span>
-            {name}
-          </button>);
-        } else {
-          labelElems.push(<span id={id} key={name} title={tooltip} className={classes}>
+          labelElems.push(<button
+            id={id}
+            key={name}
+            title={tooltip}
+            type="button"
+            className={`button ${noHoverClass}${classes}`}
+            onClick={() => this.labelClicked(name)}
+          >
               <span className="ion-pricetag">&nbsp;</span>
               {name}
-            </span>);
+                          </button>);
+        } else {
+          labelElems.push(<span id={id} key={name} title={tooltip} className={classes}>
+            <span className="ion-pricetag">&nbsp;</span>
+            {name}
+                          </span>);
         }
       }
     });
 
     function getLabelCss(name) {
-      const {color} = labels[name];
+      const { color } = labels[name];
       // Joining the list of strings, and then again the caller, is less
       // efficient, but I found it clearer, and this code is not run much
       // and hasn't shown up as a hot spot.

@@ -8,7 +8,7 @@ export default class MenuIconButton extends React.Component {
   render() {
     return (
       <button className="menu-icon-button" onClick={this.props.onClick} title={this.props.tooltip}>
-        <MenuIconSVG/>
+        <MenuIconSVG />
       </button>
     );
   }

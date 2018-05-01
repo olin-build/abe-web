@@ -51,19 +51,19 @@ export default class EventDateTimeSelector extends React.Component {
         ? this.state.moment.format('MMM D, YYYY')
         : this.state.moment.format('MMM D, YYYY h:mm A'));
       return (
-            <div className="date-time-container">
-                <button className="button" onClick={this.buttonClicked}>{buttonText}</button>
-                <div className="picker-popup-container">
-                    <PickerPopup
-                        visible={this.state.pickerVisible}
-                        lostFocus={this.lostFocus}
-                        moment={this.state.moment}
-                        onChange={this.handleChange}
-                        onSave={this.handleSave}
-                        show={this.props.show}
-                    />
-                </div>
-            </div>
+        <div className="date-time-container">
+          <button className="button" onClick={this.buttonClicked}>{buttonText}</button>
+          <div className="picker-popup-container">
+            <PickerPopup
+              visible={this.state.pickerVisible}
+              lostFocus={this.lostFocus}
+              moment={this.state.moment}
+              onChange={this.handleChange}
+              onSave={this.handleSave}
+              show={this.props.show}
+            />
+          </div>
+        </div>
       );
     }
 }
@@ -117,10 +117,10 @@ class PickerPopup extends React.Component {
     render() {
       return (this.props.visible)
         ? <InputMoment
-                    prevMonthIcon="ion-ios-arrow-left" // default
-                    nextMonthIcon="ion-ios-arrow-right" // default
-                    {...this.props}
-                />
+          prevMonthIcon="ion-ios-arrow-left" // default
+          nextMonthIcon="ion-ios-arrow-right" // default
+          {...this.props}
+        />
         : null;
     }
 }

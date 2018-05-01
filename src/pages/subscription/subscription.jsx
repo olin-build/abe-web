@@ -20,8 +20,8 @@ export default class SubscriptionEditorPage extends React.Component {
 
     axios.get(`${window.abe_url}/subscriptions/${this.getIdFromURL(props)}`)
       .then(
-        response => this.setState({data: Object.assign({}, this.state.data, response.data)}),
-        (jqXHR, textStatus, errorThrown) => this.props.importFailed(errorThrown, jqXHR.message)
+        response => this.setState({ data: Object.assign({}, this.state.data, response.data) }),
+        (jqXHR, textStatus, errorThrown) => this.props.importFailed(errorThrown, jqXHR.message),
       );
 
     this.props.setSidebarMode(SidebarModes.IMPORT);
@@ -44,7 +44,7 @@ export default class SubscriptionEditorPage extends React.Component {
     } else {
       labels.push(labelName);
     }
-    this.setState({data: Object.assign({}, this.state.data, {labels})});
+    this.setState({ data: Object.assign({}, this.state.data, { labels }) });
   };
 
   // urlChanged = (e) => {
@@ -57,10 +57,10 @@ export default class SubscriptionEditorPage extends React.Component {
     axios.put(`${window.abe_url}/subscriptions/${this.state.data.id}`, this.state.data)
       .then(
         (response) => {
-          this.setState({data: Object.assign({}, this.state.data, response.data)});
+          this.setState({ data: Object.assign({}, this.state.data, response.data) });
           this.props.importSuccess(response, response.data);
         },
-        (jqXHR, textStatus, errorThrown) => this.props.importFailed(errorThrown, jqXHR.message)
+        (jqXHR, textStatus, errorThrown) => this.props.importFailed(errorThrown, jqXHR.message),
       );
   };
 
@@ -75,9 +75,9 @@ export default class SubscriptionEditorPage extends React.Component {
       <div className="row expanded page-container">
         <div className="row content-container">
           <h1 className="page-title">
-            <MenuIconButton onClick={this.props.toggleSidebarCollapsed} tooltip="Show/Hide Sidebar"/>
+            <MenuIconButton onClick={this.props.toggleSidebarCollapsed} tooltip="Show/Hide Sidebar" />
             Edit Subscription: {this.state.data.id}
-            </h1>
+          </h1>
           {/* <input required="required" type="url" placeholder=".../example_calendar.ics"
            className="wide-text-box single-line-text-box medium-text-box" onChange={this.urlChanged}/> */}
           <h2>Tags: </h2>
@@ -88,17 +88,10 @@ export default class SubscriptionEditorPage extends React.Component {
             labelToggled={this.labelToggled}
             {...this.props}
           />
-          <br/>
-          <input type="submit" className="button submit" value="Submit" onClick={this.submitSubscription}/>
-          <br/>          
-          <a href={`webcal:${window.abe_url.split(':')[1]}${this.state.data.ics_url}`} className="ics-copy-to-clipboard">
-            Import into Outlook
-          </a>
-          
-          <a href={`https://github.com/olinlibrary/abe-web/wiki/Integrate-with-Your-Calendar#step-2-b-google-calendar`}
-           className="ics-copy-to-clipboard" onClick={() => {this.copyToClipboard(this.state.data.ics_url)}}>
-            Import into Google Calendar
-          </a>
+          <br />
+          <input type="submit" className="button submit" value="Submit" onClick={this.submitSubscription} />
+          <br />
+          <input type="submit" className="button submit" value="Copy feed URL" onClick={this.copyToClipboard} />
         </div>
       </div>
     );

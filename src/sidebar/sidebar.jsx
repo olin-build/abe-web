@@ -1,9 +1,9 @@
 // This component is the sidebar, which is displayed across the entire app. Its content merely changes when pages are
 // changed.
 
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import Footer from './footer.jsx';
-import {SidebarHeader} from '../components/sidebar-header.jsx';
+import { SidebarHeader } from '../components/sidebar-header.jsx';
 import SidebarItemContainer from './sidebar-item-wrapper.jsx';
 import FilterPane from './filter-pane.jsx';
 import LinkPane from './link-pane.jsx';
@@ -22,50 +22,54 @@ export default class Sidebar extends Component {
         addEventClicked={this.props.addEvent}
         importICSClicked={this.props.importICSClicked}
         key="link"
-        className="sidebar-item"/>);
+        className="sidebar-item"
+      />);
     }
 
     if (mode.EVENT_ACTIONS) {
-      content.push(<EventActionsPane key="event-actions" className="sidebar-item" {...this.props}/>);
+      content.push(<EventActionsPane key="event-actions" className="sidebar-item" {...this.props} />);
     }
 
     if (mode.EVENT_LABELS_PANE) { // For viewing a single event
       const currentEventLabels = this.props.currentEvent ? this.props.currentEvent.labels : null;
-      content.push(
-        <SidebarItemContainer
-          key="event-labels"
-          header="Labels">
-          <LabelPane
-            editable={false}
-            showUnselected={false}
-            selectedLabels={currentEventLabels}
-            {...this.props}
-          />
-        </SidebarItemContainer>);
+      content.push(<SidebarItemContainer
+        key="event-labels"
+        header="Labels"
+      >
+        <LabelPane
+          editable={false}
+          showUnselected={false}
+          selectedLabels={currentEventLabels}
+          {...this.props}
+        />
+                   </SidebarItemContainer>);
     }
 
     if (mode.FILTER_PANE) { // For viewing the calendar
       content.push(<SidebarItemContainer
         key="filter-pane"
-        header="Filter">
-        <FilterPane {...this.props}/>
-      </SidebarItemContainer>);
+        header="Filter"
+      >
+        <FilterPane {...this.props} />
+                   </SidebarItemContainer>);
     }
     if (mode.GENERATE_ICS_PANE) {
       const header = 'Subscribe';
       content.push(<SidebarItemContainer
         key="gen-ics"
-        header={header}>
-        <GenerateICSPane {...this.props}/>
-      </SidebarItemContainer>);
+        header={header}
+      >
+        <GenerateICSPane {...this.props} />
+                   </SidebarItemContainer>);
     }
 
     if (mode.MARKDOWN_GUIDE) {
       content.push(<SidebarItemContainer
         key="markdown-guide"
-        header="Markdown Guide">
-        <MarkdownGuide/>
-      </SidebarItemContainer>);
+        header="Markdown Guide"
+      >
+        <MarkdownGuide />
+                   </SidebarItemContainer>);
     }
 
     const sidebarClasses = `app-sidebar${(this.props.isCollapsed) ? ' collapsed' : ' expanded'}`;
@@ -79,7 +83,7 @@ export default class Sidebar extends Component {
           <div className="sidebar-content">
             {content}
           </div>
-          <Footer class="sidebar-footer"/>
+          <Footer class="sidebar-footer" />
         </div>
       </div>
     );

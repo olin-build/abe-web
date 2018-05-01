@@ -27,7 +27,7 @@ export default class EventDetailsPage extends React.Component {
       const end = this.props.eventData.allDay && oneDay &&
         <span> to<span className="event-start">{this.props.eventData.end.format(endDateFormat)}</span></span>;
       const recurrence = this.props.eventData.recurrence &&
-        <PlainEnglishRecurrence recurrence={this.props.eventData.recurrence} start={this.props.eventData.start}/>;
+        <PlainEnglishRecurrence recurrence={this.props.eventData.recurrence} start={this.props.eventData.start} />;
       return (
         <div className="row expanded page-container">
           <div className="row content-container">
@@ -39,7 +39,7 @@ export default class EventDetailsPage extends React.Component {
                 {recurrence}
                 <p className="event-location">{this.props.eventData.location}</p>
               </div>
-              <Markdown source={this.props.eventData.description} className="description-container"/>
+              <Markdown source={this.props.eventData.description} className="description-container" />
             </div>
           </div>
         </div>

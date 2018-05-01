@@ -14,7 +14,7 @@ export default class SaveCancelButtons extends React.Component {
         {deleteButton}
         <button className="button cancel" onClick={this.props.onCancel}>
           {'cancelButtonText' in this.props ? this.props.cancelButtonText : 'Cancel'}
-          </button>
+        </button>
         <button className="button submit" onClick={this.props.onSubmit} disabled={this.props.disabled}>
           {'submitButtonText' in this.props ? this.props.submitButtonText : 'Submit'}
         </button>

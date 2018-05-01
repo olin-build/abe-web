@@ -32,22 +32,22 @@ store.dispatch(fetchLabels());
 ReactDOM.render(
   <Provider store={store}>
     <div className="app-container">
-      <SidebarContainer/>
+      <SidebarContainer />
       <div className="scene-container">
-        <div className="scene-overlay" onClick={() => store.dispatch(toggleSidebarCollapsed())}/>
+        <div className="scene-overlay" onClick={() => store.dispatch(toggleSidebarCollapsed())} />
         <Router history={history}>
           <Switch>
-            <Route exact path='/' component={CalendarContainer}/>
-            <Route path='/calendar/:labels' component={CalendarContainer}/>
-            <Route path='/edit/:id?/:recId?' component={AddEditContainer}/>
-            <Route path='/view/:id/:recId?' component={ViewEventContainer}/>
-            <Route exact path='/import' component={ImportContainer}/>
-            <Route path='/subscription/:id' component={SubscriptionContainer}/>
+            <Route exact path="/" component={CalendarContainer} />
+            <Route path="/calendar/:labels" component={CalendarContainer} />
+            <Route path="/edit/:id?/:recId?" component={AddEditContainer} />
+            <Route path="/view/:id/:recId?" component={ViewEventContainer} />
+            <Route exact path="/import" component={ImportContainer} />
+            <Route path="/subscription/:id" component={SubscriptionContainer} />
           </Switch>
         </Router>
       </div>
     </div>
   </Provider>,
-  document.getElementById('app')
+  document.getElementById('app'),
 );
 
