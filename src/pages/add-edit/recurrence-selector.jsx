@@ -16,24 +16,24 @@ class MonthOptions extends React.Component {
           <div className="radio-option">
             <input
               type="radio"
-id="month-options-month"
-name="month-options"
-value="month"
-title="day of the month"
+              id="month-options-month"
+              name="month-options"
+              value="month"
+              title="day of the month"
               checked={this.props.option === 'month'}
-onChange={this.radioCheckedHandler}
+              onChange={this.radioCheckedHandler}
             />
             <label htmlFor="month-options-month">day of the month</label>
           </div>
           <div className="radio-option">
             <input
-type="radio"
-id="month-options-week"
-name="month-options"
-value="week"
-title="day of the week"
-                   checked={this.props.option === 'week'}
-onChange={this.radioCheckedHandler}
+              type="radio"
+              id="month-options-week"
+              name="month-options"
+              value="week"
+              title="day of the week"
+              checked={this.props.option === 'week'}
+              onChange={this.radioCheckedHandler}
             />
             <label htmlFor="month-options-week">day of the week</label>
           </div>
@@ -73,85 +73,85 @@ class WeekOptions extends React.Component {
         <div className="radio-collection-options-container">
           <div className="radio-option">
             <input
-type="checkbox"
-id="week-options-SU"
-name="week-options"
-value="SU"
-title="Sun"
-                   checked={this.props.days.indexOf('SU') > -1}
-onChange={this.checkedHandler}
+              type="checkbox"
+              id="week-options-SU"
+              name="week-options"
+              value="SU"
+              title="Sun"
+              checked={this.props.days.indexOf('SU') > -1}
+              onChange={this.checkedHandler}
             />
             <label htmlFor="week-options-SU">Sun</label>
           </div>
           <div className="radio-option">
             <input
-type="checkbox"
-id="week-options-MO"
-name="week-options"
-value="MO"
-title="Mon"
-                   checked={this.props.days.indexOf('MO') > -1}
-onChange={this.checkedHandler}
+              type="checkbox"
+              id="week-options-MO"
+              name="week-options"
+              value="MO"
+              title="Mon"
+              checked={this.props.days.indexOf('MO') > -1}
+              onChange={this.checkedHandler}
             />
             <label htmlFor="week-options-MO">Mon</label>
           </div>
           <div className="radio-option">
             <input
-type="checkbox"
-id="week-options-TU"
-name="week-options"
-value="TU"
-title="Tue"
-                   checked={this.props.days.indexOf('TU') > -1}
-onChange={this.checkedHandler}
+              type="checkbox"
+              id="week-options-TU"
+              name="week-options"
+              value="TU"
+              title="Tue"
+              checked={this.props.days.indexOf('TU') > -1}
+              onChange={this.checkedHandler}
             />
             <label htmlFor="week-options-TU">Tue</label>
           </div>
           <div className="radio-option">
             <input
-type="checkbox"
-id="week-options-WE"
-name="week-options"
-value="WE"
-title="Wed"
-                   checked={this.props.days.indexOf('WE') > -1}
-onChange={this.checkedHandler}
+              type="checkbox"
+              id="week-options-WE"
+              name="week-options"
+              value="WE"
+              title="Wed"
+              checked={this.props.days.indexOf('WE') > -1}
+              onChange={this.checkedHandler}
             />
             <label htmlFor="week-options-WE">Wed</label>
           </div>
           <div className="radio-option">
             <input
-type="checkbox"
-id="week-options-TH"
-name="week-options"
-value="TH"
-title="Thu"
-                   checked={this.props.days.indexOf('TH') > -1}
-onChange={this.checkedHandler}
+              type="checkbox"
+              id="week-options-TH"
+              name="week-options"
+              value="TH"
+              title="Thu"
+              checked={this.props.days.indexOf('TH') > -1}
+              onChange={this.checkedHandler}
             />
             <label htmlFor="week-options-TH">Thu</label>
           </div>
           <div className="radio-option">
             <input
-type="checkbox"
-id="week-options-FR"
-name="week-options"
-value="FR"
-title="Fri"
-                   checked={this.props.days.indexOf('FR') > -1}
-onChange={this.checkedHandler}
+              type="checkbox"
+              id="week-options-FR"
+              name="week-options"
+              value="FR"
+              title="Fri"
+              checked={this.props.days.indexOf('FR') > -1}
+              onChange={this.checkedHandler}
             />
             <label htmlFor="week-options-FR">Fri</label>
           </div>
           <div className="radio-option">
             <input
-type="checkbox"
-id="week-options-SA"
-name="week-options"
-value="SA"
-title="Sat"
-                   checked={this.props.days.indexOf('SA') > -1}
-onChange={this.checkedHandler}
+              type="checkbox"
+              id="week-options-SA"
+              name="week-options"
+              value="SA"
+              title="Sat"
+              checked={this.props.days.indexOf('SA') > -1}
+              onChange={this.checkedHandler}
             />
             <label htmlFor="week-options-SA">Sat</label>
           </div>
@@ -206,49 +206,49 @@ class EndOptions extends React.Component {
         <div className="radio-collection-options-container">
           <div className="radio-option">
             <input
-type="radio"
-id="end-options-date"
-name="end-options"
-value="date"
-title="date"
-                   checked={this.props.option === 'date'}
-onChange={this.radioCheckedHandler}
+              type="radio"
+              id="end-options-date"
+              name="end-options"
+              value="date"
+              title="date"
+              checked={this.props.option === 'date'}
+              onChange={this.radioCheckedHandler}
             />
             <label htmlFor="end-options-date">date</label>
           </div>
           {untilDate}
           <div className="radio-option">
             <input
-type="radio"
-id="end-options-occurences"
-name="end-options"
-value="occurences"
-title="occurences"
-                   checked={this.props.option === 'occurences'}
-onChange={this.radioCheckedHandler}
+              type="radio"
+              id="end-options-occurences"
+              name="end-options"
+              value="occurences"
+              title="occurences"
+              checked={this.props.option === 'occurences'}
+              onChange={this.radioCheckedHandler}
             />
             <label htmlFor="end-options-occurences">
               <input
-title="Occurence Number"
-type="number"
-min="1"
-                     className="single-line-text-box super-short-text-box"
-placeholder="#"
-value={this.state.occurence}
-                     onChange={this.occurenceChangedHandler}
+                title="Occurence Number"
+                type="number"
+                min="1"
+                className="single-line-text-box super-short-text-box"
+                placeholder="#"
+                value={this.state.occurence}
+                onChange={this.occurenceChangedHandler}
               />
               <span> times</span>
             </label>
           </div>
           <div className="radio-option">
             <input
-type="radio"
-id="end-options-forever"
-name="end-options"
-value="forever"
-title="forever"
-                   checked={this.props.option === 'forever'}
-onChange={this.radioCheckedHandler}
+              type="radio"
+              id="end-options-forever"
+              name="end-options"
+              value="forever"
+              title="forever"
+              checked={this.props.option === 'forever'}
+              onChange={this.radioCheckedHandler}
             />
             <label htmlFor="end-options-forever">forever</label>
           </div>
@@ -338,37 +338,37 @@ export default class RecurrenceSelector extends React.Component {
 
             <div className="radio-option">
               <input
-type="radio"
-id="frequency-weekly"
-name="frequency"
-value="WEEKLY"
-title="Weekly"
-                     checked={this.props.reccurs.frequency === 'WEEKLY'}
-onChange={this.frequencyChanged}
+                type="radio"
+                id="frequency-weekly"
+                name="frequency"
+                value="WEEKLY"
+                title="Weekly"
+                checked={this.props.reccurs.frequency === 'WEEKLY'}
+                onChange={this.frequencyChanged}
               />
               <label htmlFor="frequency-weekly">Weekly</label>
             </div>
             <div className="radio-option">
               <input
-type="radio"
-id="frequency-monthly"
-name="frequency"
-value="MONTHLY"
-title="Monthly"
-                     checked={this.props.reccurs.frequency === 'MONTHLY'}
-onChange={this.frequencyChanged}
+                type="radio"
+                id="frequency-monthly"
+                name="frequency"
+                value="MONTHLY"
+                title="Monthly"
+                checked={this.props.reccurs.frequency === 'MONTHLY'}
+                onChange={this.frequencyChanged}
               />
               <label htmlFor="frequency-monthly">Monthly</label>
             </div>
             <div className="radio-option">
               <input
-type="radio"
-id="frequency-yearly"
-name="frequency"
-value="YEARLY"
-title="Yearly"
-                     checked={this.props.reccurs.frequency === 'YEARLY'}
-onChange={this.frequencyChanged}
+                type="radio"
+                id="frequency-yearly"
+                name="frequency"
+                value="YEARLY"
+                title="Yearly"
+                checked={this.props.reccurs.frequency === 'YEARLY'}
+                onChange={this.frequencyChanged}
               />
               <label htmlFor="frequency-yearly">Yearly</label>
             </div>
@@ -376,13 +376,13 @@ onChange={this.frequencyChanged}
         </div>
         <span className="radio-collection-title">every</span>
         <input
-title="Interval"
-type="number"
-min="1"
-className="single-line-text-box super-short-text-box"
-               placeholder="#"
-value={this.props.reccurs.interval}
-onChange={this.intervalChanged}
+          title="Interval"
+          type="number"
+          min="1"
+          className="single-line-text-box super-short-text-box"
+          placeholder="#"
+          value={this.props.reccurs.interval}
+          onChange={this.intervalChanged}
         />
         {month_options}
         {week_options}

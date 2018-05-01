@@ -225,20 +225,20 @@ export default class LocationField extends React.Component {
       <div className="location-field-container">
         <div className="location-input-container">
           <input
-id="location"
-type="text"
-title="Location"
-                 className="wide-text-box single-line-text-box medium-text-box"
-placeholder="Location"
-                 value={this.props.location}
-onChange={this.textChanged}
+            id="location"
+            type="text"
+            title="Location"
+            className="wide-text-box single-line-text-box medium-text-box"
+            placeholder="Location"
+            value={this.props.location}
+            onChange={this.textChanged}
           />
           <span hidden={!this.state.isOlin} title="Building" className="location-parsed">{this.state.building}</span>
           <span hidden={!this.state.isOlin} title="Room" className="location-parsed">{this.state.room}</span>
           <span
-hidden={!this.state.isOlin || !this.state.suffix}
-title="Suffix"
-                className="location-parsed"
+            hidden={!this.state.isOlin || !this.state.suffix}
+            title="Suffix"
+            className="location-parsed"
           >{this.state.suffix}
           </span>
         </div>

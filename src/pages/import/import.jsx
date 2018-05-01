@@ -52,18 +52,18 @@ export default class ImportPage extends React.Component {
             Import
           </h1>
           <input
-required="required"
-type="url"
-placeholder=".../example_calendar.ics"
-                 className="wide-text-box single-line-text-box medium-text-box"
-onChange={this.urlChanged}
+            required="required"
+            type="url"
+            placeholder=".../example_calendar.ics"
+            className="wide-text-box single-line-text-box medium-text-box"
+            onChange={this.urlChanged}
           />
           <TagPane
-contentClass="import-filters"
-{...this.props}
-possibleLabels={this.props.labels}
-                   selectedLabels={this.state.importData.labels}
-labelToggled={this.labelToggled}
+            contentClass="import-filters"
+            {...this.props}
+            possibleLabels={this.props.labels}
+            selectedLabels={this.state.importData.labels}
+            labelToggled={this.labelToggled}
           />
           <br />
           <input type="submit" className="button submit" value="Submit" onClick={this.submitICS} />

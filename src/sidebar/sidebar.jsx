@@ -33,8 +33,8 @@ export default class Sidebar extends Component {
     if (mode.EVENT_LABELS_PANE) { // For viewing a single event
       const currentEventLabels = this.props.currentEvent ? this.props.currentEvent.labels : null;
       content.push(<SidebarItemContainer
-          key="event-labels"
-          header="Labels"
+        key="event-labels"
+        header="Labels"
       >
           <LabelPane
             editable={false}

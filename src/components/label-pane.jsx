@@ -27,12 +27,12 @@ export default class LabelPane extends React.Component {
         const id = `label-${name}`;
         if (editable) {
           labelElems.push(<button
-id={id}
-key={name}
-title={tooltip}
-type="button"
+            id={id}
+            key={name}
+            title={tooltip}
+            type="button"
             className={`button ${noHoverClass}${classes}`}
-onClick={() => this.labelClicked(name)}
+            onClick={() => this.labelClicked(name)}
           >
             <span className="ion-pricetag">&nbsp;</span>
             {name}
