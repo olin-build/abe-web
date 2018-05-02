@@ -1,19 +1,14 @@
 {
-  "name": "abe-web",
-  "description": "Web frontend for Olin College's Amorphous Blob of Events",
-  "scripts": {
-  },
-  "env": {
-    "ABE_URL": "https://abe.olin.build"
-  },
-  "formation": {
-  },
-  "addons": [
-
-  ],
-  "buildpacks": [
-    {
-      "url": "heroku/nodejs"
-    }
-  ]
-}
+    "name": "abe-web",
+    "description": "Web frontend for Olin College's Amorphous Blob of Events",
+    "repository": "https://github.com/olinlibrary/abe-web",
+    "success_url": "/",
+    "env": {
+        "ABE_URL": "https://abe-dev.olin.build"
+    },
+    "buildpacks": [
+        {
+            "url": "heroku/nodejs"
+        }
+    ]
+  }
