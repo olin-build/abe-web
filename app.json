@@ -4,11 +4,23 @@
     "repository": "https://github.com/olinlibrary/abe-web",
     "success_url": "/",
     "env": {
-        "ABE_URL": "https://abe-dev.olin.build"
+      "ABE_URL": {
+        "description": "The URL of the ABE back-end API server.",
+        "required": true,
+        "value": "https://abe-dev.olin.build"
+      },
+      "DEBUG": {
+        "description": "Set true to use the Redux devtools.",
+        "required": false
+      },
+      "GA_ID": {
+        "description": "Google Analytics tracking ID.",
+        "required": false
+      }
     },
     "buildpacks": [
         {
             "url": "heroku/nodejs"
         }
     ]
-  }
+}
