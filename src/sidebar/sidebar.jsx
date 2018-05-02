@@ -2,15 +2,15 @@
 // changed.
 
 import React, { Component } from 'react';
-import Footer from './footer.jsx';
-import { SidebarHeader } from '../components/sidebar-header.jsx';
-import SidebarItemContainer from './sidebar-item-wrapper.jsx';
-import FilterPane from './filter-pane.jsx';
-import LinkPane from './link-pane.jsx';
-import GenerateICSPane from './generate-ics-pane.jsx';
-import MarkdownGuide from './markdown-guide.jsx';
-import EventActionsPane from './event-actions-pane.jsx';
-import LabelPane from '../components/label-pane.jsx';
+import Footer from './footer';
+import { SidebarHeader } from '../components/sidebar-header';
+import SidebarItemContainer from './sidebar-item-wrapper';
+import FilterPane from './filter-pane';
+import LinkPane from './link-pane';
+import GenerateICSPane from './generate-ics-pane';
+import MarkdownGuide from './markdown-guide';
+import EventActionsPane from './event-actions-pane';
+import LabelPane from '../components/label-pane';
 
 export default class Sidebar extends Component {
   render() {

@@ -4,14 +4,14 @@ import * as React from 'react';
 import moment from 'moment';
 import deepcopy from 'deepcopy';
 import axios from 'axios';
-import EventVisibilitySelector from './visibility-selector.jsx';
-import SaveCancelButtons from './save-cancel-buttons.jsx';
-import LocationField from './location-field.jsx';
-import EventDateTimeSelector from '../../components/date-time-selector.jsx';
-import EventRecurrenceSelector from './recurrence-selector.jsx';
-import MarkdownEditor from '../../components/markdown-editor.jsx';
-import MenuIconButton from '../../components/menu-icon-button.jsx';
-import LabelPane from '../../components/label-pane.jsx';
+import EventVisibilitySelector from './visibility-selector';
+import SaveCancelButtons from './save-cancel-buttons';
+import LocationField from './location-field';
+import EventDateTimeSelector from '../../components/date-time-selector';
+import EventRecurrenceSelector from './recurrence-selector';
+import MarkdownEditor from '../../components/markdown-editor';
+import MenuIconButton from '../../components/menu-icon-button';
+import LabelPane from '../../components/label-pane';
 import SidebarModes from '../../data/sidebar-modes';
 
 export default class AddEditEventPage extends React.Component {

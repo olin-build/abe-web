@@ -3,7 +3,7 @@
 import * as React from 'react';
 import Markdown from 'react-markdown';
 import SidebarModes from '../../data/sidebar-modes';
-import PlainEnglishRecurrence from '../../components/plain-english-recurrence.jsx';
+import PlainEnglishRecurrence from '../../components/plain-english-recurrence';
 
 export default class EventDetailsPage extends React.Component {
   componentDidMount() {

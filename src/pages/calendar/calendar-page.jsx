@@ -3,7 +3,7 @@
 import * as React from 'react';
 import SidebarModes from '../../data/sidebar-modes';
 import UltraResponsiveCalendar from 'ultra-responsive-calendar';
-import CalendarHeader from './calendar-header.jsx';
+import CalendarHeader from './calendar-header';
 
 export default class CalendarPage extends React.Component {
   componentDidMount() {

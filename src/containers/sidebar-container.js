@@ -1,7 +1,7 @@
 // This container is a sort of middleware between the React sidebar and the Redux data store
 
 import { connect } from 'react-redux';
-import Sidebar from '../sidebar/sidebar.jsx';
+import Sidebar from '../sidebar/sidebar';
 import * as Actions from '../data/actions';
 import { push } from 'react-router-redux';
 import ReactGA from 'react-ga';

@@ -1,7 +1,7 @@
 // This component is a sidebar pane/section for filtering events.
 
 import React from 'react';
-import LabelPane from '../components/label-pane.jsx';
+import LabelPane from '../components/label-pane';
 
 export default class FilterPane extends React.Component {
   selectLabels = (allNoneDefault) => {
