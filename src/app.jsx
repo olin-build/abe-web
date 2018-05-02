@@ -38,7 +38,7 @@ ReactDOM.render(
         <Router history={history}>
           <Switch>
             <Route exact path="/" component={CalendarContainer} />
-            <Route path="/calendar/:labels" component={CalendarContainer} />
+            <Route path="/calendar/:labels?" component={CalendarContainer} />
             <Route path="/edit/:id?/:recId?" component={AddEditContainer} />
             <Route path="/view/:id/:recId?" component={ViewEventContainer} />
             <Route exact path="/import" component={ImportContainer} />
