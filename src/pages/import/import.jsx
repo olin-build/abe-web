@@ -3,8 +3,8 @@
 import * as React from 'react';
 import axios from 'axios';
 import SidebarModes from '../../data/sidebar-modes';
-import TagPane from '../../components/label-pane.jsx';
-import MenuIconButton from '../../components/menu-icon-button.jsx';
+import TagPane from '../../components/label-pane';
+import MenuIconButton from '../../components/menu-icon-button';
 
 export default class ImportPage extends React.Component {
   constructor(props) {
