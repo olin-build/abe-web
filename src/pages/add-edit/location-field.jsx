@@ -90,85 +90,85 @@ export default class LocationField extends React.Component {
       if (buildingString && buildingString.length > 0) {
         buildingString = buildingString[0].trim();
 
-        if (this.stringMatches(buildingString, this.MILAS_HALL_MATCHES)) {
+        if (LocationField.stringMatches(buildingString, this.MILAS_HALL_MATCHES)) {
           result.building = 'MH';
-        } else if (this.stringMatches(buildingString, this.CAMPUS_CENTER_MATCHES)) {
+        } else if (LocationField.stringMatches(buildingString, this.CAMPUS_CENTER_MATCHES)) {
           result.building = 'CC';
-        } else if (this.stringMatches(buildingString, this.ACADEMIC_CENTER_MATCHES)) {
+        } else if (LocationField.stringMatches(buildingString, this.ACADEMIC_CENTER_MATCHES)) {
           result.building = 'AC';
-        } else if (this.stringMatches(buildingString, this.WEST_HALL_MATCHES)) {
+        } else if (LocationField.stringMatches(buildingString, this.WEST_HALL_MATCHES)) {
           result.building = 'WH';
-        } else if (this.stringMatches(buildingString, this.EAST_HALL_MATCHES)) {
+        } else if (LocationField.stringMatches(buildingString, this.EAST_HALL_MATCHES)) {
           result.building = 'EH';
-        } else if (this.stringMatches(buildingString, this.WEST_HALL_KITCHEN_MATCHES)) {
+        } else if (LocationField.stringMatches(buildingString, this.WEST_HALL_KITCHEN_MATCHES)) {
           result.building = 'WH';
           result.room = 'Kitchen';
           result.isOlin = true;
           return result;
-        } else if (this.stringMatches(buildingString, this.EAST_HALL_KITCHEN_MATCHES)) {
+        } else if (LocationField.stringMatches(buildingString, this.EAST_HALL_KITCHEN_MATCHES)) {
           result.building = 'EH';
           result.room = 'Kitchen';
           result.isOlin = true;
           return result;
-        } else if (this.stringMatches(buildingString, this.WEST_HALL_GYM_MATCHES)) {
+        } else if (LocationField.stringMatches(buildingString, this.WEST_HALL_GYM_MATCHES)) {
           result.building = 'WH';
           result.room = 'Gym';
           result.isOlin = true;
           return result;
-        } else if (this.stringMatches(buildingString, this.EAST_HALL_GYM_MATCHES)) {
+        } else if (LocationField.stringMatches(buildingString, this.EAST_HALL_GYM_MATCHES)) {
           result.building = 'EH';
           result.room = 'Gym';
           result.isOlin = true;
           return result;
-        } else if (this.stringMatches(buildingString, this.LIBRARY_MATCHES)) {
+        } else if (LocationField.stringMatches(buildingString, this.LIBRARY_MATCHES)) {
           result.building = 'MH';
           result.room = 'Library';
           result.isOlin = true;
           return result;
-        } else if (this.stringMatches(buildingString, this.LIBRARY_UPPER_LEVEL_MATCHES)) {
+        } else if (LocationField.stringMatches(buildingString, this.LIBRARY_UPPER_LEVEL_MATCHES)) {
           result.building = 'MH';
           result.room = 'Library';
           result.suffix = 'UL';
           result.isOlin = true;
           return result;
-        } else if (this.stringMatches(buildingString, this.LIBRARY_LOWER_LEVEL_MATCHES)) {
+        } else if (LocationField.stringMatches(buildingString, this.LIBRARY_LOWER_LEVEL_MATCHES)) {
           result.building = 'MH';
           result.room = 'Library';
           result.suffix = 'LL';
           result.isOlin = true;
           return result;
-        } else if (this.stringMatches(buildingString, this.AUDITORIUM_MATCHES)) {
+        } else if (LocationField.stringMatches(buildingString, this.AUDITORIUM_MATCHES)) {
           result.building = 'MH';
           result.room = 'Auditorium';
           result.isOlin = true;
           return result;
-        } else if (this.stringMatches(buildingString, this.O_MATCHES)) {
+        } else if (LocationField.stringMatches(buildingString, this.O_MATCHES)) {
           result.room = 'O';
           result.isOlin = true;
           return result;
-        } else if (this.stringMatches(buildingString, this.GREAT_LAWN_MATCHES)) {
+        } else if (LocationField.stringMatches(buildingString, this.GREAT_LAWN_MATCHES)) {
           result.room = 'Great Lawn';
           result.isOlin = true;
           return result;
-        } else if (this.stringMatches(buildingString, this.DINING_HALL_MATCHES)) {
+        } else if (LocationField.stringMatches(buildingString, this.DINING_HALL_MATCHES)) {
           result.building = 'CC';
           result.room = 'Dining Hall';
-        } else if (this.stringMatches(buildingString, this.DINING_HALL_MEZZANINE_MATCHES)) {
+        } else if (LocationField.stringMatches(buildingString, this.DINING_HALL_MEZZANINE_MATCHES)) {
           result.building = 'CC';
           result.room = 'Dining Hall';
           result.suffix = 'Mezzanine';
           result.isOlin = true;
           return result;
-        } else if (this.stringMatches(buildingString, this.MILAS_HALL_MEZZANINE_MATCHES)) {
+        } else if (LocationField.stringMatches(buildingString, this.MILAS_HALL_MEZZANINE_MATCHES)) {
           result.building = 'MH';
           result.suffix = 'Mezzanine';
           result.isOlin = true;
           return result;
-        } else if (this.stringMatches(buildingString, this.LARGE_PROJECT_BUILDING_MATCHES)) {
+        } else if (LocationField.stringMatches(buildingString, this.LARGE_PROJECT_BUILDING_MATCHES)) {
           result.building = 'LPB';
           result.isOlin = true;
           return result;
-        } else if (this.stringMatches(buildingString, this.CRESCENT_ROOM)) {
+        } else if (LocationField.stringMatches(buildingString, this.CRESCENT_ROOM)) {
           result.building = 'CC';
           result.room = 'Crescent Room';
           result.isOlin = true;
@@ -189,13 +189,13 @@ export default class LocationField extends React.Component {
         // Just return if the regex didn't find anything
         if (suffixString !== null && suffixString.length > 0) {
           // The regex found something, so let's parse it
-          if (this.stringMatches(suffixString, this.ANTELOUNGE_MATCHES)) {
+          if (LocationField.stringMatches(suffixString, this.ANTELOUNGE_MATCHES)) {
             result.suffix = 'AL';
-          } else if (this.stringMatches(suffixString, this.LOUNGE_MATCHES)) {
+          } else if (LocationField.stringMatches(suffixString, this.LOUNGE_MATCHES)) {
             result.suffix = 'L';
-            // } else if (this.stringMatches(suffixString, this.NOOK_MATCHES)) {
+            // } else if (LocationField.stringMatches(suffixString, this.NOOK_MATCHES)) {
             //     result.suffix = 'N';
-          } else if (this.stringMatches(suffixString, this.SUITE_MATCHES)) {
+          } else if (LocationField.stringMatches(suffixString, this.SUITE_MATCHES)) {
             result.suffix = suffixString.toUpperCase();
           }
         } else {
