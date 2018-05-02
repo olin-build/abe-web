@@ -49,6 +49,7 @@
     "copy-to-clipboard": "^3.0.6",
     "css-loader": "^0.28.4",
     "deepcopy": "^0.6.3",
+    "dotenv": "^5.0.0",
     "expose": "^0.1.4",
     "expose-loader": "^0.7.3",
     "express": "^4.15.3",
@@ -74,11 +75,11 @@
     "svg-react-loader": "^0.4.4",
     "typescript": "^2.4.1",
     "ultra-responsive-calendar": "https://github.com/kylecombes/ultra-responsive-calendar.git",
-    "webpack": "^2.6.1"
+    "webpack": "^2.6.1",
+    "webpack-dev-middleware": "^2.0.4"
   },
   "devDependencies": {
     "babel-preset-env": "^1.6.1",
-    "dotenv": "^5.0.0",
     "eslint": "^4.19.1",
     "eslint-config-airbnb": "^16.1.0",
     "eslint-plugin-import": "^2.7.0",
@@ -92,7 +93,6 @@
     "redux-devtools": "^3.4.0",
     "regenerator-runtime": "^0.11.1",
     "source-map-loader": "^0.2.3",
-    "webpack-dev-middleware": "^2.0.4",
     "webpack-dev-server": "^2.5.0"
   },
   "jest": {
