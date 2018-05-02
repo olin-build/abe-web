@@ -28,8 +28,15 @@ export default class AddEditEventPage extends React.Component {
     } else { // Creating a new event
       eventData = {
         title: '',
-        start: moment().minutes(0).milliseconds(0),
-        end: moment().minutes(0).milliseconds(0).add(1, 'h'),
+        start: moment()
+          .minutes(0)
+          .seconds(0)
+          .milliseconds(0),
+        end: moment()
+          .minutes(0)
+          .seconds(0)
+          .milliseconds(0)
+          .add(1, 'h'),
         allDay: false,
         location: '',
         description: '',
@@ -269,7 +276,7 @@ export default class AddEditEventPage extends React.Component {
                   onChange={this.state.eventData.recurrenceRuleChanged}
                 />}
             </div>
-            <LocationField location={this.state.eventData.location} onChange={this.locationChanged} />
+            <LocationField location={this.state.locationRaw} onChange={this.locationChanged} />
             <MarkdownEditor source={this.state.eventData.description} onChange={this.descriptionChanged} />
             <EventVisibilitySelector
               visibility={this.state.eventData.visibility}
