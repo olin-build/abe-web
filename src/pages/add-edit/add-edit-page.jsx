@@ -154,6 +154,7 @@ export default class AddEditEventPage extends React.Component {
         } else {
           url = `${window.abe_url}/events/${eventData.id || eventData.sid}`;
         }
+        delete eventData.color; // Don't send the color used for rendering the calendar
         requestMethod = axios.put;
       } else { // We're adding a new event
         url = `${window.abe_url}/events/`;
