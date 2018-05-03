@@ -1,8 +1,8 @@
 // This page displays the calendar (it's the home page)
 
 import * as React from 'react';
-import SidebarModes from '../../data/sidebar-modes';
 import UltraResponsiveCalendar from 'ultra-responsive-calendar';
+import SidebarModes from '../../data/sidebar-modes';
 import CalendarHeader from './calendar-header';
 
 export default class CalendarPage extends React.Component {

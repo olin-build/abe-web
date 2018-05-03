@@ -7,13 +7,13 @@ import SidebarMode from './sidebar-modes';
 
 
 export default function setupStore(history) {
-  const DEBUG = process.env.DEBUG || false;
-  const GA_ID = process.env.GA_ID;
+  const debug = process.env.DEBUG || false;
+  const googleAnalyticsId = process.env.GA_ID;
 
   const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent);
   const initialState = {
     general: {
-      debug: window.debug,
+      debug,
       isMobile,
       pageTitlePrefix: null,
       pageTitleSuffix: 'Olin College Events',
@@ -63,11 +63,8 @@ export default function setupStore(history) {
     ? initialState.calendar.possibleViewModes['3-Day']
     : initialState.calendar.possibleViewModes.Month;
 
-  // Google Analytics
-  if (GA_ID) {
-    ReactGA.initialize(GA_ID, {
-      debug: DEBUG,
-    });
+  if (googleAnalyticsId) {
+    ReactGA.initialize(googleAnalyticsId, { debug });
     history.listen((event) => {
       // Dispatch page changes to Google Analytics
       ReactGA.set({ page: event.pathname });
@@ -78,7 +75,7 @@ export default function setupStore(history) {
   }
 
   // Load the Redux middleware if the Redux devtools extension is available
-  const middleware = (DEBUG && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__)
+  const middleware = (debug && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__)
     ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__(applyMiddleware(
       thunkMiddleware, // lets us dispatch() functions
       routerMiddleware(history),

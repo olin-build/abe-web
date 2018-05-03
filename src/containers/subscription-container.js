@@ -1,13 +1,13 @@
 // This container is a sort of middleware between the React import component and the Redux data store
 
 import { connect } from 'react-redux';
+import * as ga from 'react-ga';
 import {
   setSidebarMode,
   toggleSidebarCollapsed,
   setPageTitlePrefix,
 } from '../data/actions';
 import SubscriptionEditorPage from '../pages/subscription/subscription';
-import * as ga from 'react-ga';
 
 // This function passes values/objects from the Redux state to the React component as props
 const mapStateToProps = state => ({
