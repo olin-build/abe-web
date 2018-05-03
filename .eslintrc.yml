@@ -64,6 +64,8 @@ overrides:
       no-console: off
       global-require: off  # this warning doesn't apply to non-babel server
   # tests:
-  - files: [ "**/__test__/**/*.js ", "**/*\\.test\\.js" ]
+  - files: [ "**/__test__/**/*.js", "**/*.test.js", "**/*.test.jsx" ]
     env:
       jest: true
+    rules:
+      import/no-extraneous-dependencies: off
