@@ -27,7 +27,6 @@ const mapDispatchToProps = dispatch => ({
       action: 'click',
       label: 'User clicked the Olin logo to return to the Home view',
     });
-    dispatch(Actions.clearCurrentEvent());
     dispatch(push('/'));
   },
   addEvent: () => {
