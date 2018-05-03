@@ -23,7 +23,6 @@ rules:
   consistent-return: warn
   guard-for-in: warn
   import/first: warn
-  import/no-extraneous-dependencies: warn
   import/no-unresolved: warn
   import/no-webpack-loader-syntax: warn
   import/prefer-default-export: warn

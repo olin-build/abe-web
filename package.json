@@ -60,6 +60,7 @@
     "input-moment": "git+https://github.com/kylecombes/input-moment.git",
     "jquery": "^3.2.1",
     "moment": "^2.18.1",
+    "prop-types": "^15.6.1",
     "react": "^15.6.1",
     "react-dnd": "^2.4.0",
     "react-dom": "^15.6.1",
