@@ -28,7 +28,7 @@ rules:
   no-alert: warn
   no-mixed-operators: warn
   no-param-reassign: warn
-  no-plusplus: warn
+  no-plusplus: off
   no-restricted-globals: warn
   no-restricted-syntax: warn
   no-underscore-dangle: [error, allow: [__REDUX_DEVTOOLS_EXTENSION_COMPOSE__]]

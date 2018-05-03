@@ -22,6 +22,12 @@ export default class AddEditEventPage extends React.Component {
       ? deepcopy(props.eventData)
       : null;
 
+    // If we want to edit a recurring series definition but we have a data for a specific recurrence
+    // in that series, we need to fetch the original series data
+    if (eventData && eventData.recId && !props.match.params.recId) {
+      eventData = null;
+    }
+
     // Check if we need to request data from the server
     if (!eventData && props.match.params.id) {
       props.getEventDataViaUrlParams(props.match.params);
@@ -42,7 +48,15 @@ export default class AddEditEventPage extends React.Component {
         description: '',
         visibility: 'public',
         labels: [],
+        recurrence: null,
       };
+    }
+
+    if (props.match.params.id && props.match.params.recId) { // Editing a specific recurrence in a series of events
+      // Get the series data so we know how this event differs from the rest in the series
+      axios.get(`${window.abe_url}/events/${props.match.params.id}`)
+        .then(this.receivedSuccessfulSeriesDataResponse);
+      // TODO: Handle an unsuccessful response
     }
 
     this.state = {
@@ -55,9 +69,7 @@ export default class AddEditEventPage extends React.Component {
         month_option: 'month',
         week_option: 'week',
       },
-      markdownGuideVisible: true,
-      locationRaw: '',
-      recurrenceRule: null,
+      locationRaw: eventData ? eventData.location : '',
     };
 
     this.props.setSidebarMode(SidebarModes.ADD_EDIT_EVENT);
@@ -67,37 +79,25 @@ export default class AddEditEventPage extends React.Component {
 
   componentWillReceiveProps(newProps) {
     if (newProps.eventData) {
-      this.setState({ eventData: deepcopy(newProps.eventData) });
+      this.setState({
+        eventData: deepcopy(newProps.eventData),
+        locationRaw: newProps.eventData.location,
+      });
     }
     // TODO: If the event is recurring but newProps.match.params.recId is not defined, copy the data to seriesData
   }
 
-    // TODO: Use the logic in here for dealing with recurring events (currently broken)
-    receivedSuccessfulResponse = (response) => {
-      const eventData = response.data;
+    receivedSuccessfulSeriesDataResponse = (response) => {
+      const seriesData = response.data;
 
-      // If the labels are null/undefined, create an empty list in our state
-      if (!eventData.labels) { eventData.labels = []; }
-
-      // Convert start strings (in UTC) to local-time Moment.js objects
-      eventData.start = moment.utc(eventData.start).local();
-      eventData.end = moment.utc(eventData.end).local();
-
-      // Create copy of event data to compare to later to determine changes
-      const seriesData = deepcopy(eventData);
-      // Create copy of Moment objects
-      seriesData.start = moment(seriesData.start).local();
-      seriesData.end = moment(seriesData.end).local();
-
-      if (!eventData.id) { // Recurring event
-        eventData.rec_id = moment.utc(eventData.rec_id).local(); // rec_id is start time
+      const { eventData } = this.state;
+      if (this.state.eventData) {
+        // Save the original start and end times in the series data (to check later if the user changed it)
+        seriesData.start = moment(eventData.start);
+        seriesData.end = moment(eventData.end);
       }
 
-      this.setState({
-        eventData,
-        locationRaw: eventData.location,
-        seriesData,
-      });
+      this.setState({ seriesData });
     };
 
     validateInput = () => {
@@ -140,12 +140,21 @@ export default class AddEditEventPage extends React.Component {
             // Determine what's different for this event compared to the rest of the events in the series
             Object.keys(eventData).forEach((key) => {
               // Check if this attribute is the same for all events in the series
+              if (Array.isArray(eventData[key])) {
+                if (this.arraysEqual(eventData[key], this.state.seriesData[key])) {
+                  delete eventData[key];
+                }
+              } else if (moment.isMoment(eventData[key])) {
+                if (eventData[key].isSame(this.state.seriesData[key])) {
+                  delete eventData[key];
+                }
+              }
               if (eventData[key] === this.state.seriesData[key]) {
                 delete eventData[key]; // If so, don't override it for this event
               }
             });
 
-            url = `${window.abe_url}/events/${eventData.id || eventData.sid}/${eventData.recId}`;
+            url = `${window.abe_url}/events/${eventData.id || eventData.sid}/${this.props.match.params.recId}`;
           } else {
             url = `${window.abe_url}/events/${eventData.id || eventData.sid}`;
           }
@@ -160,6 +169,16 @@ export default class AddEditEventPage extends React.Component {
           .then(this.props.eventSavedSuccessfully)
           .catch(jqXHR => this.props.eventSaveFailed(eventData, jqXHR.message));
       }
+    };
+
+    arraysEqual = (arr1, arr2) => {
+      if (arr1.length !== arr2.length) return false;
+
+      for (let i = 0; i < arr1.length; i++) {
+        if (arr1[i] !== arr2[i]) return false;
+      }
+
+      return true;
     };
 
     titleChanged = e => this.updateEventDatum({ title: e.currentTarget.value });
@@ -188,9 +207,13 @@ export default class AddEditEventPage extends React.Component {
 
     setEnd = end => this.updateEventDatum({ end });
 
-    doesRecurToggled = e => this.updateEventDatum({ doesRecur: e.currentTarget.checked });
+    doesRecurToggled = e => this.updateEventDatum({
+      recurrence: e.currentTarget.checked
+        ? deepcopy(this.state.defaultRecurrence)
+        : null,
+    });
 
-    recurrenceRuleChanged = recurrenceRule => this.setState({ recurrenceRule });
+    recurrenceRuleChanged = recurrence => this.updateEventDatum({ recurrence });
 
     descriptionChanged = description => this.updateEventDatum({ description });
 
@@ -265,13 +288,13 @@ export default class AddEditEventPage extends React.Component {
                 id="repeats-check"
                 title="Repeats?"
                 disabled={this.state.seriesData}
-                checked={this.state.eventData.doesRecur}
+                checked={!!this.state.eventData.recurrence}
                 onChange={this.doesRecurToggled}
               />
               <label htmlFor="repeats-check">Repeats?</label>
-              {this.state.eventData.doesRecur &&
+              {this.state.eventData.recurrence &&
                 <EventRecurrenceSelector
-                  reccurs={this.state.eventData.recurrenceRule}
+                  reccurs={this.state.eventData.recurrence}
                   start={this.state.eventData.start}
                   onChange={this.state.eventData.recurrenceRuleChanged}
                 />}
