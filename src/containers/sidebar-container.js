@@ -1,10 +1,10 @@
 // This container is a sort of middleware between the React sidebar and the Redux data store
 
 import { connect } from 'react-redux';
-import Sidebar from '../sidebar/sidebar';
-import * as Actions from '../data/actions';
 import { push } from 'react-router-redux';
 import ReactGA from 'react-ga';
+import Sidebar from '../sidebar/sidebar';
+import * as Actions from '../data/actions';
 
 // This function passes values/objects from the Redux state to the React component as props
 const mapStateToProps = state => ({

@@ -22,7 +22,6 @@ rules:
   camelcase: warn
   consistent-return: warn
   guard-for-in: warn
-  import/first: warn
   import/no-unresolved: warn
   import/no-webpack-loader-syntax: warn
   import/prefer-default-export: warn

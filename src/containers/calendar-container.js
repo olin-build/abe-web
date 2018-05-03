@@ -1,6 +1,7 @@
 // This container is a sort of middleware between the React page and the Redux data store
 
 import { connect } from 'react-redux';
+import moment from 'moment';
 import {
   setSidebarMode,
   toggleSidebarCollapsed,
@@ -13,7 +14,6 @@ import {
   viewEvent,
 } from '../data/actions';
 import CalendarPage from '../pages/calendar/calendar-page';
-import moment from 'moment';
 
 const getVisibleEvents = (events, visibleLabels, allLabels) => {
   // Filter out events that are not labeled with currently visible labels
