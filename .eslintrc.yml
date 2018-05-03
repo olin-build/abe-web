@@ -18,16 +18,14 @@ rules:
   react/no-find-dom-node: warn
   react/prop-types: off           # TODO: #123
 
-  # exceptions from airbnb style:
+  # Airbnb style exceptions that we'll eventually fix:
   camelcase: warn
   consistent-return: warn
   guard-for-in: warn
   import/no-unresolved: warn
   import/prefer-default-export: warn
-  no-alert: warn
   no-mixed-operators: warn
   no-param-reassign: warn
-  no-plusplus: off
   no-restricted-globals: warn
   no-restricted-syntax: warn
   no-underscore-dangle: [error, allow: [__REDUX_DEVTOOLS_EXTENSION_COMPOSE__]]
@@ -42,6 +40,10 @@ rules:
   react/prefer-stateless-function: warn
   react/require-default-props: warn
   react/sort-comp: warn
+
+  # Intentional Airbnb exceptions:
+  no-alert: off  # currently used in the UI
+  no-plusplus: [error, allowForLoopAfterthoughts: true]
 
   # TODO: #118 accessibility
   jsx-a11y/anchor-is-valid: off
@@ -69,3 +71,6 @@ overrides:
       jest: true
     rules:
       import/no-extraneous-dependencies: off
+  - files: [ "actions.js" ]
+    rules:
+      no-use-before-define: off
