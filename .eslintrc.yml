@@ -13,7 +13,7 @@ globals:
 rules:
   max-len: [warn, { code: 120 }]
   # exceptions from eslint:recommended:
-  no-unused-vars: [error, { argsIgnorePattern: "^_" }]
+  no-unused-vars: [error, argsIgnorePattern: "^_" ]
   # exceptions from plugin:react/recommended:
   react/no-find-dom-node: warn
   react/prop-types: off           # TODO: #123
@@ -35,7 +35,7 @@ rules:
   no-plusplus: warn
   no-restricted-globals: warn
   no-restricted-syntax: warn
-  no-underscore-dangle: warn
+  no-underscore-dangle: [error, allow: [__REDUX_DEVTOOLS_EXTENSION_COMPOSE__]]
   no-use-before-define: warn
   prefer-destructuring: warn
   react/forbid-prop-types: warn
