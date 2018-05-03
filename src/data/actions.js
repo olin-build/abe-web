@@ -516,4 +516,12 @@ export function labelVisibilityToggled(labelName) {
   return { type: ActionTypes.FILTER_LABEL_TOGGLED, labelName };
 }
 
+export function updateLabel(data) {
+  return () => {
+    // TODO: update model on success
+    axios.post(`${window.abe_url}/labels/${data.id}`, data)
+      .catch(error => alert(`Update label failed:\n${error}`));
+  };
+}
+
 // ########## End Labels-Related Actions ########## //
