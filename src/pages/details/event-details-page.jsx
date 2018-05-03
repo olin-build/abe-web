@@ -18,6 +18,10 @@ export default class EventDetailsPage extends React.Component {
     this.props.setSidebarMode(SidebarModes.VIEW_EVENT);
   }
 
+  componentWillUnmount() {
+    this.props.clearCurrentEvent();
+  }
+
   render() {
     if (this.props.eventData) {
       const oneDay = this.props.eventData.start.diff(this.props.eventData.end, 'days') === 0;

@@ -88,6 +88,10 @@ export default class AddEditEventPage extends React.Component {
     // TODO: If the event is recurring but newProps.match.params.recId is not defined, copy the data to seriesData
   }
 
+  componentWillUnmount() {
+    this.props.clearCurrentEvent();
+  }
+
   receivedSuccessfulSeriesDataResponse = (response) => {
     const seriesData = response.data;
 
