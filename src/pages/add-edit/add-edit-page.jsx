@@ -202,8 +202,8 @@ export default class AddEditEventPage extends React.Component {
   labelToggled = (labelName) => {
     const labels = this.state.eventData.labels.slice(); // Make a copy of the list
     const labelIndex = labels.indexOf(labelName);
-    if (labelIndex > 0) { // The label is already on the event
-      labels.splice(labelName, 1); // Remove the label
+    if (labelIndex > -1) { // The label is already on the event
+      labels.splice(labelIndex, 1); // Remove the label
     } else {
       labels.push(labelName); // Add the label
     }
