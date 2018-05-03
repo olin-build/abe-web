@@ -1,8 +1,8 @@
 // This component is a button for hiding and showing the sidebar
 
 import React from 'react';
-import MenuIconSVG from 'svg-react-loader?name=Icon!../../assets/menu-icon.svg';
 import PropTypes from 'prop-types';
+import MenuIconSVG from '../../assets/menu-icon.svg';
 
 export default class MenuIconButton extends React.Component {
   render() {

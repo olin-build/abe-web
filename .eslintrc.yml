@@ -23,7 +23,6 @@ rules:
   consistent-return: warn
   guard-for-in: warn
   import/no-unresolved: warn
-  import/no-webpack-loader-syntax: warn
   import/prefer-default-export: warn
   no-alert: warn
   no-mixed-operators: warn
