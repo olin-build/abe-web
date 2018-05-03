@@ -4,6 +4,7 @@ import * as React from 'react';
 import moment from 'moment';
 import deepcopy from 'deepcopy';
 import axios from 'axios';
+import _ from 'lodash';
 import EventVisibilitySelector from './visibility-selector';
 import SaveCancelButtons from './save-cancel-buttons';
 import LocationField from './location-field';
@@ -91,7 +92,7 @@ export default class AddEditEventPage extends React.Component {
     const seriesData = response.data;
 
     const { eventData } = this.state;
-    if (this.state.eventData) {
+    if (eventData) {
       // Save the original start and end times in the series data (to check later if the user changed it)
       seriesData.start = moment(eventData.start);
       seriesData.end = moment(eventData.end);
@@ -140,16 +141,7 @@ export default class AddEditEventPage extends React.Component {
           // Determine what's different for this event compared to the rest of the events in the series
           Object.keys(eventData).forEach((key) => {
             // Check if this attribute is the same for all events in the series
-            if (Array.isArray(eventData[key])) {
-              if (this.arraysEqual(eventData[key], this.state.seriesData[key])) {
-                delete eventData[key];
-              }
-            } else if (moment.isMoment(eventData[key])) {
-              if (eventData[key].isSame(this.state.seriesData[key])) {
-                delete eventData[key];
-              }
-            }
-            if (eventData[key] === this.state.seriesData[key]) {
+            if (_.isEqual(eventData[key], this.state.seriesData[key])) {
               delete eventData[key]; // If so, don't override it for this event
             }
           });
@@ -169,16 +161,6 @@ export default class AddEditEventPage extends React.Component {
         .then(this.props.eventSavedSuccessfully)
         .catch(jqXHR => this.props.eventSaveFailed(eventData, jqXHR.message));
     }
-  };
-
-  arraysEqual = (arr1, arr2) => {
-    if (arr1.length !== arr2.length) return false;
-
-    for (let i = 0; i < arr1.length; i++) {
-      if (arr1[i] !== arr2[i]) return false;
-    }
-
-    return true;
   };
 
   titleChanged = e => this.updateEventDatum({ title: e.currentTarget.value });
