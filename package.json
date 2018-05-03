@@ -82,12 +82,13 @@
   },
   "devDependencies": {
     "babel-preset-env": "^1.6.1",
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-15": "^1.0.5",
     "eslint": "^4.19.1",
     "eslint-config-airbnb": "^16.1.0",
     "eslint-plugin-import": "^2.7.0",
     "eslint-plugin-jsx-a11y": "6.0.2",
     "eslint-plugin-react": "^7.4.0",
-    "jest": "^22.4.3",
     "markdownlint-cli": "^0.8.1",
     "react-codemirror": "^1.0.0",
     "react-tag-input": "git+https://github.com/kylecombes/react-tags.git",
@@ -98,6 +99,12 @@
     "webpack-dev-server": "^2.5.0"
   },
   "jest": {
-    "testEnvironment": "node"
+    "moduleNameMapper": {
+      "\\.(svg)$": "<rootDir>/__mocks__/fileMock.js"
+    },
+    "setupTestFrameworkScriptFile": "<rootDir>/src/__test__/setup.js",
+    "testPathIgnorePatterns": [
+      "setup.js"
+    ]
   }
 }
