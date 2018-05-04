@@ -23,6 +23,7 @@ const getVisibleEvents = (events, visibleLabels, allLabels) => {
       const indexOfLabel = visibleLabels.indexOf(event.labels[i]);
       if (indexOfLabel > -1) {
         event.color = allLabels[visibleLabels[indexOfLabel]].color;
+        event.id = event.id || event.sid; // Make sure all events have an id attribute
         return true; // Event has at least one visible label
       }
     }

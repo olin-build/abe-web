@@ -9,6 +9,7 @@ import {
   deleteCurrentEvent,
   eventSavedSuccessfully,
   eventSaveFailed,
+  clearCurrentEvent,
 } from '../data/actions';
 import AddEditEventPage from '../pages/add-edit/add-edit-page';
 
@@ -46,6 +47,9 @@ const mapDispatchToProps = dispatch => ({
   },
   eventSaveFailed: (event, error) => {
     dispatch(eventSaveFailed(event, error));
+  },
+  clearCurrentEvent: () => {
+    dispatch(clearCurrentEvent());
   },
 });
 

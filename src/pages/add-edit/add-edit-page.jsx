@@ -88,6 +88,10 @@ export default class AddEditEventPage extends React.Component {
     // TODO: If the event is recurring but newProps.match.params.recId is not defined, copy the data to seriesData
   }
 
+  componentWillUnmount() {
+    this.props.clearCurrentEvent();
+  }
+
   receivedSuccessfulSeriesDataResponse = (response) => {
     const seriesData = response.data;
 
@@ -150,6 +154,7 @@ export default class AddEditEventPage extends React.Component {
         } else {
           url = `${window.abe_url}/events/${eventData.id || eventData.sid}`;
         }
+        delete eventData.color; // Don't send the color used for rendering the calendar
         requestMethod = axios.put;
       } else { // We're adding a new event
         url = `${window.abe_url}/events/`;
@@ -202,8 +207,8 @@ export default class AddEditEventPage extends React.Component {
   labelToggled = (labelName) => {
     const labels = this.state.eventData.labels.slice(); // Make a copy of the list
     const labelIndex = labels.indexOf(labelName);
-    if (labelIndex > 0) { // The label is already on the event
-      labels.splice(labelName, 1); // Remove the label
+    if (labelIndex > -1) { // The label is already on the event
+      labels.splice(labelIndex, 1); // Remove the label
     } else {
       labels.push(labelName); // Add the label
     }
