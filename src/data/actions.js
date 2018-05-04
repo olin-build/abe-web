@@ -279,6 +279,14 @@ export function refreshEvents(start, end) {
   };
 }
 
+// FIXME: This is a bit of a hack to trigger a refresh. It should be replaced by some sort of cache invalidation call.
+export function refreshEventsForCurrentViewWindow() {
+  return (dispatch, getStore) => {
+    const { currentlyViewingDate } = getStore().calendar;
+    dispatch(setCurrentlyViewingDate(currentlyViewingDate));
+  };
+}
+
 /**
  * Saves the event data received from the server to the Redux store.
  * @param {object} events - the event data
@@ -360,6 +368,7 @@ export function eventSavedSuccessfully(event) {
       action,
       label,
     });
+    dispatch(refreshEventsForCurrentViewWindow());
     dispatch(push('/'));
   };
 }
