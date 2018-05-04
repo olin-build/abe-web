@@ -32,10 +32,10 @@ export default class CalendarPage extends React.Component {
       const labelsStr = this.props.labels.visibleLabels
         .sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase())) // sort alphabetically ignoring case
         .join(',');
-      const url = `/calendar/${encodeURI(labelsStr)}`;
+      const url = `/calendar/${labelsStr}`;
       if (url !== this.props.location.pathname) {
         // Update URL to reflect selected labels
-        this.props.setRoute(url);
+        this.props.setRoute(encodeURI(url));
       }
     }
   }

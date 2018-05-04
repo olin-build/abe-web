@@ -13,7 +13,9 @@ const mapStateToProps = state => ({
   isCollapsed: state.sidebar.isCollapsed,
   sidebarMode: state.sidebar.mode,
   possibleLabels: state.labels.labelList,
-  selectedLabels: state.labels.visibleLabels,
+  selectedLabels: state.events.current
+    ? state.events.current.labels
+    : state.labels.visibleLabels,
 });
 
 // This function passes functions from /srcs/data/actions.jsx to the React component as props

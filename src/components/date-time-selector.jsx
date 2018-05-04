@@ -12,7 +12,7 @@ export default class EventDateTimeSelector extends React.Component {
 
     // Initialize the state
     this.state = {
-      moment: moment(), // Current date and time
+      moment: props.datetime,
       pickerVisible: false, // Date/time picker not visible
     };
   }
@@ -71,13 +71,14 @@ export default class EventDateTimeSelector extends React.Component {
 // Define React prop types for type checking during development
 EventDateTimeSelector.propTypes = {
   buttonPrefix: PropTypes.string,
-  moment: PropTypes.instanceOf(moment),
+  datetime: PropTypes.instanceOf(moment),
   onChange: PropTypes.func.isRequired,
 };
 
 // Define default prop values
 EventDateTimeSelector.defaultProps = {
   buttonPrefix: '',
+  datetime: moment(),
 };
 
 class PickerPopup extends React.Component {
