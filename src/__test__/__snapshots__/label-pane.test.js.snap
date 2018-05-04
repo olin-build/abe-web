@@ -8,11 +8,11 @@ exports[`LabelPane matches snapshot 1`] = `
     type="text/css"
   >
     .label.first.button:not(.selected){background-color:white;}
-.label.first:not(.button):not(.selected){border-color:red;color:red;}
-.label.button.first:not(.no-hover):hover,.label.first.selected{background-color:red;}
-.label.second.button:not(.selected){background-color:white;}
-.label.second:not(.button):not(.selected){border-color:green;color:green;}
-.label.button.second:not(.no-hover):hover,.label.second.selected{background-color:green;}
+    .label.first:not(.button):not(.selected){border-color:red;color:red;}
+    .label.button.first:not(.no-hover):hover,.label.first.selected{background-color:red;}
+    .label.second.button:not(.selected){background-color:white;}
+    .label.second:not(.button):not(.selected){border-color:green;color:green;}
+    .label.button.second:not(.no-hover):hover,.label.second.selected{background-color:green;}
   </style>
   <div
     className="label-selector-list"
@@ -57,11 +57,11 @@ exports[`LabelPane not editable 1`] = `
     type="text/css"
   >
     .label.first.button:not(.selected){background-color:white;}
-.label.first:not(.button):not(.selected){border-color:red;color:red;}
-.label.button.first:not(.no-hover):hover,.label.first.selected{background-color:red;}
-.label.second.button:not(.selected){background-color:white;}
-.label.second:not(.button):not(.selected){border-color:green;color:green;}
-.label.button.second:not(.no-hover):hover,.label.second.selected{background-color:green;}
+    .label.first:not(.button):not(.selected){border-color:red;color:red;}
+    .label.button.first:not(.no-hover):hover,.label.first.selected{background-color:red;}
+    .label.second.button:not(.selected){background-color:white;}
+    .label.second:not(.button):not(.selected){border-color:green;color:green;}
+    .label.button.second:not(.no-hover):hover,.label.second.selected{background-color:green;}
   </style>
   <div
     className="label-selector-list"
@@ -102,11 +102,11 @@ exports[`LabelPane with selected labels 1`] = `
     type="text/css"
   >
     .label.first.button:not(.selected){background-color:white;}
-.label.first:not(.button):not(.selected){border-color:red;color:red;}
-.label.button.first:not(.no-hover):hover,.label.first.selected{background-color:red;}
-.label.second.button:not(.selected){background-color:white;}
-.label.second:not(.button):not(.selected){border-color:green;color:green;}
-.label.button.second:not(.no-hover):hover,.label.second.selected{background-color:green;}
+    .label.first:not(.button):not(.selected){border-color:red;color:red;}
+    .label.button.first:not(.no-hover):hover,.label.first.selected{background-color:red;}
+    .label.second.button:not(.selected){background-color:white;}
+    .label.second:not(.button):not(.selected){border-color:green;color:green;}
+    .label.button.second:not(.no-hover):hover,.label.second.selected{background-color:green;}
   </style>
   <div
     className="label-selector-list"

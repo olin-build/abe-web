@@ -23,7 +23,6 @@ rules:
   consistent-return: warn
   guard-for-in: warn
   import/no-unresolved: warn
-  import/no-webpack-loader-syntax: warn
   import/prefer-default-export: warn
   no-alert: warn
   no-mixed-operators: warn
@@ -65,6 +64,8 @@ overrides:
       no-console: off
       global-require: off  # this warning doesn't apply to non-babel server
   # tests:
-  - files: [ "**/__test__/**/*.js ", "**/*\\.test\\.js" ]
+  - files: [ "**/__test__/**/*.js", "**/*.test.js", "**/*.test.jsx" ]
     env:
       jest: true
+    rules:
+      import/no-extraneous-dependencies: off
