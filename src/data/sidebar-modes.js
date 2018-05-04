@@ -43,6 +43,14 @@ const SidebarModes = {
     EVENT_ACTIONS: false,
     EVENT_LABELS_PANE: false,
   },
+  EMPTY: {
+    LINK_PANE: false,
+    FILTER_PANE: false,
+    GENERATE_ICS_PANE: false,
+    MARKDOWN_GUIDE: false,
+    EVENT_ACTIONS: false,
+    EVENT_LABELS_PANE: true,
+  },
 };
 
 export default SidebarModes;

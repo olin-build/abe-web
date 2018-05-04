@@ -5,10 +5,10 @@ import moment from 'moment';
 import AddEditEventPage from '../pages/add-edit/add-edit-page';
 
 describe('AddEditEventPage', () => {
-    // TODO: test the snapshot. This requires mocking moment or
-    // EventDateTimeSelector, or modifying the latter to accept the datetime as
-    // a property.
-    test.skip('matches snapshot', () => {
+  // TODO: test the snapshot. This requires mocking moment or
+  // EventDateTimeSelector, or modifying the latter to accept the datetime as
+  // a property.
+  test.skip('matches snapshot', () => {
     const event = {
       title: 'An event title',
       labels: ['label'],

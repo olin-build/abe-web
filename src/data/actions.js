@@ -15,12 +15,12 @@ export const ActionTypes = {
   TOGGLE_SIDEBAR_VISIBILITY: 'TOGGLE_SIDEBAR_VISIBILITY', // Toggles the visibility of the app sidebar
   // Calendar view
   SET_FOCUSED_DATE: 'SET_FOCUSED_DATE', // Sets the day the calendar view is ensuring is shown (changing this changes
-                                        // which time period is shown on the calendar)
+  // which time period is shown on the calendar)
   SET_FILTER_LABELS: 'SET_FILTER_LABELS', // Sets which labels are selected as part of the event filter
   FILTER_LABEL_TOGGLED: 'FILTER_LABEL_TOGGLED', // Toggles whether or not a specific label is selected as part
-                                                // of the event filter
+  // of the event filter
   SET_FILTER_LABEL_SELECTED: 'SET_FILTER_LABEL_SELECTED', // Sets whether or not a specific label is selected as part
-                                                          // of the event filter
+  // of the event filter
   SET_VIEW_MODE: 'SET_VIEW_MODE', // Sets which view mode (month, week, day, etc) the calendar is in
   // Event data
   SET_CURRENT_EVENT: 'SET_CURRENT_EVENT', // Keeps track of the data for the event currently being viewed or edited
@@ -35,7 +35,7 @@ export const ActionTypes = {
   SET_LABELS: 'SET_LABELS', // Sets the label data using data from a server response
   // ICS
   GENERATE_ICS_FEED: 'GENERATE_ICS_FEED', // Triggers generation of an ICS feed with current filter applied and copies
-                                          // URL to clipboard
+  // URL to clipboard
 };
 
 // Sections:
@@ -279,6 +279,14 @@ export function refreshEvents(start, end) {
   };
 }
 
+// FIXME: This is a bit of a hack to trigger a refresh. It should be replaced by some sort of cache invalidation call.
+export function refreshEventsForCurrentViewWindow() {
+  return (dispatch, getStore) => {
+    const { currentlyViewingDate } = getStore().calendar;
+    dispatch(setCurrentlyViewingDate(currentlyViewingDate));
+  };
+}
+
 /**
  * Saves the event data received from the server to the Redux store.
  * @param {object} events - the event data
@@ -360,6 +368,7 @@ export function eventSavedSuccessfully(event) {
       action,
       label,
     });
+    dispatch(refreshEventsForCurrentViewWindow());
     dispatch(push('/'));
   };
 }
@@ -514,6 +523,14 @@ export function labelVisibilityToggled(labelName) {
     label: 'User toggled visibility of label on calendar',
   });
   return { type: ActionTypes.FILTER_LABEL_TOGGLED, labelName };
+}
+
+export function updateLabel(data) {
+  return () => {
+    // TODO: update model on success
+    axios.post(`${window.abe_url}/labels/${data.id}`, data)
+      .catch(error => alert(`Update label failed:\n${error}`));
+  };
 }
 
 // ########## End Labels-Related Actions ########## //

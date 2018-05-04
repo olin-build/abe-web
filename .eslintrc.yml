@@ -50,7 +50,7 @@ rules:
   jsx-a11y/no-static-element-interactions: off
 
   # Fixable exceptions to Airbnb style guide.
-  indent: off
+  indent: warn
   react/jsx-indent: off
 
 overrides:
