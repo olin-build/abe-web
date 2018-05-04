@@ -429,6 +429,7 @@ span.label {
 
 #calendar {
     padding: 1rem 0 0;
+    flex: 1;
 }
 
 .fc-toolbar.fc-header-toolbar {
@@ -448,6 +449,8 @@ span.label {
 .calendar-container {
     position: relative;
     height: 100%;
+    display: flex;
+    flex-direction: column;
 }
 
 .label-selector-list {

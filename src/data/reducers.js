@@ -49,6 +49,9 @@ export function events(state = {}, action) {
         current: action.data,
       });
     case ActionTypes.SET_EVENTS:
+      // Sort the list of labels on each event so that events with the same labels
+      // always display with the same color
+      Object.values(action.data).forEach(event => event.labels.sort());
       return Object.assign({}, state, {
         events: action.data,
       });

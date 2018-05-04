@@ -44,24 +44,21 @@ export default class CalendarPage extends React.Component {
     const currDate = this.props.currentlyViewingDate
       ? this.props.currentlyViewingDate.format('MMMM D, YYYY')
       : '';
-    const header = (<CalendarHeader
-      title={currDate}
-      onLeftClick={this.props.pageLeft}
-      onRightClick={this.props.pageRight}
-      onTodayClick={this.props.showToday}
-      {...this.props}
-    />);
 
     return (
       <div className="calendar-container">
-        {/* <MenuIconButton onClick={this.props.toggleSidebarCollapsed} tooltip="Show/Hide Sidebar"/> */}
-        {/* <div style={{display: 'none'}}>{hackInsert}</div> */}
+        <CalendarHeader
+          title={currDate}
+          onLeftClick={this.props.pageLeft}
+          onRightClick={this.props.pageRight}
+          onTodayClick={this.props.showToday}
+          {...this.props}
+        />
         <UltraResponsiveCalendar
           id="calendar"
           className="page-container calendar-container"
           viewType={this.props.currentViewMode.calendarModeProp}
           days={this.props.currentViewMode.daysVisible}
-          header={header}
           startDate={this.props.currentlyViewingDate}
           onEventClick={this.props.viewEvent}
           dayStartHour={9}

@@ -3660,13 +3660,6 @@ fstream@^1.0.0, fstream@^1.0.10, fstream@^1.0.2:
     mkdirp ">=0.5 0"
     rimraf "2"
 
-fullcalendar@^3.4.0:
-  version "3.8.0"
-  resolved "https://registry.yarnpkg.com/fullcalendar/-/fullcalendar-3.8.0.tgz#4c0fe494a62b0a8d640c6de8eb883b49a212b5dc"
-  dependencies:
-    jquery "2 - 3"
-    moment "^2.9.0"
-
 function-bind@^1.0.2, function-bind@^1.1.0, function-bind@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/function-bind/-/function-bind-1.1.1.tgz#a56899d3ea3c9bab874bb9773b7c5ede92f4895d"
@@ -8392,8 +8385,8 @@ uid-number@^0.0.6:
   resolved "https://registry.yarnpkg.com/uid-number/-/uid-number-0.0.6.tgz#0ea10e8035e8eb5b8e4449f06da1c730663baa81"
 
 "ultra-responsive-calendar@https://github.com/kylecombes/ultra-responsive-calendar.git":
-  version "0.2.6"
-  resolved "https://github.com/kylecombes/ultra-responsive-calendar.git#5c65c169543e9389612dbe1f7f892927e73bd698"
+  version "0.2.10"
+  resolved "https://github.com/kylecombes/ultra-responsive-calendar.git#6ae1b6b54ec05065313f510daeffc39f8be784e0"
   dependencies:
     axios "^0.18.0"
     babel "^6.23.0"
@@ -8404,6 +8397,7 @@ uid-number@^0.0.6:
     babel-preset-react "^6.24.1"
     babel-preset-stage-0 "^6.24.1"
     css-loader "^0.28.4"
+    deepcopy "^0.6.3"
     moment "^2.18.1"
     moment-timezone "^0.5.14"
     prop-types "^15.6.1"
