@@ -4,15 +4,15 @@ import { refreshLabelsIfNeeded, updateLabel } from '../data/actions';
 
 // Pass data from the Redux state to the React component
 const mapStateToProps = state => ({
-    labels: state.labels.labelList,
+  labels: state.labels.labelList,
 });
 
 // Pass functions from src/data/actions.jsx to the React component
 const mapDispatchToProps = dispatch => ({
-    updateLabel: (data) => {
-        dispatch(updateLabel(data));
-    },
-    refreshLabelsIfNeeded,
+  updateLabel: (data) => {
+    dispatch(updateLabel(data));
+  },
+  refreshLabelsIfNeeded,
 });
 
 // Connect props to Redux state and actions
