@@ -3,15 +3,9 @@
 // It's intended to make it easier for an administator to review the labels,
 // their descriptions, colors, and flags.
 //
-//
 // This isn't part of the public UI. It's not protected by auth, since it
 // doesn't (yet) allow modifications to the set of labels, but there's no link
 // to it.
-//
-// It could be added as a user-visible view:
-//   * Set the sidebar mode
-//   * Set the page title
-//   * Link to it
 
 import * as React from 'react';
 import _ from 'lodash';
@@ -20,6 +14,8 @@ export default class LabelsPage extends React.Component {
   constructor(props) {
     super(props);
     props.refreshLabelsIfNeeded();
+    this.props.setSidebarMode();
+    props.setPageTitlePrefix('Labels');
   }
 
   render() {
