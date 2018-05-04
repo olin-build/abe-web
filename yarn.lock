@@ -8385,8 +8385,8 @@ uid-number@^0.0.6:
   resolved "https://registry.yarnpkg.com/uid-number/-/uid-number-0.0.6.tgz#0ea10e8035e8eb5b8e4449f06da1c730663baa81"
 
 "ultra-responsive-calendar@https://github.com/kylecombes/ultra-responsive-calendar.git":
-  version "0.2.9"
-  resolved "https://github.com/kylecombes/ultra-responsive-calendar.git#3fa89768c8038ff7d4039440d8d5e4663d07413e"
+  version "0.2.10"
+  resolved "https://github.com/kylecombes/ultra-responsive-calendar.git#6ae1b6b54ec05065313f510daeffc39f8be784e0"
   dependencies:
     axios "^0.18.0"
     babel "^6.23.0"
@@ -8397,6 +8397,7 @@ uid-number@^0.0.6:
     babel-preset-react "^6.24.1"
     babel-preset-stage-0 "^6.24.1"
     css-loader "^0.28.4"
+    deepcopy "^0.6.3"
     moment "^2.18.1"
     moment-timezone "^0.5.14"
     prop-types "^15.6.1"
