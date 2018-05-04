@@ -14,6 +14,7 @@ import SidebarContainer from './containers/sidebar-container';
 import AddEditContainer from './containers/add-edit-container';
 import ViewEventContainer from './containers/event-details-container';
 import ImportContainer from './containers/import-container';
+import LabelsContainer from './containers/labels-container';
 import SubscriptionContainer from './containers/subscription-container';
 
 // Remove trailing slash, if present
@@ -42,6 +43,7 @@ ReactDOM.render(
             <Route path="/edit/:id?/:recId?" component={AddEditContainer} />
             <Route path="/view/:id/:recId?" component={ViewEventContainer} />
             <Route exact path="/import" component={ImportContainer} />
+            <Route exact path="/labels" component={LabelsContainer} />
             <Route path="/subscription/:id" component={SubscriptionContainer} />
           </Switch>
         </Router>
@@ -50,4 +52,3 @@ ReactDOM.render(
   </Provider>,
   document.getElementById('app'),
 );
-
