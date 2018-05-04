@@ -13,7 +13,7 @@ globals:
 rules:
   max-len: [warn, { code: 120 }]
   # exceptions from eslint:recommended:
-  no-unused-vars: [error, { argsIgnorePattern: "^_" }]
+  no-unused-vars: [error, argsIgnorePattern: "^_" ]
   # exceptions from plugin:react/recommended:
   react/no-find-dom-node: warn
   react/prop-types: off           # TODO: #123
@@ -22,22 +22,15 @@ rules:
   camelcase: warn
   consistent-return: warn
   guard-for-in: warn
-  import/first: warn
-  import/no-extraneous-dependencies: warn
   import/no-unresolved: warn
-  import/no-webpack-loader-syntax: warn
   import/prefer-default-export: warn
-  jsx-a11y/anchor-is-valid: warn
-  jsx-a11y/click-events-have-key-events: warn
-  jsx-a11y/label-has-for: warn
-  jsx-a11y/no-static-element-interactions: warn
   no-alert: warn
   no-mixed-operators: warn
   no-param-reassign: warn
-  no-plusplus: warn
+  no-plusplus: off
   no-restricted-globals: warn
   no-restricted-syntax: warn
-  no-underscore-dangle: warn
+  no-underscore-dangle: [error, allow: [__REDUX_DEVTOOLS_EXTENSION_COMPOSE__]]
   no-use-before-define: warn
   prefer-destructuring: warn
   react/forbid-prop-types: warn
@@ -49,6 +42,12 @@ rules:
   react/prefer-stateless-function: warn
   react/require-default-props: warn
   react/sort-comp: warn
+
+  # TODO: #118 accessibility
+  jsx-a11y/anchor-is-valid: off
+  jsx-a11y/click-events-have-key-events: off
+  jsx-a11y/label-has-for: off
+  jsx-a11y/no-static-element-interactions: off
 
   # Fixable exceptions to Airbnb style guide.
   indent: off
@@ -65,6 +64,8 @@ overrides:
       no-console: off
       global-require: off  # this warning doesn't apply to non-babel server
   # tests:
-  - files: [ "**/__test__/**/*.js ", "**/*\\.test\\.js" ]
+  - files: [ "**/__test__/**/*.js", "**/*.test.js", "**/*.test.jsx" ]
     env:
       jest: true
+    rules:
+      import/no-extraneous-dependencies: off

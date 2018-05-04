@@ -5,6 +5,7 @@ import {
   setSidebarMode,
   setPageTitlePrefix,
   getEventDataViaUrlParams,
+  clearCurrentEvent,
 } from '../data/actions';
 import EventDetailsPage from '../pages/details/event-details-page';
 
@@ -23,6 +24,9 @@ const mapDispatchToProps = dispatch => ({
   },
   setPageTitlePrefix: (title) => {
     dispatch(setPageTitlePrefix(title));
+  },
+  clearCurrentEvent: () => {
+    dispatch(clearCurrentEvent());
   },
 });
 

@@ -1,6 +1,7 @@
 // This container is a sort of middleware between the React page and the Redux data store
 
 import { connect } from 'react-redux';
+import moment from 'moment';
 import {
   setSidebarMode,
   toggleSidebarCollapsed,
@@ -13,7 +14,6 @@ import {
   viewEvent,
 } from '../data/actions';
 import CalendarPage from '../pages/calendar/calendar-page';
-import moment from 'moment';
 
 const getVisibleEvents = (events, visibleLabels, allLabels) => {
   // Filter out events that are not labeled with currently visible labels
@@ -23,6 +23,7 @@ const getVisibleEvents = (events, visibleLabels, allLabels) => {
       const indexOfLabel = visibleLabels.indexOf(event.labels[i]);
       if (indexOfLabel > -1) {
         event.color = allLabels[visibleLabels[indexOfLabel]].color;
+        event.id = event.id || event.sid; // Make sure all events have an id attribute
         return true; // Event has at least one visible label
       }
     }

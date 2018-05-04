@@ -54,12 +54,11 @@
     "expose": "^0.1.4",
     "expose-loader": "^0.7.3",
     "express": "^4.15.3",
-    "flux": "^3.1.2",
-    "fullcalendar": "^3.4.0",
     "http-server": "0.10.0",
     "input-moment": "git+https://github.com/kylecombes/input-moment.git",
-    "jquery": "^3.2.1",
+    "lodash": "^4.17.10",
     "moment": "^2.18.1",
+    "prop-types": "^15.6.1",
     "react": "^15.6.1",
     "react-dnd": "^2.4.0",
     "react-dom": "^15.6.1",
@@ -80,12 +79,13 @@
   },
   "devDependencies": {
     "babel-preset-env": "^1.6.1",
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-15": "^1.0.5",
     "eslint": "^4.19.1",
     "eslint-config-airbnb": "^16.1.0",
     "eslint-plugin-import": "^2.7.0",
     "eslint-plugin-jsx-a11y": "6.0.2",
     "eslint-plugin-react": "^7.4.0",
-    "jest": "^22.4.3",
     "markdownlint-cli": "^0.8.1",
     "react-codemirror": "^1.0.0",
     "react-tag-input": "git+https://github.com/kylecombes/react-tags.git",
@@ -96,6 +96,12 @@
     "webpack-dev-server": "^2.5.0"
   },
   "jest": {
-    "testEnvironment": "node"
+    "moduleNameMapper": {
+      "\\.(svg)$": "<rootDir>/__mocks__/fileMock.js"
+    },
+    "setupTestFrameworkScriptFile": "<rootDir>/src/__test__/setup.js",
+    "testPathIgnorePatterns": [
+      "setup.js"
+    ]
   }
 }

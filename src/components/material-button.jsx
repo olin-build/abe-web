@@ -3,7 +3,7 @@
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-// import AddIcon from 'svg-react-loader?name=Icon!../../assets/icons/ic-add-circle.svg';
+// import AddIcon from '../../assets/icons/ic-add-circle.svg';
 
 export default class AddButton extends Component {
   constructor(props) {
