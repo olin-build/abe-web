@@ -411,6 +411,7 @@ export function eventDeletedSuccessfully(eventId) {
       action: 'success',
       label: `Event ${eventId} deleted successfully`,
     });
+    dispatch(refreshEventsForCurrentViewWindow());
     dispatch(push('/'));
   };
 }
