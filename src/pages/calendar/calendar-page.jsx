@@ -12,12 +12,8 @@ export default class CalendarPage extends React.Component {
 
     // Load the visible labels from the URL (if defined)
     const labelsStr = this.props.match.params.labels;
-    const labels = this.props.labels.labelList;
-    if (labels && labelsStr && labelsStr.length > 0) {
-      const labelsArr = labelsStr.split(',');
-      Object.keys(labels).forEach((labelName) => {
-        labels[labelName].selected = labelName in labelsArr;
-      });
+    if (labelsStr && labelsStr.length > 0) {
+      const labelsArr = labelsStr.split(',').sort();
       this.props.setVisibleLabels(labelsArr);
     }
 

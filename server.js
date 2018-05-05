@@ -9,7 +9,8 @@ const fs = require('fs');
 app.use(bodyParser.json({ type: 'application/*+json' }));
 app.use(express.static(__dirname));
 
-if (fs.existsSync('./.env')) { // Check if we're running on a local dev machine
+// Check if we're running on a local dev machine
+if (fs.existsSync('./.env')) {
   // Load environment variables from .env
   require('dotenv').config();
 
@@ -28,19 +29,7 @@ const getHtml = require('./index.html.js');
 // Ugly HTML template TODO: Do this better
 const html = getHtml();
 
-const routes = [
-  '/',
-  '/calendar',
-  '/calendar/:labels',
-  '/edit',
-  '/import',
-  '/edit/:id',
-  '/edit/:sid/:rec_id',
-  '/view/:id/:rec_id?',
-  '/subscription/:id',
-];
-
-app.get(routes, (req, res) => {
+app.get('*', (req, res) => {
   res.send(html);
 });
 
