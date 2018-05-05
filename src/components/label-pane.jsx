@@ -9,8 +9,6 @@ export default class LabelPane extends React.Component {
     if (props.refreshLabelsIfNeeded) props.refreshLabelsIfNeeded();
   }
 
-  labelClicked = labelName => this.props.labelToggled(labelName);
-
   render() {
     const {
       editable, possibleLabels: labels, selectedLabels, showUnselected,
@@ -20,34 +18,36 @@ export default class LabelPane extends React.Component {
     }
     const enableHoverStyle = !this.props.general.isMobile && this.props.editable;
     const noHoverClass = enableHoverStyle ? '' : 'no-hover ';
-    const labelElems = [];
-    Object.keys(labels).forEach((name) => {
+    let labelKeys = Object.keys(labels);
+    if (!showUnselected) {
+      labelKeys = Object.select(labelKeys, selectedLabels.includes);
+    }
+    const labelClicked = labelName => this.props.labelToggled(labelName);
+
+    function renderLabel(name) {
       const tooltip = labels[name].description;
       const selected = selectedLabels.includes(name);
-      if (selected || showUnselected) {
-        const classes = `label ${name}${selected ? ' selected' : ''}`;
-        const id = `label-${name}`;
-        if (editable) {
-          labelElems.push(<button
-            id={id}
-            key={name}
-            title={tooltip}
-            type="button"
-            className={`button ${noHoverClass}${classes}`}
-            onClick={() => this.labelClicked(name)}
-          >
-              <span className="ion-pricetag">&nbsp;</span>
-              {name}
-                          </button>);
-        } else {
-          labelElems.push(<span id={id} key={name} title={tooltip} className={classes}>
-            <span className="ion-pricetag">&nbsp;</span>
-            {name}
-                          </span>);
-        }
-      }
-    });
-
+      const classes = `label ${name}${selected ? ' selected' : ''}`;
+      const id = `label-${name}`;
+      return editable ? (
+        <button
+          id={id}
+          key={name}
+          title={tooltip}
+          type="button"
+          className={`button ${noHoverClass}${classes}`}
+          onClick={() => labelClicked(name)}
+        >
+          <span className="ion-pricetag">&nbsp;</span>
+          {name}
+        </button>
+      ) : (
+        <span id={id} key={name} title={tooltip} className={classes}>
+          <span className="ion-pricetag">&nbsp;</span>
+          {name}
+        </span>
+      );
+    }
     function getLabelCss(name) {
       const { color } = labels[name];
       // Joining the list of strings, and then again the caller, is less
@@ -66,8 +66,8 @@ export default class LabelPane extends React.Component {
 
     return (
       <div className={this.props.contentClass}>
-        <style type="text/css">{Object.keys(labels).map(getLabelCss).join('\n')}</style>
-        <div className="label-selector-list">{labelElems}</div>
+        <style type="text/css">{labelKeys.map(getLabelCss).join('\n')}</style>
+        <div className="label-selector-list">{labelKeys.map(renderLabel)}</div>
       </div>
     );
   }
