@@ -35,6 +35,7 @@ describe('AddEditEventPage', () => {
     const wrapper = shallow(<AddEditEventPage
       eventData={event}
       match={{ params: { id: 1 } }}
+      possibleLabels={{}}
       setPageTitlePrefix={() => undefined}
       setSidebarMode={() => undefined}
       toggleSidebarCollapsed={() => undefined}
