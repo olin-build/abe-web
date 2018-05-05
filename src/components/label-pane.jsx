@@ -25,10 +25,10 @@ export default class LabelPane extends React.Component {
     const labelClicked = labelName => this.props.labelToggled(labelName);
 
     function renderLabel(name) {
-      const tooltip = labels[name].description;
+      const { description: tooltip, id } = labels[name];
       const selected = selectedLabels.includes(name);
-      const classes = `label ${name}${selected ? ' selected' : ''}`;
-      const id = `label-${name}`;
+      const cssId = `label-${id}`;
+      const classes = `label ${cssId}${selected ? ' selected' : ''}`;
       return editable ? (
         <button
           id={id}
@@ -49,7 +49,8 @@ export default class LabelPane extends React.Component {
       );
     }
     function getLabelCss(name) {
-      const { color } = labels[name];
+      const { color, id } = labels[name];
+      const cssId = `label-${id}`;
       // Joining the list of strings, and then again the caller, is less
       // efficient, but I found it clearer, and this code is not run much
       // and hasn't shown up as a hot spot.
@@ -57,10 +58,10 @@ export default class LabelPane extends React.Component {
       // Join w/ '\n', here and in caller, for more readable debugging and
       // snapshots.
       return [
-        `.label.${name}.button:not(.selected){background-color:white;}`,
-        `.label.${name}:not(.button):not(.selected){border-color:${color};color:${color};}`,
+        `.label.${cssId}.button:not(.selected){background-color:white;}`,
+        `.label.${cssId}:not(.button):not(.selected){border-color:${color};color:${color};}`,
         // hovered button, or selected
-        `.label.button.${name}:not(.no-hover):hover,.label.${name}.selected{background-color:${color};}`,
+        `.label.button.${cssId}:not(.no-hover):hover,.label.${cssId}.selected{background-color:${color};}`,
       ].join('\n');
     }
 
