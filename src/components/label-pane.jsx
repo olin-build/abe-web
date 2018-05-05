@@ -13,9 +13,11 @@ export default class LabelPane extends React.Component {
 
   render() {
     const {
-      editable, possibleLabels, selectedLabels, showUnselected,
+      editable, possibleLabels: labels, selectedLabels, showUnselected,
     } = this.props;
-    const labels = possibleLabels || [];
+    if (!labels) {
+      return <div className="loading" />;
+    }
     const enableHoverStyle = !this.props.general.isMobile && this.props.editable;
     const noHoverClass = enableHoverStyle ? '' : 'no-hover ';
     const labelElems = [];
@@ -73,11 +75,14 @@ export default class LabelPane extends React.Component {
 
 // Define React prop types for type checking during development
 LabelPane.propTypes = {
-  general: PropTypes.object,
+  general: PropTypes.shape({ isMobile: PropTypes.bool }),
   editable: PropTypes.bool,
   showUnselected: PropTypes.bool,
-  possibleLabels: PropTypes.object,
-  selectedLabels: PropTypes.array,
+  possibleLabels: PropTypes.objectOf(PropTypes.shape({
+    color: PropTypes.string,
+    description: PropTypes.string,
+  })),
+  selectedLabels: PropTypes.arrayOf(PropTypes.string),
   contentClass: PropTypes.string,
 };
 
@@ -85,6 +90,7 @@ LabelPane.propTypes = {
 LabelPane.defaultProps = {
   general: {},
   editable: true,
+  possibleLabels: {},
   selectedLabels: [],
   showUnselected: true,
   contentClass: '',
