@@ -1,7 +1,10 @@
 // This component shows a list of event labels
 
-import * as React from 'react';
+import _ from 'lodash';
 import PropTypes from 'prop-types';
+import * as React from 'react';
+
+const initialLabels = ['featured'];
 
 export default class LabelPane extends React.Component {
   constructor(props) {
@@ -10,22 +13,23 @@ export default class LabelPane extends React.Component {
   }
 
   render() {
-    const {
-      editable, possibleLabels: labels, selectedLabels, showUnselected,
-    } = this.props;
-    if (!labels) {
-      return <div className="loading" />;
-    }
+    const { editable, selectedLabels, showUnselected } = this.props;
     const enableHoverStyle = !this.props.general.isMobile && this.props.editable;
     const noHoverClass = enableHoverStyle ? '' : 'no-hover ';
-    let labelKeys = Object.keys(labels);
+    // sort Featured first; then remaining default labels, alphabetically within
+    // each section
+    let labels = _.chain(this.props.possibleLabels || {})
+      .sortBy(label => label.name.toLowerCase())
+      .sortBy(label => !label.default)
+      .sortBy(label => !initialLabels.includes(label.name.toLowerCase()))
+      .value();
     if (!showUnselected) {
-      labelKeys = Object.select(labelKeys, selectedLabels.includes);
+      labels = labels.filter(({ name }) => selectedLabels.includes(name));
     }
     const labelClicked = labelName => this.props.labelToggled(labelName);
 
-    function renderLabel(name) {
-      const { description: tooltip, id } = labels[name];
+    function renderLabel(label) {
+      const { description: tooltip, name, id } = label;
       const selected = selectedLabels.includes(name);
       const cssId = `label-${id}`;
       const classes = `label ${cssId}${selected ? ' selected' : ''}`;
@@ -48,8 +52,8 @@ export default class LabelPane extends React.Component {
         </span>
       );
     }
-    function getLabelCss(name) {
-      const { color, id } = labels[name];
+    function getLabelCss(label) {
+      const { color, id } = label;
       const cssId = `label-${id}`;
       // Joining the list of strings, and then again the caller, is less
       // efficient, but I found it clearer, and this code is not run much
@@ -67,8 +71,8 @@ export default class LabelPane extends React.Component {
 
     return (
       <div className={this.props.contentClass}>
-        <style type="text/css">{labelKeys.map(getLabelCss).join('\n')}</style>
-        <div className="label-selector-list">{labelKeys.map(renderLabel)}</div>
+        <style type="text/css">{labels.map(getLabelCss).join('\n')}</style>
+        <div className="label-selector-list">{labels.map(renderLabel)}</div>
       </div>
     );
   }

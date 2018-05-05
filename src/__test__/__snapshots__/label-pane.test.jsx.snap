@@ -94,6 +94,106 @@ exports[`LabelPane not editable 1`] = `
 </div>
 `;
 
+exports[`LabelPane sorts labels 1`] = `
+<div
+  className=""
+>
+  <style
+    type="text/css"
+  >
+    .label.label-id-0.button:not(.selected){background-color:white;}
+    .label.label-id-0:not(.button):not(.selected){border-color:undefined;color:undefined;}
+    .label.button.label-id-0:not(.no-hover):hover,.label.label-id-0.selected{background-color:undefined;}
+    .label.label-id-4.button:not(.selected){background-color:white;}
+    .label.label-id-4:not(.button):not(.selected){border-color:undefined;color:undefined;}
+    .label.button.label-id-4:not(.no-hover):hover,.label.label-id-4.selected{background-color:undefined;}
+    .label.label-id-3.button:not(.selected){background-color:white;}
+    .label.label-id-3:not(.button):not(.selected){border-color:undefined;color:undefined;}
+    .label.button.label-id-3:not(.no-hover):hover,.label.label-id-3.selected{background-color:undefined;}
+    .label.label-id-2.button:not(.selected){background-color:white;}
+    .label.label-id-2:not(.button):not(.selected){border-color:undefined;color:undefined;}
+    .label.button.label-id-2:not(.no-hover):hover,.label.label-id-2.selected{background-color:undefined;}
+    .label.label-id-1.button:not(.selected){background-color:white;}
+    .label.label-id-1:not(.button):not(.selected){border-color:undefined;color:undefined;}
+    .label.button.label-id-1:not(.no-hover):hover,.label.label-id-1.selected{background-color:undefined;}
+  </style>
+  <div
+    className="label-selector-list"
+  >
+    <button
+      className="button label label-id-0"
+      id="id-0"
+      onClick={[Function]}
+      title={undefined}
+      type="button"
+    >
+      <span
+        className="ion-pricetag"
+      >
+         
+      </span>
+      featured
+    </button>
+    <button
+      className="button label label-id-4"
+      id="id-4"
+      onClick={[Function]}
+      title={undefined}
+      type="button"
+    >
+      <span
+        className="ion-pricetag"
+      >
+         
+      </span>
+      a-label-3
+    </button>
+    <button
+      className="button label label-id-3"
+      id="id-3"
+      onClick={[Function]}
+      title={undefined}
+      type="button"
+    >
+      <span
+        className="ion-pricetag"
+      >
+         
+      </span>
+      a-label-4
+    </button>
+    <button
+      className="button label label-id-2"
+      id="id-2"
+      onClick={[Function]}
+      title={undefined}
+      type="button"
+    >
+      <span
+        className="ion-pricetag"
+      >
+         
+      </span>
+      a-label-1
+    </button>
+    <button
+      className="button label label-id-1"
+      id="id-1"
+      onClick={[Function]}
+      title={undefined}
+      type="button"
+    >
+      <span
+        className="ion-pricetag"
+      >
+         
+      </span>
+      a-label-2
+    </button>
+  </div>
+</div>
+`;
+
 exports[`LabelPane with selected labels 1`] = `
 <div
   className="css-class"
