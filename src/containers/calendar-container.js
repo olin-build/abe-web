@@ -1,14 +1,13 @@
 // This container is a sort of middleware between the React page and the Redux data store
 
 import { connect } from 'react-redux';
-import moment from 'moment';
 import {
   setSidebarMode,
   toggleSidebarCollapsed,
   setVisibleLabels,
   setPageTitlePrefix,
   setRoute,
-  setCurrentlyViewingDate,
+  showToday,
   page,
   setViewMode,
   viewEvent,
@@ -65,7 +64,7 @@ const mapDispatchToProps = dispatch => ({
     dispatch(page(1));
   },
   showToday: () => {
-    dispatch(setCurrentlyViewingDate(moment().local()));
+    dispatch(showToday());
   },
   setViewMode: (mode) => {
     dispatch(setViewMode(mode));

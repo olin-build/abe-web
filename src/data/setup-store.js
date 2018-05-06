@@ -9,6 +9,9 @@ import SidebarMode from './sidebar-modes';
 export default function setupStore(history) {
   const debug = process.env.DEBUG || false;
   const googleAnalyticsId = process.env.GA_ID;
+  // TODO: Replace these with some user-configurable option
+  const dayStartHour = process.env.DAY_START_HOUR || 8;
+  const dayEndHour = process.env.DAY_END_HOUR || 24;
 
   const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent);
   const initialState = {
@@ -22,6 +25,8 @@ export default function setupStore(history) {
     calendar: {
       currentlyViewingDate: null,
       currentViewMode: null, // Set below
+      dayStartHour,
+      dayEndHour,
       possibleViewModes: {
         Day: {
           displayName: 'Day',
