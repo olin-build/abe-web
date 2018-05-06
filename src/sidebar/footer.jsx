@@ -7,7 +7,7 @@ export default class Footer extends React.Component {
     return (
       <footer>
         <div className="footer-message">
-          <p>Made with &hearts; at
+          <p>Made with &hearts; at&nbsp;
             <a href="http://www.olin.edu/" title="Olin College website" target="_blank">Olin College of Engineering</a>
           </p>
           <p>
