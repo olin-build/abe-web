@@ -57,9 +57,7 @@ export default class CalendarPage extends React.Component {
           days={this.props.currentViewMode.daysVisible}
           startDate={this.props.currentlyViewingDate}
           onEventClick={this.props.viewEvent}
-          dayStartHour={9}
-          dayEndHour={24}
-          events={this.props.events}
+          {...this.props}
         />
       </div>
     );
