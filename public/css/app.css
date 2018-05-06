@@ -95,6 +95,10 @@ textarea::placeholder {
     pointer-events: none;
 }
 
+.sidebar-item-content > div > *:last-child {
+    margin-bottom: 0;
+}
+
 @media screen and (max-width: 700px) {
     .app-sidebar {
         left: -33.3%;
@@ -139,7 +143,7 @@ textarea::placeholder {
 
 @media (min-width: 60rem) {
     .app-sidebar {
-        width: 25rem;
+        width: 20rem;
     }
 
     .app-sidebar.collapsed {
@@ -147,15 +151,14 @@ textarea::placeholder {
     }
 
     .scene-container {
-        left: 25rem;
+        left: 20rem;
     }
 }
 
 /** --- Begin Sidebar Header --- **/
 
 .header-content {
-    padding: 1.2em 0.5em 1.2em 0;
-    text-align: center;
+    padding: 1.2em;
     background-color: #009BDF;
     flex-basis: content;
     width: 100%
@@ -187,8 +190,6 @@ header nav li.menu-text {
 header nav li.menu-text a {
     color: white;
     padding: 1rem 1.8rem;
-    /*border-top: 6px solid #e9e9e9;*/
-    /*border-bottom: 6px solid #e9e9e9;*/
 }
 
 header nav li.menu-text:hover a {
@@ -216,7 +217,7 @@ header nav li.menu-text:hover a {
     display: flex;
     width: 100%;
     padding: 0.5em 1rem;
-    font-size: 120%;
+    font-size: 1.1em;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
@@ -224,7 +225,7 @@ header nav li.menu-text:hover a {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    border-bottom: 4px solid #e2dddd;
+    border-bottom: 0.15em solid #e2dddd;
 }
 
 .sidebar-title-right {
@@ -334,7 +335,7 @@ footer {
 
 .label {
     display: inline-block;
-    padding: 0.33333rem 0.5rem;
+    padding: 0.35em 0.5em;
     border-radius: 0;
     font-size: 0.8rem;
     line-height: 1;
@@ -350,8 +351,7 @@ span.label {
 }
 
 .button.label {
-    margin-bottom: 0;
-    margin-top: 1rem;
+    margin: 0.3rem 0.2em;
 }
 
 .button.label:hover:not(.no-hover) {
@@ -361,7 +361,7 @@ span.label {
  }
 
 .label-selector-list {
-    margin-top: -0.6rem;
+    margin-bottom: -0.2em;
 }
 
 /** ----- End Labels ----- **/
@@ -371,14 +371,18 @@ span.label {
 
 .calendar-header {
     background-color: white;
-    border-bottom: 4px solid #dcd9d9;
+    border-bottom: 0.15em solid #dcd9d9;
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
+.calendar-header * {
+    color: #7d7d7d;
+}
+
 .calendar-header .title {
-    font-size: 2em;
+    font-size: 1.3em;
 }
 
 .calendar-header-view-selector {
@@ -387,7 +391,7 @@ span.label {
 
 .calendar-header-view-option {
     display: inline-block;
-    padding: 1.5em 1em;
+    padding: 0.6em 1em;
     transition: all 0.3s ease;
     cursor: pointer;
 }
@@ -411,19 +415,19 @@ span.label {
 
 .calendar-header-pagination button {
     padding: 0.2em;
-    margin: 0.7em 0.5em;
+    margin: 0 0.5em;
     font-weight: bold;
     cursor: pointer;
 }
 
 .calendar-container .menu-icon-button {
     cursor: pointer;
-    margin: 0 1em;
+    margin: 0 0.5em;
 }
 
 .calendar-container .menu-icon-button > .menu-icon {
-    width: 3em;
-    height: 3em;
+    width: 2em;
+    height: 2em;
     fill: gray;
 }
 
@@ -432,18 +436,12 @@ span.label {
     flex: 1;
 }
 
-.fc-toolbar.fc-header-toolbar {
-    padding-left: 5em;
+.urc {
+    font-size: 0.9em;
 }
 
-.fc-list-item{
-    color: white
-}
-
-.fc-list-item:hover,
-.fc-list-item:focus,
-.fc-list-item-title:hover a{
-    color: black
+.urc .month-day-header {
+    font-size: 0.8em;
 }
 
 .calendar-container {
@@ -460,7 +458,7 @@ span.label {
 }
 
 .label-selector-list button {
-    border-radius: 8px;
+    border-radius: 0.2rem;
 }
 
 .label:not(.selected) {
