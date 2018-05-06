@@ -164,6 +164,18 @@ function getPageDelta(state) {
     : [1, 'M'];
 }
 
+export function showToday() {
+  return (dispatch, getStore) => {
+    const focusDate = moment().local();
+    const state = getStore();
+    const inWeekView = state.calendar.currentViewMode.daysVisible === 7;
+    if (inWeekView) {
+      focusDate.day(0);
+    }
+    dispatch(setCurrentlyViewingDate(focusDate));
+  };
+}
+
 /**
  * Sets the date the calendar should be "centered" around
  * @param {Moment} date - the first day to show in a multi-day view, or to be used to determine the week or month to
