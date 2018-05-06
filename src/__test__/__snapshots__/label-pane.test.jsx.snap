@@ -7,19 +7,19 @@ exports[`LabelPane matches snapshot 1`] = `
   <style
     type="text/css"
   >
-    .label.first.button:not(.selected){background-color:white;}
-    .label.first:not(.button):not(.selected){border-color:red;color:red;}
-    .label.button.first:not(.no-hover):hover,.label.first.selected{background-color:red;}
-    .label.second.button:not(.selected){background-color:white;}
-    .label.second:not(.button):not(.selected){border-color:green;color:green;}
-    .label.button.second:not(.no-hover):hover,.label.second.selected{background-color:green;}
+    .label.label-label-1.button:not(.selected){background-color:white;}
+    .label.label-label-1:not(.button):not(.selected){border-color:red;color:red;}
+    .label.button.label-label-1:not(.no-hover):hover,.label.label-label-1.selected{background-color:red;}
+    .label.label-label-2.button:not(.selected){background-color:white;}
+    .label.label-label-2:not(.button):not(.selected){border-color:green;color:green;}
+    .label.button.label-label-2:not(.no-hover):hover,.label.label-label-2.selected{background-color:green;}
   </style>
   <div
     className="label-selector-list"
   >
     <button
-      className="button label first"
-      id="label-first"
+      className="button label label-label-1"
+      id="label-1"
       onClick={[Function]}
       title="first label"
       type="button"
@@ -32,8 +32,8 @@ exports[`LabelPane matches snapshot 1`] = `
       first
     </button>
     <button
-      className="button label second"
-      id="label-second"
+      className="button label label-label-2"
+      id="label-2"
       onClick={[Function]}
       title="second label"
       type="button"
@@ -56,19 +56,19 @@ exports[`LabelPane not editable 1`] = `
   <style
     type="text/css"
   >
-    .label.first.button:not(.selected){background-color:white;}
-    .label.first:not(.button):not(.selected){border-color:red;color:red;}
-    .label.button.first:not(.no-hover):hover,.label.first.selected{background-color:red;}
-    .label.second.button:not(.selected){background-color:white;}
-    .label.second:not(.button):not(.selected){border-color:green;color:green;}
-    .label.button.second:not(.no-hover):hover,.label.second.selected{background-color:green;}
+    .label.label-label-1.button:not(.selected){background-color:white;}
+    .label.label-label-1:not(.button):not(.selected){border-color:red;color:red;}
+    .label.button.label-label-1:not(.no-hover):hover,.label.label-label-1.selected{background-color:red;}
+    .label.label-label-2.button:not(.selected){background-color:white;}
+    .label.label-label-2:not(.button):not(.selected){border-color:green;color:green;}
+    .label.button.label-label-2:not(.no-hover):hover,.label.label-label-2.selected{background-color:green;}
   </style>
   <div
     className="label-selector-list"
   >
     <span
-      className="label first selected"
-      id="label-first"
+      className="label label-label-1 selected"
+      id="label-1"
       title="first label"
     >
       <span
@@ -79,8 +79,8 @@ exports[`LabelPane not editable 1`] = `
       first
     </span>
     <span
-      className="label second"
-      id="label-second"
+      className="label label-label-2"
+      id="label-2"
       title="second label"
     >
       <span
@@ -94,6 +94,106 @@ exports[`LabelPane not editable 1`] = `
 </div>
 `;
 
+exports[`LabelPane sorts labels 1`] = `
+<div
+  className=""
+>
+  <style
+    type="text/css"
+  >
+    .label.label-id-0.button:not(.selected){background-color:white;}
+    .label.label-id-0:not(.button):not(.selected){border-color:undefined;color:undefined;}
+    .label.button.label-id-0:not(.no-hover):hover,.label.label-id-0.selected{background-color:undefined;}
+    .label.label-id-4.button:not(.selected){background-color:white;}
+    .label.label-id-4:not(.button):not(.selected){border-color:undefined;color:undefined;}
+    .label.button.label-id-4:not(.no-hover):hover,.label.label-id-4.selected{background-color:undefined;}
+    .label.label-id-3.button:not(.selected){background-color:white;}
+    .label.label-id-3:not(.button):not(.selected){border-color:undefined;color:undefined;}
+    .label.button.label-id-3:not(.no-hover):hover,.label.label-id-3.selected{background-color:undefined;}
+    .label.label-id-2.button:not(.selected){background-color:white;}
+    .label.label-id-2:not(.button):not(.selected){border-color:undefined;color:undefined;}
+    .label.button.label-id-2:not(.no-hover):hover,.label.label-id-2.selected{background-color:undefined;}
+    .label.label-id-1.button:not(.selected){background-color:white;}
+    .label.label-id-1:not(.button):not(.selected){border-color:undefined;color:undefined;}
+    .label.button.label-id-1:not(.no-hover):hover,.label.label-id-1.selected{background-color:undefined;}
+  </style>
+  <div
+    className="label-selector-list"
+  >
+    <button
+      className="button label label-id-0"
+      id="id-0"
+      onClick={[Function]}
+      title={undefined}
+      type="button"
+    >
+      <span
+        className="ion-pricetag"
+      >
+         
+      </span>
+      featured
+    </button>
+    <button
+      className="button label label-id-4"
+      id="id-4"
+      onClick={[Function]}
+      title={undefined}
+      type="button"
+    >
+      <span
+        className="ion-pricetag"
+      >
+         
+      </span>
+      a-label-3
+    </button>
+    <button
+      className="button label label-id-3"
+      id="id-3"
+      onClick={[Function]}
+      title={undefined}
+      type="button"
+    >
+      <span
+        className="ion-pricetag"
+      >
+         
+      </span>
+      a-label-4
+    </button>
+    <button
+      className="button label label-id-2"
+      id="id-2"
+      onClick={[Function]}
+      title={undefined}
+      type="button"
+    >
+      <span
+        className="ion-pricetag"
+      >
+         
+      </span>
+      a-label-1
+    </button>
+    <button
+      className="button label label-id-1"
+      id="id-1"
+      onClick={[Function]}
+      title={undefined}
+      type="button"
+    >
+      <span
+        className="ion-pricetag"
+      >
+         
+      </span>
+      a-label-2
+    </button>
+  </div>
+</div>
+`;
+
 exports[`LabelPane with selected labels 1`] = `
 <div
   className="css-class"
@@ -101,19 +201,19 @@ exports[`LabelPane with selected labels 1`] = `
   <style
     type="text/css"
   >
-    .label.first.button:not(.selected){background-color:white;}
-    .label.first:not(.button):not(.selected){border-color:red;color:red;}
-    .label.button.first:not(.no-hover):hover,.label.first.selected{background-color:red;}
-    .label.second.button:not(.selected){background-color:white;}
-    .label.second:not(.button):not(.selected){border-color:green;color:green;}
-    .label.button.second:not(.no-hover):hover,.label.second.selected{background-color:green;}
+    .label.label-label-1.button:not(.selected){background-color:white;}
+    .label.label-label-1:not(.button):not(.selected){border-color:red;color:red;}
+    .label.button.label-label-1:not(.no-hover):hover,.label.label-label-1.selected{background-color:red;}
+    .label.label-label-2.button:not(.selected){background-color:white;}
+    .label.label-label-2:not(.button):not(.selected){border-color:green;color:green;}
+    .label.button.label-label-2:not(.no-hover):hover,.label.label-label-2.selected{background-color:green;}
   </style>
   <div
     className="label-selector-list"
   >
     <button
-      className="button label first selected"
-      id="label-first"
+      className="button label label-label-1 selected"
+      id="label-1"
       onClick={[Function]}
       title="first label"
       type="button"
@@ -126,8 +226,8 @@ exports[`LabelPane with selected labels 1`] = `
       first
     </button>
     <button
-      className="button label second"
-      id="label-second"
+      className="button label label-label-2"
+      id="label-2"
       onClick={[Function]}
       title="second label"
       type="button"
