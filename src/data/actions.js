@@ -204,7 +204,7 @@ export function setViewMode(mode) {
   return (dispatch, getStore) => {
     const state = getStore();
     if (mode === state.calendar.possibleViewModes.Week) {
-      const firstOfWeek = moment(state.calendar.currentlyViewingDate).day(7);
+      const firstOfWeek = moment(state.calendar.currentlyViewingDate).day(0);
       dispatch({ type: ActionTypes.SET_FOCUSED_DATE, data: firstOfWeek });
     }
     dispatch({ type: ActionTypes.SET_VIEW_MODE, data: mode });
