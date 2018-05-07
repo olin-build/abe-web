@@ -1,19 +1,16 @@
 # A Web Frontend for ABE
 
-Dev: [![Build Status](https://travis-ci.org/olinlibrary/abe-web.svg?branch=dev)](https://travis-ci.org/olinlibrary/abe-web/branches)
-Master: [![Build Status](https://travis-ci.org/olinlibrary/abe-web.svg?branch=master)](https://travis-ci.org/olinlibrary/abe-web/branches)
+[![Build Status](https://travis-ci.org/olinlibrary/abe-web.svg?branch=dev)](https://travis-ci.org/olinlibrary/abe-web)
 
-This is a Web front-end for the
-[Olin College of Engineering Library](http://www.olin.build)'s
-[Amorphous Blob of Events](https://github.com/olinlibrary/ABE).
+This is a Web front end to the [Olin College of Engineering
+Library](http://www.olin.build)'s [Amorphous Blob of
+Events](https://github.com/olinlibrary/ABE).
 
-## Setup on Ubuntu
+## Development
 
-In order to run ABE's Web frontend, you'll need [Node.js](https://nodejs.org/en/https://nodejs.org/en/),
-[React](https://facebook.github.io/react/), [Babel](https://babeljs.io/) and [Webpack](https://webpack.js.org/).
-You can install them by following the instructions below.
+### Setup
 
-### Clone This Repo
+#### Clone This Repo
 
 You first need to clone the code from this repository to your computer. To do that, run the following:
 
@@ -22,7 +19,7 @@ git clone https://github.com/olinlibrary/abe-web.git
 cd abe-web
 ```
 
-### Node.js
+#### Install Node.js and yarn
 
 Then you'll need to install the Node.js server and a package manager (yarn).
 
@@ -42,39 +39,40 @@ On Ubuntu:
     echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
     sudo apt-get update && sudo apt-get install yarn
 
-### Dependencies
+#### Install Package Dependencies
 
 Once you have Node installed, you can use `yarn` to install the necessary packages (read from `package.json`).
 
-cd into the abe-web directory first, then run yarn install
+`cd` into the `abe-web` directory that the `git clone` command, above, created,
+and run `yarn install`:
 
 ```shell
 cd abe-web
 yarn install
 ```
 
-### Environment variables
+#### (Optional) Configure Environment variables
 
-If you are a member of Hacking the Library, use [this starter .env file](https://docs.google.com/document/d/1CZ45xYT33sTi5xpFJF8BkEeniCRszaxcfwiBmvMdmbk/edit).
-Otherwise, make your own. Its contents should be in the following format:
-
-Certain environment variables need to be set before running the server:
+Certain environment variables may be set before running the server. In
+particular, set `ABE_URL` to the URL of an [ABE server](https://github.com/olinlibrary/abe).
 
 * `ABE_URL` (optional) - the URL of the ABE back-end instance you'd like to
    connect to. (Please use a dev instance when developing.) This defaults to
-   <http://localhost:3000/>, which is the URL of a local
-   [ABE](https://github.com/olinlibrary/abe) instance.
+   <http://localhost:3000/>, which is the URL of a local ABE server instance.
 * `DEBUG` (optional) - set to `true` to use the [Redux
   devtools](https://github.com/zalmoxisus/redux-devtools-extension)
 * `GA_ID` (optional) - set to your Google Analytics tracking ID
 
-This can be done through Node environment variables, or by creating a text file
+Set these variables by setting environment variables, or by creating a text file
 called `.env` in the root of the repository.
 
-To run against a remote instance of ABE, set the `ABE_URL` environment variable,
-or copy `.env.template` to `.env` and edit the value of `ABE_URL` in that file.
+If you are a member of Hacking the Library, use [this starter `.env`
+file](https://docs.google.com/document/d/1CZ45xYT33sTi5xpFJF8BkEeniCRszaxcfwiBmvMdmbk/edit).
 
-## Build and Run
+Otherwise, create your own `.env` file. You may copy `.env.template` to `.env`
+and the values in that file.
+
+### Run
 
 To launch the web app, make sure you have a local ABE instance running on port
 3000 (go to <https://github.com/olinlibrary/ABE> for instructions on how to run
@@ -88,21 +86,47 @@ Changes should be reflected in your browser every time you save a file (except
 CSS files, which currently require a manual refresh), but it may take a couple
 seconds for Webpack to recompile everything.
 
-## Test
+### Test
 
 `yarn test` runs [Jest](https://facebook.github.io/jest/).
 
 `yarn test:watch` runs Jest in watch mode.
 
-You can also run `jest` and `jest --watch`, if `./node_modules/.bin` is on your
-`PATH`.
+### Lint
 
-## Lint
+`yarn lint` runs [ESLint](https://eslint.org/). This verifies that the code
+matches the project style conventions — mostly the [Airbnb JavaScript style
+guide](https://github.com/airbnb/javascript), with [some
+exceptions](./eslintrc.yml).
 
-`yarn lint` runs [ESLint](https://eslint.org/) against the client code (in
-`./src`).
+`yarn format` fixes some lint errors, such as indentation and spacing.
 
-`yarn format` fixes lint errors that `eslint --fix` can fix.
+### Built With
+
+A familiarity with some of these technologies is helpful for working on the project,
+although by no means do you need to know all of them to work on just some parts.
+
+General web development:
+
+* [React](https://facebook.github.io/react/) lets JavaScript code create and
+  update HTML presentation elements.
+* [Redux](https://redux.js.org/) enables a [reactive programming
+  style](https://en.wikipedia.org/wiki/Reactive_programming).
+* [Babel](https://babeljs.io/) enables modern JavaScript features on older
+  browsers.
+* The [Ionic Framework](https://ionicframework.com/docs/) is a software
+  development kit for mobile web views (and native apps). Thie project uses CSS
+  files from the framework.
+
+For working on the server or the build system:
+
+* [Node.js](https://nodejs.org/en/https://nodejs.org/en/) runs JavaScript on the
+  server.
+* [Webpack](https://webpack.js.org/) combines and optimizes source files.
+
+## License
+
+MIT License
 
 ## Supporters
 
