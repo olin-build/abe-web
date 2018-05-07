@@ -1,9 +1,10 @@
 // This file contains a bunch of Redux actions
 
-import { push } from 'react-router-redux';
 import axios from 'axios';
 import moment from 'moment';
 import ReactGA from 'react-ga';
+import { push } from 'react-router-redux';
+import { decodeEvent } from './encoding';
 
 export const ActionTypes = {
   // General UI
@@ -46,11 +47,6 @@ export const ActionTypes = {
 //     View mode
 //   Event data actions
 //   Labels actions
-
-
-function processDate(date) {
-  return moment.utc(date).local();
-}
 
 // ########## Begin General UI Actions ########## //
 
@@ -128,7 +124,6 @@ export function setPageTitlePrefix(newTitle) {
 
 // ########## End General UI Actions ########## //
 
-
 // ########## Begin Navigation Actions ########## //
 
 /**
@@ -142,7 +137,6 @@ export function setRoute(route) {
 }
 
 // ########## End Navigation Actions ########## //
-
 
 // ########## Begin Calendar View Actions ########## //
 
@@ -163,9 +157,7 @@ export function page(direction) {
  * what display mode (month, week, day, etc) the calendar is in
  */
 function getPageDelta(state) {
-  return state.calendar.currentViewMode.daysVisible > 0
-    ? [state.calendar.currentViewMode.daysVisible, 'd']
-    : [1, 'M'];
+  return state.calendar.currentViewMode.daysVisible > 0 ? [state.calendar.currentViewMode.daysVisible, 'd'] : [1, 'M'];
 }
 
 export function showToday() {
@@ -185,14 +177,23 @@ export function showToday() {
  * @param {Moment} date - the first day to show in a multi-day view, or to be used to determine the week or month to
  * show in a week or month view, etc.
  */
-export function setCurrentlyViewingDate(date) { // Set the first date visible on the calendar
-  date.hour(0).minute(0).second(0); // Set to start of day to avoid any potential weirdness when manipulating later
+export function setCurrentlyViewingDate(date) {
+  // Set the first date visible on the calendar
+  date
+    .hour(0)
+    .minute(0)
+    .second(0); // Set to start of day to avoid any potential weirdness when manipulating later
   // TODO: Cache request responses (so don't need to make request on every page change)
   return (dispatch) => {
     // Find the first day of the first week of the month
-    const firstDay = moment(date).date(0).day(0);
+    const firstDay = moment(date)
+      .date(0)
+      .day(0);
     // Find the last day of the last week of the month
-    const lastDay = moment(date).date(0).add(1, 'M').subtract(1, 'd')
+    const lastDay = moment(date)
+      .date(0)
+      .add(1, 'M')
+      .subtract(1, 'd')
       .day(6);
     dispatch(refreshEvents(firstDay, lastDay));
     dispatch({ type: ActionTypes.SET_FOCUSED_DATE, data: date });
@@ -219,7 +220,6 @@ export function setViewMode(mode) {
 
 // ########## End Calendar View Actions ########## //
 
-
 // ########## Begin Event Data Actions ########## //
 
 // ----- Begin general event actions ----- //
@@ -234,19 +234,16 @@ export function setCurrentEventById(id, recId) {
     // Try to get the event from our cache
     const store = getStore();
     const eventKey = recId ? `${id}${recId}` : id;
-    const eventData = store.events.events
-      ? store.events.events[eventKey]
-      : null;
+    const eventData = store.events.events ? store.events.events[eventKey] : null;
 
     // Make sure we have the event data
     if (eventData) {
       dispatch(setCurrentEventData(eventData));
     } else {
       // We don't have the data, so request it from the server
-      const url = recId
-        ? `${window.abe_url}/events/${id}/${recId}`
-        : `${window.abe_url}/events/${id}`;
-      axios.get(url)
+      const url = recId ? `${window.abe_url}/events/${id}/${recId}` : `${window.abe_url}/events/${id}`;
+      axios
+        .get(url)
         .then(response => dispatch(setCurrentEventData(response.data)))
         .catch(response => console.error(response)); // TODO: Display an error message to the user
     }
@@ -254,13 +251,7 @@ export function setCurrentEventById(id, recId) {
 }
 
 export function setCurrentEventData(data) {
-  if (data.start && !moment.isMoment(data.start)) {
-    data.start = processDate(data.start);
-  }
-  if (data.end && !moment.isMoment(data.end)) {
-    data.end = processDate(data.end);
-  }
-  return { type: ActionTypes.SET_CURRENT_EVENT, data };
+  return { type: ActionTypes.SET_CURRENT_EVENT, data: decodeEvent(data) };
 }
 
 export function getEventDataViaUrlParams(urlParams) {
@@ -281,15 +272,9 @@ export function refreshEvents(start, end) {
     const startString = `${start.year()}-${start.month() + 1}-${start.date()}`;
     const endString = `${end.year()}-${end.month() + 1}-${end.date()}`;
     return fetch(`${window.abe_url}/events/?start=${startString}&end=${endString}`)
-      .then(
-        response => response.json(),
-        error => dispatch(displayError(error)),
-      )
-      .then((events) => {
-        events.forEach((event) => {
-          event.start = processDate(event.start);
-          event.end = processDate(event.end);
-        });
+      .then(response => response.json(), error => dispatch(displayError(error)))
+      .then((data) => {
+        const events = data.map(decodeEvent);
         dispatch(setEvents(events));
       });
   };
@@ -312,7 +297,7 @@ export function setEvents(events) {
     const res = {};
     events.forEach((event) => {
       // Resolve unique ID for single-occurrence event or recurring event occurrence
-      const eventKey = event.id || (event.sid + event.start.format('YYYYDDD'));
+      const eventKey = event.id || event.sid + event.start.format('YYYYDDD');
       res[eventKey] = event;
     });
     dispatch({ type: ActionTypes.SET_EVENTS, data: res });
@@ -320,7 +305,6 @@ export function setEvents(events) {
 }
 
 // ----- End general event actions ----- //
-
 
 // ----- Begin editing event actions ----- //
 
@@ -332,9 +316,7 @@ export function editCurrentEvent() {
   return (dispatch, getStore) => {
     const store = getStore();
     const event = store.events.current;
-    const linkSuffix = event.recId ?
-      `${event.id || event.sid}/${event.recId}`
-      : event.id;
+    const linkSuffix = event.recId ? `${event.id || event.sid}/${event.recId}` : event.id;
     const path = `/edit/${linkSuffix}`;
     dispatch(push(path));
   };
@@ -357,7 +339,8 @@ export function deleteCurrentEvent() {
   return (dispatch, getStore) => {
     const store = getStore();
     const event = store.events.current;
-    axios.delete(`${window.abe_url}/events/${event.id || event.sid}`)
+    axios
+      .delete(`${window.abe_url}/events/${event.id || event.sid}`)
       .then(() => dispatch(eventDeletedSuccessfully(event.id || event.sid)))
       .catch(response => eventDeleteFailed(event, response));
   };
@@ -468,7 +451,6 @@ export function viewEvent(event) {
 
 // ########## End Event Data Actions ########## //
 
-
 // ########## Begin Labels-Related Actions ########## //
 
 /**
@@ -486,12 +468,10 @@ export function refreshLabelsIfNeeded() {
  * Performs a server request to refresh the labels in the Redux store.
  */
 export function fetchLabels() {
-  return dispatch => fetch(`${window.abe_url}/labels/`)
-    .then(
-      response => response.json(),
-      error => dispatch(displayError(error)),
-    )
-    .then(labels => dispatch(setLabels(labels)));
+  return dispatch =>
+    fetch(`${window.abe_url}/labels/`)
+      .then(response => response.json(), error => dispatch(displayError(error)))
+      .then(labels => dispatch(setLabels(labels)));
 }
 
 /**
@@ -545,8 +525,7 @@ export function labelVisibilityToggled(labelName) {
 export function updateLabel(data) {
   return () => {
     // TODO: update model on success
-    axios.post(`${window.abe_url}/labels/${data.id}`, data)
-      .catch(error => alert(`Update label failed:\n${error}`));
+    axios.post(`${window.abe_url}/labels/${data.id}`, data).catch(error => alert(`Update label failed:\n${error}`));
   };
 }
 
