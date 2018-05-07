@@ -29,7 +29,7 @@ const mapDispatchToProps = dispatch => ({
       action: 'click',
       label: 'User clicked the Olin logo to return to the Home view',
     });
-    dispatch(push('/'));
+    dispatch(Actions.navigateHome());
   },
   addEvent: () => {
     dispatch(push('/edit'));

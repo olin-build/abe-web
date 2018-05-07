@@ -101,6 +101,10 @@ export function toggleSidebarCollapsed() {
 
 // ----- Begin miscellaneous UI actions ----- //
 
+export function navigateHome() {
+  return push('/');
+}
+
 /**
  * Sets the page title prefix (what's displayed before the cross-site app name suffix)
  * @param {string} newTitle - the title
@@ -424,7 +428,7 @@ export function eventDeletedSuccessfully(eventId) {
       label: `Event ${eventId} deleted successfully`,
     });
     dispatch(refreshEventsForCurrentViewWindow());
-    dispatch(push('/'));
+    dispatch(navigateHome());
   };
 }
 
