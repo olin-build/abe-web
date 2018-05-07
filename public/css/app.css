@@ -95,7 +95,7 @@ textarea::placeholder {
     pointer-events: none;
 }
 
-.sidebar-item-content > div > *:last-child {
+.sidebar-item-content>div>*:last-child {
     margin-bottom: 0;
 }
 
@@ -107,19 +107,15 @@ textarea::placeholder {
         border-right: none;
         width: 85%;
     }
-
     .app-sidebar.collapsed {
         left: -85%;
     }
-
     .app-sidebar.expanded .sidebar-toggle-button {
         display: none;
     }
-
     .app-sidebar.expanded {
         left: 0;
     }
-
     .scene-container {
         position: absolute;
         left: 0;
@@ -128,15 +124,14 @@ textarea::placeholder {
         top: 0;
         width: 100%;
     }
-
-    .app-sidebar.expanded + .scene-container .scene-overlay {
-        background-color: rgba(0,0,0,0.5);
+    .app-sidebar.expanded+.scene-container .scene-overlay {
+        background-color: rgba(0, 0, 0, 0.5);
         pointer-events: all;
     }
 }
 
 @media screen and (min-width: 701px) {
-    .app-sidebar.collapsed + .scene-container {
+    .app-sidebar.collapsed+.scene-container {
         left: 0;
     }
 }
@@ -145,11 +140,9 @@ textarea::placeholder {
     .app-sidebar {
         width: 20rem;
     }
-
     .app-sidebar.collapsed {
         left: -25rem;
     }
-
     .scene-container {
         left: 20rem;
     }
@@ -195,6 +188,7 @@ header nav li.menu-text a {
 header nav li.menu-text:hover a {
     border-bottom: 6px solid #dedede;
 }
+
 /** --- End Sidebar Header --- **/
 
 .sidebar-item-content {
@@ -290,7 +284,7 @@ footer {
 
 .footer-message {
     margin: 1em;
-    text-align:center;
+    text-align: center;
     color: #9c9c9c;
     font-size: small;
 }
@@ -308,26 +302,21 @@ footer {
 }
 
 @media screen and (max-width:400px) {
-
     .app-sidebar {
         font-size: 80%;
     }
-
     .sidebar-container button {
         font-size: 1em;
     }
-
     .link-pane button {
         margin: 0.7em;
     }
-
     .footer-message {
         font-size: x-small;
     }
 }
 
 /** --- End Sidebar Footer --- **/
-
 
 /** ----- End Sidebar ----- **/
 
@@ -358,14 +347,26 @@ span.label {
     background-color: #14679e;
     color: #fefefe;
     cursor: pointer;
- }
+}
 
 .label-selector-list {
     margin-bottom: -0.2em;
 }
 
-/** ----- End Labels ----- **/
+.add-edit-filters .button.label,
+.add-edit-filters .button.label:not(.selected):not(.no-hover):hover {
+    background-color: #14679e !important;
+    color: #fefefe !important;
+}
 
+.add-edit-filters .button.label:not(.selected),
+.add-edit-filters .button.label.selected:not(.no-hover):hover {
+    background-color: white !important;
+    border-color: #14679e !important;
+    color: #14679e !important;
+}
+
+/** ----- End Labels ----- **/
 
 /** ----- Begin Calendar ----- **/
 
@@ -409,7 +410,7 @@ span.label {
     display: inline-block;
 }
 
-.calendar-header-options > * {
+.calendar-header-options>* {
     display: inline-block;
 }
 
@@ -425,7 +426,7 @@ span.label {
     margin: 0 0.5em;
 }
 
-.calendar-container .menu-icon-button > .menu-icon {
+.calendar-container .menu-icon-button>.menu-icon {
     width: 2em;
     height: 2em;
     fill: gray;
@@ -440,8 +441,19 @@ span.label {
     font-size: 0.9em;
 }
 
+.urc .urc-event {
+    margin-bottom: 0.2em;
+}
+
 .urc .month-day-header {
     font-size: 0.8em;
+}
+
+@media screen and (max-height: 40em) {
+    .urc-side-label {
+        padding-top: 0;
+        padding-bottom: 0;
+    }
 }
 
 .calendar-container {
@@ -483,7 +495,6 @@ span.label {
 
 /** ----- End Calendar ----- **/
 
-
 /** ----- Begin Event Add/Edit ----- **/
 
 .content-container {
@@ -497,14 +508,14 @@ span.label {
     background-color: #009BDF;
 }
 
-.page-title > .menu-icon-button {
-  position: relative;
-  z-index: 20;
-  cursor: pointer;
-  margin-right: .5em;
+.page-title>.menu-icon-button {
+    position: relative;
+    z-index: 20;
+    cursor: pointer;
+    margin-right: .5em;
 }
 
-.page-title > .menu-icon-button > .menu-icon {
+.page-title>.menu-icon-button>.menu-icon {
     width: 1em;
     height: 1em;
     fill: gray;
@@ -621,7 +632,7 @@ textarea.markdown-editor {
     line-height: 2.4em;
 }
 
-.location-input-container > input {
+.location-input-container>input {
     margin: 0 0.5em 0 0;
 }
 
@@ -630,7 +641,7 @@ textarea.markdown-editor {
     flex-direction: row;
 }
 
-.location-input-container > img {
+.location-input-container>img {
     margin-left: 0.5em;
     padding: 0.2rem;
     height: 2.4375rem;
@@ -640,20 +651,29 @@ textarea.markdown-editor {
     max-width: 10em;
     display: inline-block;
     margin: 0 0.5rem 1rem;
-
 }
-.short-text-box:first-child { margin-left: 0; }
-.short-text-box:last-child { margin-right: 0; }
+
+.short-text-box:first-child {
+    margin-left: 0;
+}
+
+.short-text-box:last-child {
+    margin-right: 0;
+}
 
 .super-short-text-box {
     max-width: 4em;
     display: inline-block;
     margin: 0 0.5rem 1rem;
-
 }
-.super-short-text-box:first-child { margin-left: 0; }
-.super-short-text-box:last-child { margin-right: 0; }
 
+.super-short-text-box:first-child {
+    margin-left: 0;
+}
+
+.super-short-text-box:last-child {
+    margin-right: 0;
+}
 
 .medium-text-box {
     max-width: 30em;
@@ -709,7 +729,7 @@ textarea.markdown-editor {
     background-color: #9f9f9f;
 }
 
-.recurrence-container{
+.recurrence-container {
     margin-bottom: 1em;
 }
 
@@ -717,7 +737,7 @@ textarea.markdown-editor {
 
 /** ----- Begin View ----- **/
 
-.event-date-location-container{
+.event-date-location-container {
     margin-bottom: 1em;
 }
 

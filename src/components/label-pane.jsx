@@ -15,7 +15,7 @@ export default class LabelPane extends React.Component {
   render() {
     const { editable, selectedLabels, showUnselected } = this.props;
     const enableHoverStyle = !this.props.general.isMobile && this.props.editable;
-    const noHoverClass = enableHoverStyle ? '' : 'no-hover ';
+    const noHoverClass = enableHoverStyle ? '' : 'no-hover';
     // sort Featured first; then remaining default labels, alphabetically within
     // each section
     let labels = _.chain(this.props.possibleLabels || {})
@@ -32,14 +32,14 @@ export default class LabelPane extends React.Component {
       const { description: tooltip, name, id } = label;
       const selected = selectedLabels.includes(name);
       const cssId = `label-${id}`;
-      const classes = `label ${cssId}${selected ? ' selected' : ''}`;
+      const classes = `label ${cssId} ${selected ? 'selected' : ''}`;
       return editable ? (
         <button
           id={id}
           key={name}
           title={tooltip}
           type="button"
-          className={`button ${noHoverClass}${classes}`}
+          className={`button ${noHoverClass} ${classes}`}
           onClick={() => labelClicked(name)}
         >
           <span className="ion-pricetag">&nbsp;</span>
@@ -54,7 +54,7 @@ export default class LabelPane extends React.Component {
     }
     function getLabelCss(label) {
       const { color, id } = label;
-      const cssId = `label-${id}`;
+      const sel = `.label.label-${id}`;
       // Joining the list of strings, and then again the caller, is less
       // efficient, but I found it clearer, and this code is not run much
       // and hasn't shown up as a hot spot.
@@ -62,10 +62,10 @@ export default class LabelPane extends React.Component {
       // Join w/ '\n', here and in caller, for more readable debugging and
       // snapshots.
       return [
-        `.label.${cssId}.button:not(.selected){background-color:white;}`,
-        `.label.${cssId}:not(.button):not(.selected){border-color:${color};color:${color};}`,
-        // hovered button, or selected
-        `.label.button.${cssId}:not(.no-hover):hover,.label.${cssId}.selected{background-color:${color};}`,
+        `${sel}.selected{background-color:${color}}`,
+        `${sel}.selected:not(.no-hover):hover{background-color:white;border-color:${color};color:${color}}`,
+        `${sel}:not(.selected){background-color:white;border-color:${color};color:${color}}`,
+        `${sel}:not(.no-hover):hover{background-color:${color || 'black'};color:white}`,
       ].join('\n');
     }
 
