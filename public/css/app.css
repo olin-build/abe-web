@@ -440,8 +440,19 @@ span.label {
     font-size: 0.9em;
 }
 
+.urc .urc-event {
+    margin-bottom: 0.2em;
+}
+
 .urc .month-day-header {
     font-size: 0.8em;
+}
+
+@media screen and (max-height: 40em) {
+    .urc-side-label {
+        padding-top: 0;
+        padding-bottom: 0;
+    }
 }
 
 .calendar-container {

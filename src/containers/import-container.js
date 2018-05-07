@@ -5,6 +5,7 @@ import * as ga from 'react-ga';
 import {
   setSidebarMode,
   toggleSidebarCollapsed,
+  navigateHome,
   setPageTitlePrefix,
 } from '../data/actions';
 import ImportPage from '../pages/import/import';
@@ -41,6 +42,7 @@ const mapDispatchToProps = (dispatch, getState) => ({
       label: 'User successfully imported ICS feed into ABE',
     });
     alert('ICS imported successfully');
+    dispatch(navigateHome());
   },
   importFailed: (error, importData) => {
     ga.event({
