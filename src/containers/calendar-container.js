@@ -2,17 +2,20 @@
 
 import { connect } from 'react-redux';
 import {
-  setSidebarMode,
-  toggleSidebarCollapsed,
-  setVisibleLabels,
+  page,
   setPageTitlePrefix,
   setRoute,
-  showToday,
-  page,
+  setSidebarMode,
   setViewMode,
+  setVisibleLabels,
+  showToday,
+  toggleSidebarCollapsed,
   viewEvent,
 } from '../data/actions';
 import CalendarPage from '../pages/calendar/calendar-page';
+import withServerData from './with-server-data';
+
+// const normalizeLabelName = (label, allLabels) => {};
 
 const getVisibleEvents = (events, visibleLabels, allLabels) => {
   // Filter out events that are not labeled with currently visible labels
@@ -72,6 +75,6 @@ const mapDispatchToProps = dispatch => ({
 });
 
 // Connect props to Redux state and actions
-const CalendarContainer = connect(mapStateToProps, mapDispatchToProps)(CalendarPage);
+const CalendarContainer = connect(mapStateToProps, mapDispatchToProps)(withServerData(CalendarPage));
 
 export default CalendarContainer;
