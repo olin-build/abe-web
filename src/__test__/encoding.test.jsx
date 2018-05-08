@@ -1,12 +1,14 @@
-import moment from 'moment';
+import moment from 'moment-timezone';
 import { decodeEvent, encodeEvent } from '../data/encoding';
 
 describe('decodeEvent', () => {
+  moment.tz.setDefault('EDT');
   test('decodes dates', () => {
     const event = decodeEvent({ start: '2018-05-07T09:00:00Z', end: '2018-05-07T10:00:00Z' });
-    expect(event.start).toBeInstanceOf(moment);
+    // expect(event.start).toBeInstanceOf(moment);
+    // expect(event.end).toBeInstanceOf(moment);
     expect(event.start.format()).toBe('2018-05-07T05:00:00-04:00');
-    expect(event.end).toBeInstanceOf(moment);
+    expect(event.end.format()).toBe('2018-05-07T06:00:00-04:00');
   });
   test('renames all_day property', () => {
     const event = decodeEvent({ all_day: true });
@@ -17,6 +19,7 @@ describe('decodeEvent', () => {
 });
 
 describe('encodeEvent', () => {
+  moment.tz.setDefault('EDT');
   test.skip('renames allDay', () => {
     // TODO: enable this, and remove the next two tests, once the decodeEvent no
     // longer has side effects.

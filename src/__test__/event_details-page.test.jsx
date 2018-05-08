@@ -1,9 +1,10 @@
-import moment from 'moment';
+import moment from 'moment-timezone';
 import React from 'react';
 import renderer from 'react-test-renderer';
 import EventDetailsPage from '../pages/details/event-details-page';
 
 describe('EventDetailsPage', () => {
+  moment.tz.setDefault('EDT');
   test('loading', () => {
     const component = renderer.create(<EventDetailsPage eventData={null} setSidebarMode={() => undefined} />);
     const tree = component.toJSON();
