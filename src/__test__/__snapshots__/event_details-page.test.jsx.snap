@@ -26,7 +26,7 @@ exports[`EventDetailsPage multi-day all-day event 1`] = `
     <h1
       className="page-title"
     >
-      Title
+      Multi-day event from 5.07–5.08
     </h1>
     <div
       className="event-info-container"
@@ -75,7 +75,7 @@ exports[`EventDetailsPage regular event 1`] = `
     <h1
       className="page-title"
     >
-      Title
+      Event at 9-10AM 5.07
     </h1>
     <div
       className="event-info-container"
@@ -124,7 +124,7 @@ exports[`EventDetailsPage single-day all-day event 1`] = `
     <h1
       className="page-title"
     >
-      Title
+      All-day event on 5.07
     </h1>
     <div
       className="event-info-container"

@@ -7,8 +7,8 @@ describe('decodeEvent', () => {
     const event = decodeEvent({ start: '2018-05-07T09:00:00Z', end: '2018-05-07T10:00:00Z' });
     // expect(event.start).toBeInstanceOf(moment);
     // expect(event.end).toBeInstanceOf(moment);
-    expect(event.start.format()).toBe('2018-05-07T05:00:00-04:00');
-    expect(event.end.format()).toBe('2018-05-07T06:00:00-04:00');
+    expect(event.start.utc().format()).toBe('2018-05-07T09:00:00Z');
+    expect(event.end.utc().format()).toBe('2018-05-07T10:00:00Z');
   });
   test('renames all_day property', () => {
     const event = decodeEvent({ all_day: true });
