@@ -1,11 +1,11 @@
 // This component allows the user to import a calendar from an ICS feed
 
-import * as React from 'react';
 import axios from 'axios';
 import copy from 'copy-to-clipboard';
-import SidebarModes from '../../data/sidebar-modes';
+import * as React from 'react';
 import TagPane from '../../components/label-pane';
 import MenuIconButton from '../../components/menu-icon-button';
+import SidebarModes from '../../data/sidebar-modes';
 
 export default class SubscriptionEditorPage extends React.Component {
   constructor(props) {
@@ -18,7 +18,8 @@ export default class SubscriptionEditorPage extends React.Component {
       },
     };
 
-    axios.get(`${window.abe_url}/subscriptions/${this.getIdFromURL(props)}`)
+    axios
+      .get(`${window.abe_url}/subscriptions/${this.getIdFromURL(props)}`)
       .then(
         response => this.setState({ data: Object.assign({}, this.state.data, response.data) }),
         (jqXHR, textStatus, errorThrown) => this.props.importFailed(errorThrown, jqXHR.message),
@@ -54,14 +55,13 @@ export default class SubscriptionEditorPage extends React.Component {
   // };
 
   submitSubscription = () => {
-    axios.put(`${window.abe_url}/subscriptions/${this.state.data.id}`, this.state.data)
-      .then(
-        (response) => {
-          this.setState({ data: Object.assign({}, this.state.data, response.data) });
-          this.props.importSuccess(response, response.data);
-        },
-        (jqXHR, textStatus, errorThrown) => this.props.importFailed(errorThrown, jqXHR.message),
-      );
+    axios.put(`${window.abe_url}/subscriptions/${this.state.data.id}`, this.state.data).then(
+      (response) => {
+        this.setState({ data: Object.assign({}, this.state.data, response.data) });
+        this.props.importSuccess(response, response.data);
+      },
+      (jqXHR, textStatus, errorThrown) => this.props.importFailed(errorThrown, jqXHR.message),
+    );
   };
 
   copyToClipboard() {
@@ -91,7 +91,22 @@ export default class SubscriptionEditorPage extends React.Component {
           <br />
           <input type="submit" className="button submit" value="Submit" onClick={this.submitSubscription} />
           <br />
-          <input type="submit" className="button submit" value="Copy feed URL" onClick={this.copyToClipboard} />
+          <a
+            href={`webcal:${window.abe_url.split(':')[1]}${this.state.data.ics_url}`}
+            className="ics-copy-to-clipboard"
+          >
+            Import into Outlook
+          </a>
+
+          <a
+            href="https://github.com/olinlibrary/abe-web/wiki/Integrate-with-Your-Calendar#step-2-b-google-calendar"
+            className="ics-copy-to-clipboard"
+            onClick={() => {
+              this.copyToClipboard(this.state.data.ics_url);
+            }}
+          >
+            Import into Google Calendar
+          </a>
         </div>
       </div>
     );
