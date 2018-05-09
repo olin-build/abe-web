@@ -65,8 +65,14 @@ export default class GenerateICSPane extends React.Component {
         {/* <a className="ics-copy-to-clipboard" title="Copy feed URL" alt="Copy feed URL"
          onClick={this.getFeedUrl}>Copy link to clipboard</a> */}
         <br />
-        { !this.state.data.id && (
-        <input type="submit" style={{marginTop:"16pt"}} className="button submit" value="Generate event feed" onClick={this.getFeedUrl} />
+        {!this.state.data.id && (
+          <input
+            type="submit"
+            style={{ marginTop: '16pt' }}
+            className="button submit"
+            value="Generate event feed"
+            onClick={this.getFeedUrl}
+          />
         )}
         {this.state.data.id.length > 0 && (
           <div>
