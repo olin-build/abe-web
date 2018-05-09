@@ -1,91 +1,92 @@
-// This component is the sidebar, which is displayed across the entire app. Its content merely changes when pages are
-// changed.
+// This component is the sidebar, which is displayed across the entire app. Its
+// content merely changes when pages are changed.
 
-import React, { Component } from 'react';
-import Footer from './footer';
-import { SidebarHeader } from '../components/sidebar-header';
-import SidebarItemContainer from './sidebar-item-wrapper';
-import FilterPane from './filter-pane';
-import LinkPane from './link-pane';
-import GenerateICSPane from './generate-ics-pane';
-import MarkdownGuide from './markdown-guide';
-import EventActionsPane from './event-actions-pane';
+import React from 'react';
 import LabelPane from '../components/label-pane';
+import { SidebarHeader } from '../components/sidebar-header';
+import EventActionsPane from './event-actions-pane';
+import FilterPane from './filter-pane';
+import Footer from './footer';
+import GenerateICSPane from './generate-ics-pane';
+import LinkPane from './link-pane';
+import MarkdownGuide from './markdown-guide';
+import SidebarItemContainer from './sidebar-item-wrapper';
 
-export default class Sidebar extends Component {
-  render() {
-    const mode = this.props.sidebarMode;
-    const content = [];
+const Sidebar = (props) => {
+  const {
+    account: { permissions },
+    sidebarMode: mode,
+  } = props;
 
-    if (mode.LINK_PANE) {
-      content.push(<LinkPane
-        addEventClicked={this.props.addEvent}
-        importICSClicked={this.props.importICSClicked}
-        key="link"
-        className="sidebar-item"
-      />);
-    }
+  const content = (
+    <div>
+      {!permissions.view_all_events && (
+        <p>
+          You are viewing the public calendar. Visit the calendar from on campus to see all events
+          and to add and edit events.
+        </p>
+      )}
 
-    if (mode.EVENT_ACTIONS) {
-      content.push(<EventActionsPane key="event-actions" className="sidebar-item" {...this.props} />);
-    }
-
-    if (mode.EVENT_LABELS_PANE) { // For viewing a single event
-      const currentEventLabels = this.props.currentEvent ? this.props.currentEvent.labels : null;
-      content.push(<SidebarItemContainer
-        key="event-labels"
-        header="Labels"
-      >
-        <LabelPane
-          editable={false}
-          showUnselected={false}
-          selectedLabels={currentEventLabels}
-          {...this.props}
-        />
-                   </SidebarItemContainer>);
-    }
-
-    if (mode.FILTER_PANE) { // For viewing the calendar
-      content.push(<SidebarItemContainer
-        key="filter-pane"
-        header="Filter"
-      >
-        <FilterPane {...this.props} />
-                   </SidebarItemContainer>);
-    }
-    if (mode.GENERATE_ICS_PANE) {
-      const header = 'Subscribe';
-      content.push(<SidebarItemContainer
-        key="gen-ics"
-        header={header}
-      >
-        <GenerateICSPane {...this.props} />
-                   </SidebarItemContainer>);
-    }
-
-    if (mode.MARKDOWN_GUIDE) {
-      content.push(<SidebarItemContainer
-        key="markdown-guide"
-        header="Markdown Guide"
-      >
-        <MarkdownGuide />
-                   </SidebarItemContainer>);
-    }
-
-    const sidebarClasses = `app-sidebar${(this.props.isCollapsed) ? ' collapsed' : ' expanded'}`;
-    return (
-      <div className={sidebarClasses}>
-        <div className="sidebar-container">
-          <SidebarHeader
-            homeClicked={this.props.homeClicked}
-            toggleSidebarCollapsed={this.props.toggleSidebarCollapsed}
+      {mode.LINK_PANE &&
+        permissions.add_events && (
+          <LinkPane
+            addEventClicked={props.addEvent}
+            importICSClicked={props.importICSClicked}
+            key="link"
+            className="sidebar-item"
           />
-          <div className="sidebar-content">
-            {content}
-          </div>
-          <Footer class="sidebar-footer" />
-        </div>
+        )}
+
+      {mode.EVENT_ACTIONS &&
+        permissions.edit_events && (
+          <EventActionsPane key="event-actions" className="sidebar-item" {...props} />
+        )}
+
+      {mode.EVENT_LABELS_PANE && (
+        <SidebarItemContainer key="event-labels" header="Labels">
+          <LabelPane
+            editable={false}
+            showUnselected={false}
+            selectedLabels={props.currentEvent ? props.currentEvent.labels : null}
+            {...props}
+          />
+        </SidebarItemContainer>
+      )}
+
+      {mode.FILTER_PANE && (
+        // For viewing the calendar
+        <SidebarItemContainer key="filter-pane" header="Filter">
+          <FilterPane {...props} />
+        </SidebarItemContainer>
+      )}
+
+      {mode.GENERATE_ICS_PANE && (
+        <SidebarItemContainer key="gen-ics" header="Subscribe">
+          <GenerateICSPane {...props} />
+        </SidebarItemContainer>
+      )}
+
+      {mode.MARKDOWN_GUIDE && (
+        <SidebarItemContainer key="markdown-guide" header="Markdown Guide">
+          <MarkdownGuide />
+        </SidebarItemContainer>
+      )}
+    </div>
+  );
+
+  const sidebarClasses = `app-sidebar${props.isCollapsed ? ' collapsed' : ' expanded'}`;
+  return (
+    <div className={sidebarClasses}>
+      <div className="sidebar-container">
+        <SidebarHeader
+          homeClicked={props.homeClicked}
+          toggleSidebarCollapsed={props.toggleSidebarCollapsed}
+        />
+        <div className="sidebar-content">{content}</div>
+        <Footer class="sidebar-footer" />
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
+
+export default Sidebar;

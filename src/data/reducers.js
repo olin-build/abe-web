@@ -1,7 +1,7 @@
 // This file contains a bunch of Redux reducers
 
-import { ActionTypes } from './actions';
 import SidebarModes from '../data/sidebar-modes';
+import { ActionTypes } from './actions';
 
 export function general(state = {}, action) {
   const newState = Object.assign({}, state);
@@ -11,7 +11,7 @@ export function general(state = {}, action) {
       alert(action.message);
       return state;
     case ActionTypes.DISPLAY_ERROR:
-      alert((action.message) ? action.message : action.error);
+      alert(action.message ? action.message : action.error);
       console.error(action.error);
       return state;
     case ActionTypes.SET_PAGE_TITLE_PREFIX:
@@ -21,6 +21,10 @@ export function general(state = {}, action) {
     default:
       return state;
   }
+}
+
+export function account(state = {}, _action) {
+  return state;
 }
 
 export function calendar(state = {}, action) {
@@ -87,9 +91,8 @@ export function labels(state = {}, action) {
       // If the visible labels array hasn't been set yet, set it to be the default
       if (!state.visibleLabels) {
         const labelsArray = Object.values(labelList);
-        newState.visibleLabels = (labelsArray.length > 0)
-          ? labelsArray.filter(l => l.default).map(l => l.name)
-          : [];
+        newState.visibleLabels =
+          labelsArray.length > 0 ? labelsArray.filter(l => l.default).map(l => l.name) : [];
       }
       return newState;
     }
