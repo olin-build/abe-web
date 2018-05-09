@@ -13,53 +13,54 @@ import MarkdownGuide from './markdown-guide';
 import SidebarItemContainer from './sidebar-item-wrapper';
 
 const Sidebar = (props) => {
-  const mode = props.sidebarMode;
-  const content = [];
+  const { sidebarMode: mode } = props;
 
-  if (mode.LINK_PANE) {
-    content.push(<LinkPane
-      addEventClicked={props.addEvent}
-      importICSClicked={props.importICSClicked}
-      key="link"
-      className="sidebar-item"
-    />);
-  }
-
-  if (mode.EVENT_ACTIONS) {
-    content.push(<EventActionsPane key="event-actions" className="sidebar-item" {...props} />);
-  }
-
-  if (mode.EVENT_LABELS_PANE) {
-    // For viewing a single event
-    const currentEventLabels = props.currentEvent ? props.currentEvent.labels : null;
-    content.push(<SidebarItemContainer key="event-labels" header="Labels">
-        <LabelPane
-          editable={false}
-          showUnselected={false}
-          selectedLabels={currentEventLabels}
-          {...props}
+  const content = (
+    <div>
+      {mode.LINK_PANE && (
+        <LinkPane
+          addEventClicked={props.addEvent}
+          importICSClicked={props.importICSClicked}
+          key="link"
+          className="sidebar-item"
         />
-                 </SidebarItemContainer>);
-  }
+      )}
 
-  if (mode.FILTER_PANE) {
-    // For viewing the calendar
-    content.push(<SidebarItemContainer key="filter-pane" header="Filter">
-        <FilterPane {...props} />
-                 </SidebarItemContainer>);
-  }
-  if (mode.GENERATE_ICS_PANE) {
-    const header = 'Subscribe';
-    content.push(<SidebarItemContainer key="gen-ics" header={header}>
-        <GenerateICSPane {...props} />
-                 </SidebarItemContainer>);
-  }
+      {mode.EVENT_ACTIONS && (
+        <EventActionsPane key="event-actions" className="sidebar-item" {...props} />
+      )}
 
-  if (mode.MARKDOWN_GUIDE) {
-    content.push(<SidebarItemContainer key="markdown-guide" header="Markdown Guide">
-        <MarkdownGuide />
-                 </SidebarItemContainer>);
-  }
+      {mode.EVENT_LABELS_PANE && (
+        <SidebarItemContainer key="event-labels" header="Labels">
+          <LabelPane
+            editable={false}
+            showUnselected={false}
+            selectedLabels={props.currentEvent ? props.currentEvent.labels : null}
+            {...props}
+          />
+        </SidebarItemContainer>
+      )}
+
+      {mode.FILTER_PANE && (
+        // For viewing the calendar
+        <SidebarItemContainer key="filter-pane" header="Filter">
+          <FilterPane {...props} />
+        </SidebarItemContainer>
+      )}
+
+      {mode.GENERATE_ICS_PANE && (
+        <SidebarItemContainer key="gen-ics" header="Subscribe">
+          <GenerateICSPane {...props} />
+        </SidebarItemContainer>
+      )}
+
+      {mode.MARKDOWN_GUIDE && (
+        <SidebarItemContainer key="markdown-guide" header="Markdown Guide">
+          <MarkdownGuide />
+        </SidebarItemContainer>
+      )}
+    </div>
+  );
 
   const sidebarClasses = `app-sidebar${props.isCollapsed ? ' collapsed' : ' expanded'}`;
   return (
