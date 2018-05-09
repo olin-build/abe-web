@@ -1,6 +1,7 @@
 # A Web Frontend for ABE
 
 [![Build Status](https://travis-ci.org/olinlibrary/abe-web.svg?branch=dev)](https://travis-ci.org/olinlibrary/abe-web)
+[![Coverage Status](https://coveralls.io/repos/github/olinlibrary/abe-web/badge.svg?branch=dev)](https://coveralls.io/github/olinlibrary/abe-web?branch=dev)
 
 This is a Web front end to the [Olin College of Engineering
 Library](http://www.olin.build)'s [Amorphous Blob of
