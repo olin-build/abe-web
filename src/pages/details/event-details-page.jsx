@@ -23,36 +23,41 @@ export default class EventDetailsPage extends React.Component {
   }
 
   render() {
-    if (this.props.eventData) {
-      const oneDay = this.props.eventData.start.diff(this.props.eventData.end, 'days') === 0;
-      const timeFormat = this.props.eventData.allDay ? '' : ' h:mm A';
-      const startDateFormat = `ddd, MMM D, YYYY${timeFormat}`;
-      const endDateFormat = (oneDay) ? timeFormat : ` ddd, MMM D, YYYY${timeFormat}`;
-      const end = this.props.eventData.allDay && oneDay &&
-        <span> to<span className="event-start">{this.props.eventData.end.format(endDateFormat)}</span></span>;
-      const recurrence = this.props.eventData.recurrence &&
-        <PlainEnglishRecurrence recurrence={this.props.eventData.recurrence} start={this.props.eventData.start} />;
+    const { eventData: event } = this.props;
+    if (!event) {
       return (
         <div className="row expanded page-container">
           <div className="row content-container">
-            <h1 className="page-title">{this.props.eventData.title}</h1>
-            <div className="event-info-container">
-              <div className="event-date-location-container">
-                <span className="event-start">{this.props.eventData.start.format(startDateFormat)}</span>
-                {end}
-                {recurrence}
-                <p className="event-location">{this.props.eventData.location}</p>
-              </div>
-              <Markdown source={this.props.eventData.description} className="description-container" />
-            </div>
+            <h1 className="page-title">Loading...</h1>
           </div>
         </div>
       );
     }
+
+    const oneDay = event.start.diff(event.end, 'days') === 0;
+    const timeFormat = event.allDay ? '' : ' h:mm A';
+    const startDateFormat = `ddd, MMM D, YYYY${timeFormat}`;
+    const endDateFormat = oneDay ? timeFormat : ` ddd, MMM D, YYYY${timeFormat}`;
+    const end = !(event.allDay && oneDay) && (
+      <span>
+        &nbsp;to
+        <span className="event-start">{event.end.format(endDateFormat)}</span>
+      </span>
+    );
+    const recurrence = event.recurrence && <PlainEnglishRecurrence recurrence={event.recurrence} start={event.start} />;
     return (
       <div className="row expanded page-container">
         <div className="row content-container">
-          <h1 className="page-title">Loading...</h1>
+          <h1 className="page-title">{event.title}</h1>
+          <div className="event-info-container">
+            <div className="event-date-location-container">
+              <span className="event-start">{event.start.format(startDateFormat)}</span>
+              {end}
+              {recurrence}
+              <p className="event-location">{event.location}</p>
+            </div>
+            <Markdown source={event.description} className="description-container" />
+          </div>
         </div>
       </div>
     );

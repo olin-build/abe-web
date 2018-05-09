@@ -1,27 +1,26 @@
 // This page is used to add or edit an event
 
-import * as React from 'react';
-import moment from 'moment';
-import deepcopy from 'deepcopy';
 import axios from 'axios';
+import deepcopy from 'deepcopy';
 import _ from 'lodash';
-import EventVisibilitySelector from './visibility-selector';
-import SaveCancelButtons from './save-cancel-buttons';
-import LocationField from './location-field';
+import moment from 'moment';
+import * as React from 'react';
 import EventDateTimeSelector from '../../components/date-time-selector';
-import EventRecurrenceSelector from './recurrence-selector';
+import LabelPane from '../../components/label-pane';
 import MarkdownEditor from '../../components/markdown-editor';
 import MenuIconButton from '../../components/menu-icon-button';
-import LabelPane from '../../components/label-pane';
+import { encodeEvent } from '../../data/encoding';
 import SidebarModes from '../../data/sidebar-modes';
+import LocationField from './location-field';
+import EventRecurrenceSelector from './recurrence-selector';
+import SaveCancelButtons from './save-cancel-buttons';
+import EventVisibilitySelector from './visibility-selector';
 
 export default class AddEditEventPage extends React.Component {
   constructor(props) {
     super(props);
 
-    let eventData = props.eventData
-      ? deepcopy(props.eventData)
-      : null;
+    let eventData = props.eventData ? deepcopy(props.eventData) : null;
 
     // If we want to edit a recurring series definition but we have a data for a specific recurrence
     // in that series, we need to fetch the original series data
@@ -32,7 +31,8 @@ export default class AddEditEventPage extends React.Component {
     // Check if we need to request data from the server
     if (!eventData && props.match.params.id) {
       props.getEventDataViaUrlParams(props.match.params);
-    } else { // Creating a new event
+    } else {
+      // Creating a new event
       eventData = {
         title: '',
         start: moment()
@@ -53,10 +53,10 @@ export default class AddEditEventPage extends React.Component {
       };
     }
 
-    if (props.match.params.id && props.match.params.recId) { // Editing a specific recurrence in a series of events
+    if (props.match.params.id && props.match.params.recId) {
+      // Editing a specific recurrence in a series of events
       // Get the series data so we know how this event differs from the rest in the series
-      axios.get(`${window.abe_url}/events/${props.match.params.id}`)
-        .then(this.receivedSuccessfulSeriesDataResponse);
+      axios.get(`${window.abe_url}/events/${props.match.params.id}`).then(this.receivedSuccessfulSeriesDataResponse);
       // TODO: Handle an unsuccessful response
     }
 
@@ -66,7 +66,11 @@ export default class AddEditEventPage extends React.Component {
       defaultRecurrence: {
         frequency: 'WEEKLY',
         interval: '1',
-        by_day: [moment().format('dd').toUpperCase()],
+        by_day: [
+          moment()
+            .format('dd')
+            .toUpperCase(),
+        ],
         month_option: 'month',
         week_option: 'week',
       },
@@ -139,7 +143,8 @@ export default class AddEditEventPage extends React.Component {
       let requestMethod;
 
       // Check if we're editing an existing event or creating a new one
-      if (eventData.id || eventData.sid) { // Existing
+      if (eventData.id || eventData.sid) {
+        // Existing
         // Check if we're editing a single recurrence of a recurring event
         if (this.state.seriesData) {
           // Determine what's different for this event compared to the rest of the events in the series
@@ -156,13 +161,14 @@ export default class AddEditEventPage extends React.Component {
         }
         delete eventData.color; // Don't send the color used for rendering the calendar
         requestMethod = axios.put;
-      } else { // We're adding a new event
+      } else {
+        // We're adding a new event
         url = `${window.abe_url}/events/`;
         requestMethod = axios.post;
       }
 
       // Make the request
-      requestMethod(url, eventData)
+      requestMethod(url, encodeEvent(eventData))
         .then(this.props.eventSavedSuccessfully)
         .catch(jqXHR => this.props.eventSaveFailed(eventData, jqXHR.message));
     }
@@ -173,9 +179,7 @@ export default class AddEditEventPage extends React.Component {
   locationChanged = (loc) => {
     // Save the processed/cleaned version to the eventData object
     this.updateEventDatum({
-      location: loc.isOlin
-        ? [loc.building, loc.room, loc.suffix].join(' ').trim()
-        : loc.value.trim(),
+      location: loc.isOlin ? [loc.building, loc.room, loc.suffix].join(' ').trim() : loc.value.trim(),
     });
     // Save the dirty version to be passed on to the text field
     this.setState({ locationRaw: loc.value });
@@ -194,11 +198,10 @@ export default class AddEditEventPage extends React.Component {
 
   setEnd = end => this.updateEventDatum({ end });
 
-  doesRecurToggled = e => this.updateEventDatum({
-    recurrence: e.currentTarget.checked
-      ? deepcopy(this.state.defaultRecurrence)
-      : null,
-  });
+  doesRecurToggled = e =>
+    this.updateEventDatum({
+      recurrence: e.currentTarget.checked ? deepcopy(this.state.defaultRecurrence) : null,
+    });
 
   recurrenceRuleChanged = recurrence => this.updateEventDatum({ recurrence });
 
@@ -207,7 +210,8 @@ export default class AddEditEventPage extends React.Component {
   labelToggled = (labelName) => {
     const labels = this.state.eventData.labels.slice(); // Make a copy of the list
     const labelIndex = labels.indexOf(labelName);
-    if (labelIndex > -1) { // The label is already on the event
+    if (labelIndex > -1) {
+      // The label is already on the event
       labels.splice(labelIndex, 1); // Remove the label
     } else {
       labels.push(labelName); // Add the label
@@ -279,27 +283,28 @@ export default class AddEditEventPage extends React.Component {
               onChange={this.doesRecurToggled}
             />
             <label htmlFor="repeats-check">Repeats?</label>
-            {this.state.eventData.recurrence &&
+            {this.state.eventData.recurrence && (
               <EventRecurrenceSelector
                 reccurs={this.state.eventData.recurrence}
                 start={this.state.eventData.start}
                 onChange={this.state.eventData.recurrenceRuleChanged}
-              />}
+              />
+            )}
           </div>
           <LocationField location={this.state.locationRaw} onChange={this.locationChanged} />
           <MarkdownEditor source={this.state.eventData.description} onChange={this.descriptionChanged} />
-          <EventVisibilitySelector
-            visibility={this.state.eventData.visibility}
-            onChange={this.visibilityChanged}
-          />
+          <EventVisibilitySelector visibility={this.state.eventData.visibility} onChange={this.visibilityChanged} />
           <LabelPane
             contentClass="add-edit-filters"
             selectedLabels={this.state.eventData.labels}
             labelToggled={this.labelToggled}
             {...this.props}
           />
-          <span style={{ marginTop: '1em', display: 'block' }} >
-                  Need a new label? <a href={formUrl} target="_blank">Request one here</a>.
+          <span style={{ marginTop: '1em', display: 'block' }}>
+            Need a new label?{' '}
+            <a href={formUrl} target="_blank">
+              Request one here
+            </a>.
           </span>
           <SaveCancelButtons
             onCancel={this.props.cancelButtonClicked}

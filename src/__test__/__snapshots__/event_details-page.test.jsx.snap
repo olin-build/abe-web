@@ -1,0 +1,156 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`EventDetailsPage loading 1`] = `
+<div
+  className="row expanded page-container"
+>
+  <div
+    className="row content-container"
+  >
+    <h1
+      className="page-title"
+    >
+      Loading...
+    </h1>
+  </div>
+</div>
+`;
+
+exports[`EventDetailsPage multi-day all-day event 1`] = `
+<div
+  className="row expanded page-container"
+>
+  <div
+    className="row content-container"
+  >
+    <h1
+      className="page-title"
+    >
+      Multi-day event from 5.07–5.08
+    </h1>
+    <div
+      className="event-info-container"
+    >
+      <div
+        className="event-date-location-container"
+      >
+        <span
+          className="event-start"
+        >
+          Mon, May 7, 2018
+        </span>
+        <span>
+           to
+          <span
+            className="event-start"
+          >
+             Tue, May 8, 2018
+          </span>
+        </span>
+        <p
+          className="event-location"
+        >
+          Location
+        </p>
+      </div>
+      <div
+        className="description-container"
+      >
+        <p>
+          Description
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`EventDetailsPage regular event 1`] = `
+<div
+  className="row expanded page-container"
+>
+  <div
+    className="row content-container"
+  >
+    <h1
+      className="page-title"
+    >
+      Event at 9-10AM 5.07
+    </h1>
+    <div
+      className="event-info-container"
+    >
+      <div
+        className="event-date-location-container"
+      >
+        <span
+          className="event-start"
+        >
+          Mon, May 7, 2018 9:00 AM
+        </span>
+        <span>
+           to
+          <span
+            className="event-start"
+          >
+             10:00 AM
+          </span>
+        </span>
+        <p
+          className="event-location"
+        >
+          Location
+        </p>
+      </div>
+      <div
+        className="description-container"
+      >
+        <p>
+          Description
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`EventDetailsPage single-day all-day event 1`] = `
+<div
+  className="row expanded page-container"
+>
+  <div
+    className="row content-container"
+  >
+    <h1
+      className="page-title"
+    >
+      All-day event on 5.07
+    </h1>
+    <div
+      className="event-info-container"
+    >
+      <div
+        className="event-date-location-container"
+      >
+        <span
+          className="event-start"
+        >
+          Mon, May 7, 2018
+        </span>
+        <p
+          className="event-location"
+        >
+          Location
+        </p>
+      </div>
+      <div
+        className="description-container"
+      >
+        <p>
+          Description
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+`;
