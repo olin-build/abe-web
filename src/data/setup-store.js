@@ -1,10 +1,9 @@
-import { createStore, applyMiddleware, combineReducers } from 'redux';
-import thunkMiddleware from 'redux-thunk';
 import ReactGA from 'react-ga';
-import { routerReducer, routerMiddleware } from 'react-router-redux';
+import { routerMiddleware, routerReducer } from 'react-router-redux';
+import { applyMiddleware, combineReducers, createStore } from 'redux';
+import thunkMiddleware from 'redux-thunk';
 import * as reducers from './reducers';
 import SidebarMode from './sidebar-modes';
-
 
 export default function setupStore(history) {
   const debug = process.env.DEBUG || false;
@@ -50,6 +49,15 @@ export default function setupStore(history) {
         },
       },
     },
+    // TODO: replace this by the response to GET /account, on implementaion of olinlibrary/ABE#214
+    account: {
+      authenticated: true,
+      permissions: {
+        add_events: true,
+        edit_events: true,
+        view_all_events: true,
+      },
+    },
     events: {
       current: null,
       events: null,
@@ -80,15 +88,16 @@ export default function setupStore(history) {
   }
 
   // Load the Redux middleware if the Redux devtools extension is available
-  const middleware = (debug && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__)
-    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__(applyMiddleware(
-      thunkMiddleware, // lets us dispatch() functions
-      routerMiddleware(history),
-    ))
-    : applyMiddleware(
-      thunkMiddleware, // lets us dispatch() functions
-      routerMiddleware(history),
-    );
+  const middleware =
+    debug && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+      ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__(applyMiddleware(
+        thunkMiddleware, // lets us dispatch() functions
+        routerMiddleware(history),
+      ))
+      : applyMiddleware(
+        thunkMiddleware, // lets us dispatch() functions
+        routerMiddleware(history),
+      );
 
   return createStore(
     combineReducers({ ...reducers, router: routerReducer }),

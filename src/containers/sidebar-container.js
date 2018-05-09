@@ -9,13 +9,12 @@ import * as Actions from '../data/actions';
 // This function passes values/objects from the Redux state to the React component as props
 const mapStateToProps = state => ({
   general: state.general,
+  account: state.account,
   currentEvent: state.events.current,
   isCollapsed: state.sidebar.isCollapsed,
   sidebarMode: state.sidebar.mode,
   possibleLabels: state.labels.labelList,
-  selectedLabels: state.events.current
-    ? state.events.current.labels
-    : state.labels.visibleLabels,
+  selectedLabels: state.events.current ? state.events.current.labels : state.labels.visibleLabels,
 });
 
 // This function passes functions from /srcs/data/actions.jsx to the React component as props

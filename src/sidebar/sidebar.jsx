@@ -13,22 +13,34 @@ import MarkdownGuide from './markdown-guide';
 import SidebarItemContainer from './sidebar-item-wrapper';
 
 const Sidebar = (props) => {
-  const { sidebarMode: mode } = props;
+  const {
+    account: { permissions },
+    sidebarMode: mode,
+  } = props;
 
   const content = (
     <div>
-      {mode.LINK_PANE && (
-        <LinkPane
-          addEventClicked={props.addEvent}
-          importICSClicked={props.importICSClicked}
-          key="link"
-          className="sidebar-item"
-        />
+      {!permissions.view_all_events && (
+        <p>
+          You are viewing the public calendar. Visit the calendar from on campus to see all events
+          and to add and edit events.
+        </p>
       )}
 
-      {mode.EVENT_ACTIONS && (
-        <EventActionsPane key="event-actions" className="sidebar-item" {...props} />
-      )}
+      {mode.LINK_PANE &&
+        permissions.add_events && (
+          <LinkPane
+            addEventClicked={props.addEvent}
+            importICSClicked={props.importICSClicked}
+            key="link"
+            className="sidebar-item"
+          />
+        )}
+
+      {mode.EVENT_ACTIONS &&
+        permissions.edit_events && (
+          <EventActionsPane key="event-actions" className="sidebar-item" {...props} />
+        )}
 
       {mode.EVENT_LABELS_PANE && (
         <SidebarItemContainer key="event-labels" header="Labels">
