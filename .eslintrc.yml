@@ -71,6 +71,7 @@ overrides:
       jest: true
     rules:
       import/no-extraneous-dependencies: off
+      react/jsx-indent: false
   - files: [ "actions.js" ]
     rules:
       no-use-before-define: off

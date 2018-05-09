@@ -56,7 +56,9 @@ export default class AddEditEventPage extends React.Component {
     if (props.match.params.id && props.match.params.recId) {
       // Editing a specific recurrence in a series of events
       // Get the series data so we know how this event differs from the rest in the series
-      axios.get(`${window.abe_url}/events/${props.match.params.id}`).then(this.receivedSuccessfulSeriesDataResponse);
+      axios
+        .get(`${window.abe_url}/events/${props.match.params.id}`)
+        .then(this.receivedSuccessfulSeriesDataResponse);
       // TODO: Handle an unsuccessful response
     }
 
@@ -95,19 +97,6 @@ export default class AddEditEventPage extends React.Component {
   componentWillUnmount() {
     this.props.clearCurrentEvent();
   }
-
-  receivedSuccessfulSeriesDataResponse = (response) => {
-    const seriesData = response.data;
-
-    const { eventData } = this.state;
-    if (eventData) {
-      // Save the original start and end times in the series data (to check later if the user changed it)
-      seriesData.start = moment(eventData.start);
-      seriesData.end = moment(eventData.end);
-    }
-
-    this.setState({ seriesData });
-  };
 
   validateInput = () => {
     if (this.state.eventData.title.length === 0) {
@@ -155,7 +144,9 @@ export default class AddEditEventPage extends React.Component {
             }
           });
 
-          url = `${window.abe_url}/events/${eventData.id || eventData.sid}/${this.props.match.params.recId}`;
+          url = `${window.abe_url}/events/${eventData.id || eventData.sid}/${
+            this.props.match.params.recId
+          }`;
         } else {
           url = `${window.abe_url}/events/${eventData.id || eventData.sid}`;
         }
@@ -179,7 +170,9 @@ export default class AddEditEventPage extends React.Component {
   locationChanged = (loc) => {
     // Save the processed/cleaned version to the eventData object
     this.updateEventDatum({
-      location: loc.isOlin ? [loc.building, loc.room, loc.suffix].join(' ').trim() : loc.value.trim(),
+      location: loc.isOlin
+        ? [loc.building, loc.room, loc.suffix].join(' ').trim()
+        : loc.value.trim(),
     });
     // Save the dirty version to be passed on to the text field
     this.setState({ locationRaw: loc.value });
@@ -197,6 +190,19 @@ export default class AddEditEventPage extends React.Component {
   };
 
   setEnd = end => this.updateEventDatum({ end });
+
+  receivedSuccessfulSeriesDataResponse = (response) => {
+    const seriesData = response.data;
+
+    const { eventData } = this.state;
+    if (eventData) {
+      // Save the original start and end times in the series data (to check later if the user changed it)
+      seriesData.start = moment(eventData.start);
+      seriesData.end = moment(eventData.end);
+    }
+
+    this.setState({ seriesData });
+  };
 
   doesRecurToggled = e =>
     this.updateEventDatum({
@@ -221,7 +227,8 @@ export default class AddEditEventPage extends React.Component {
 
   visibilityChanged = visibility => this.updateEventDatum({ visibility });
 
-  updateEventDatum = delta => this.setState({ eventData: Object.assign({}, this.state.eventData, delta) });
+  updateEventDatum = delta =>
+    this.setState({ eventData: Object.assign({}, this.state.eventData, delta) });
 
   render() {
     if (!this.state.eventData) {
@@ -240,7 +247,10 @@ export default class AddEditEventPage extends React.Component {
       <div className="row content-container">
         <span className="content-container">
           <h1 className="page-title">
-            <MenuIconButton onClick={this.props.toggleSidebarCollapsed} tooltip="Show/Hide Sidebar" />
+            <MenuIconButton
+              onClick={this.props.toggleSidebarCollapsed}
+              tooltip="Show/Hide Sidebar"
+            />
             {pageTitle}
           </h1>
         </span>
@@ -292,8 +302,14 @@ export default class AddEditEventPage extends React.Component {
             )}
           </div>
           <LocationField location={this.state.locationRaw} onChange={this.locationChanged} />
-          <MarkdownEditor source={this.state.eventData.description} onChange={this.descriptionChanged} />
-          <EventVisibilitySelector visibility={this.state.eventData.visibility} onChange={this.visibilityChanged} />
+          <MarkdownEditor
+            source={this.state.eventData.description}
+            onChange={this.descriptionChanged}
+          />
+          <EventVisibilitySelector
+            visibility={this.state.eventData.visibility}
+            onChange={this.visibilityChanged}
+          />
           <LabelPane
             contentClass="add-edit-filters"
             selectedLabels={this.state.eventData.labels}
