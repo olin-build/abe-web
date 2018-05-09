@@ -5,6 +5,28 @@ import UltraResponsiveCalendar from 'ultra-responsive-calendar';
 import SidebarModes from '../../data/sidebar-modes';
 import CalendarHeader from './calendar-header';
 
+const normalizeLabelName = name => name.replace(/[- ]/g, '').toLowerCase();
+
+/** labelsParam is a string of comma-separated label names. Given a list of label
+ * names in allLabels, return a list of label names from labelsParam. Labels are
+ * changed to match the case of allLabels.
+ */
+export function normalizeUrlLabels(labelsParam, allLabels) {
+  const allLabelNames = Object.keys(allLabels);
+  const map = new Map(allLabelNames.map(name => [normalizeLabelName(name), name]));
+  // The literal names take precedence over normalized names. This assures that
+  // if allLabels contains both "Label" and "label", the former isn't turned
+  // into the latter.
+  allLabelNames.forEach((name) => {
+    map.set(name, name);
+  });
+  return labelsParam
+    .split(',')
+    .map(name => map.get(normalizeLabelName(name)))
+    .filter(name => name)
+    .sort();
+}
+
 export default class CalendarPage extends React.Component {
   componentDidMount() {
     this.props.setSidebarMode(SidebarModes.CALENDAR_VIEW);
@@ -13,8 +35,7 @@ export default class CalendarPage extends React.Component {
     // Load the visible labels from the URL (if defined)
     const labelsStr = this.props.match.params.labels;
     if (labelsStr && labelsStr.length > 0) {
-      const labelsArr = labelsStr.split(',').sort();
-      this.props.setVisibleLabels(labelsArr);
+      this.props.setVisibleLabels(normalizeUrlLabels(labelsStr, this.props.labels.labelList));
     }
 
     if (!this.props.currentlyViewingDate) {
@@ -37,9 +58,7 @@ export default class CalendarPage extends React.Component {
   }
 
   render() {
-    const currDate = this.props.currentlyViewingDate
-      ? this.props.currentlyViewingDate.format('MMMM D, YYYY')
-      : '';
+    const currDate = this.props.currentlyViewingDate ? this.props.currentlyViewingDate.format('MMMM D, YYYY') : '';
 
     return (
       <div className="calendar-container">

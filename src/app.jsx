@@ -1,24 +1,23 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
+import createHistory from 'history/createBrowserHistory';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { Router, Route, Switch } from 'react-router';
-// eslint-disable-next-line import/no-extraneous-dependencies
-import createHistory from 'history/createBrowserHistory';
-import {
-  toggleSidebarCollapsed,
-  fetchLabels,
-} from './data/actions';
-import setupStore from './data/setup-store';
-import CalendarContainer from './containers/calendar-container';
-import SidebarContainer from './containers/sidebar-container';
+import { Route, Router, Switch } from 'react-router';
 import AddEditContainer from './containers/add-edit-container';
+import CalendarContainer from './containers/calendar-container';
 import ViewEventContainer from './containers/event-details-container';
 import ImportContainer from './containers/import-container';
 import LabelsContainer from './containers/labels-container';
+import SidebarContainer from './containers/sidebar-container';
 import SubscriptionContainer from './containers/subscription-container';
+import { fetchLabels, toggleSidebarCollapsed } from './data/actions';
+import setupStore from './data/setup-store';
 
-// Remove trailing slash, if present
-// TODO: change this from a global to a provider pattern.
+// Remove the trailing slash, if present
+//
+// TODO: change this from a global variable to an API Client that's supplied via
+// the provider pattern.
 window.abe_url = process.env.ABE_URL.replace(/\/$/, '');
 
 // React Router (with Redux middleware)
