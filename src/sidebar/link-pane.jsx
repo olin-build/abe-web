@@ -1,21 +1,23 @@
 // This component contains a collection of buttons for starting various general tasks
 
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 
-export default class ButtonPane extends React.Component {
-  render() {
-    return (
-      <div className={`link-pane ${this.props.className}`}>
-        <button className="button" onClick={this.props.addEventClicked}>Add Event</button>
-        <button className="button" onClick={this.props.importICSClicked}>Import Calendar</button>
-      </div>
-    );
-  }
-}
+const ButtonPane = props => (
+  <div className={`link-pane ${props.className}`}>
+    <button className="button" onClick={props.addEventClicked}>
+      Add Event
+    </button>
+    <button className="button" onClick={props.importICSClicked}>
+      Import Calendar
+    </button>
+  </div>
+);
 
 // Define React property types for type checking during development
 ButtonPane.propTypes = {
-  addEventClicked: PropTypes.func,
-  importICSClicked: PropTypes.func,
+  addEventClicked: PropTypes.func.isRequired,
+  importICSClicked: PropTypes.func.isRequired,
 };
+
+export default ButtonPane;
