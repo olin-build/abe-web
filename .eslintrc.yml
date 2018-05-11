@@ -22,20 +22,16 @@ rules:
   camelcase: warn
   consistent-return: warn
   guard-for-in: warn
-  import/no-unresolved: warn
   import/prefer-default-export: warn
   no-mixed-operators: warn
   no-param-reassign: warn
   no-restricted-globals: warn
   no-restricted-syntax: warn
-  no-underscore-dangle: [error, allow: [__REDUX_DEVTOOLS_EXTENSION_COMPOSE__]]
   no-use-before-define: warn
   prefer-destructuring: warn
   react/forbid-prop-types: warn
-  react/jsx-filename-extension: warn
   react/jsx-no-target-blank: warn
   react/no-multi-comp: warn
-  react/no-unused-prop-types: warn
   react/no-unused-state: warn
   react/prefer-stateless-function: warn
   react/require-default-props: warn
@@ -44,6 +40,7 @@ rules:
   # Intentional Airbnb exceptions:
   no-alert: off  # currently used in the UI
   no-plusplus: [error, allowForLoopAfterthoughts: true]
+  no-underscore-dangle: [error, allow: [__REDUX_DEVTOOLS_EXTENSION_COMPOSE__]]
 
   # TODO: #118 accessibility
   jsx-a11y/anchor-is-valid: off

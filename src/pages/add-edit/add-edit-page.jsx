@@ -98,6 +98,17 @@ export default class AddEditEventPage extends React.Component {
     this.props.clearCurrentEvent();
   }
 
+  setStart = (start) => {
+    const timeDelta = start.diff(this.state.eventData.start);
+    this.updateEventDatum({
+      start,
+      // Shift the end time to maintain the same duration
+      end: moment(this.state.eventData.end).add(timeDelta, 'ms'),
+    });
+  };
+
+  setEnd = end => this.updateEventDatum({ end });
+
   validateInput = () => {
     if (this.state.eventData.title.length === 0) {
       alert('Event Title is required');
@@ -179,17 +190,6 @@ export default class AddEditEventPage extends React.Component {
   };
 
   allDayToggled = e => this.updateEventDatum({ allDay: e.currentTarget.checked });
-
-  setStart = (start) => {
-    const timeDelta = start.diff(this.state.eventData.start);
-    this.updateEventDatum({
-      start,
-      // Shift the end time to maintain the same duration
-      end: moment(this.state.eventData.end).add(timeDelta, 'ms'),
-    });
-  };
-
-  setEnd = end => this.updateEventDatum({ end });
 
   receivedSuccessfulSeriesDataResponse = (response) => {
     const seriesData = response.data;
