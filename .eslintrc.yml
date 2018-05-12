@@ -20,14 +20,10 @@ rules:
 
   # Airbnb style exceptions that we'll eventually fix:
   camelcase: warn
-  consistent-return: warn
-  guard-for-in: warn
   import/prefer-default-export: warn
-  no-mixed-operators: warn
   no-param-reassign: warn
   no-restricted-globals: warn
   no-restricted-syntax: warn
-  no-use-before-define: warn
   prefer-destructuring: warn
   react/forbid-prop-types: warn
   react/jsx-no-target-blank: warn
