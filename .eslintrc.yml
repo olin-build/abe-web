@@ -19,15 +19,12 @@ rules:
   react/prop-types: off           # TODO: #123
 
   # Airbnb style exceptions that we'll eventually fix:
-  camelcase: warn
   import/prefer-default-export: warn
   no-param-reassign: warn
   no-restricted-globals: warn
-  no-restricted-syntax: warn
   prefer-destructuring: warn
   react/forbid-prop-types: warn
   react/jsx-no-target-blank: warn
-  react/no-multi-comp: warn
   react/no-unused-state: warn
   react/prefer-stateless-function: warn
   react/require-default-props: warn

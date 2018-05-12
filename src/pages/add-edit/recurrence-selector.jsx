@@ -5,6 +5,7 @@ import moment from 'moment';
 import EventDateTimeSelector from '../../components/date-time-selector';
 import PlainEnglishRecurrence from '../../components/plain-english-recurrence';
 
+// eslint-disable-next-line react/no-multi-comp
 class MonthOptions extends React.Component {
   radioCheckedHandler = e => this.props.onChange(e.currentTarget.value);
 
@@ -43,6 +44,7 @@ class MonthOptions extends React.Component {
   }
 }
 
+// eslint-disable-next-line react/no-multi-comp
 class WeekOptions extends React.Component {
   constructor(props) {
     super(props);
@@ -161,6 +163,7 @@ class WeekOptions extends React.Component {
   }
 }
 
+// eslint-disable-next-line react/no-multi-comp
 class EndOptions extends React.Component {
   constructor(props) {
     super(props);
@@ -196,10 +199,15 @@ class EndOptions extends React.Component {
     });
   }
 
-
   render() {
-    const untilDate = this.state.option === 'date' ?
-      <EventDateTimeSelector datetime={this.state.endDate} onChange={this.endDateHandler} show="date" /> : null;
+    const untilDate =
+      this.state.option === 'date' ? (
+        <EventDateTimeSelector
+          datetime={this.state.endDate}
+          onChange={this.endDateHandler}
+          show="date"
+        />
+      ) : null;
     return (
       <div className="radio-collection-container">
         <span className="radio-collection-title">ends</span>
@@ -253,12 +261,12 @@ class EndOptions extends React.Component {
             <label htmlFor="end-options-forever">forever</label>
           </div>
         </div>
-
       </div>
     );
   }
 }
 
+// eslint-disable-next-line react/no-multi-comp
 export default class RecurrenceSelector extends React.Component {
   constructor(props) {
     super(props);
@@ -286,18 +294,19 @@ export default class RecurrenceSelector extends React.Component {
   }
 
   intervalChanged(e) {
-    let reccurs = this.state.recurrence;
-    reccurs = Object.assign(reccurs, { interval: e.currentTarget.value });
-    this.setState({ recurrence: reccurs });
+    const recurrence = Object.assign(this.state.recurrence, { interval: e.currentTarget.value });
+    this.setState({ recurrence });
     this.props.onChange(this.state);
   }
 
   monthOptionsChanged(value) {
-    const state = this.state;
-    if (value === 'month') { // By day of month
+    const { state } = this;
+    if (value === 'month') {
+      // By day of month
       state.recurrence.by_month_day = state.start.date().toString();
       delete state.recurrence.by_day;
-    } else if (value === 'week') { // By day of week
+    } else if (value === 'week') {
+      // By day of week
       state.recurrence.by_day = [state.start.format('dd').toUpperCase()];
       delete state.recurrence.by_month_day;
     }
@@ -326,16 +335,22 @@ export default class RecurrenceSelector extends React.Component {
   }
 
   render() {
-    const month_options = this.props.reccurs.frequency === 'MONTHLY' ?
-      <MonthOptions option={this.state.recurrence.month_option} onChange={this.monthOptionsChanged} /> : null;
-    const week_options = this.props.reccurs.frequency === 'WEEKLY' ?
-      <WeekOptions days={this.state.recurrence.by_day} onChange={this.monthOptionsChanged} /> : null;
+    const monthOptions =
+      this.props.reccurs.frequency === 'MONTHLY' ? (
+        <MonthOptions
+          option={this.state.recurrence.month_option}
+          onChange={this.monthOptionsChanged}
+        />
+      ) : null;
+    const weekOptions =
+      this.props.reccurs.frequency === 'WEEKLY' ? (
+        <WeekOptions days={this.state.recurrence.by_day} onChange={this.monthOptionsChanged} />
+      ) : null;
     return (
       <div className="recurrence-container">
         <div className="radio-collection-container">
           <span className="radio-collection-title">Repeat</span>
           <div className="radio-collection-options-container">
-
             <div className="radio-option">
               <input
                 type="radio"
@@ -384,8 +399,8 @@ export default class RecurrenceSelector extends React.Component {
           value={this.props.reccurs.interval}
           onChange={this.intervalChanged}
         />
-        {month_options}
-        {week_options}
+        {monthOptions}
+        {weekOptions}
         <EndOptions option={this.state.recurrence.end_option} onChange={this.endOptionsChanged} />
         <PlainEnglishRecurrence recurrence={this.state.recurrence} start={this.state.start} />
       </div>
