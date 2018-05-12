@@ -93,6 +93,8 @@ seconds for Webpack to recompile everything.
 
 `yarn test:watch` runs Jest in watch mode.
 
+`yarn test:coverage` creates a test coverage report. View the HTML at `./coverage/lcov-report/index.html`.
+
 ### Lint
 
 `yarn lint` runs [ESLint](https://eslint.org/). This verifies that the code
