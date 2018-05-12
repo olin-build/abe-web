@@ -12,7 +12,7 @@ import MenuIconButton from '../../components/menu-icon-button';
 import { encodeEvent } from '../../data/encoding';
 import SidebarModes from '../../data/sidebar-modes';
 import LocationField from './location-field';
-import EventRecurrenceSelector from './recurrence-selector';
+import RecurrenceSelector from './recurrence-selector';
 import SaveCancelButtons from './save-cancel-buttons';
 import EventVisibilitySelector from './visibility-selector';
 
@@ -294,8 +294,8 @@ export default class AddEditEventPage extends React.Component {
             />
             <label htmlFor="repeats-check">Repeats?</label>
             {this.state.eventData.recurrence && (
-              <EventRecurrenceSelector
-                reccurs={this.state.eventData.recurrence}
+              <RecurrenceSelector
+                recurs={this.state.eventData.recurrence}
                 start={this.state.eventData.start}
                 onChange={this.state.eventData.recurrenceRuleChanged}
               />

@@ -275,20 +275,20 @@ export default class RecurrenceSelector extends React.Component {
     this.monthOptionsChanged = this.monthOptionsChanged.bind(this);
     this.endOptionsChanged = this.endOptionsChanged.bind(this);
     this.state = {
-      recurrence: this.props.reccurs,
+      recurrence: this.props.recurs,
       start: this.props.start,
     };
   }
 
   frequencyChanged(e) {
-    let reccurs = this.state.recurrence;
-    if (e.currentTarget.value === 'WEEKLY' && reccurs.by_month_day) {
-      // reccurs = Object.assign(reccurs, {by_month_day: undefined})
-      reccurs.by_day = [this.state.start.format('dd').toUpperCase()];
-      delete reccurs.by_month_day;
+    let recurs = this.state.recurrence;
+    if (e.currentTarget.value === 'WEEKLY' && recurs.by_month_day) {
+      // recurs = Object.assign(recurs, {by_month_day: undefined})
+      recurs.by_day = [this.state.start.format('dd').toUpperCase()];
+      delete recurs.by_month_day;
     }
-    reccurs = Object.assign(reccurs, { frequency: e.currentTarget.value });
-    this.setState({ recurrence: reccurs }, () => {
+    recurs = Object.assign(recurs, { frequency: e.currentTarget.value });
+    this.setState({ recurrence: recurs }, () => {
       this.props.onChange(this.state);
     });
   }
@@ -336,14 +336,14 @@ export default class RecurrenceSelector extends React.Component {
 
   render() {
     const monthOptions =
-      this.props.reccurs.frequency === 'MONTHLY' ? (
+      this.props.recurs.frequency === 'MONTHLY' ? (
         <MonthOptions
           option={this.state.recurrence.month_option}
           onChange={this.monthOptionsChanged}
         />
       ) : null;
     const weekOptions =
-      this.props.reccurs.frequency === 'WEEKLY' ? (
+      this.props.recurs.frequency === 'WEEKLY' ? (
         <WeekOptions days={this.state.recurrence.by_day} onChange={this.monthOptionsChanged} />
       ) : null;
     return (
@@ -358,7 +358,7 @@ export default class RecurrenceSelector extends React.Component {
                 name="frequency"
                 value="WEEKLY"
                 title="Weekly"
-                checked={this.props.reccurs.frequency === 'WEEKLY'}
+                checked={this.props.recurs.frequency === 'WEEKLY'}
                 onChange={this.frequencyChanged}
               />
               <label htmlFor="frequency-weekly">Weekly</label>
@@ -370,7 +370,7 @@ export default class RecurrenceSelector extends React.Component {
                 name="frequency"
                 value="MONTHLY"
                 title="Monthly"
-                checked={this.props.reccurs.frequency === 'MONTHLY'}
+                checked={this.props.recurs.frequency === 'MONTHLY'}
                 onChange={this.frequencyChanged}
               />
               <label htmlFor="frequency-monthly">Monthly</label>
@@ -382,7 +382,7 @@ export default class RecurrenceSelector extends React.Component {
                 name="frequency"
                 value="YEARLY"
                 title="Yearly"
-                checked={this.props.reccurs.frequency === 'YEARLY'}
+                checked={this.props.recurs.frequency === 'YEARLY'}
                 onChange={this.frequencyChanged}
               />
               <label htmlFor="frequency-yearly">Yearly</label>
@@ -396,7 +396,7 @@ export default class RecurrenceSelector extends React.Component {
           min="1"
           className="single-line-text-box super-short-text-box"
           placeholder="#"
-          value={this.props.reccurs.interval}
+          value={this.props.recurs.interval}
           onChange={this.intervalChanged}
         />
         {monthOptions}
