@@ -5,6 +5,7 @@ import axios from 'axios';
 import copy from 'copy-to-clipboard';
 import React from 'react';
 import { OutboundLink } from 'react-ga';
+import docs from '../docs';
 
 export default class GenerateICSPane extends React.Component {
   constructor(props) {
@@ -54,7 +55,7 @@ export default class GenerateICSPane extends React.Component {
           Use an ICS feed to add events with the selected tags to your own calendar (
           <OutboundLink
             eventLabel="GitHub Wiki: Integrate with Your Calendar"
-            to="https://github.com/olinlibrary/abe-web/wiki/Integrate-with-Your-Calendar"
+            to={docs.integrateCalendarUrl}
             alt="Instructions for adding an ICS feed"
             title="Instructions for adding an ICS feed"
             target="_blank"
@@ -92,8 +93,9 @@ export default class GenerateICSPane extends React.Component {
             </a>
 
             <a
-              href="https://github.com/olinlibrary/abe-web/wiki/Integrate-with-Your-Calendar#step-2-b-google-calendar"
+              href={docs.googleCalendarUrl}
               className="ics-copy-to-clipboard"
+              target="_blank"
               onClick={() => {
                 this.copyToClipboard(this.state.data.ics_url);
               }}

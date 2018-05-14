@@ -6,6 +6,7 @@ import * as React from 'react';
 import TagPane from '../../components/label-pane';
 import MenuIconButton from '../../components/menu-icon-button';
 import SidebarModes from '../../data/sidebar-modes';
+import docs from '../../docs';
 
 export default class SubscriptionEditorPage extends React.Component {
   constructor(props) {
@@ -75,12 +76,13 @@ export default class SubscriptionEditorPage extends React.Component {
       <div className="row expanded page-container">
         <div className="row content-container">
           <h1 className="page-title">
-            <MenuIconButton onClick={this.props.toggleSidebarCollapsed} tooltip="Show/Hide Sidebar" />
+            <MenuIconButton
+              onClick={this.props.toggleSidebarCollapsed}
+              tooltip="Show/Hide Sidebar"
+            />
             Edit Subscription: {this.state.data.id}
           </h1>
-          {/* <input required="required" type="url" placeholder=".../example_calendar.ics"
-           className="wide-text-box single-line-text-box medium-text-box" onChange={this.urlChanged}/> */}
-          <h2>Tags: </h2>
+          <h2>Tags:</h2>
           <TagPane
             contentClass="import-filters"
             possibleLabels={this.props.labels}
@@ -89,7 +91,12 @@ export default class SubscriptionEditorPage extends React.Component {
             {...this.props}
           />
           <br />
-          <input type="submit" className="button submit" value="Submit" onClick={this.submitSubscription} />
+          <input
+            type="submit"
+            className="button submit"
+            value="Submit"
+            onClick={this.submitSubscription}
+          />
           <br />
           <a
             href={`webcal:${window.abe_url.split(':')[1]}${this.state.data.ics_url}`}
@@ -99,8 +106,9 @@ export default class SubscriptionEditorPage extends React.Component {
           </a>
 
           <a
-            href="https://github.com/olinlibrary/abe-web/wiki/Integrate-with-Your-Calendar#step-2-b-google-calendar"
+            href={docs.googleCalendarUrl}
             className="ics-copy-to-clipboard"
+            target="_blank"
             onClick={() => {
               this.copyToClipboard(this.state.data.ics_url);
             }}
