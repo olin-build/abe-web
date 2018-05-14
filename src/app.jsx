@@ -11,7 +11,7 @@ import ImportContainer from './containers/import-container';
 import LabelsContainer from './containers/labels-container';
 import SidebarContainer from './containers/sidebar-container';
 import SubscriptionContainer from './containers/subscription-container';
-import { fetchLabels, toggleSidebarCollapsed } from './data/actions';
+import { fetchAccount, fetchLabels, toggleSidebarCollapsed } from './data/actions';
 import setupStore from './data/setup-store';
 
 // Remove the trailing slash, if present
@@ -27,6 +27,7 @@ const history = createHistory();
 const store = setupStore(history);
 
 // Fetch the labels
+store.dispatch(fetchAccount());
 store.dispatch(fetchLabels());
 
 ReactDOM.render(

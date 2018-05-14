@@ -49,15 +49,7 @@ export default function setupStore(history) {
         },
       },
     },
-    // TODO: replace this by the response to GET /account, on implementaion of olinlibrary/ABE#214
-    account: {
-      authenticated: true,
-      permissions: {
-        add_events: true,
-        edit_events: true,
-        view_all_events: true,
-      },
-    },
+    account: null,
     events: {
       current: null,
       events: null,
