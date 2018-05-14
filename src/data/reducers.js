@@ -23,8 +23,13 @@ export function general(state = {}, action) {
   }
 }
 
-export function account(state = {}, _action) {
-  return state;
+export function account(state = {}, action) {
+  switch (action.type) {
+    case ActionTypes.SET_ACCOUNT:
+      return action.data;
+    default:
+      return state;
+  }
 }
 
 export function calendar(state = {}, action) {

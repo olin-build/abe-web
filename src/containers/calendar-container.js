@@ -15,8 +15,6 @@ import {
 import CalendarPage from '../pages/calendar/calendar-page';
 import withServerData from './with-server-data';
 
-// const normalizeLabelName = (label, allLabels) => {};
-
 const getVisibleEvents = (events, visibleLabels, allLabels) => {
   // Filter out events that are not labeled with currently visible labels
   if (!events || !visibleLabels || !allLabels) return null;
@@ -35,6 +33,7 @@ const getVisibleEvents = (events, visibleLabels, allLabels) => {
 
 // This function passes values/objects from the Redux state to the React component as props
 const mapStateToProps = state => ({
+  account: state.account,
   events: getVisibleEvents(state.events.events, state.labels.visibleLabels, state.labels.labelList),
   labels: state.labels,
   ...state.calendar,

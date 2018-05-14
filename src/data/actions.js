@@ -23,6 +23,7 @@ export const ActionTypes = {
   SET_FILTER_LABEL_SELECTED: 'SET_FILTER_LABEL_SELECTED', // Sets whether or not a specific label is selected as part
   // of the event filter
   SET_VIEW_MODE: 'SET_VIEW_MODE', // Sets which view mode (month, week, day, etc) the calendar is in
+  SET_ACCOUNT: 'SET_ACCOUNT',
   // Event data
   SET_CURRENT_EVENT: 'SET_CURRENT_EVENT', // Keeps track of the data for the event currently being viewed or edited
   FETCH_EVENTS_IF_NEEDED: 'FETCH_EVENTS_IF_NEEDED', // Triggers FETCH_EVENTS if no event data is loaded
@@ -157,7 +158,9 @@ export function page(direction) {
  * what display mode (month, week, day, etc) the calendar is in
  */
 function getPageDelta(state) {
-  return state.calendar.currentViewMode.daysVisible > 0 ? [state.calendar.currentViewMode.daysVisible, 'd'] : [1, 'M'];
+  return state.calendar.currentViewMode.daysVisible > 0
+    ? [state.calendar.currentViewMode.daysVisible, 'd']
+    : [1, 'M'];
 }
 
 export function showToday() {
@@ -220,6 +223,27 @@ export function setViewMode(mode) {
 
 // ########## End Calendar View Actions ########## //
 
+/**
+ * Performs a server request to refresh the account info.
+ */
+export function fetchAccount() {
+  return dispatch =>
+    fetch(`${window.abe_url}/account`)
+      .then(response => response.json(), error => dispatch(displayError(error)))
+      .then(account => dispatch(setAccount(account)));
+}
+
+/**
+ * Updates the account in the Redux store.
+ */
+export function setAccount(account) {
+  const data = {
+    authenticated: account.authenticated,
+    permissions: new Set(account.permissions),
+  };
+  return { type: ActionTypes.SET_ACCOUNT, data };
+}
+
 // ########## Begin Event Data Actions ########## //
 
 // ----- Begin general event actions ----- //
@@ -241,7 +265,9 @@ export function setCurrentEventById(id, recId) {
       dispatch(setCurrentEventData(eventData));
     } else {
       // We don't have the data, so request it from the server
-      const url = recId ? `${window.abe_url}/events/${id}/${recId}` : `${window.abe_url}/events/${id}`;
+      const url = recId
+        ? `${window.abe_url}/events/${id}/${recId}`
+        : `${window.abe_url}/events/${id}`;
       axios
         .get(url)
         .then(response => dispatch(setCurrentEventData(response.data)))
@@ -525,7 +551,9 @@ export function labelVisibilityToggled(labelName) {
 export function updateLabel(data) {
   return () => {
     // TODO: update model on success
-    axios.post(`${window.abe_url}/labels/${data.id}`, data).catch(error => alert(`Update label failed:\n${error}`));
+    axios
+      .post(`${window.abe_url}/labels/${data.id}`, data)
+      .catch(error => alert(`Update label failed:\n${error}`));
   };
 }
 

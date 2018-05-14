@@ -20,15 +20,22 @@ const Sidebar = (props) => {
 
   const content = (
     <div>
-      {!permissions.view_all_events && (
-        <p>
-          You are viewing the public calendar. Visit the calendar from on campus to see all events
-          and to add and edit events.
-        </p>
+      {!permissions.has('view_all_events') && (
+        <div>
+          <p>You are viewing the public calendar.</p>
+          <p>
+            <a
+              href="https://github.com/olinlibrary/abe-web/wiki/Calendar-Access#view-olin-community-events"
+              target="_black"
+            >
+              How do I see Olin Community events?
+            </a>
+          </p>
+        </div>
       )}
 
       {mode.LINK_PANE &&
-        permissions.add_events && (
+        permissions.has('add_events') && (
           <LinkPane
             addEventClicked={props.addEvent}
             importICSClicked={props.importICSClicked}
@@ -38,9 +45,7 @@ const Sidebar = (props) => {
         )}
 
       {mode.EVENT_ACTIONS &&
-        permissions.edit_events && (
-          <EventActionsPane key="event-actions" className="sidebar-item" {...props} />
-        )}
+        permissions.has('edit_events') && <EventActionsPane key="event-actions" className="sidebar-item" {...props} />}
 
       {mode.EVENT_LABELS_PANE && (
         <SidebarItemContainer key="event-labels" header="Labels">
@@ -78,10 +83,7 @@ const Sidebar = (props) => {
   return (
     <div className={sidebarClasses}>
       <div className="sidebar-container">
-        <SidebarHeader
-          homeClicked={props.homeClicked}
-          toggleSidebarCollapsed={props.toggleSidebarCollapsed}
-        />
+        <SidebarHeader homeClicked={props.homeClicked} toggleSidebarCollapsed={props.toggleSidebarCollapsed} />
         <div className="sidebar-content">{content}</div>
         <Footer class="sidebar-footer" />
       </div>
