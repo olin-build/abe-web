@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import moment from 'moment';
-import EventDateTimeSelector from '../../components/date-time-selector';
+import DateTimeSelector from '../../components/date-time-selector';
 import PlainEnglishRecurrence from '../../components/plain-english-recurrence';
 
 // eslint-disable-next-line react/no-multi-comp
@@ -202,11 +202,7 @@ class EndOptions extends React.Component {
   render() {
     const untilDate =
       this.state.option === 'date' ? (
-        <EventDateTimeSelector
-          datetime={this.state.endDate}
-          onChange={this.endDateHandler}
-          show="date"
-        />
+        <DateTimeSelector datetime={this.state.endDate} onChange={this.endDateHandler} show="date" />
       ) : null;
     return (
       <div className="radio-collection-container">
@@ -337,10 +333,7 @@ export default class RecurrenceSelector extends React.Component {
   render() {
     const monthOptions =
       this.props.recurs.frequency === 'MONTHLY' ? (
-        <MonthOptions
-          option={this.state.recurrence.month_option}
-          onChange={this.monthOptionsChanged}
-        />
+        <MonthOptions option={this.state.recurrence.month_option} onChange={this.monthOptionsChanged} />
       ) : null;
     const weekOptions =
       this.props.recurs.frequency === 'WEEKLY' ? (

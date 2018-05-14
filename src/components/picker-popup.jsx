@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import * as React from 'react';
 import ReactDOM from 'react-dom';
 
-class PickerPopup extends React.Component {
+export default class PickerPopup extends React.Component {
   constructor(props) {
     super(props);
 

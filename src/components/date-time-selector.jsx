@@ -16,7 +16,8 @@ export default class DateTimeSelector extends React.Component {
     };
   }
 
-  // This function is called whenever the props on this component change (including during initialization)
+  // This function is called whenever the props on this component change
+  // (including during initialization)
   componentWillReceiveProps(nextProps) {
     this.setState({
       moment: nextProps.datetime,

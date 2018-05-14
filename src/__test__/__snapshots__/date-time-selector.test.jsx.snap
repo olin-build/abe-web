@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DateTimeSelector date 1`] = `
+<div
+  className="date-time-container"
+>
+  <button
+    className="button"
+    onClick={[Function]}
+  >
+    May 14, 2018
+  </button>
+  <div
+    className="picker-popup-container"
+  />
+</div>
+`;
+
+exports[`DateTimeSelector datetime 1`] = `
+<div
+  className="date-time-container"
+>
+  <button
+    className="button"
+    onClick={[Function]}
+  >
+    May 14, 2018 8:00 AM
+  </button>
+  <div
+    className="picker-popup-container"
+  />
+</div>
+`;

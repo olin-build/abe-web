@@ -5,7 +5,7 @@ import deepcopy from 'deepcopy';
 import _ from 'lodash';
 import moment from 'moment';
 import * as React from 'react';
-import EventDateTimeSelector from '../../components/date-time-selector';
+import DateTimeSelector from '../../components/date-time-selector';
 import LabelPane from '../../components/label-pane';
 import MarkdownEditor from '../../components/markdown-editor';
 import MenuIconButton from '../../components/menu-icon-button';
@@ -264,13 +264,13 @@ export default class AddEditEventPage extends React.Component {
             onChange={this.titleChanged}
           />
           <div className="date-time-container">
-            <EventDateTimeSelector
+            <DateTimeSelector
               buttonPrefix="Start: "
               datetime={moment(this.state.eventData.start)}
               onChange={this.setStart}
               show={this.state.eventData.allDay ? 'date' : 'both'}
             />
-            <EventDateTimeSelector
+            <DateTimeSelector
               buttonPrefix="End: "
               datetime={moment(this.state.eventData.end)}
               onChange={this.setEnd}
