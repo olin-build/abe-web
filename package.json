@@ -14,6 +14,7 @@
     "format": "eslint --fix --ext .js,.jsx src *.js && $npm_execpath run lint:markdown --fix",
     "lint:markdown": "markdownlint *.md && markdownlint .github/PULL_REQUEST_TEMPLATE.md -c .github/.markdownlintrc",
     "test": "jest",
+    "test:coverage": "jest --coverage",
     "test:watch": "jest --watch",
     "stats": "webpack --json > stats.json"
   },
@@ -98,6 +99,7 @@
     "webpack-dev-server": "^2.5.0"
   },
   "jest": {
+    "coveragePathIgnorePatterns": ["/node_modules/","__test__"],
     "moduleNameMapper": {
       "\\.(svg)$": "<rootDir>/__mocks__/fileMock.js"
     },

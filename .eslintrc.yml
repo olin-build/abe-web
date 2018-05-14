@@ -19,23 +19,17 @@ rules:
   react/prop-types: off           # TODO: #123
 
   # Airbnb style exceptions that we'll eventually fix:
-  camelcase: warn
-  consistent-return: warn
-  guard-for-in: warn
   import/prefer-default-export: warn
-  no-mixed-operators: warn
   no-param-reassign: warn
   no-restricted-globals: warn
-  no-restricted-syntax: warn
-  no-use-before-define: warn
   prefer-destructuring: warn
   react/forbid-prop-types: warn
   react/jsx-no-target-blank: warn
-  react/no-multi-comp: warn
   react/no-unused-state: warn
   react/prefer-stateless-function: warn
   react/require-default-props: warn
   react/sort-comp: warn
+  no-console: off
 
   # Intentional Airbnb exceptions:
   no-alert: off  # currently used in the UI
@@ -49,7 +43,6 @@ rules:
   jsx-a11y/no-static-element-interactions: off
 
   # Fixable exceptions to Airbnb style guide.
-  indent: warn
   react/jsx-indent: off
 
 overrides:
