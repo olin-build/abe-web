@@ -36,7 +36,10 @@ describe('RecurrenceSelector', () => {
       frequency: 'MONTHLY',
       interval: 1,
     };
-    const component = renderer.create(<RecurrenceSelector recurs={recurrence} start={moment('2018-05-12')} onChange={() => {}} />);
+    const jsx = (
+      <RecurrenceSelector recurs={recurrence} start={moment('2018-05-12')} onChange={() => {}} />
+    );
+    const component = renderer.create(jsx);
     const tree = component.toJSON();
     expect(tree).toMatchSnapshot();
   });
