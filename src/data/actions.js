@@ -4,6 +4,7 @@ import axios from 'axios';
 import moment from 'moment';
 import ReactGA from 'react-ga';
 import { push } from 'react-router-redux';
+import { setAccessTokenFromResponse } from './auth';
 import { decodeEvent } from './encoding';
 
 export const ActionTypes = {
@@ -228,8 +229,10 @@ export function setViewMode(mode) {
  */
 export function fetchAccount() {
   return dispatch =>
-    fetch(`${window.abe_url}/account`)
-      .then(response => response.json(), error => dispatch(displayError(error)))
+    axios
+      .get(`${window.abe_url}/account/`)
+      .then(setAccessTokenFromResponse)
+      .then(response => response.data, error => dispatch(displayError(error)))
       .then(account => dispatch(setAccount(account)));
 }
 
@@ -297,8 +300,9 @@ export function refreshEvents(start, end) {
   return (dispatch) => {
     const startString = `${start.year()}-${start.month() + 1}-${start.date()}`;
     const endString = `${end.year()}-${end.month() + 1}-${end.date()}`;
-    return fetch(`${window.abe_url}/events/?start=${startString}&end=${endString}`)
-      .then(response => response.json(), error => dispatch(displayError(error)))
+    return axios
+      .get(`${window.abe_url}/events/?start=${startString}&end=${endString}`)
+      .then(response => response.data, error => dispatch(displayError(error)))
       .then((data) => {
         const events = data.map(decodeEvent);
         dispatch(setEvents(events));
@@ -495,8 +499,9 @@ export function refreshLabelsIfNeeded() {
  */
 export function fetchLabels() {
   return dispatch =>
-    fetch(`${window.abe_url}/labels/`)
-      .then(response => response.json(), error => dispatch(displayError(error)))
+    axios
+      .get(`${window.abe_url}/labels/`)
+      .then(response => response.data, error => dispatch(displayError(error)))
       .then(labels => dispatch(setLabels(labels)));
 }
 

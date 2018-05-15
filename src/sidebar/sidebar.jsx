@@ -25,11 +25,11 @@ const Sidebar = (props) => {
           <p>You are viewing the public calendar.</p>
           <p>
             <a
-              href="https://github.com/olinlibrary/abe-web/wiki/Calendar-Access#view-olin-community-events"
-              target="_black"
+              href={`${window.abe_url}/oauth/authorize?redirect_uri=${encodeURIComponent(window.location.href)}`}
             >
-              How do I see Olin Community events?
-            </a>
+              Sign in
+            </a>{' '}
+            to view and add Olin Community events.
           </p>
         </div>
       )}
@@ -45,7 +45,9 @@ const Sidebar = (props) => {
         )}
 
       {mode.EVENT_ACTIONS &&
-        permissions.has('edit_events') && <EventActionsPane key="event-actions" className="sidebar-item" {...props} />}
+        permissions.has('edit_events') && (
+          <EventActionsPane key="event-actions" className="sidebar-item" {...props} />
+        )}
 
       {mode.EVENT_LABELS_PANE && (
         <SidebarItemContainer key="event-labels" header="Labels">
@@ -83,7 +85,10 @@ const Sidebar = (props) => {
   return (
     <div className={sidebarClasses}>
       <div className="sidebar-container">
-        <SidebarHeader homeClicked={props.homeClicked} toggleSidebarCollapsed={props.toggleSidebarCollapsed} />
+        <SidebarHeader
+          homeClicked={props.homeClicked}
+          toggleSidebarCollapsed={props.toggleSidebarCollapsed}
+        />
         <div className="sidebar-content">{content}</div>
         <Footer class="sidebar-footer" />
       </div>

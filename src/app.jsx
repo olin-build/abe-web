@@ -4,6 +4,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { Route, Router, Switch } from 'react-router';
+import { initializeAccessToken } from './data/auth';
 import AddEditContainer from './containers/add-edit-container';
 import CalendarContainer from './containers/calendar-container';
 import ViewEventContainer from './containers/event-details-container';
@@ -25,6 +26,8 @@ const history = createHistory();
 
 // Set up the Redux store
 const store = setupStore(history);
+
+initializeAccessToken();
 
 // Fetch the labels
 store.dispatch(fetchAccount());
