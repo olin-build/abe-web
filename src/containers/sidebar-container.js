@@ -5,12 +5,13 @@ import { push } from 'react-router-redux';
 import ReactGA from 'react-ga';
 import Sidebar from '../sidebar/sidebar';
 import * as Actions from '../data/actions';
+import { withAccountInfo } from './with-server-data';
 
 // This function passes values/objects from the Redux state to the React component as props
 const mapStateToProps = state => ({
-  general: state.general,
   account: state.account,
   currentEvent: state.events.current,
+  general: state.general,
   isCollapsed: state.sidebar.isCollapsed,
   sidebarMode: state.sidebar.mode,
   possibleLabels: state.labels.labelList,
@@ -60,6 +61,6 @@ const mapDispatchToProps = dispatch => ({
 });
 
 // Connect props to Redux state and actions
-const SidebarContainer = connect(mapStateToProps, mapDispatchToProps)(Sidebar);
+const SidebarContainer = connect(mapStateToProps, mapDispatchToProps)(withAccountInfo(Sidebar));
 
 export default SidebarContainer;

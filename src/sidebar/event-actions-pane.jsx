@@ -2,21 +2,25 @@
 
 import React from 'react';
 
-export default class EventActionsPane extends React.Component {
-  render() {
-    if (!this.props.currentEvent) return null;
+const EventActionsPane = (props) => {
+  if (!props.currentEvent) return null;
 
-    const editRecurrence = this.props.currentEvent.recId ? (
-      <button className="button" onClick={this.props.editEventSeries}>Edit Series</button>
-    ) : null;
-    const mainEditButtonText = this.props.currentEvent.recId ? 'Edit Recurrence' : 'Edit Event';
+  const editRecurrence = props.currentEvent.recId ? (
+    <button className="button" onClick={props.editEventSeries}>
+      Edit Series
+    </button>
+  ) : null;
+  const mainEditButtonText = props.currentEvent.recId ? 'Edit Recurrence' : 'Edit Event';
 
-    return (
-      <div className={`link-pane ${this.props.className}`}>
-        {editRecurrence}
-        <button className="button" onClick={this.props.editCurrentEvent}>{mainEditButtonText}</button>
-        {/* <button className="button" onClick={this.props.deleteCurrentEvent}>Delete Event</button> */}
-      </div>
-    );
-  }
-}
+  return (
+    <div className={`link-pane ${props.className}`}>
+      {editRecurrence}
+      <button className="button" onClick={props.editCurrentEvent}>
+        {mainEditButtonText}
+      </button>
+      {/* <button className="button" onClick={props.deleteCurrentEvent}>Delete Event</button> */}
+    </div>
+  );
+};
+
+export default EventActionsPane;

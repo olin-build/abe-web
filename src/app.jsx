@@ -4,6 +4,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { Route, Router, Switch } from 'react-router';
+import { initializeAccessToken } from './data/auth';
 import AddEditContainer from './containers/add-edit-container';
 import CalendarContainer from './containers/calendar-container';
 import ViewEventContainer from './containers/event-details-container';
@@ -11,7 +12,7 @@ import ImportContainer from './containers/import-container';
 import LabelsContainer from './containers/labels-container';
 import SidebarContainer from './containers/sidebar-container';
 import SubscriptionContainer from './containers/subscription-container';
-import { fetchLabels, toggleSidebarCollapsed } from './data/actions';
+import { fetchAccount, fetchLabels, toggleSidebarCollapsed } from './data/actions';
 import setupStore from './data/setup-store';
 
 // Remove the trailing slash, if present
@@ -26,7 +27,10 @@ const history = createHistory();
 // Set up the Redux store
 const store = setupStore(history);
 
+initializeAccessToken();
+
 // Fetch the labels
+store.dispatch(fetchAccount());
 store.dispatch(fetchLabels());
 
 ReactDOM.render(

@@ -5,14 +5,14 @@ import deepcopy from 'deepcopy';
 import _ from 'lodash';
 import moment from 'moment';
 import * as React from 'react';
-import EventDateTimeSelector from '../../components/date-time-selector';
+import DateTimeSelector from '../../components/date-time-selector';
 import LabelPane from '../../components/label-pane';
 import MarkdownEditor from '../../components/markdown-editor';
 import MenuIconButton from '../../components/menu-icon-button';
 import { encodeEvent } from '../../data/encoding';
 import SidebarModes from '../../data/sidebar-modes';
 import LocationField from './location-field';
-import EventRecurrenceSelector from './recurrence-selector';
+import RecurrenceSelector from './recurrence-selector';
 import SaveCancelButtons from './save-cancel-buttons';
 import EventVisibilitySelector from './visibility-selector';
 
@@ -56,7 +56,9 @@ export default class AddEditEventPage extends React.Component {
     if (props.match.params.id && props.match.params.recId) {
       // Editing a specific recurrence in a series of events
       // Get the series data so we know how this event differs from the rest in the series
-      axios.get(`${window.abe_url}/events/${props.match.params.id}`).then(this.receivedSuccessfulSeriesDataResponse);
+      axios
+        .get(`${window.abe_url}/events/${props.match.params.id}`)
+        .then(this.receivedSuccessfulSeriesDataResponse);
       // TODO: Handle an unsuccessful response
     }
 
@@ -96,18 +98,16 @@ export default class AddEditEventPage extends React.Component {
     this.props.clearCurrentEvent();
   }
 
-  receivedSuccessfulSeriesDataResponse = (response) => {
-    const seriesData = response.data;
-
-    const { eventData } = this.state;
-    if (eventData) {
-      // Save the original start and end times in the series data (to check later if the user changed it)
-      seriesData.start = moment(eventData.start);
-      seriesData.end = moment(eventData.end);
-    }
-
-    this.setState({ seriesData });
+  setStart = (start) => {
+    const timeDelta = start.diff(this.state.eventData.start);
+    this.updateEventDatum({
+      start,
+      // Shift the end time to maintain the same duration
+      end: moment(this.state.eventData.end).add(timeDelta, 'ms'),
+    });
   };
+
+  setEnd = end => this.updateEventDatum({ end });
 
   validateInput = () => {
     if (this.state.eventData.title.length === 0) {
@@ -155,7 +155,9 @@ export default class AddEditEventPage extends React.Component {
             }
           });
 
-          url = `${window.abe_url}/events/${eventData.id || eventData.sid}/${this.props.match.params.recId}`;
+          url = `${window.abe_url}/events/${eventData.id || eventData.sid}/${
+            this.props.match.params.recId
+          }`;
         } else {
           url = `${window.abe_url}/events/${eventData.id || eventData.sid}`;
         }
@@ -179,7 +181,9 @@ export default class AddEditEventPage extends React.Component {
   locationChanged = (loc) => {
     // Save the processed/cleaned version to the eventData object
     this.updateEventDatum({
-      location: loc.isOlin ? [loc.building, loc.room, loc.suffix].join(' ').trim() : loc.value.trim(),
+      location: loc.isOlin
+        ? [loc.building, loc.room, loc.suffix].join(' ').trim()
+        : loc.value.trim(),
     });
     // Save the dirty version to be passed on to the text field
     this.setState({ locationRaw: loc.value });
@@ -187,16 +191,18 @@ export default class AddEditEventPage extends React.Component {
 
   allDayToggled = e => this.updateEventDatum({ allDay: e.currentTarget.checked });
 
-  setStart = (start) => {
-    const timeDelta = start.diff(this.state.eventData.start);
-    this.updateEventDatum({
-      start,
-      // Shift the end time to maintain the same duration
-      end: moment(this.state.eventData.end).add(timeDelta, 'ms'),
-    });
-  };
+  receivedSuccessfulSeriesDataResponse = (response) => {
+    const seriesData = response.data;
 
-  setEnd = end => this.updateEventDatum({ end });
+    const { eventData } = this.state;
+    if (eventData) {
+      // Save the original start and end times in the series data (to check later if the user changed it)
+      seriesData.start = moment(eventData.start);
+      seriesData.end = moment(eventData.end);
+    }
+
+    this.setState({ seriesData });
+  };
 
   doesRecurToggled = e =>
     this.updateEventDatum({
@@ -221,7 +227,8 @@ export default class AddEditEventPage extends React.Component {
 
   visibilityChanged = visibility => this.updateEventDatum({ visibility });
 
-  updateEventDatum = delta => this.setState({ eventData: Object.assign({}, this.state.eventData, delta) });
+  updateEventDatum = delta =>
+    this.setState({ eventData: Object.assign({}, this.state.eventData, delta) });
 
   render() {
     if (!this.state.eventData) {
@@ -240,7 +247,10 @@ export default class AddEditEventPage extends React.Component {
       <div className="row content-container">
         <span className="content-container">
           <h1 className="page-title">
-            <MenuIconButton onClick={this.props.toggleSidebarCollapsed} tooltip="Show/Hide Sidebar" />
+            <MenuIconButton
+              onClick={this.props.toggleSidebarCollapsed}
+              tooltip="Show/Hide Sidebar"
+            />
             {pageTitle}
           </h1>
         </span>
@@ -254,13 +264,13 @@ export default class AddEditEventPage extends React.Component {
             onChange={this.titleChanged}
           />
           <div className="date-time-container">
-            <EventDateTimeSelector
+            <DateTimeSelector
               buttonPrefix="Start: "
               datetime={moment(this.state.eventData.start)}
               onChange={this.setStart}
               show={this.state.eventData.allDay ? 'date' : 'both'}
             />
-            <EventDateTimeSelector
+            <DateTimeSelector
               buttonPrefix="End: "
               datetime={moment(this.state.eventData.end)}
               onChange={this.setEnd}
@@ -284,16 +294,22 @@ export default class AddEditEventPage extends React.Component {
             />
             <label htmlFor="repeats-check">Repeats?</label>
             {this.state.eventData.recurrence && (
-              <EventRecurrenceSelector
-                reccurs={this.state.eventData.recurrence}
+              <RecurrenceSelector
+                recurs={this.state.eventData.recurrence}
                 start={this.state.eventData.start}
                 onChange={this.state.eventData.recurrenceRuleChanged}
               />
             )}
           </div>
           <LocationField location={this.state.locationRaw} onChange={this.locationChanged} />
-          <MarkdownEditor source={this.state.eventData.description} onChange={this.descriptionChanged} />
-          <EventVisibilitySelector visibility={this.state.eventData.visibility} onChange={this.visibilityChanged} />
+          <MarkdownEditor
+            source={this.state.eventData.description}
+            onChange={this.descriptionChanged}
+          />
+          <EventVisibilitySelector
+            visibility={this.state.eventData.visibility}
+            onChange={this.visibilityChanged}
+          />
           <LabelPane
             contentClass="add-edit-filters"
             selectedLabels={this.state.eventData.labels}

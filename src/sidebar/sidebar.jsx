@@ -20,15 +20,22 @@ const Sidebar = (props) => {
 
   const content = (
     <div>
-      {!permissions.view_all_events && (
-        <p>
-          You are viewing the public calendar. Visit the calendar from on campus to see all events
-          and to add and edit events.
-        </p>
+      {!permissions.has('view_all_events') && (
+        <div>
+          <p>You are viewing the public calendar.</p>
+          <p>
+            <a
+              href={`${window.abe_url}/oauth/authorize?redirect_uri=${encodeURIComponent(window.location.href)}`}
+            >
+              Sign in
+            </a>{' '}
+            to view and add Olin Community events.
+          </p>
+        </div>
       )}
 
       {mode.LINK_PANE &&
-        permissions.add_events && (
+        permissions.has('add_events') && (
           <LinkPane
             addEventClicked={props.addEvent}
             importICSClicked={props.importICSClicked}
@@ -38,7 +45,7 @@ const Sidebar = (props) => {
         )}
 
       {mode.EVENT_ACTIONS &&
-        permissions.edit_events && (
+        permissions.has('edit_events') && (
           <EventActionsPane key="event-actions" className="sidebar-item" {...props} />
         )}
 
