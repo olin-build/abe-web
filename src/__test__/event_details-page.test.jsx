@@ -1,4 +1,4 @@
-import moment from 'moment-timezone';
+import moment from 'moment';
 import React from 'react';
 import renderer from 'react-test-renderer';
 import EventDetailsPage from '../pages/details/event-details-page';
