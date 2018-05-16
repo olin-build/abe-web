@@ -11,6 +11,7 @@ import GenerateICSPane from './generate-ics-pane';
 import LinkPane from './link-pane';
 import MarkdownGuide from './markdown-guide';
 import SidebarItemContainer from './sidebar-item-wrapper';
+import { canSignOut, clearAccessToken } from '../data/auth';
 
 const Sidebar = (props) => {
   const {
@@ -81,6 +82,10 @@ const Sidebar = (props) => {
     </div>
   );
 
+  const onSignOut = () => {
+    clearAccessToken();
+    window.location.reload();
+  };
   const sidebarClasses = `app-sidebar${props.isCollapsed ? ' collapsed' : ' expanded'}`;
   return (
     <div className={sidebarClasses}>
@@ -90,7 +95,7 @@ const Sidebar = (props) => {
           toggleSidebarCollapsed={props.toggleSidebarCollapsed}
         />
         <div className="sidebar-content">{content}</div>
-        <Footer class="sidebar-footer" />
+        <Footer class="sidebar-footer" onSignOut={canSignOut() && onSignOut} />
       </div>
     </div>
   );
