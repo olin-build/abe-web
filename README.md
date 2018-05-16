@@ -9,20 +9,30 @@ Events](https://github.com/olinlibrary/ABE).
 
 ## Contributing
 
-You can help:
+Design, developer, Olin community member — you can help:
+
+### Olin Community
 
 * Use ABE
 * Tell people about ABE
-* Enter calendar information
+* Enter events into the calendar
 * Give us feedback
-  * Bug reports
-  * Enhancement requests
+  * Submit bug reports [here][issues]
+  * Submit ideas for new features [here][issues]
   * Usability criticisms, suggestions, and improvements
-* Work on bugs
-  * The (contribution guideslines)[./docs/CONTRIBUTING.md] describe how to run
-    the project on your development machine.
-  * Please check out the [the open issues][issues].
-  * Good first issues are labeled with ["good first issue"][good-first-issue].
+
+### Designers
+
+Usability and design issues are labeled with
+[`usability`](https://github.com/olinlibrary/abe-web/issues?q=is%3Aopen+is%3Aissue+label%3Ausability)
+and
+[`design`](https://github.com/olinlibrary/abe-web/issues?q=is%3Aopen+is%3Aissue+label%3Adesign).
+
+### Developers
+
+The [contribution guidelines](./docs/CONTRIBUTING.md) describe how to run the project on your development machine.
+
+Please check out the [the open issues][issues]. Good first issues are labeled with [`good first issue`][good-first-issue].
 
 ## Contributors
 
