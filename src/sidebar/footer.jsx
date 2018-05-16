@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 
-const Footer = _props => (
+const Footer = props => (
   <footer>
     <div className="footer-message">
       <p>
@@ -20,6 +20,12 @@ const Footer = _props => (
           View on GitHub
         </a>
       </p>
+      {props.onSignOut && (
+        <span>
+          &nbsp;|&nbsp;
+          <a onClick={props.onSignOut}>Sign Out</a>
+        </span>
+      )}
     </div>
   </footer>
 );
