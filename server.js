@@ -10,6 +10,7 @@ app.use(bodyParser.json({ type: 'application/*+json' }));
 app.use(express.static(__dirname));
 
 // Check if we're running on a local dev machine
+// TODO: Remove use of .env. Change instructions to direct users to direnv
 if (fs.existsSync('./.env')) {
   // Load environment variables from .env
   require('dotenv').config();

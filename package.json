@@ -6,8 +6,7 @@
   "scripts": {
     "clean": "rimraf bundle.js bundle.js.map",
     "build": "webpack --config=webpack.config.js -p",
-    "postinstall": "$npm_execpath run clean && $npm_execpath run build",
-    "start": "node server.js",
+    "start": "([ -f .env ] || $npm_execpath run build) && node server.js",
     "dev": "webpack-dev-server --inline --hot",
     "lint": "$npm_execpath run lint:js && $npm_execpath run lint:markdown",
     "lint:js": "eslint --cache --ext .js,.jsx src *.js",
