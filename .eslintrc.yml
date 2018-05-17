@@ -13,7 +13,6 @@ globals:
 rules:
   # Intentional exceptions to Airbnb rules:
   no-alert: off  # currently used in the UI
-  no-plusplus: [error, allowForLoopAfterthoughts: true]
   no-underscore-dangle: [error, allow: [__REDUX_DEVTOOLS_EXTENSION_COMPOSE__]]
   no-unused-vars: [error, argsIgnorePattern: "^_" ]
   react/jsx-no-target-blank: off
@@ -24,7 +23,6 @@ rules:
   no-restricted-globals: warn
   react/no-find-dom-node: warn
   react/prop-types: off           # TODO: #123
-  react/require-default-props: warn
 
   # TODO: #118 accessibility
   jsx-a11y/anchor-is-valid: off
