@@ -202,7 +202,11 @@ class EndOptions extends React.Component {
   render() {
     const untilDate =
       this.state.option === 'date' ? (
-        <DateTimeSelector datetime={this.state.endDate} onChange={this.endDateHandler} show="date" />
+        <DateTimeSelector
+          datetime={this.state.endDate}
+          onChange={this.endDateHandler}
+          show="date"
+        />
       ) : null;
     return (
       <div className="radio-collection-container">
@@ -313,7 +317,7 @@ export default class RecurrenceSelector extends React.Component {
   }
 
   endOptionsChanged(value) {
-    const state = this.state;
+    const { state } = this;
     if (value.option === 'date') {
       state.recurrence.until = value.endDate;
       delete state.recurrence.count;
@@ -333,7 +337,10 @@ export default class RecurrenceSelector extends React.Component {
   render() {
     const monthOptions =
       this.props.recurs.frequency === 'MONTHLY' ? (
-        <MonthOptions option={this.state.recurrence.month_option} onChange={this.monthOptionsChanged} />
+        <MonthOptions
+          option={this.state.recurrence.month_option}
+          onChange={this.monthOptionsChanged}
+        />
       ) : null;
     const weekOptions =
       this.props.recurs.frequency === 'WEEKLY' ? (

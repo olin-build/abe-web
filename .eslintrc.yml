@@ -11,7 +11,7 @@ globals:
   process: false  # allow webpack `process.env[*]` variables
 
 rules:
-  max-len: [warn, { code: 120 }]
+  max-len: [warn, { code: 100 }]
   # exceptions from eslint:recommended:
   no-unused-vars: [error, argsIgnorePattern: "^_" ]
   # exceptions from plugin:react/recommended:
@@ -65,3 +65,6 @@ overrides:
   - files: [ "actions.js" ]
     rules:
       no-use-before-define: off
+  - files: [ "index.html.js" ]
+    rules:
+      max-len: off

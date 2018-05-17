@@ -1,5 +1,6 @@
 import { removeOauthParams } from '../data/auth';
 
+/* eslint-disable max-len */
 describe('removeOauthParams', () => {
   test('removes parameters', () => {
     expect(removeOauthParams('http://localhost/path')).toEqual('http://localhost/path');

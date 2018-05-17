@@ -14,7 +14,9 @@ export default class FilterPane extends React.Component {
         visibleLabels = [];
         break;
       case 'default':
-        visibleLabels = Object.values(this.props.possibleLabels).filter(l => l.default).map(l => l.name);
+        visibleLabels = Object.values(this.props.possibleLabels)
+          .filter(l => l.default)
+          .map(l => l.name);
         break;
       default:
       // Do nothing

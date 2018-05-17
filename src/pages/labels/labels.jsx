@@ -49,14 +49,12 @@ export default class LabelsPage extends React.Component {
                       name="Default"
                       description="Selected when the calendar is loaded"
                     />
-                    {/* TODO: Update label.public to whatever the property ends up being named */}
                     <LabelFlag
                       symbol="👥"
                       value={label.public}
                       name="Public"
                       description="Events with this label are visible otuside Olin"
                     />
-                    {/* TODO: Update label.protected to whatever the property ends up being named */}
                     <LabelFlag
                       symbol="🔒"
                       value={label.protected}

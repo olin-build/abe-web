@@ -6,7 +6,8 @@ import EventDetailsPage from '../pages/details/event-details-page';
 describe('EventDetailsPage', () => {
   moment.tz.setDefault('EST');
   test('loading', () => {
-    const component = renderer.create(<EventDetailsPage eventData={null} setSidebarMode={() => undefined} />);
+    const jsx = <EventDetailsPage eventData={null} setSidebarMode={() => undefined} />;
+    const component = renderer.create(jsx);
     const tree = component.toJSON();
     expect(tree).toMatchSnapshot();
   });
@@ -19,7 +20,8 @@ describe('EventDetailsPage', () => {
       end: moment('2018-05-07T10:00:00-05:00'),
       allDay: false,
     };
-    const component = renderer.create(<EventDetailsPage eventData={event} setSidebarMode={() => undefined} />);
+    const jsx = <EventDetailsPage eventData={event} setSidebarMode={() => undefined} />;
+    const component = renderer.create(jsx);
     const tree = component.toJSON();
     expect(tree).toMatchSnapshot();
   });
@@ -32,7 +34,8 @@ describe('EventDetailsPage', () => {
       end: moment('2018-05-07T23:59:59-05:00'),
       allDay: true,
     };
-    const component = renderer.create(<EventDetailsPage eventData={event} setSidebarMode={() => undefined} />);
+    const jsx = <EventDetailsPage eventData={event} setSidebarMode={() => undefined} />;
+    const component = renderer.create(jsx);
     const tree = component.toJSON();
     expect(tree).toMatchSnapshot();
   });
@@ -45,7 +48,8 @@ describe('EventDetailsPage', () => {
       end: moment('2018-05-08T23:59:59-05:00'),
       allDay: true,
     };
-    const component = renderer.create(<EventDetailsPage eventData={event} setSidebarMode={() => undefined} />);
+    const jsx = <EventDetailsPage eventData={event} setSidebarMode={() => undefined} />;
+    const component = renderer.create(jsx);
     const tree = component.toJSON();
     expect(tree).toMatchSnapshot();
   });

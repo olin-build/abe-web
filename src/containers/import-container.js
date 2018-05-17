@@ -1,4 +1,5 @@
-// This container is a sort of middleware between the React import component and the Redux data store
+// This container is a sort of middleware between the React import component and
+// the Redux data store
 
 import { connect } from 'react-redux';
 import * as ga from 'react-ga';

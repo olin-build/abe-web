@@ -1,6 +1,11 @@
 import { connect } from 'react-redux';
 import LabelsPage from '../pages/labels/labels';
-import { refreshLabelsIfNeeded, setPageTitlePrefix, setSidebarMode, updateLabel } from '../data/actions';
+import {
+  refreshLabelsIfNeeded,
+  setPageTitlePrefix,
+  setSidebarMode,
+  updateLabel,
+} from '../data/actions';
 import SidebarModes from '../data/sidebar-modes';
 
 // Pass data from the Redux state to the React component

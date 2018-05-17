@@ -18,9 +18,10 @@ const decodeDateTime = value => (moment.isMoment(value) ? value : toLocalDate(va
  */
 export function decodeEvent(data) {
   useSnakeCaseProperties = 'all_day' in data;
+  const isDateField = key => key === 'start' || key === 'end';
   return _.chain(data)
     .mapKeys((_value, key) => (key === 'all_day' ? 'allDay' : key))
-    .mapValues((value, key) => (key === 'start' || key === 'end' ? decodeDateTime(data[key]) : value))
+    .mapValues((value, key) => (isDateField(key) ? decodeDateTime(value) : value))
     .value();
 }
 
@@ -28,5 +29,7 @@ export function decodeEvent(data) {
  *  Convert an event from this app's internal format to the client-server API format.
  */
 export function encodeEvent(event) {
-  return useSnakeCaseProperties ? _.mapKeys(event, (_value, key) => (key === 'allDay' ? 'all_day' : key)) : event;
+  return useSnakeCaseProperties
+    ? _.mapKeys(event, (_value, key) => (key === 'allDay' ? 'all_day' : key))
+    : event;
 }
