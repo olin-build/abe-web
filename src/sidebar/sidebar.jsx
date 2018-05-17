@@ -3,40 +3,39 @@
 
 import React from 'react';
 import LabelPane from '../components/label-pane';
-import { SidebarHeader } from '../components/sidebar-header';
+import SidebarHeader from '../components/sidebar-header';
+import { canSignOut, clearAccessToken } from '../data/auth';
 import EventActionsPane from './event-actions-pane';
 import FilterPane from './filter-pane';
 import Footer from './footer';
 import GenerateICSPane from './generate-ics-pane';
 import LinkPane from './link-pane';
 import MarkdownGuide from './markdown-guide';
-import SidebarItemContainer from './sidebar-item-wrapper';
-import { canSignOut, clearAccessToken } from '../data/auth';
+import SidebarItem from './sidebar-item';
 
 const Sidebar = (props) => {
   const {
-    account: { permissions },
+    account: { scope },
     sidebarMode: mode,
   } = props;
 
+  const oauthBaseUrl = `${window.abe_url}/oauth/authorize`;
+  const oauthUrl = `${oauthBaseUrl}?redirect_uri=${encodeURIComponent(window.location.href)}`;
   const content = (
     <div>
-      {!permissions.has('view_all_events') && (
-        <div>
-          <p>You are viewing the public calendar.</p>
-          <p>
-            <a
-              href={`${window.abe_url}/oauth/authorize?redirect_uri=${encodeURIComponent(window.location.href)}`}
-            >
-              Sign in
-            </a>{' '}
-            to view and add Olin Community events.
-          </p>
-        </div>
+      {!scope.has('community_events:read') && (
+        <SidebarItem key="login" header="Sign In">
+          <div>
+            <p>You are viewing the public calendar.</p>
+            <p>
+              <a href={oauthUrl}>Sign in</a> to view and add Olin Community events.
+            </p>
+          </div>
+        </SidebarItem>
       )}
 
       {mode.LINK_PANE &&
-        permissions.has('add_events') && (
+        scope.has('events:create') && (
           <LinkPane
             addEventClicked={props.addEvent}
             importICSClicked={props.importICSClicked}
@@ -46,38 +45,38 @@ const Sidebar = (props) => {
         )}
 
       {mode.EVENT_ACTIONS &&
-        permissions.has('edit_events') && (
+        scope.has('events:edit') && (
           <EventActionsPane key="event-actions" className="sidebar-item" {...props} />
         )}
 
       {mode.EVENT_LABELS_PANE && (
-        <SidebarItemContainer key="event-labels" header="Labels">
+        <SidebarItem key="event-labels" header="Labels">
           <LabelPane
             editable={false}
             showUnselected={false}
             selectedLabels={props.currentEvent ? props.currentEvent.labels : null}
             {...props}
           />
-        </SidebarItemContainer>
+        </SidebarItem>
       )}
 
       {mode.FILTER_PANE && (
         // For viewing the calendar
-        <SidebarItemContainer key="filter-pane" header="Filter">
+        <SidebarItem key="filter-pane" header="Filter">
           <FilterPane {...props} />
-        </SidebarItemContainer>
+        </SidebarItem>
       )}
 
       {mode.GENERATE_ICS_PANE && (
-        <SidebarItemContainer key="gen-ics" header="Subscribe">
+        <SidebarItem key="gen-ics" header="Subscribe">
           <GenerateICSPane {...props} />
-        </SidebarItemContainer>
+        </SidebarItem>
       )}
 
       {mode.MARKDOWN_GUIDE && (
-        <SidebarItemContainer key="markdown-guide" header="Markdown Guide">
+        <SidebarItem key="markdown-guide" header="Markdown Guide">
           <MarkdownGuide />
-        </SidebarItemContainer>
+        </SidebarItem>
       )}
     </div>
   );
