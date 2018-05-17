@@ -74,6 +74,7 @@ const mapDispatchToProps = dispatch => ({
 });
 
 // Connect props to Redux state and actions
-const CalendarContainer = connect(mapStateToProps, mapDispatchToProps)(withServerData(CalendarPage));
+const GuardedCalendarPage = withServerData(CalendarPage);
+const CalendarContainer = connect(mapStateToProps, mapDispatchToProps)(GuardedCalendarPage);
 
 export default CalendarContainer;

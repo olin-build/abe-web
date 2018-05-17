@@ -91,7 +91,8 @@ export default class AddEditEventPage extends React.Component {
         locationRaw: newProps.eventData.location,
       });
     }
-    // TODO: If the event is recurring but newProps.match.params.recId is not defined, copy the data to seriesData
+    // TODO: If the event is recurring but newProps.match.params.recId is not
+    // defined, copy the data to seriesData
   }
 
   componentWillUnmount() {
@@ -138,7 +139,8 @@ export default class AddEditEventPage extends React.Component {
         eventData.end.endOf('day');
       }
 
-      // Declare some variables for keeping track of exactly what kind of request we'll be making later
+      // Declare some variables for keeping track of exactly what kind of
+      // request we'll be making later
       let url;
       let requestMethod;
 
@@ -147,7 +149,8 @@ export default class AddEditEventPage extends React.Component {
         // Existing
         // Check if we're editing a single recurrence of a recurring event
         if (this.state.seriesData) {
-          // Determine what's different for this event compared to the rest of the events in the series
+          // Determine what's different for this event compared to the rest of
+          // the events in the series
           Object.keys(eventData).forEach((key) => {
             // Check if this attribute is the same for all events in the series
             if (_.isEqual(eventData[key], this.state.seriesData[key])) {
@@ -196,7 +199,8 @@ export default class AddEditEventPage extends React.Component {
 
     const { eventData } = this.state;
     if (eventData) {
-      // Save the original start and end times in the series data (to check later if the user changed it)
+      // Save the original start and end times in the series data (to check
+      // later if the user changed it)
       seriesData.start = moment(eventData.start);
       seriesData.end = moment(eventData.end);
     }

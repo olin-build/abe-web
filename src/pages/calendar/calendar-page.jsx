@@ -47,7 +47,7 @@ export default class CalendarPage extends React.Component {
   componentDidUpdate() {
     if (this.props.labels.visibleLabels) {
       const labelsStr = this.props.labels.visibleLabels
-        .sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase())) // sort alphabetically ignoring case
+        .sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()))
         .join(',');
       const url = `/calendar/${labelsStr}`;
       if (url !== this.props.location.pathname) {
@@ -58,7 +58,9 @@ export default class CalendarPage extends React.Component {
   }
 
   render() {
-    const currDate = this.props.currentlyViewingDate ? this.props.currentlyViewingDate.format('MMMM D, YYYY') : '';
+    const currDate = this.props.currentlyViewingDate
+      ? this.props.currentlyViewingDate.format('MMMM D, YYYY')
+      : '';
 
     return (
       <div className="calendar-container">

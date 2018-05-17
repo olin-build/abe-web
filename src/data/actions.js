@@ -7,6 +7,7 @@ import { push } from 'react-router-redux';
 import { setAccessTokenFromResponse } from './auth';
 import { decodeEvent } from './encoding';
 
+/* eslint-disable max-len */
 export const ActionTypes = {
   // General UI
   DISPLAY_ERROR: 'DISPLAY_ERROR', // Displays an error message (red background) at the top of the screen TODO: Issue #54
@@ -40,6 +41,7 @@ export const ActionTypes = {
   GENERATE_ICS_FEED: 'GENERATE_ICS_FEED', // Triggers generation of an ICS feed with current filter applied and copies
   // URL to clipboard
 };
+/* eslint-emable max-len */
 
 // Sections:
 //   General UI actions
@@ -62,7 +64,8 @@ export function displayMessage(message) {
 }
 
 /**
- * Display an error message (red background) at the top of the window in a notification bar TODO: Issue #54
+ * Display an error message (red background) at the top of the window in a
+ * notification bar TODO: Issue #54
  */
 export function displayError(error, message) {
   return { type: ActionTypes.DISPLAY_ERROR, error, message };
@@ -110,7 +113,7 @@ export function navigateHome() {
 export function setPageTitlePrefix(newTitle) {
   return (dispatch, getState) => {
     let fullTitle;
-    const pageTitleSuffix = getState().general.pageTitleSuffix;
+    const { pageTitleSuffix } = getState().general;
     if (!newTitle || newTitle.length === 0) {
       fullTitle = pageTitleSuffix;
     } else if (newTitle.length > 50) {
@@ -155,8 +158,9 @@ export function page(direction) {
 }
 
 /**
- * Calculates how many of what unit (3 days, 1 week, etc) the currently viewing date should be changed by, based on
- * what display mode (month, week, day, etc) the calendar is in
+ * Calculates how many of what unit (3 days, 1 week, etc) the currently viewing
+ * date should be changed by, based on what display mode (month, week, day, etc)
+ * the calendar is in
  */
 function getPageDelta(state) {
   return state.calendar.currentViewMode.daysVisible > 0
@@ -178,8 +182,8 @@ export function showToday() {
 
 /**
  * Sets the date the calendar should be "centered" around
- * @param {Moment} date - the first day to show in a multi-day view, or to be used to determine the week or month to
- * show in a week or month view, etc.
+ * @param {Moment} date - the first day to show in a multi-day view, or to be
+ *  used to determine the week or month to show in a week or month view, etc.
  */
 export function setCurrentlyViewingDate(date) {
   // Set the first date visible on the calendar
@@ -242,7 +246,7 @@ export function fetchAccount() {
 export function setAccount(account) {
   const data = {
     authenticated: account.authenticated,
-    permissions: new Set(account.permissions),
+    scope: new Set(account.scope),
   };
   return { type: ActionTypes.SET_ACCOUNT, data };
 }
@@ -252,9 +256,12 @@ export function setAccount(account) {
 // ----- Begin general event actions ----- //
 
 /**
- * Sets the current event so that the entire app can know what's being viewed or edited (esp. the sidebar)
+ * Sets the current event so that the entire app can know what's being viewed or
+ * edited (esp. the sidebar)
+ *
  * @param {string} id: the ID or SID (series ID?) of the event
- * @param {string|null} recId: the date of the recurrence instance (YYYYDDD), if applicable
+ * @param {string|null} recId: the date of the recurrence instance (YYYYDDD), if
+ * applicable
  */
 export function setCurrentEventById(id, recId) {
   return (dispatch, getStore) => {
@@ -310,7 +317,8 @@ export function refreshEvents(start, end) {
   };
 }
 
-// FIXME: This is a bit of a hack to trigger a refresh. It should be replaced by some sort of cache invalidation call.
+// FIXME: This is a bit of a hack to trigger a refresh. It should be replaced by
+// some sort of cache invalidation call.
 export function refreshEventsForCurrentViewWindow() {
   return (dispatch, getStore) => {
     const { currentlyViewingDate } = getStore().calendar;
@@ -463,6 +471,9 @@ export function eventDeleteFailed(event, error) {
 
 /**
  * Triggers showing the event details page.
+ *
+ * This function adds a `recId` property to the event.
+ *
  * @param {object} event - the event data of the event to view
  */
 export function viewEvent(event) {
@@ -510,23 +521,26 @@ export function fetchLabels() {
  * @param {object} labels - a dictionary of label names and information
  */
 export function setLabels(labels) {
+  let data = labels;
   if (Object.prototype.toString.call(labels) === '[object Array]') {
     // Convert array to object
     const labelsMap = {};
     labels.forEach((label) => {
       labelsMap[label.name] = label;
     });
-    labels = labelsMap;
+    data = labelsMap;
   }
-  return { type: ActionTypes.SET_LABELS, data: labels };
+  return { type: ActionTypes.SET_LABELS, data };
 }
 
 /**
  * Sets the label filter for the calendar view.
- * @param {array} visibleLabels - which labels should be used to filter the events (presence indicates visible, absence
- * indicates invisible)
- * @param {string|undefined} allNoneDefault - 'all', 'none' or 'default' if that button was clicked in the sidebar
- *      (triggers reporting of the action to Google Analytics)
+ *
+ * @param {array} visibleLabels - which labels should be used to filter the
+ *     events (presence indicates visible, absence indicates invisible)
+ * @param {string|undefined} allNoneDefault - 'all', 'none' or 'default' if that
+ *      button was clicked in the sidebar (triggers reporting of the action to
+ *      Google Analytics)
  */
 export function setVisibleLabels(visibleLabels, allNoneDefault) {
   if (allNoneDefault !== undefined) {
@@ -540,8 +554,10 @@ export function setVisibleLabels(visibleLabels, allNoneDefault) {
 }
 
 /**
- * Toggles whether or not events with a particular label should be shown on the calendar. (An event with the given label
- * will still be displayed if another one of its labels is selected for the filter [an OR operator is used].)
+ * Toggles whether or not events with a particular label should be shown on the
+ * calendar. (An event with the given label will still be displayed if another
+ * one of its labels is selected for the filter [an OR operator is used].)
+ *
  * @param {string} labelName - the name of the label to toggle
  */
 export function labelVisibilityToggled(labelName) {

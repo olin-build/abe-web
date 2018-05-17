@@ -1,5 +1,5 @@
-// This component is an add (+) button following the Material Design style, like the button to create an event in
-// Google Calendar
+// This component is an add (+) button following the Material Design style, like
+// the button to create an event in Google Calendar.
 
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';

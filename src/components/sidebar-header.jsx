@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import * as React from 'react';
 import OlinLogo from '../../assets/olin-logo-beta.svg';
 
-export const SidebarHeader = props => (
+const SidebarHeader = props => (
   <header className="header-content">
     <a onClick={props.homeClicked} alt="Home" title="Home">
       <OlinLogo className="olin-logo" />
@@ -14,3 +14,5 @@ export const SidebarHeader = props => (
 SidebarHeader.propTypes = {
   homeClicked: PropTypes.func.isRequired,
 };
+
+export default SidebarHeader;

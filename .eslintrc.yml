@@ -11,39 +11,26 @@ globals:
   process: false  # allow webpack `process.env[*]` variables
 
 rules:
-  max-len: [warn, { code: 120 }]
-  # exceptions from eslint:recommended:
-  no-unused-vars: [error, argsIgnorePattern: "^_" ]
-  # exceptions from plugin:react/recommended:
-  react/no-find-dom-node: warn
-  react/prop-types: off           # TODO: #123
-
-  # Airbnb style exceptions that we'll eventually fix:
-  import/prefer-default-export: warn
-  no-param-reassign: warn
-  no-restricted-globals: warn
-  prefer-destructuring: warn
-  react/forbid-prop-types: warn
-  react/jsx-no-target-blank: warn
-  react/no-unused-state: warn
-  react/prefer-stateless-function: warn
-  react/require-default-props: warn
-  react/sort-comp: warn
-  no-console: off
-
-  # Intentional Airbnb exceptions:
+  # Intentional exceptions to Airbnb rules:
   no-alert: off  # currently used in the UI
   no-plusplus: [error, allowForLoopAfterthoughts: true]
   no-underscore-dangle: [error, allow: [__REDUX_DEVTOOLS_EXTENSION_COMPOSE__]]
+  no-unused-vars: [error, argsIgnorePattern: "^_" ]
+  react/jsx-no-target-blank: off
+
+  # Airbnb exceptions that we should fix:
+  no-console: off
+  no-param-reassign: warn
+  no-restricted-globals: warn
+  react/no-find-dom-node: warn
+  react/prop-types: off           # TODO: #123
+  react/require-default-props: warn
 
   # TODO: #118 accessibility
   jsx-a11y/anchor-is-valid: off
   jsx-a11y/click-events-have-key-events: off
   jsx-a11y/label-has-for: off
   jsx-a11y/no-static-element-interactions: off
-
-  # Fixable exceptions to Airbnb style guide.
-  react/jsx-indent: off
 
 overrides:
   # server:
@@ -65,3 +52,6 @@ overrides:
   - files: [ "actions.js" ]
     rules:
       no-use-before-define: off
+  - files: [ "index.html.js" ]
+    rules:
+      max-len: off

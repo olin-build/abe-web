@@ -30,13 +30,13 @@ export default class ImportPage extends React.Component {
   };
 
   urlChanged = (e) => {
-    let importData = this.state.importData;
-    importData = Object.assign(importData, { url: e.currentTarget.value });
+    const importData = Object.assign(this.state.importData, { url: e.currentTarget.value });
     this.setState({ importData });
   };
 
   submitICS = () => {
-    axios.post(`${window.abe_url}/ics/`, this.state.importData)
+    axios
+      .post(`${window.abe_url}/ics/`, this.state.importData)
       .then(
         response => this.props.importSuccess(response, this.state.importData),
         (jqXHR, textStatus, errorThrown) => this.props.importFailed(errorThrown, jqXHR.message),
@@ -48,7 +48,10 @@ export default class ImportPage extends React.Component {
       <div className="row expanded page-container">
         <div className="row content-container">
           <h1 className="page-title">
-            <MenuIconButton onClick={this.props.toggleSidebarCollapsed} tooltip="Show/Hide Sidebar" />
+            <MenuIconButton
+              onClick={this.props.toggleSidebarCollapsed}
+              tooltip="Show/Hide Sidebar"
+            />
             Import
           </h1>
           <input

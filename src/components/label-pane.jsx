@@ -63,8 +63,9 @@ export default class LabelPane extends React.Component {
       // snapshots.
       return [
         `${sel}.selected{background-color:${color}}`,
-        `${sel}.selected:not(.no-hover):hover{background-color:white;border-color:${color};color:${color}}`,
-        `${sel}:not(.selected){background-color:white;border-color:${color};color:${color}}`,
+        `${sel}.selected:not(.no-hover):hover,`,
+        `${sel}:not(.selected)`,
+        `{background-color:white;border-color:${color};color:${color}}`,
         `${sel}:not(.no-hover):hover{background-color:${color || 'black'};color:white}`,
       ].join('\n');
     }

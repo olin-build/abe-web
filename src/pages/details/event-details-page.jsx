@@ -44,7 +44,9 @@ export default class EventDetailsPage extends React.Component {
         <span className="event-start">{event.end.format(endDateFormat)}</span>
       </span>
     );
-    const recurrence = event.recurrence && <PlainEnglishRecurrence recurrence={event.recurrence} start={event.start} />;
+    const recurrence = event.recurrence && (
+      <PlainEnglishRecurrence recurrence={event.recurrence} start={event.start} />
+    );
     return (
       <div className="row expanded page-container">
         <div className="row content-container">

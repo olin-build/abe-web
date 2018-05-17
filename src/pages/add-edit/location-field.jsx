@@ -1,9 +1,20 @@
-// This component is a text box for event locations. It tries to parse locations on the Olin campus (input in various
-// formats) and stores them in a standard format to aid in analytics later.
+// This component is a text box for event locations. It tries to parse locations
+// on the Olin campus (input in various formats) and stores them in a standard
+// format to aid in analytics later.
 
 import * as React from 'react';
 
 export default class LocationField extends React.Component {
+  static stringMatches(str, substrings) {
+    const s = str.trim();
+    for (let i = 0; i < substrings.length; ++i) {
+      if (s === substrings[i]) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   constructor(props) {
     super(props);
     this.state = {
@@ -11,7 +22,6 @@ export default class LocationField extends React.Component {
       room: null,
       suffix: null,
       isOlin: false,
-      value: this.props.location,
     };
 
     // Matching substrings for each building. Should be lowercase.
@@ -20,13 +30,35 @@ export default class LocationField extends React.Component {
     this.LIBRARY_MATCHES = ['library', 'lib', 'l'];
     this.LIBRARY_UPPER_LEVEL_MATCHES = ['library upper level', 'lu', 'lul', 'library ul'];
     this.LIBRARY_LOWER_LEVEL_MATCHES = ['library lower level', 'll', 'lll', 'library ll'];
-    this.AUDITORIUM_MATCHES = ['auditorium', 'nordatorium', 'nord', 'mh auditorium', 'milas hall auditorium',
-      'milas auditorium', 'mh nord', 'mh nordatorium'];
+    this.AUDITORIUM_MATCHES = [
+      'auditorium',
+      'nordatorium',
+      'nord',
+      'mh auditorium',
+      'milas hall auditorium',
+      'milas auditorium',
+      'mh nord',
+      'mh nordatorium',
+    ];
     this.DINING_HALL_MATCHES = ['dh', 'dining hall'];
-    this.DINING_HALL_MEZZANINE_MATCHES = ['dh mezz', 'dhm', 'mezz', 'dining hall mezz', 'dining hall mezzanine',
-      'cc mezz', 'campus center mezz', 'campus center mezzanine'];
-    this.MILAS_HALL_MEZZANINE_MATCHES = ['mh mezz', 'mhm', 'milas mezz', 'milas hall mezz', 'milas hall mezz',
-      'milas hall mezzanine'];
+    this.DINING_HALL_MEZZANINE_MATCHES = [
+      'dh mezz',
+      'dhm',
+      'mezz',
+      'dining hall mezz',
+      'dining hall mezzanine',
+      'cc mezz',
+      'campus center mezz',
+      'campus center mezzanine',
+    ];
+    this.MILAS_HALL_MEZZANINE_MATCHES = [
+      'mh mezz',
+      'mhm',
+      'milas mezz',
+      'milas hall mezz',
+      'milas hall mezz',
+      'milas hall mezzanine',
+    ];
     this.GREAT_LAWN_MATCHES = ['gl', 'great lawn', 'lawn'];
     this.MILAS_HALL_MATCHES = ['mh', 'milas', 'milas hall'];
     this.CAMPUS_CENTER_MATCHES = ['cc', 'campus center'];
@@ -59,7 +91,7 @@ export default class LocationField extends React.Component {
   }
 
   textChanged = (e) => {
-    const value = e.target.value;
+    const { value } = e.target;
     const parsed = this.tryParseLocationInput(value);
     const locationObj = {
       building: parsed.building,
@@ -73,12 +105,13 @@ export default class LocationField extends React.Component {
     }
   };
 
-  tryParseLocationInput = (string) => {
+  tryParseLocationInput = (str) => {
+    let name = str;
     const result = { isOlin: false, building: null, room: null };
 
-    if (string && string.length > 0) {
+    if (name && name.length > 0) {
       // We don't care about case
-      string = string.toLowerCase();
+      name = name.toLowerCase();
 
       // Define regular expressions to use when searching string
       const buildingRegex = /^\D+/;
@@ -86,7 +119,7 @@ export default class LocationField extends React.Component {
       const suffixRegex = /\D*$/;
 
       // Try to determine Olin building
-      let buildingString = buildingRegex.exec(string);
+      let buildingString = buildingRegex.exec(name);
       if (buildingString && buildingString.length > 0) {
         buildingString = buildingString[0].trim();
 
@@ -153,7 +186,9 @@ export default class LocationField extends React.Component {
         } else if (LocationField.stringMatches(buildingString, this.DINING_HALL_MATCHES)) {
           result.building = 'CC';
           result.room = 'Dining Hall';
-        } else if (LocationField.stringMatches(buildingString, this.DINING_HALL_MEZZANINE_MATCHES)) {
+        } else if (
+          LocationField.stringMatches(buildingString, this.DINING_HALL_MEZZANINE_MATCHES)
+        ) {
           result.building = 'CC';
           result.room = 'Dining Hall';
           result.suffix = 'Mezzanine';
@@ -164,7 +199,9 @@ export default class LocationField extends React.Component {
           result.suffix = 'Mezzanine';
           result.isOlin = true;
           return result;
-        } else if (LocationField.stringMatches(buildingString, this.LARGE_PROJECT_BUILDING_MATCHES)) {
+        } else if (
+          LocationField.stringMatches(buildingString, this.LARGE_PROJECT_BUILDING_MATCHES)
+        ) {
           result.building = 'LPB';
           result.isOlin = true;
           return result;
@@ -177,15 +214,15 @@ export default class LocationField extends React.Component {
       }
 
       // Try to determine Olin room number
-      const roomString = roomRegex.exec(string);
+      const roomString = roomRegex.exec(name);
       if (roomString && roomString.length > 0) {
         result.room = roomString[0].trim();
       }
 
       // Try to determine Olin room suffix (optional)
-      let suffixString = suffixRegex.exec(string);
-      if (suffixString && suffixString.length > 0) {
-        suffixString = suffixString[0];
+      const suffixMatch = suffixRegex.exec(name);
+      if (suffixMatch && suffixMatch.length > 0) {
+        const suffixString = suffixMatch[0];
         // Just return if the regex didn't find anything
         if (suffixString !== null && suffixString.length > 0) {
           // The regex found something, so let's parse it
@@ -203,20 +240,11 @@ export default class LocationField extends React.Component {
         }
       }
 
-      result.isOlin = (result.building !== null && result.room !== null && result.suffix !== undefined);
+      result.isOlin =
+        result.building !== null && result.room !== null && result.suffix !== undefined;
     }
     return result;
   };
-
-  static stringMatches(string, substrings) {
-    string = string.trim();
-    for (let i = 0; i < substrings.length; ++i) {
-      if (string === substrings[i]) {
-        return true;
-      }
-    }
-    return false;
-  }
 
   render() {
     // let svgSrc = (this.state.isOlin) ? '/assets/olin-o.svg' : '/assets/olin-o-slash.svg';
@@ -233,13 +261,18 @@ export default class LocationField extends React.Component {
             value={this.props.location}
             onChange={this.textChanged}
           />
-          <span hidden={!this.state.isOlin} title="Building" className="location-parsed">{this.state.building}</span>
-          <span hidden={!this.state.isOlin} title="Room" className="location-parsed">{this.state.room}</span>
+          <span hidden={!this.state.isOlin} title="Building" className="location-parsed">
+            {this.state.building}
+          </span>
+          <span hidden={!this.state.isOlin} title="Room" className="location-parsed">
+            {this.state.room}
+          </span>
           <span
             hidden={!this.state.isOlin || !this.state.suffix}
             title="Suffix"
             className="location-parsed"
-          >{this.state.suffix}
+          >
+            {this.state.suffix}
           </span>
         </div>
       </div>

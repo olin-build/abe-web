@@ -8,12 +8,14 @@ exports[`LabelPane matches snapshot 1`] = `
     type="text/css"
   >
     .label.label-label-1.selected{background-color:red}
-    .label.label-label-1.selected:not(.no-hover):hover{background-color:white;border-color:red;color:red}
-    .label.label-label-1:not(.selected){background-color:white;border-color:red;color:red}
+    .label.label-label-1.selected:not(.no-hover):hover,
+    .label.label-label-1:not(.selected)
+    {background-color:white;border-color:red;color:red}
     .label.label-label-1:not(.no-hover):hover{background-color:red;color:white}
     .label.label-label-2.selected{background-color:green}
-    .label.label-label-2.selected:not(.no-hover):hover{background-color:white;border-color:green;color:green}
-    .label.label-label-2:not(.selected){background-color:white;border-color:green;color:green}
+    .label.label-label-2.selected:not(.no-hover):hover,
+    .label.label-label-2:not(.selected)
+    {background-color:white;border-color:green;color:green}
     .label.label-label-2:not(.no-hover):hover{background-color:green;color:white}
   </style>
   <div
@@ -59,12 +61,14 @@ exports[`LabelPane not editable 1`] = `
     type="text/css"
   >
     .label.label-label-1.selected{background-color:red}
-    .label.label-label-1.selected:not(.no-hover):hover{background-color:white;border-color:red;color:red}
-    .label.label-label-1:not(.selected){background-color:white;border-color:red;color:red}
+    .label.label-label-1.selected:not(.no-hover):hover,
+    .label.label-label-1:not(.selected)
+    {background-color:white;border-color:red;color:red}
     .label.label-label-1:not(.no-hover):hover{background-color:red;color:white}
     .label.label-label-2.selected{background-color:green}
-    .label.label-label-2.selected:not(.no-hover):hover{background-color:white;border-color:green;color:green}
-    .label.label-label-2:not(.selected){background-color:white;border-color:green;color:green}
+    .label.label-label-2.selected:not(.no-hover):hover,
+    .label.label-label-2:not(.selected)
+    {background-color:white;border-color:green;color:green}
     .label.label-label-2:not(.no-hover):hover{background-color:green;color:white}
   </style>
   <div
@@ -106,24 +110,29 @@ exports[`LabelPane sorts labels 1`] = `
     type="text/css"
   >
     .label.label-id-0.selected{background-color:undefined}
-    .label.label-id-0.selected:not(.no-hover):hover{background-color:white;border-color:undefined;color:undefined}
-    .label.label-id-0:not(.selected){background-color:white;border-color:undefined;color:undefined}
+    .label.label-id-0.selected:not(.no-hover):hover,
+    .label.label-id-0:not(.selected)
+    {background-color:white;border-color:undefined;color:undefined}
     .label.label-id-0:not(.no-hover):hover{background-color:black;color:white}
     .label.label-id-4.selected{background-color:undefined}
-    .label.label-id-4.selected:not(.no-hover):hover{background-color:white;border-color:undefined;color:undefined}
-    .label.label-id-4:not(.selected){background-color:white;border-color:undefined;color:undefined}
+    .label.label-id-4.selected:not(.no-hover):hover,
+    .label.label-id-4:not(.selected)
+    {background-color:white;border-color:undefined;color:undefined}
     .label.label-id-4:not(.no-hover):hover{background-color:black;color:white}
     .label.label-id-3.selected{background-color:undefined}
-    .label.label-id-3.selected:not(.no-hover):hover{background-color:white;border-color:undefined;color:undefined}
-    .label.label-id-3:not(.selected){background-color:white;border-color:undefined;color:undefined}
+    .label.label-id-3.selected:not(.no-hover):hover,
+    .label.label-id-3:not(.selected)
+    {background-color:white;border-color:undefined;color:undefined}
     .label.label-id-3:not(.no-hover):hover{background-color:black;color:white}
     .label.label-id-2.selected{background-color:undefined}
-    .label.label-id-2.selected:not(.no-hover):hover{background-color:white;border-color:undefined;color:undefined}
-    .label.label-id-2:not(.selected){background-color:white;border-color:undefined;color:undefined}
+    .label.label-id-2.selected:not(.no-hover):hover,
+    .label.label-id-2:not(.selected)
+    {background-color:white;border-color:undefined;color:undefined}
     .label.label-id-2:not(.no-hover):hover{background-color:black;color:white}
     .label.label-id-1.selected{background-color:undefined}
-    .label.label-id-1.selected:not(.no-hover):hover{background-color:white;border-color:undefined;color:undefined}
-    .label.label-id-1:not(.selected){background-color:white;border-color:undefined;color:undefined}
+    .label.label-id-1.selected:not(.no-hover):hover,
+    .label.label-id-1:not(.selected)
+    {background-color:white;border-color:undefined;color:undefined}
     .label.label-id-1:not(.no-hover):hover{background-color:black;color:white}
   </style>
   <div
@@ -211,12 +220,14 @@ exports[`LabelPane with selected labels 1`] = `
     type="text/css"
   >
     .label.label-label-1.selected{background-color:red}
-    .label.label-label-1.selected:not(.no-hover):hover{background-color:white;border-color:red;color:red}
-    .label.label-label-1:not(.selected){background-color:white;border-color:red;color:red}
+    .label.label-label-1.selected:not(.no-hover):hover,
+    .label.label-label-1:not(.selected)
+    {background-color:white;border-color:red;color:red}
     .label.label-label-1:not(.no-hover):hover{background-color:red;color:white}
     .label.label-label-2.selected{background-color:green}
-    .label.label-label-2.selected:not(.no-hover):hover{background-color:white;border-color:green;color:green}
-    .label.label-label-2:not(.selected){background-color:white;border-color:green;color:green}
+    .label.label-label-2.selected:not(.no-hover):hover,
+    .label.label-label-2:not(.selected)
+    {background-color:white;border-color:green;color:green}
     .label.label-label-2:not(.no-hover):hover{background-color:green;color:white}
   </style>
   <div
