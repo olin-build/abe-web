@@ -471,6 +471,9 @@ export function eventDeleteFailed(event, error) {
 
 /**
  * Triggers showing the event details page.
+ *
+ * This function adds a `recId` property to the event.
+ *
  * @param {object} event - the event data of the event to view
  */
 export function viewEvent(event) {
@@ -518,15 +521,16 @@ export function fetchLabels() {
  * @param {object} labels - a dictionary of label names and information
  */
 export function setLabels(labels) {
+  let data = labels;
   if (Object.prototype.toString.call(labels) === '[object Array]') {
     // Convert array to object
     const labelsMap = {};
     labels.forEach((label) => {
       labelsMap[label.name] = label;
     });
-    labels = labelsMap;
+    data = labelsMap;
   }
-  return { type: ActionTypes.SET_LABELS, data: labels };
+  return { type: ActionTypes.SET_LABELS, data };
 }
 
 /**
