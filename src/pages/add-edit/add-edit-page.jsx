@@ -307,7 +307,7 @@ export default class AddEditEventPage extends React.Component {
           </div>
           <LocationField location={this.state.locationRaw} onChange={this.locationChanged} />
           <MarkdownEditor
-            source={this.state.eventData.description}
+            source={this.state.eventData.description || ''}
             onChange={this.descriptionChanged}
           />
           <EventVisibilitySelector
