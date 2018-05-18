@@ -243,7 +243,9 @@ export default class AddEditEventPage extends React.Component {
       );
     }
 
+    const { scope } = this.props.account;
     const editingExisting = this.state.eventData.id || this.state.eventData.sid;
+    const requiredScope = editingExisting ? 'create:protected_events' : 'edit:protected_events';
     const pageTitle = editingExisting ? 'Edit Event' : 'Add Event';
     const submitButtonText = editingExisting ? 'Update Event' : 'Add Event';
     const formUrl = 'https://goo.gl/forms/2cqVijokICZ5S20R2';
@@ -316,7 +318,7 @@ export default class AddEditEventPage extends React.Component {
           />
           <LabelPane
             contentClass="add-edit-filters"
-            disableProtectedLabels
+            disableProtectedLabels={!scope.has(requiredScope)}
             selectedLabels={this.state.eventData.labels}
             labelToggled={this.labelToggled}
             {...this.props}
