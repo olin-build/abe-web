@@ -316,6 +316,7 @@ export default class AddEditEventPage extends React.Component {
           />
           <LabelPane
             contentClass="add-edit-filters"
+            disableProtectedLabels
             selectedLabels={this.state.eventData.labels}
             labelToggled={this.labelToggled}
             {...this.props}

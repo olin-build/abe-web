@@ -8,21 +8,23 @@ exports[`LabelPane matches snapshot 1`] = `
     type="text/css"
   >
     .label.label-label-1.selected{background-color:red}
-    .label.label-label-1.selected:not(.no-hover):hover,
+    .label.label-label-1.selected:not(.disabled):not(.no-hover):hover,
     .label.label-label-1:not(.selected)
     {background-color:white;border-color:red;color:red}
-    .label.label-label-1:not(.no-hover):hover{background-color:red;color:white}
+    .label.label-label-1:not(.disabled):not(.no-hover):hover
+    {background-color:red;color:white}
     .label.label-label-2.selected{background-color:green}
-    .label.label-label-2.selected:not(.no-hover):hover,
+    .label.label-label-2.selected:not(.disabled):not(.no-hover):hover,
     .label.label-label-2:not(.selected)
     {background-color:white;border-color:green;color:green}
-    .label.label-label-2:not(.no-hover):hover{background-color:green;color:white}
+    .label.label-label-2:not(.disabled):not(.no-hover):hover
+    {background-color:green;color:white}
   </style>
   <div
     className="label-selector-list"
   >
     <button
-      className="button  label label-label-1 "
+      className="button  label label-label-1  "
       id="label-1"
       onClick={[Function]}
       title="first label"
@@ -36,7 +38,7 @@ exports[`LabelPane matches snapshot 1`] = `
       first
     </button>
     <button
-      className="button  label label-label-2 "
+      className="button  label label-label-2  "
       id="label-2"
       onClick={[Function]}
       title="second label"
@@ -61,21 +63,23 @@ exports[`LabelPane not editable 1`] = `
     type="text/css"
   >
     .label.label-label-1.selected{background-color:red}
-    .label.label-label-1.selected:not(.no-hover):hover,
+    .label.label-label-1.selected:not(.disabled):not(.no-hover):hover,
     .label.label-label-1:not(.selected)
     {background-color:white;border-color:red;color:red}
-    .label.label-label-1:not(.no-hover):hover{background-color:red;color:white}
+    .label.label-label-1:not(.disabled):not(.no-hover):hover
+    {background-color:red;color:white}
     .label.label-label-2.selected{background-color:green}
-    .label.label-label-2.selected:not(.no-hover):hover,
+    .label.label-label-2.selected:not(.disabled):not(.no-hover):hover,
     .label.label-label-2:not(.selected)
     {background-color:white;border-color:green;color:green}
-    .label.label-label-2:not(.no-hover):hover{background-color:green;color:white}
+    .label.label-label-2:not(.disabled):not(.no-hover):hover
+    {background-color:green;color:white}
   </style>
   <div
     className="label-selector-list"
   >
     <span
-      className="label label-label-1 selected"
+      className="label label-label-1 selected "
       id="label-1"
       title="first label"
     >
@@ -87,7 +91,7 @@ exports[`LabelPane not editable 1`] = `
       first
     </span>
     <span
-      className="label label-label-2 "
+      className="label label-label-2  "
       id="label-2"
       title="second label"
     >
@@ -110,36 +114,41 @@ exports[`LabelPane sorts labels 1`] = `
     type="text/css"
   >
     .label.label-id-0.selected{background-color:undefined}
-    .label.label-id-0.selected:not(.no-hover):hover,
+    .label.label-id-0.selected:not(.disabled):not(.no-hover):hover,
     .label.label-id-0:not(.selected)
     {background-color:white;border-color:undefined;color:undefined}
-    .label.label-id-0:not(.no-hover):hover{background-color:black;color:white}
+    .label.label-id-0:not(.disabled):not(.no-hover):hover
+    {background-color:black;color:white}
     .label.label-id-4.selected{background-color:undefined}
-    .label.label-id-4.selected:not(.no-hover):hover,
+    .label.label-id-4.selected:not(.disabled):not(.no-hover):hover,
     .label.label-id-4:not(.selected)
     {background-color:white;border-color:undefined;color:undefined}
-    .label.label-id-4:not(.no-hover):hover{background-color:black;color:white}
+    .label.label-id-4:not(.disabled):not(.no-hover):hover
+    {background-color:black;color:white}
     .label.label-id-3.selected{background-color:undefined}
-    .label.label-id-3.selected:not(.no-hover):hover,
+    .label.label-id-3.selected:not(.disabled):not(.no-hover):hover,
     .label.label-id-3:not(.selected)
     {background-color:white;border-color:undefined;color:undefined}
-    .label.label-id-3:not(.no-hover):hover{background-color:black;color:white}
+    .label.label-id-3:not(.disabled):not(.no-hover):hover
+    {background-color:black;color:white}
     .label.label-id-2.selected{background-color:undefined}
-    .label.label-id-2.selected:not(.no-hover):hover,
+    .label.label-id-2.selected:not(.disabled):not(.no-hover):hover,
     .label.label-id-2:not(.selected)
     {background-color:white;border-color:undefined;color:undefined}
-    .label.label-id-2:not(.no-hover):hover{background-color:black;color:white}
+    .label.label-id-2:not(.disabled):not(.no-hover):hover
+    {background-color:black;color:white}
     .label.label-id-1.selected{background-color:undefined}
-    .label.label-id-1.selected:not(.no-hover):hover,
+    .label.label-id-1.selected:not(.disabled):not(.no-hover):hover,
     .label.label-id-1:not(.selected)
     {background-color:white;border-color:undefined;color:undefined}
-    .label.label-id-1:not(.no-hover):hover{background-color:black;color:white}
+    .label.label-id-1:not(.disabled):not(.no-hover):hover
+    {background-color:black;color:white}
   </style>
   <div
     className="label-selector-list"
   >
     <button
-      className="button  label label-id-0 "
+      className="button  label label-id-0  "
       id="id-0"
       onClick={[Function]}
       title={undefined}
@@ -153,7 +162,7 @@ exports[`LabelPane sorts labels 1`] = `
       featured
     </button>
     <button
-      className="button  label label-id-4 "
+      className="button  label label-id-4  "
       id="id-4"
       onClick={[Function]}
       title={undefined}
@@ -167,7 +176,7 @@ exports[`LabelPane sorts labels 1`] = `
       a-label-3
     </button>
     <button
-      className="button  label label-id-3 "
+      className="button  label label-id-3  "
       id="id-3"
       onClick={[Function]}
       title={undefined}
@@ -181,7 +190,7 @@ exports[`LabelPane sorts labels 1`] = `
       a-label-4
     </button>
     <button
-      className="button  label label-id-2 "
+      className="button  label label-id-2  "
       id="id-2"
       onClick={[Function]}
       title={undefined}
@@ -195,7 +204,7 @@ exports[`LabelPane sorts labels 1`] = `
       a-label-1
     </button>
     <button
-      className="button  label label-id-1 "
+      className="button  label label-id-1  "
       id="id-1"
       onClick={[Function]}
       title={undefined}
@@ -220,21 +229,23 @@ exports[`LabelPane with selected labels 1`] = `
     type="text/css"
   >
     .label.label-label-1.selected{background-color:red}
-    .label.label-label-1.selected:not(.no-hover):hover,
+    .label.label-label-1.selected:not(.disabled):not(.no-hover):hover,
     .label.label-label-1:not(.selected)
     {background-color:white;border-color:red;color:red}
-    .label.label-label-1:not(.no-hover):hover{background-color:red;color:white}
+    .label.label-label-1:not(.disabled):not(.no-hover):hover
+    {background-color:red;color:white}
     .label.label-label-2.selected{background-color:green}
-    .label.label-label-2.selected:not(.no-hover):hover,
+    .label.label-label-2.selected:not(.disabled):not(.no-hover):hover,
     .label.label-label-2:not(.selected)
     {background-color:white;border-color:green;color:green}
-    .label.label-label-2:not(.no-hover):hover{background-color:green;color:white}
+    .label.label-label-2:not(.disabled):not(.no-hover):hover
+    {background-color:green;color:white}
   </style>
   <div
     className="label-selector-list"
   >
     <button
-      className="button  label label-label-1 selected"
+      className="button  label label-label-1 selected "
       id="label-1"
       onClick={[Function]}
       title="first label"
@@ -248,7 +259,7 @@ exports[`LabelPane with selected labels 1`] = `
       first
     </button>
     <button
-      className="button  label label-label-2 "
+      className="button  label label-label-2  "
       id="label-2"
       onClick={[Function]}
       title="second label"

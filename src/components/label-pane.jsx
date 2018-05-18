@@ -13,8 +13,11 @@ export default class LabelPane extends React.Component {
   }
 
   render() {
-    const { editable, selectedLabels, showUnselected } = this.props;
-    const enableHoverStyle = !this.props.general.isMobile && this.props.editable;
+    const { props } = this;
+    const {
+      disableProtectedLabels, editable, selectedLabels, showUnselected,
+    } = this.props;
+    const enableHoverStyle = !this.props.general.isMobile && props.editable;
     const noHoverClass = enableHoverStyle ? '' : 'no-hover';
     // sort Featured first; then remaining default labels, alphabetically within
     // each section
@@ -23,16 +26,30 @@ export default class LabelPane extends React.Component {
       .sortBy(label => !label.default)
       .sortBy(label => !initialLabels.includes(label.name.toLowerCase()))
       .value();
+    if (disableProtectedLabels) {
+      labels = _.sortBy(labels, label => Boolean(label.protected));
+    }
     if (!showUnselected) {
       labels = labels.filter(({ name }) => selectedLabels.includes(name));
     }
-    const labelClicked = labelName => this.props.labelToggled(labelName);
+    const labelClicked = labelName => props.labelToggled(labelName);
+    const visibilityIcons = {
+      public: 'ion-android-people',
+      olin: null,
+      students: 'ion-university',
+    };
 
     function renderLabel(label) {
       const { description: tooltip, name, id } = label;
       const selected = selectedLabels.includes(name);
       const cssId = `label-${id}`;
-      const classes = `label ${cssId} ${selected ? 'selected' : ''}`;
+      const disabled = disableProtectedLabels && label.protected;
+      const classes = `label ${cssId} ${selected ? 'selected' : ''} ${disabled ? 'disabled' : ''}`;
+      const iconClass =
+        disableProtectedLabels && label.protected
+          ? 'ion-android-lock'
+          : visibilityIcons[label.visibility] || 'ion-pricetag';
+      const icon = <span className={iconClass}>&nbsp;</span>;
       return editable ? (
         <button
           id={id}
@@ -40,14 +57,14 @@ export default class LabelPane extends React.Component {
           title={tooltip}
           type="button"
           className={`button ${noHoverClass} ${classes}`}
-          onClick={() => labelClicked(name)}
+          onClick={() => !disabled && labelClicked(name)}
         >
-          <span className="ion-pricetag">&nbsp;</span>
+          {icon}
           {name}
         </button>
       ) : (
         <span id={id} key={name} title={tooltip} className={classes}>
-          <span className="ion-pricetag">&nbsp;</span>
+          {icon}
           {name}
         </span>
       );
@@ -63,10 +80,11 @@ export default class LabelPane extends React.Component {
       // snapshots.
       return [
         `${sel}.selected{background-color:${color}}`,
-        `${sel}.selected:not(.no-hover):hover,`,
+        `${sel}.selected:not(.disabled):not(.no-hover):hover,`,
         `${sel}:not(.selected)`,
         `{background-color:white;border-color:${color};color:${color}}`,
-        `${sel}:not(.no-hover):hover{background-color:${color || 'black'};color:white}`,
+        `${sel}:not(.disabled):not(.no-hover):hover`,
+        `{background-color:${color || 'black'};color:white}`,
       ].join('\n');
     }
 
@@ -83,10 +101,13 @@ export default class LabelPane extends React.Component {
 LabelPane.propTypes = {
   general: PropTypes.shape({ isMobile: PropTypes.bool }),
   editable: PropTypes.bool,
+  disableProtectedLabels: PropTypes.bool,
   showUnselected: PropTypes.bool,
   possibleLabels: PropTypes.objectOf(PropTypes.shape({
     color: PropTypes.string,
     description: PropTypes.string,
+    protected: PropTypes.bool,
+    visbility: PropTypes.string,
   })),
   selectedLabels: PropTypes.arrayOf(PropTypes.string),
   contentClass: PropTypes.string,
@@ -96,6 +117,7 @@ LabelPane.propTypes = {
 LabelPane.defaultProps = {
   general: {},
   editable: true,
+  disableProtectedLabels: false,
   possibleLabels: {},
   selectedLabels: [],
   showUnselected: true,

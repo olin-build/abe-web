@@ -58,7 +58,7 @@ export default class EventDetailsPage extends React.Component {
               {recurrence}
               <p className="event-location">{event.location}</p>
             </div>
-            <Markdown source={event.description} className="description-container" />
+            <Markdown source={event.description || ''} className="description-container" />
           </div>
         </div>
       </div>

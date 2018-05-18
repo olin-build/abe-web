@@ -1,5 +1,4 @@
 import { getVisibleEvents } from '../containers/calendar-container';
-import { getVisibleEvents } from '../containers/calendar-container';
 
 describe('getVisibleEvents', () => {
   const events = [
