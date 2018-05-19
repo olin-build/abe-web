@@ -2,6 +2,17 @@ import axios from 'axios';
 
 const ACCESS_TOKEN_KEY = 'abeAccessToken';
 
+export function authorizationUrl(redirectUri) {
+  const oauthBaseUrl = `${window.abe_url}/oauth/authorize`;
+  const clientId = process.env.ABE_CLIENT_ID;
+  let url = `${oauthBaseUrl}?redirect_uri=${encodeURIComponent(redirectUri)}`;
+  url += '&response_type=token';
+  if (clientId) {
+    url += `&client_id=${clientId}`;
+  }
+  return url;
+}
+
 export function clearAccessToken() {
   localStorage.removeItem(ACCESS_TOKEN_KEY);
   axios.defaults.headers.common.Authorization = null;

@@ -4,7 +4,7 @@
 import React from 'react';
 import LabelPane from '../components/label-pane';
 import SidebarHeader from '../components/sidebar-header';
-import { canSignOut, clearAccessToken } from '../data/auth';
+import { authorizationUrl, canSignOut, clearAccessToken } from '../data/auth';
 import EventActionsPane from './event-actions-pane';
 import FilterPane from './filter-pane';
 import Footer from './footer';
@@ -22,8 +22,6 @@ const Sidebar = (props) => {
     sidebarMode: mode,
   } = props;
 
-  const oauthBaseUrl = `${window.abe_url}/oauth/authorize`;
-  const oauthUrl = `${oauthBaseUrl}?redirect_uri=${encodeURIComponent(window.location.href)}`;
   const content = (
     <div>
       {!scope.has('read:all_events') && (
@@ -31,7 +29,8 @@ const Sidebar = (props) => {
           <div>
             <p>You are viewing the public calendar.</p>
             <p>
-              <a href={oauthUrl}>Sign in</a> to view and add Olin Community events.
+              <a href={authorizationUrl(window.location.href)}>Sign in</a> to view and add Olin
+              Community events.
             </p>
           </div>
         </SidebarItem>
