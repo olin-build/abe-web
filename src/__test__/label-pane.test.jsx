@@ -15,32 +15,37 @@ describe('LabelPane', () => {
       id: 'label-2',
       color: 'green',
       description: 'second label',
+      protected: true,
     },
   };
-  test('matches snapshot', () => {
-    const component = renderer.create(<LabelPane
-      contentClass="css-class"
-      possibleLabels={labels}
-    />);
+  test('matches baseline', () => {
+    const jsx = <LabelPane possibleLabels={labels} />;
+    const component = renderer.create(jsx);
     const tree = component.toJSON();
     expect(tree).toMatchSnapshot();
   });
-  test('with selected labels', () => {
-    const component = renderer.create(<LabelPane
-      contentClass="css-class"
-      possibleLabels={labels}
-      selectedLabels={['first']}
-    />);
+  test('shows selected labels', () => {
+    const jsx = <LabelPane possibleLabels={labels} selectedLabels={['first']} />;
+    const component = renderer.create(jsx);
+    const tree = component.toJSON();
+    expect(tree).toMatchSnapshot();
+  });
+  test('hides unselected labels', () => {
+    const jsx = (
+      <LabelPane possibleLabels={labels} selectedLabels={['first']} showUnselected={false} />
+    );
+    const component = renderer.create(jsx);
+    const tree = component.toJSON();
+    expect(tree).toMatchSnapshot();
+  });
+  test('disables protected labels', () => {
+    const jsx = <LabelPane disableProtectedLabels possibleLabels={labels} />;
+    const component = renderer.create(jsx);
     const tree = component.toJSON();
     expect(tree).toMatchSnapshot();
   });
   test('not editable', () => {
-    const component = renderer.create(<LabelPane
-      contentClass="css-class"
-      editable={false}
-      possibleLabels={labels}
-      selectedLabels={['first']}
-    />);
+    const component = renderer.create(<LabelPane editable={false} possibleLabels={labels} selectedLabels={['first']} />);
     const tree = component.toJSON();
     expect(tree).toMatchSnapshot();
   });

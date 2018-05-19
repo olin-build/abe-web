@@ -15,6 +15,7 @@ import AddEditEventPage from '../pages/add-edit/add-edit-page';
 
 // This function passes values/objects from the Redux state to the React component as props
 const mapStateToProps = state => ({
+  account: state.account,
   general: state.general,
   eventData: state.events.current,
   possibleLabels: state.labels.labelList,

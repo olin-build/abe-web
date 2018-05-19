@@ -1,5 +1,6 @@
 // This container is a sort of middleware between the React page and the Redux data store
 
+import _ from 'lodash';
 import { connect } from 'react-redux';
 import {
   page,
@@ -15,20 +16,18 @@ import {
 import CalendarPage from '../pages/calendar/calendar-page';
 import withServerData from './with-server-data';
 
-const getVisibleEvents = (events, visibleLabels, allLabels) => {
+export const getVisibleEvents = (events, visibleLabels, allLabels) => {
   // Filter out events that are not labeled with currently visible labels
   if (!events || !visibleLabels || !allLabels) return null;
-  return Object.values(events).filter((event) => {
-    for (let i = 0; i < event.labels.length; ++i) {
-      const indexOfLabel = visibleLabels.indexOf(event.labels[i]);
-      if (indexOfLabel > -1) {
-        event.color = allLabels[visibleLabels[indexOfLabel]].color;
-        event.id = event.id || event.sid; // Make sure all events have an id attribute
-        return true; // Event has at least one visible label
-      }
-    }
-    return false; // No labels on this event are currently visible, so don't show
-  });
+  const visibleLabelSet = new Set(visibleLabels);
+  const firstVisibleLabel = event => event.labels.find(name => visibleLabelSet.has(name));
+  return Object.values(events)
+    .filter(event => firstVisibleLabel(event))
+    .map(event =>
+      _.merge({}, event, {
+        color: allLabels[firstVisibleLabel(event)].color,
+        id: event.id || event.sid, // Make sure all events have an id attribute
+      }));
 };
 
 // This function passes values/objects from the Redux state to the React component as props

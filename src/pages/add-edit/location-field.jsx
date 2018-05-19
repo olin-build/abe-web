@@ -7,12 +7,7 @@ import * as React from 'react';
 export default class LocationField extends React.Component {
   static stringMatches(str, substrings) {
     const s = str.trim();
-    for (let i = 0; i < substrings.length; ++i) {
-      if (s === substrings[i]) {
-        return true;
-      }
-    }
-    return false;
+    return substrings.some(substr => substr === s);
   }
 
   constructor(props) {

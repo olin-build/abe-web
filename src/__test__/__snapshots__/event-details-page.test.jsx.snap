@@ -44,7 +44,7 @@ exports[`EventDetailsPage multi-day all-day event 1`] = `
           <span
             className="event-start"
           >
-             Tue, May 8, 2018
+             Wed, May 9, 2018
           </span>
         </span>
         <p
@@ -86,14 +86,14 @@ exports[`EventDetailsPage regular event 1`] = `
         <span
           className="event-start"
         >
-          Mon, May 7, 2018 9:00 AM
+          Mon, May 7, 2018 10:00 AM
         </span>
         <span>
            to
           <span
             className="event-start"
           >
-             10:00 AM
+             11:00 AM
           </span>
         </span>
         <p
