@@ -343,7 +343,7 @@ span.label {
     margin: 0.3rem 0.2em;
 }
 
-.button.label:hover:not(.no-hover) {
+.button.label:hover:not(.disabled):not(.no-hover) {
     background-color: #14679e;
     color: #fefefe;
     cursor: pointer;
@@ -354,13 +354,13 @@ span.label {
 }
 
 .add-edit-filters .button.label,
-.add-edit-filters .button.label:not(.selected):not(.no-hover):hover {
+.add-edit-filters .button.label:not(.selected):not(.disabled):not(.no-hover):hover {
     background-color: #14679e !important;
     color: #fefefe !important;
 }
 
 .add-edit-filters .button.label:not(.selected),
-.add-edit-filters .button.label.selected:not(.no-hover):hover {
+.add-edit-filters .button.label.selected:not(.disabled):not(.no-hover):hover {
     background-color: white !important;
     border-color: #14679e !important;
     color: #14679e !important;

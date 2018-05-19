@@ -4,6 +4,7 @@ import axios from 'axios';
 import deepcopy from 'deepcopy';
 import _ from 'lodash';
 import moment from 'moment';
+import PropTypes from 'prop-types';
 import * as React from 'react';
 import DateTimeSelector from '../../components/date-time-selector';
 import LabelPane from '../../components/label-pane';
@@ -111,11 +112,6 @@ export default class AddEditEventPage extends React.Component {
   setEnd = end => this.updateEventDatum({ end });
 
   validateInput = () => {
-    if (this.state.eventData.title.length === 0) {
-      alert('Event Title is required');
-      return false;
-    }
-
     if (this.state.eventData.title.length === 0) {
       alert('Event must have a title');
       return false;
@@ -243,7 +239,9 @@ export default class AddEditEventPage extends React.Component {
       );
     }
 
+    const { scope } = this.props.account;
     const editingExisting = this.state.eventData.id || this.state.eventData.sid;
+    const requiredScope = editingExisting ? 'create:protected_events' : 'edit:protected_events';
     const pageTitle = editingExisting ? 'Edit Event' : 'Add Event';
     const submitButtonText = editingExisting ? 'Update Event' : 'Add Event';
     const formUrl = 'https://goo.gl/forms/2cqVijokICZ5S20R2';
@@ -307,7 +305,7 @@ export default class AddEditEventPage extends React.Component {
           </div>
           <LocationField location={this.state.locationRaw} onChange={this.locationChanged} />
           <MarkdownEditor
-            source={this.state.eventData.description}
+            source={this.state.eventData.description || ''}
             onChange={this.descriptionChanged}
           />
           <EventVisibilitySelector
@@ -316,6 +314,7 @@ export default class AddEditEventPage extends React.Component {
           />
           <LabelPane
             contentClass="add-edit-filters"
+            disableProtectedLabels={!scope.has(requiredScope)}
             selectedLabels={this.state.eventData.labels}
             labelToggled={this.labelToggled}
             {...this.props}
@@ -338,3 +337,22 @@ export default class AddEditEventPage extends React.Component {
     );
   }
 }
+
+AddEditEventPage.propTypes = {
+  account: PropTypes.shape({ scope: PropTypes.instanceOf(Map) }).isRequired,
+  eventData: PropTypes.shape({
+    title: PropTypes.string,
+    description: PropTypes.string,
+    start: PropTypes.instanceOf(moment),
+    end: PropTypes.instanceOf(moment),
+    labels: PropTypes.arrayOf(PropTypes.string),
+  }),
+  match: PropTypes.shape({ id: PropTypes.number }).isRequired,
+  setPageTitlePrefix: PropTypes.func.isRequired,
+  setSidebarMode: PropTypes.func.isRequired,
+  toggleSidebarCollapsed: PropTypes.func.isRequired,
+};
+
+AddEditEventPage.defaultProps = {
+  eventData: null,
+};

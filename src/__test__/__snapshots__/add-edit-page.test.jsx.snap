@@ -1,0 +1,706 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AddEditEventPage admin 1`] = `
+<div
+  className="row content-container"
+>
+  <span
+    className="content-container"
+  >
+    <h1
+      className="page-title"
+    >
+      <button
+        className="menu-icon-button"
+        onClick={[Function]}
+        title="Show/Hide Sidebar"
+      >
+        <test-file-stub />
+      </button>
+      Add Event
+    </h1>
+  </span>
+  <div
+    className="event-info-container"
+  >
+    <input
+      className="wide-text-box single-line-text-box medium-text-box"
+      id="event-title"
+      onChange={[Function]}
+      placeholder="Title"
+      type="text"
+      value=""
+    />
+    <div
+      className="date-time-container"
+    >
+      <div
+        className="date-time-container"
+      >
+        <button
+          className="button"
+          onClick={[Function]}
+        >
+          Start: May 18, 2018 10:00 PM
+        </button>
+        <div
+          className="picker-popup-container"
+        />
+      </div>
+      <div
+        className="date-time-container"
+      >
+        <button
+          className="button"
+          onClick={[Function]}
+        >
+          End: May 18, 2018 11:00 PM
+        </button>
+        <div
+          className="picker-popup-container"
+        />
+      </div>
+      <input
+        checked={false}
+        id="all-day-check"
+        onChange={[Function]}
+        title="All Day"
+        type="checkbox"
+      />
+      <label
+        htmlFor="all-day-check"
+      >
+        All Day
+      </label>
+      <input
+        checked={false}
+        disabled={null}
+        id="repeats-check"
+        onChange={[Function]}
+        title="Repeats?"
+        type="checkbox"
+      />
+      <label
+        htmlFor="repeats-check"
+      >
+        Repeats?
+      </label>
+    </div>
+    <div
+      className="location-field-container"
+    >
+      <div
+        className="location-input-container"
+      >
+        <input
+          className="wide-text-box single-line-text-box medium-text-box"
+          id="location"
+          onChange={[Function]}
+          placeholder="Location"
+          title="Location"
+          type="text"
+          value=""
+        />
+        <span
+          className="location-parsed"
+          hidden={true}
+          title="Building"
+        />
+        <span
+          className="location-parsed"
+          hidden={true}
+          title="Room"
+        />
+        <span
+          className="location-parsed"
+          hidden={true}
+          title="Suffix"
+        />
+      </div>
+    </div>
+    <div
+      className="markdown-editor-container"
+    >
+      <div
+        className="markdown-editor-editor-preview-container"
+      >
+        <textarea
+          className="markdown-editor column medium-6"
+          onChange={[Function]}
+          placeholder="Description (Markdown enabled)"
+          value=""
+        />
+        <div
+          className="markdown-preview column medium-6"
+        />
+      </div>
+    </div>
+    <div
+      className="radio-collection-container undefined"
+    >
+      <span
+        className="radio-collection-title"
+      >
+        Visibility
+      </span>
+      <div
+        className="radio-collection-options-container"
+      >
+        <div
+          className="radio-option"
+        >
+          <input
+            checked={true}
+            id="privacy-public"
+            name="privacy"
+            onChange={[Function]}
+            title="Public"
+            type="radio"
+            value="public"
+          />
+          <label
+            htmlFor="privacy-public"
+          >
+            Public
+          </label>
+        </div>
+        <div
+          className="radio-option"
+        >
+          <input
+            checked={false}
+            id="privacy-olin"
+            name="privacy"
+            onChange={[Function]}
+            title="Olin Community Only"
+            type="radio"
+            value="olin"
+          />
+          <label
+            htmlFor="privacy-olin"
+          >
+            Olin Community Only
+          </label>
+        </div>
+      </div>
+    </div>
+    <div
+      className="add-edit-filters"
+    >
+      <style
+        type="text/css"
+      >
+        
+      </style>
+      <div
+        className="label-selector-list"
+      />
+    </div>
+    <span
+      style={
+        Object {
+          "display": "block",
+          "marginTop": "1em",
+        }
+      }
+    >
+      Need a new label?
+       
+      <a
+        href="https://goo.gl/forms/2cqVijokICZ5S20R2"
+        target="_blank"
+      >
+        Request one here
+      </a>
+      .
+    </span>
+    <div
+      className="form-submit-button-container"
+    >
+      <button
+        className="button cancel"
+        onClick={undefined}
+      >
+        Cancel
+      </button>
+      <button
+        className="button submit"
+        disabled={undefined}
+        onClick={[Function]}
+      >
+        Add Event
+      </button>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`AddEditEventPage new event 1`] = `
+<div
+  className="row content-container"
+>
+  <span
+    className="content-container"
+  >
+    <h1
+      className="page-title"
+    >
+      <button
+        className="menu-icon-button"
+        onClick={[Function]}
+        title="Show/Hide Sidebar"
+      >
+        <test-file-stub />
+      </button>
+      Add Event
+    </h1>
+  </span>
+  <div
+    className="event-info-container"
+  >
+    <input
+      className="wide-text-box single-line-text-box medium-text-box"
+      id="event-title"
+      onChange={[Function]}
+      placeholder="Title"
+      type="text"
+      value=""
+    />
+    <div
+      className="date-time-container"
+    >
+      <div
+        className="date-time-container"
+      >
+        <button
+          className="button"
+          onClick={[Function]}
+        >
+          Start: May 18, 2018 10:00 PM
+        </button>
+        <div
+          className="picker-popup-container"
+        />
+      </div>
+      <div
+        className="date-time-container"
+      >
+        <button
+          className="button"
+          onClick={[Function]}
+        >
+          End: May 18, 2018 11:00 PM
+        </button>
+        <div
+          className="picker-popup-container"
+        />
+      </div>
+      <input
+        checked={false}
+        id="all-day-check"
+        onChange={[Function]}
+        title="All Day"
+        type="checkbox"
+      />
+      <label
+        htmlFor="all-day-check"
+      >
+        All Day
+      </label>
+      <input
+        checked={false}
+        disabled={null}
+        id="repeats-check"
+        onChange={[Function]}
+        title="Repeats?"
+        type="checkbox"
+      />
+      <label
+        htmlFor="repeats-check"
+      >
+        Repeats?
+      </label>
+    </div>
+    <div
+      className="location-field-container"
+    >
+      <div
+        className="location-input-container"
+      >
+        <input
+          className="wide-text-box single-line-text-box medium-text-box"
+          id="location"
+          onChange={[Function]}
+          placeholder="Location"
+          title="Location"
+          type="text"
+          value=""
+        />
+        <span
+          className="location-parsed"
+          hidden={true}
+          title="Building"
+        />
+        <span
+          className="location-parsed"
+          hidden={true}
+          title="Room"
+        />
+        <span
+          className="location-parsed"
+          hidden={true}
+          title="Suffix"
+        />
+      </div>
+    </div>
+    <div
+      className="markdown-editor-container"
+    >
+      <div
+        className="markdown-editor-editor-preview-container"
+      >
+        <textarea
+          className="markdown-editor column medium-6"
+          onChange={[Function]}
+          placeholder="Description (Markdown enabled)"
+          value=""
+        />
+        <div
+          className="markdown-preview column medium-6"
+        />
+      </div>
+    </div>
+    <div
+      className="radio-collection-container undefined"
+    >
+      <span
+        className="radio-collection-title"
+      >
+        Visibility
+      </span>
+      <div
+        className="radio-collection-options-container"
+      >
+        <div
+          className="radio-option"
+        >
+          <input
+            checked={true}
+            id="privacy-public"
+            name="privacy"
+            onChange={[Function]}
+            title="Public"
+            type="radio"
+            value="public"
+          />
+          <label
+            htmlFor="privacy-public"
+          >
+            Public
+          </label>
+        </div>
+        <div
+          className="radio-option"
+        >
+          <input
+            checked={false}
+            id="privacy-olin"
+            name="privacy"
+            onChange={[Function]}
+            title="Olin Community Only"
+            type="radio"
+            value="olin"
+          />
+          <label
+            htmlFor="privacy-olin"
+          >
+            Olin Community Only
+          </label>
+        </div>
+      </div>
+    </div>
+    <div
+      className="add-edit-filters"
+    >
+      <style
+        type="text/css"
+      >
+        
+      </style>
+      <div
+        className="label-selector-list"
+      />
+    </div>
+    <span
+      style={
+        Object {
+          "display": "block",
+          "marginTop": "1em",
+        }
+      }
+    >
+      Need a new label?
+       
+      <a
+        href="https://goo.gl/forms/2cqVijokICZ5S20R2"
+        target="_blank"
+      >
+        Request one here
+      </a>
+      .
+    </span>
+    <div
+      className="form-submit-button-container"
+    >
+      <button
+        className="button cancel"
+        onClick={undefined}
+      >
+        Cancel
+      </button>
+      <button
+        className="button submit"
+        disabled={undefined}
+        onClick={[Function]}
+      >
+        Add Event
+      </button>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`AddEditEventPage signed-in user 1`] = `
+<div
+  className="row content-container"
+>
+  <span
+    className="content-container"
+  >
+    <h1
+      className="page-title"
+    >
+      <button
+        className="menu-icon-button"
+        onClick={[Function]}
+        title="Show/Hide Sidebar"
+      >
+        <test-file-stub />
+      </button>
+      Add Event
+    </h1>
+  </span>
+  <div
+    className="event-info-container"
+  >
+    <input
+      className="wide-text-box single-line-text-box medium-text-box"
+      id="event-title"
+      onChange={[Function]}
+      placeholder="Title"
+      type="text"
+      value=""
+    />
+    <div
+      className="date-time-container"
+    >
+      <div
+        className="date-time-container"
+      >
+        <button
+          className="button"
+          onClick={[Function]}
+        >
+          Start: May 18, 2018 10:00 PM
+        </button>
+        <div
+          className="picker-popup-container"
+        />
+      </div>
+      <div
+        className="date-time-container"
+      >
+        <button
+          className="button"
+          onClick={[Function]}
+        >
+          End: May 18, 2018 11:00 PM
+        </button>
+        <div
+          className="picker-popup-container"
+        />
+      </div>
+      <input
+        checked={false}
+        id="all-day-check"
+        onChange={[Function]}
+        title="All Day"
+        type="checkbox"
+      />
+      <label
+        htmlFor="all-day-check"
+      >
+        All Day
+      </label>
+      <input
+        checked={false}
+        disabled={null}
+        id="repeats-check"
+        onChange={[Function]}
+        title="Repeats?"
+        type="checkbox"
+      />
+      <label
+        htmlFor="repeats-check"
+      >
+        Repeats?
+      </label>
+    </div>
+    <div
+      className="location-field-container"
+    >
+      <div
+        className="location-input-container"
+      >
+        <input
+          className="wide-text-box single-line-text-box medium-text-box"
+          id="location"
+          onChange={[Function]}
+          placeholder="Location"
+          title="Location"
+          type="text"
+          value=""
+        />
+        <span
+          className="location-parsed"
+          hidden={true}
+          title="Building"
+        />
+        <span
+          className="location-parsed"
+          hidden={true}
+          title="Room"
+        />
+        <span
+          className="location-parsed"
+          hidden={true}
+          title="Suffix"
+        />
+      </div>
+    </div>
+    <div
+      className="markdown-editor-container"
+    >
+      <div
+        className="markdown-editor-editor-preview-container"
+      >
+        <textarea
+          className="markdown-editor column medium-6"
+          onChange={[Function]}
+          placeholder="Description (Markdown enabled)"
+          value=""
+        />
+        <div
+          className="markdown-preview column medium-6"
+        />
+      </div>
+    </div>
+    <div
+      className="radio-collection-container undefined"
+    >
+      <span
+        className="radio-collection-title"
+      >
+        Visibility
+      </span>
+      <div
+        className="radio-collection-options-container"
+      >
+        <div
+          className="radio-option"
+        >
+          <input
+            checked={true}
+            id="privacy-public"
+            name="privacy"
+            onChange={[Function]}
+            title="Public"
+            type="radio"
+            value="public"
+          />
+          <label
+            htmlFor="privacy-public"
+          >
+            Public
+          </label>
+        </div>
+        <div
+          className="radio-option"
+        >
+          <input
+            checked={false}
+            id="privacy-olin"
+            name="privacy"
+            onChange={[Function]}
+            title="Olin Community Only"
+            type="radio"
+            value="olin"
+          />
+          <label
+            htmlFor="privacy-olin"
+          >
+            Olin Community Only
+          </label>
+        </div>
+      </div>
+    </div>
+    <div
+      className="add-edit-filters"
+    >
+      <style
+        type="text/css"
+      >
+        
+      </style>
+      <div
+        className="label-selector-list"
+      />
+    </div>
+    <span
+      style={
+        Object {
+          "display": "block",
+          "marginTop": "1em",
+        }
+      }
+    >
+      Need a new label?
+       
+      <a
+        href="https://goo.gl/forms/2cqVijokICZ5S20R2"
+        target="_blank"
+      >
+        Request one here
+      </a>
+      .
+    </span>
+    <div
+      className="form-submit-button-container"
+    >
+      <button
+        className="button cancel"
+        onClick={undefined}
+      >
+        Cancel
+      </button>
+      <button
+        className="button submit"
+        disabled={undefined}
+        onClick={[Function]}
+      >
+        Add Event
+      </button>
+    </div>
+  </div>
+</div>
+`;

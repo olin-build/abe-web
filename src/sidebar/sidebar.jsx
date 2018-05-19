@@ -13,6 +13,9 @@ import LinkPane from './link-pane';
 import MarkdownGuide from './markdown-guide';
 import SidebarItem from './sidebar-item';
 
+const isProtectedEvent = (event, possibleLabels) =>
+  event && event.labels.some(label => (possibleLabels[label] || {}).protected);
+
 const Sidebar = (props) => {
   const {
     account: { scope },
@@ -23,7 +26,7 @@ const Sidebar = (props) => {
   const oauthUrl = `${oauthBaseUrl}?redirect_uri=${encodeURIComponent(window.location.href)}`;
   const content = (
     <div>
-      {!scope.has('community_events:read') && (
+      {!scope.has('read:all_events') && (
         <SidebarItem key="login" header="Sign In">
           <div>
             <p>You are viewing the public calendar.</p>
@@ -35,7 +38,7 @@ const Sidebar = (props) => {
       )}
 
       {mode.LINK_PANE &&
-        scope.has('events:create') && (
+        scope.has('create:events') && (
           <LinkPane
             addEventClicked={props.addEvent}
             importICSClicked={props.importICSClicked}
@@ -45,7 +48,9 @@ const Sidebar = (props) => {
         )}
 
       {mode.EVENT_ACTIONS &&
-        scope.has('events:edit') && (
+        scope.has('edit:events') &&
+        (scope.has('edit:protected_events') ||
+          !isProtectedEvent(props.currentEvent, props.possibleLabels)) && (
           <EventActionsPane key="event-actions" className="sidebar-item" {...props} />
         )}
 
