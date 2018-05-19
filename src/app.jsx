@@ -12,7 +12,7 @@ import ImportContainer from './containers/import-container';
 import LabelsContainer from './containers/labels-container';
 import SidebarContainer from './containers/sidebar-container';
 import SubscriptionContainer from './containers/subscription-container';
-import { fetchAccount, fetchLabels, toggleSidebarCollapsed } from './data/actions';
+import { fetchUser, fetchLabels, toggleSidebarCollapsed } from './data/actions';
 import setupStore from './data/setup-store';
 
 // Remove the trailing slash, if present
@@ -30,7 +30,7 @@ const store = setupStore(history);
 initializeAccessToken();
 
 // Fetch the labels
-store.dispatch(fetchAccount());
+store.dispatch(fetchUser());
 store.dispatch(fetchLabels());
 
 ReactDOM.render(

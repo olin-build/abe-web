@@ -23,9 +23,9 @@ export function general(state = {}, action) {
   }
 }
 
-export function account(state = {}, action) {
+export function user(state = {}, action) {
   switch (action.type) {
-    case ActionTypes.SET_ACCOUNT:
+    case ActionTypes.SET_USER:
       return action.data;
     default:
       return state;

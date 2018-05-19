@@ -18,7 +18,7 @@ const isProtectedEvent = (event, possibleLabels) =>
 
 const Sidebar = (props) => {
   const {
-    account: { scope },
+    user: { scope },
     sidebarMode: mode,
   } = props;
 

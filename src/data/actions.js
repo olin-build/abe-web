@@ -25,7 +25,7 @@ export const ActionTypes = {
   SET_FILTER_LABEL_SELECTED: 'SET_FILTER_LABEL_SELECTED', // Sets whether or not a specific label is selected as part
   // of the event filter
   SET_VIEW_MODE: 'SET_VIEW_MODE', // Sets which view mode (month, week, day, etc) the calendar is in
-  SET_ACCOUNT: 'SET_ACCOUNT',
+  SET_USER: 'SET_USER',
   // Event data
   SET_CURRENT_EVENT: 'SET_CURRENT_EVENT', // Keeps track of the data for the event currently being viewed or edited
   FETCH_EVENTS_IF_NEEDED: 'FETCH_EVENTS_IF_NEEDED', // Triggers FETCH_EVENTS if no event data is loaded
@@ -229,26 +229,26 @@ export function setViewMode(mode) {
 // ########## End Calendar View Actions ########## //
 
 /**
- * Performs a server request to refresh the account info.
+ * Performs a server request to refresh the user info.
  */
-export function fetchAccount() {
+export function fetchUser() {
   return dispatch =>
     axios
-      .get(`${window.abe_url}/account/`)
+      .get(`${window.abe_url}/user/`)
       .then(setAccessTokenFromResponse)
       .then(response => response.data, error => dispatch(displayError(error)))
-      .then(account => dispatch(setAccount(account)));
+      .then(user => dispatch(setUser(user)));
 }
 
 /**
- * Updates the account in the Redux store.
+ * Updates the user in the Redux store.
  */
-export function setAccount(account) {
+export function setUser(user) {
   const data = {
-    authenticated: account.authenticated,
-    scope: new Set(account.scope),
+    authenticated: user.authenticated,
+    scope: new Set(user.scope),
   };
-  return { type: ActionTypes.SET_ACCOUNT, data };
+  return { type: ActionTypes.SET_USER, data };
 }
 
 // ########## Begin Event Data Actions ########## //

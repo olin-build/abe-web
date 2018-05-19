@@ -9,7 +9,7 @@ import { withAccountInfo } from './with-server-data';
 
 // This function passes values/objects from the Redux state to the React component as props
 const mapStateToProps = state => ({
-  account: state.account,
+  user: state.user,
   currentEvent: state.events.current,
   general: state.general,
   isCollapsed: state.sidebar.isCollapsed,
