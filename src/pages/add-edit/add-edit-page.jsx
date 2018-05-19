@@ -4,6 +4,7 @@ import axios from 'axios';
 import deepcopy from 'deepcopy';
 import _ from 'lodash';
 import moment from 'moment';
+import PropTypes from 'prop-types';
 import * as React from 'react';
 import DateTimeSelector from '../../components/date-time-selector';
 import LabelPane from '../../components/label-pane';
@@ -111,11 +112,6 @@ export default class AddEditEventPage extends React.Component {
   setEnd = end => this.updateEventDatum({ end });
 
   validateInput = () => {
-    if (this.state.eventData.title.length === 0) {
-      alert('Event Title is required');
-      return false;
-    }
-
     if (this.state.eventData.title.length === 0) {
       alert('Event must have a title');
       return false;
@@ -341,3 +337,22 @@ export default class AddEditEventPage extends React.Component {
     );
   }
 }
+
+AddEditEventPage.propTypes = {
+  account: PropTypes.shape({ scope: PropTypes.instanceOf(Map) }).isRequired,
+  eventData: PropTypes.shape({
+    title: PropTypes.string,
+    description: PropTypes.string,
+    start: PropTypes.instanceOf(moment),
+    end: PropTypes.instanceOf(moment),
+    labels: PropTypes.arrayOf(PropTypes.string),
+  }),
+  match: PropTypes.shape({ id: PropTypes.number }).isRequired,
+  setPageTitlePrefix: PropTypes.func.isRequired,
+  setSidebarMode: PropTypes.func.isRequired,
+  toggleSidebarCollapsed: PropTypes.func.isRequired,
+};
+
+AddEditEventPage.defaultProps = {
+  eventData: null,
+};

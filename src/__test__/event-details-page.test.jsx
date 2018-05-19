@@ -4,7 +4,6 @@ import renderer from 'react-test-renderer';
 import EventDetailsPage from '../pages/details/event-details-page';
 
 describe('EventDetailsPage', () => {
-  moment.tz.setDefault('EST');
   test('loading', () => {
     const jsx = <EventDetailsPage eventData={null} setSidebarMode={() => undefined} />;
     const component = renderer.create(jsx);

@@ -1,8 +1,98 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`LabelPane matches snapshot 1`] = `
+exports[`LabelPane disables protected labels 1`] = `
 <div
-  className="css-class"
+  className=""
+>
+  <style
+    type="text/css"
+  >
+    .label.label-label-1.selected{background-color:red}
+    .label.label-label-1.selected:not(.disabled):not(.no-hover):hover,
+    .label.label-label-1:not(.selected)
+    {background-color:white;border-color:red;color:red}
+    .label.label-label-1:not(.disabled):not(.no-hover):hover
+    {background-color:red;color:white}
+    .label.label-label-2.selected{background-color:green}
+    .label.label-label-2.selected:not(.disabled):not(.no-hover):hover,
+    .label.label-label-2:not(.selected)
+    {background-color:white;border-color:green;color:green}
+    .label.label-label-2:not(.disabled):not(.no-hover):hover
+    {background-color:green;color:white}
+  </style>
+  <div
+    className="label-selector-list"
+  >
+    <button
+      className="button  label label-label-1  "
+      id="label-1"
+      onClick={[Function]}
+      title="first label"
+      type="button"
+    >
+      <span
+        className="ion-pricetag"
+      >
+         
+      </span>
+      first
+    </button>
+    <button
+      className="button  label label-label-2  disabled"
+      id="label-2"
+      onClick={[Function]}
+      title="second label"
+      type="button"
+    >
+      <span
+        className="ion-android-lock"
+      >
+         
+      </span>
+      second
+    </button>
+  </div>
+</div>
+`;
+
+exports[`LabelPane hides unselected labels 1`] = `
+<div
+  className=""
+>
+  <style
+    type="text/css"
+  >
+    .label.label-label-1.selected{background-color:red}
+    .label.label-label-1.selected:not(.disabled):not(.no-hover):hover,
+    .label.label-label-1:not(.selected)
+    {background-color:white;border-color:red;color:red}
+    .label.label-label-1:not(.disabled):not(.no-hover):hover
+    {background-color:red;color:white}
+  </style>
+  <div
+    className="label-selector-list"
+  >
+    <button
+      className="button  label label-label-1 selected "
+      id="label-1"
+      onClick={[Function]}
+      title="first label"
+      type="button"
+    >
+      <span
+        className="ion-pricetag"
+      >
+         
+      </span>
+      first
+    </button>
+  </div>
+</div>
+`;
+
+exports[`LabelPane matches baseline 1`] = `
+<div
+  className=""
 >
   <style
     type="text/css"
@@ -57,7 +147,7 @@ exports[`LabelPane matches snapshot 1`] = `
 
 exports[`LabelPane not editable 1`] = `
 <div
-  className="css-class"
+  className=""
 >
   <style
     type="text/css"
@@ -102,6 +192,61 @@ exports[`LabelPane not editable 1`] = `
       </span>
       second
     </span>
+  </div>
+</div>
+`;
+
+exports[`LabelPane shows selected labels 1`] = `
+<div
+  className=""
+>
+  <style
+    type="text/css"
+  >
+    .label.label-label-1.selected{background-color:red}
+    .label.label-label-1.selected:not(.disabled):not(.no-hover):hover,
+    .label.label-label-1:not(.selected)
+    {background-color:white;border-color:red;color:red}
+    .label.label-label-1:not(.disabled):not(.no-hover):hover
+    {background-color:red;color:white}
+    .label.label-label-2.selected{background-color:green}
+    .label.label-label-2.selected:not(.disabled):not(.no-hover):hover,
+    .label.label-label-2:not(.selected)
+    {background-color:white;border-color:green;color:green}
+    .label.label-label-2:not(.disabled):not(.no-hover):hover
+    {background-color:green;color:white}
+  </style>
+  <div
+    className="label-selector-list"
+  >
+    <button
+      className="button  label label-label-1 selected "
+      id="label-1"
+      onClick={[Function]}
+      title="first label"
+      type="button"
+    >
+      <span
+        className="ion-pricetag"
+      >
+         
+      </span>
+      first
+    </button>
+    <button
+      className="button  label label-label-2  "
+      id="label-2"
+      onClick={[Function]}
+      title="second label"
+      type="button"
+    >
+      <span
+        className="ion-pricetag"
+      >
+         
+      </span>
+      second
+    </button>
   </div>
 </div>
 `;
@@ -216,61 +361,6 @@ exports[`LabelPane sorts labels 1`] = `
          
       </span>
       a-label-2
-    </button>
-  </div>
-</div>
-`;
-
-exports[`LabelPane with selected labels 1`] = `
-<div
-  className="css-class"
->
-  <style
-    type="text/css"
-  >
-    .label.label-label-1.selected{background-color:red}
-    .label.label-label-1.selected:not(.disabled):not(.no-hover):hover,
-    .label.label-label-1:not(.selected)
-    {background-color:white;border-color:red;color:red}
-    .label.label-label-1:not(.disabled):not(.no-hover):hover
-    {background-color:red;color:white}
-    .label.label-label-2.selected{background-color:green}
-    .label.label-label-2.selected:not(.disabled):not(.no-hover):hover,
-    .label.label-label-2:not(.selected)
-    {background-color:white;border-color:green;color:green}
-    .label.label-label-2:not(.disabled):not(.no-hover):hover
-    {background-color:green;color:white}
-  </style>
-  <div
-    className="label-selector-list"
-  >
-    <button
-      className="button  label label-label-1 selected "
-      id="label-1"
-      onClick={[Function]}
-      title="first label"
-      type="button"
-    >
-      <span
-        className="ion-pricetag"
-      >
-         
-      </span>
-      first
-    </button>
-    <button
-      className="button  label label-label-2  "
-      id="label-2"
-      onClick={[Function]}
-      title="second label"
-      type="button"
-    >
-      <span
-        className="ion-pricetag"
-      >
-         
-      </span>
-      second
     </button>
   </div>
 </div>

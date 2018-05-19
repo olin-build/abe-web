@@ -1,4 +1,19 @@
-import { removeOauthParams } from '../data/auth';
+import {
+  canSignOut,
+  initializeAccessToken,
+  clearAccessToken,
+  removeOauthParams,
+} from '../data/auth';
+
+describe('access tokens', () => {
+  test('sequence', () => {
+    localStorage.abeAccessToken = 'token';
+    initializeAccessToken();
+    expect(canSignOut()).toEqual(true);
+    clearAccessToken();
+    expect(canSignOut()).toEqual(true);
+  });
+});
 
 /* eslint-disable max-len */
 describe('removeOauthParams', () => {
