@@ -16,19 +16,19 @@ export function canSignOut() {
   return Boolean(localStorage[ACCESS_TOKEN_KEY]);
 }
 
-export function removeOauthParams(url) {
+export function removeOauthFragments(url) {
   return url
-    .replace(/([?&])(access_token|expires_in|state|token_type)=[^&]*/g, '$1')
-    .replace(/([?&])&+/, '$1')
-    .replace(/[?&]$/, '');
+    .replace(/([#&])(access_token|expires_in|state|token_type)=[^&]*/g, '$1')
+    .replace(/([#&])&+/, '$1')
+    .replace(/[#&]$/, '');
 }
 
 export function initializeAccessToken() {
   const token = localStorage[ACCESS_TOKEN_KEY];
-  const match = document.location.search.match(/[&?]access_token=([^&]+)/);
+  const match = document.location.hash.match(/[#&]access_token=([^&]*)/);
   if (match) {
     setAccessToken(decodeURIComponent(match[1]));
-    window.history.replaceState({}, document.title, removeOauthParams(window.location.href));
+    window.history.replaceState({}, document.title, removeOauthFragments(window.location.href));
   } else if (token) {
     setAccessToken(token);
   }
