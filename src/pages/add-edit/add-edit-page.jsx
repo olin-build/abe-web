@@ -239,7 +239,7 @@ export default class AddEditEventPage extends React.Component {
       );
     }
 
-    const { scope } = this.props.account;
+    const { scope } = this.props.user;
     const editingExisting = this.state.eventData.id || this.state.eventData.sid;
     const requiredScope = editingExisting ? 'create:protected_events' : 'edit:protected_events';
     const pageTitle = editingExisting ? 'Edit Event' : 'Add Event';
@@ -339,7 +339,7 @@ export default class AddEditEventPage extends React.Component {
 }
 
 AddEditEventPage.propTypes = {
-  account: PropTypes.shape({ scope: PropTypes.instanceOf(Map) }).isRequired,
+  user: PropTypes.shape({ scope: PropTypes.instanceOf(Map) }).isRequired,
   eventData: PropTypes.shape({
     title: PropTypes.string,
     description: PropTypes.string,

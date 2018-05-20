@@ -33,6 +33,7 @@ const config = {
   plugins: [
     new webpack.EnvironmentPlugin({
       ABE_URL: 'http://localhost:3000/',
+      ABE_CLIENT_ID: null,
       DEBUG: true,
       GA_ID: null,
     }),

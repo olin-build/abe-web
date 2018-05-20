@@ -49,7 +49,7 @@ export default function setupStore(history) {
         },
       },
     },
-    account: null,
+    user: null,
     events: {
       current: null,
       events: null,

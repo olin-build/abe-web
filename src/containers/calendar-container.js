@@ -32,7 +32,7 @@ export const getVisibleEvents = (events, visibleLabels, allLabels) => {
 
 // This function passes values/objects from the Redux state to the React component as props
 const mapStateToProps = state => ({
-  account: state.account,
+  user: state.user,
   events: getVisibleEvents(state.events.events, state.labels.visibleLabels, state.labels.labelList),
   labels: state.labels,
   ...state.calendar,
