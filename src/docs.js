@@ -1,5 +1,5 @@
 const integrateCalendarPageUrl =
-  'https://github.com/olinlibrary/abe-web/wiki/Integrate-with-Your-Calendar';
+  'https://github.com/olin-build/abe-web/wiki/Integrate-with-Your-Calendar';
 
 const urls = {
   integrateCalendarUrl: `${integrateCalendarPageUrl}#wiki-wrapper`,

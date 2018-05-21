@@ -5,7 +5,7 @@ import moment from 'moment';
 // user creates an event in an empty database), but only needs to get us through
 // an API transition and can then be removed.
 //
-// TODO: Remove this variable, and simplify its users, once olinlibrary/ABE#243
+// TODO: Remove this variable, and simplify its users, once olin-build/ABE#243
 // is on production and active developer branches.
 let useSnakeCaseProperties = true;
 

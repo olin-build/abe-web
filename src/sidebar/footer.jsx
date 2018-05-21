@@ -16,7 +16,7 @@ const Footer = props => (
           Report a problem
         </a>
         &nbsp;|&nbsp;
-        <a href="https://github.com/olinlibrary/abe-web" title="View on GitHub" target="_blank">
+        <a href="https://github.com/olin-build/abe-web" title="View on GitHub" target="_blank">
           View on GitHub
         </a>
       </p>
