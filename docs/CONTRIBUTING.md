@@ -88,9 +88,10 @@ seconds for Webpack to recompile everything.
 
 `yarn test` runs [Jest](https://facebook.github.io/jest/).
 
-`yarn test:watch` runs Jest in watch mode.
+`yarn test --watch` runs Jest in watch mode. Jest will run until you press `q`,
+and re-run the tests when a source file changes.
 
-`yarn test:coverage` creates a test coverage report. View the HTML at `./coverage/lcov-report/index.html`.
+`yarn test --coverage` creates a test coverage report. View the HTML at `./coverage/lcov-report/index.html`.
 
 ### Lint
 
