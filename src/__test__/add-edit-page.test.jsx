@@ -26,7 +26,7 @@ describe('AddEditEventPage', () => {
 
   test('new event', () => {
     const component = renderer.create(<AddEditEventPage
-      account={userAccount}
+      user={userAccount}
       eventData={null}
       match={{ params: {} }}
       {...sidebarFunctions}
@@ -36,7 +36,7 @@ describe('AddEditEventPage', () => {
   });
   test('signed-in user', () => {
     const component = renderer.create(<AddEditEventPage
-      account={userAccount}
+      user={userAccount}
       eventData={event}
       match={{ params: { id: 1 } }}
       {...sidebarFunctions}
@@ -46,7 +46,7 @@ describe('AddEditEventPage', () => {
   });
   test('admin', () => {
     const component = renderer.create(<AddEditEventPage
-      account={userAccount}
+      user={userAccount}
       eventData={event}
       match={{ params: { id: 1 } }}
       {...sidebarFunctions}
@@ -56,7 +56,7 @@ describe('AddEditEventPage', () => {
   });
   test('validateInput', () => {
     const instance = shallow(<AddEditEventPage
-      account={adminAccount}
+      user={adminAccount}
       eventData={event}
       match={{ params: { id: 1 } }}
       possibleLabels={{}}
