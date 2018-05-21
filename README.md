@@ -1,11 +1,11 @@
 # A Web Frontend for ABE
 
-[![Build Status](https://travis-ci.org/olinlibrary/abe-web.svg?branch=dev)](https://travis-ci.org/olinlibrary/abe-web)
-[![Coverage Status](https://coveralls.io/repos/github/olinlibrary/abe-web/badge.svg?branch=dev)](https://coveralls.io/github/olinlibrary/abe-web?branch=dev)
+[![Build Status](https://travis-ci.org/olin-build/abe-web.svg?branch=dev)](https://travis-ci.org/olin-build/abe-web)
+[![Coverage Status](https://coveralls.io/repos/github/olin-build/abe-web/badge.svg?branch=dev)](https://coveralls.io/github/olin-build/abe-web?branch=dev)
 
 This is a Web front end to the [Olin College of Engineering
 Library](http://www.olin.build)'s [Amorphous Blob of
-Events](https://github.com/olinlibrary/ABE).
+Events](https://github.com/olin-build/ABE).
 
 ## Contributing
 
@@ -24,9 +24,9 @@ Design, developer, Olin community member — you can help:
 ### Designers
 
 Usability and design issues are labeled with
-[`usability`](https://github.com/olinlibrary/abe-web/issues?q=is%3Aopen+is%3Aissue+label%3Ausability)
+[`usability`](https://github.com/olin-build/abe-web/issues?q=is%3Aopen+is%3Aissue+label%3Ausability)
 and
-[`design`](https://github.com/olinlibrary/abe-web/issues?q=is%3Aopen+is%3Aissue+label%3Adesign).
+[`design`](https://github.com/olin-build/abe-web/issues?q=is%3Aopen+is%3Aissue+label%3Adesign).
 
 ### Developers
 
@@ -55,5 +55,5 @@ service free of charge. BrowserStack allows us to test our project in a
 multitude of browsers on various platforms, including IE, Safari, Android and
 iOS, to ensure compatibility with as many as possible.
 
-[issues]: https://github.com/olinlibrary/abe-web/issues
-[good-first-issue]: https://github.com/olinlibrary/abe-web/issues?q=is%3Aopen+is%3Aissue+label%3A%22good+first+issue%22
+[issues]: https://github.com/olin-build/abe-web/issues
+[good-first-issue]: https://github.com/olin-build/abe-web/issues?q=is%3Aopen+is%3Aissue+label%3A%22good+first+issue%22

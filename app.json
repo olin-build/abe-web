@@ -1,7 +1,7 @@
 {
     "name": "abe-web",
     "description": "Web frontend for Olin College's Amorphous Blob of Events",
-    "repository": "https://github.com/olinlibrary/abe-web",
+    "repository": "https://github.com/olin-build/abe-web",
     "success_url": "/",
     "env": {
         "ABE_URL": "https://abe-dev.olin.build"

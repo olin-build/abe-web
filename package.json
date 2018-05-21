@@ -21,7 +21,7 @@
   "engines": {
     "node": "^9"
   },
-  "repository": "github:olinlibrary/abe-web",
+  "repository": "github:olin-build/abe-web",
   "keywords": [
     "abe",
     "events",
@@ -34,9 +34,9 @@
   "author": "Olin College of Engineering Library",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/olinlibrary/abe-web/issues"
+    "url": "https://github.com/olin-build/abe-web/issues"
   },
-  "homepage": "https://github.com/olinlibrary/abe-web#readme",
+  "homepage": "https://github.com/olin-build/abe-web#readme",
   "dependencies": {
     "axios": "^0.16.2",
     "babel-core": "^6.26.0",
