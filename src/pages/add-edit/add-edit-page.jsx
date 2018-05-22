@@ -339,7 +339,9 @@ export default class AddEditEventPage extends React.Component {
 }
 
 AddEditEventPage.propTypes = {
+  // TODO: DRY w/ sidebar.jsx
   user: PropTypes.shape({ scope: PropTypes.instanceOf(Map) }).isRequired,
+  // TODO: DRY w/ sidebar.jsx
   eventData: PropTypes.shape({
     title: PropTypes.string,
     description: PropTypes.string,

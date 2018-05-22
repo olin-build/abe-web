@@ -99,6 +99,15 @@ textarea::placeholder {
     margin-bottom: 0;
 }
 
+.olin-build-logo {
+    color: #c7254e;
+}
+
+.olin-build-logo:hover {
+    color: #c7254e;
+    text-decoration: underline;
+}
+
 @media screen and (max-width: 700px) {
     .app-sidebar {
         left: -33.3%;

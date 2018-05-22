@@ -1,0 +1,526 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Sidebar renders ICS pane 1`] = `
+<div
+  className="app-sidebar expanded"
+>
+  <div
+    className="sidebar-container"
+  >
+    <div
+      className="sidebar-header"
+    />
+    <div
+      className="sidebar-content"
+    >
+      <div>
+        <div
+          className="sidebar-item"
+        >
+          <div
+            className="sidebar-item-header"
+          >
+            Subscribe
+          </div>
+          <div
+            className="sidebar-item-content"
+          >
+            <div>
+              <span
+                className="sidebar-item-info"
+              >
+                Use an ICS feed to add events with the selected tags to your own calendar (
+                <a
+                  alt="Instructions for adding an ICS feed"
+                  href="https://github.com/olin-build/abe-web/wiki/Integrate-with-Your-Calendar#wiki-wrapper"
+                  onClick={[Function]}
+                  target="_blank"
+                  title="Instructions for adding an ICS feed"
+                  to="https://github.com/olin-build/abe-web/wiki/Integrate-with-Your-Calendar#wiki-wrapper"
+                >
+                  instructions
+                </a>
+                ).
+              </span>
+              <br />
+              <input
+                className="button submit"
+                onClick={[Function]}
+                style={
+                  Object {
+                    "marginTop": "16pt",
+                  }
+                }
+                type="submit"
+                value="Generate event feed"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      className="footer"
+    />
+  </div>
+</div>
+`;
+
+exports[`Sidebar renders event actions 1`] = `
+<div
+  className="app-sidebar expanded"
+>
+  <div
+    className="sidebar-container"
+  >
+    <div
+      className="sidebar-header"
+    />
+    <div
+      className="sidebar-content"
+    >
+      <div>
+        <div
+          className="link-pane sidebar-item"
+        >
+          <button
+            className="button"
+            onClick={[Function]}
+          >
+            Edit Event
+          </button>
+        </div>
+      </div>
+    </div>
+    <div
+      className="footer"
+    />
+  </div>
+</div>
+`;
+
+exports[`Sidebar renders event labels 1`] = `
+<div
+  className="app-sidebar expanded"
+>
+  <div
+    className="sidebar-container"
+  >
+    <div
+      className="sidebar-header"
+    />
+    <div
+      className="sidebar-content"
+    >
+      <div>
+        <div
+          className="sidebar-item"
+        >
+          <div
+            className="sidebar-item-header"
+          >
+            Labels
+          </div>
+          <div
+            className="sidebar-item-content"
+          >
+            <div
+              className="label-pane"
+            >
+              featured
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      className="footer"
+    />
+  </div>
+</div>
+`;
+
+exports[`Sidebar renders filter pane 1`] = `
+<div
+  className="app-sidebar expanded"
+>
+  <div
+    className="sidebar-container"
+  >
+    <div
+      className="sidebar-header"
+    />
+    <div
+      className="sidebar-content"
+    >
+      <div>
+        <div
+          className="sidebar-item"
+        >
+          <div
+            className="sidebar-item-header"
+          >
+            Filter Events
+          </div>
+          <div
+            className="sidebar-item-content"
+          >
+            <div
+              className="filter-pane undefined"
+            >
+              <div
+                className="sidebar-item-subsection-header"
+              >
+                <span
+                  className="sidebar-item-subsection-title"
+                >
+                  Labels
+                </span>
+                <div
+                  className="align-right"
+                >
+                  <a
+                    onClick={[Function]}
+                  >
+                    All
+                  </a>
+                   | 
+                  <a
+                    onClick={[Function]}
+                  >
+                    Default
+                  </a>
+                   | 
+                  <a
+                    onClick={[Function]}
+                  >
+                    None
+                  </a>
+                </div>
+              </div>
+              <div
+                className="label-pane"
+              >
+                featured
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      className="footer"
+    />
+  </div>
+</div>
+`;
+
+exports[`Sidebar renders link pane 1`] = `
+<div
+  className="app-sidebar expanded"
+>
+  <div
+    className="sidebar-container"
+  >
+    <div
+      className="sidebar-header"
+    />
+    <div
+      className="sidebar-content"
+    >
+      <div>
+        <div
+          className="link-pane sidebar-item"
+        >
+          <button
+            className="button"
+            onClick={[Function]}
+          >
+            Add Event
+          </button>
+          <button
+            className="button"
+            onClick={[Function]}
+          >
+            Import Calendar
+          </button>
+        </div>
+      </div>
+    </div>
+    <div
+      className="footer"
+    />
+  </div>
+</div>
+`;
+
+exports[`Sidebar renders markdown pane 1`] = `
+<div
+  className="app-sidebar expanded"
+>
+  <div
+    className="sidebar-container"
+  >
+    <div
+      className="sidebar-header"
+    />
+    <div
+      className="sidebar-content"
+    >
+      <div>
+        <div
+          className="sidebar-item"
+        >
+          <div
+            className="sidebar-item-header"
+          >
+            Markdown Guide
+          </div>
+          <div
+            className="sidebar-item-content"
+          >
+            <div
+              className="markdown-guide"
+            >
+              <div
+                className="markdown-guide-section-container"
+              >
+                <div
+                  className="markdown-guide-section"
+                >
+                  <span
+                    className="markdown-guide-section-title"
+                  >
+                    Links
+                  </span>
+                  <p
+                    className="markdown-sample"
+                  >
+                    [link text](url)
+                  </p>
+                  <p
+                    className="markdown-sample"
+                  >
+                    &lt;url&gt;
+                  </p>
+                </div>
+                <div
+                  className="markdown-guide-section"
+                >
+                  <span
+                    className="markdown-guide-section-title"
+                  >
+                    Headers
+                  </span>
+                  <h1>
+                    # big header
+                  </h1>
+                  <h2>
+                    ## smaller header
+                  </h2>
+                  <p>
+                    And so on, adding more hashes to make the header smaller.
+                    <br />
+                    <strong>
+                      Don’t forget the space between the hash and the text.
+                    </strong>
+                  </p>
+                </div>
+                <div
+                  className="markdown-guide-section"
+                >
+                  <span
+                    className="markdown-guide-section-title"
+                  >
+                    Emphasis
+                  </span>
+                  <p
+                    className="markdown-sample italic"
+                  >
+                    *italic*
+                  </p>
+                  <p
+                    className="markdown-sample bold"
+                  >
+                    **bold**
+                  </p>
+                  <p
+                    className="markdown-sample bold italic"
+                  >
+                    ***bold and italic***
+                  </p>
+                </div>
+                <div
+                  className="markdown-guide-section"
+                >
+                  <span
+                    className="markdown-guide-section-title"
+                  >
+                    Images
+                  </span>
+                  <p
+                    className="markdown-sample"
+                  >
+                    ![mouse hover text](url_to_image)
+                  </p>
+                  <p>
+                    Currently images must be hosted elsewhere. If you need to upload your photo somewhere, put it on Google Drive or Dropbox and use the public link to the file.
+                  </p>
+                </div>
+                <div
+                  className="markdown-guide-section"
+                >
+                  <span
+                    className="markdown-guide-section-title"
+                  >
+                    Lists
+                  </span>
+                  <p>
+                    Indent each list item with 
+                    <strong>
+                      two spaces
+                    </strong>
+                    , followed by an asterisk, number, or letter, and then another space.
+                  </p>
+                  <div
+                    style={
+                      Object {
+                        "display": "block",
+                      }
+                    }
+                  >
+                    <div
+                      style={
+                        Object {
+                          "float": "left",
+                          "width": "33.3%",
+                        }
+                      }
+                    >
+                      <span>
+                        Bulletted
+                      </span>
+                      <p
+                        className="markdown-sample"
+                      >
+                          * List item
+                        <br />
+                          * List item
+                        <br />
+                          * List item
+                      </p>
+                    </div>
+                    <div
+                      style={
+                        Object {
+                          "float": "left",
+                          "width": "33.3%",
+                        }
+                      }
+                    >
+                      <span>
+                        Numbered
+                      </span>
+                      <p
+                        className="markdown-sample"
+                      >
+                          1 List item
+                        <br />
+                          2 List item
+                        <br />
+                          3 List item
+                      </p>
+                    </div>
+                    <div
+                      style={
+                        Object {
+                          "float": "left",
+                          "width": "33.3%",
+                        }
+                      }
+                    >
+                      <span>
+                        Lettered
+                      </span>
+                      <p
+                        className="markdown-sample"
+                      >
+                          a List item
+                        <br />
+                          b List item
+                        <br />
+                          c List item
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      className="footer"
+    />
+  </div>
+</div>
+`;
+
+exports[`Sidebar renders sign in 1`] = `
+<div
+  className="app-sidebar expanded"
+>
+  <div
+    className="sidebar-container"
+  >
+    <div
+      className="sidebar-header"
+    />
+    <div
+      className="sidebar-content"
+    >
+      <div>
+        <div
+          className="sidebar-item"
+        >
+          <div
+            className="sidebar-item-header"
+          >
+            Sign In
+          </div>
+          <div
+            className="sidebar-item-content"
+          >
+            <div>
+              <p>
+                You are viewing public events.
+              </p>
+              <p>
+                <a
+                  href="http://abe_url/oauth/authorize?redirect_uri=about%3Ablank&response_type=token&client_id=$abe-client-id"
+                >
+                  Sign in
+                </a>
+                 to 
+                <a
+                  className="olin-build-logo"
+                  href="https://olin.build"
+                  target="_blank"
+                  title="olin.build promotes community software at Olin"
+                >
+                  olin.build
+                </a>
+                 to see and add Olin Community events.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      className="footer"
+    />
+  </div>
+</div>
+`;
