@@ -9,7 +9,7 @@ const MarkdownGuide = _props => (
       <div className="markdown-guide-section">
         <span className="markdown-guide-section-title">Links</span>
         <p className="markdown-sample">[link text](url)</p>
-        <p className="markdown-sample">[url]</p>
+        <p className="markdown-sample">&lt;url&gt;</p>
       </div>
       <div className="markdown-guide-section">
         <span className="markdown-guide-section-title">Headers</span>
