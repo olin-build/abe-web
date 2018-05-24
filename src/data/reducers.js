@@ -25,7 +25,7 @@ export function general(state = {}, action) {
 
 export function user(state = {}, action) {
   switch (action.type) {
-    case ActionTypes.SET_USER:
+    case ActionTypes.SET_ACCESS_INFO:
       return action.data;
     default:
       return state;

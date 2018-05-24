@@ -498,7 +498,7 @@ exports[`Sidebar renders sign in 1`] = `
               </p>
               <p>
                 <a
-                  href="http://abe_url/oauth/authorize?redirect_uri=about%3Ablank&response_type=token&client_id=$abe-client-id"
+                  href="http://abe_url/oauth/authorize?client_id=$abe-client-id&redirect_uri=about%3Ablank&response_type=token&scope=create%3Aevents%20create%3Aics%20create%3Aprotected_events%20delete%3Aevents%20delete%3Aprotected_events%20edit%3Aevents%20edit%3Aprotected_events%20read%3Aall_events%20read%3Alabels"
                 >
                   Sign in
                 </a>
