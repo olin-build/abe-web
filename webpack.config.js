@@ -1,19 +1,28 @@
 const webpack = require('webpack');
 const path = require('path');
 
-const BUILD_DIR = path.resolve(__dirname);
-const APP_DIR = path.resolve(__dirname, 'src');
+const OUTPUT_DIR = path.resolve(__dirname);
+const SOURCE_DIR = path.resolve(__dirname, 'src');
 
-const config = {
+module.exports = {
   devtool: 'source-map',
-  entry: `${APP_DIR}/app.jsx`,
-  output: {
-    path: BUILD_DIR,
-    publicPath: '/public/build/',
-    filename: 'bundle.js',
+  entry: {
+    main: `${SOURCE_DIR}/app.jsx`,
   },
+  output: {
+    filename: '[name].bundle.js',
+    chunkFilename: '[name].bundle.js',
+    path: OUTPUT_DIR,
+    publicPath: '/public/build/',
+  },
+  optimization: {
+    splitChunks: {
+      chunks: 'all',
+    },
+  },
+  performance: { hints: false },
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.js$/,
         use: ['source-map-loader'],
@@ -21,7 +30,7 @@ const config = {
       },
       {
         test: /\.jsx?$/,
-        include: APP_DIR,
+        include: SOURCE_DIR,
         loader: 'babel-loader',
       },
       {
@@ -46,5 +55,3 @@ const config = {
     extensions: ['.js', '.jsx'],
   },
 };
-
-module.exports = config;

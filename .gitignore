@@ -254,3 +254,5 @@ ENV/
 # webpack creates these
 bundle.js
 bundle.js.map
+*.bundle.js
+*.bundle.js.map

@@ -9,25 +9,29 @@ const fs = require('fs');
 app.use(bodyParser.json({ type: 'application/*+json' }));
 app.use(express.static(__dirname));
 
-// Check if we're running on a local dev machine
+// The presence of `.env` signals to run in development mode.
+//
+// In this mode, the server loads environment variables from `.env` and runs
+// webpack-dev-server as middleware.
+//
+// Otherwise it depeends on a prior webpack build step.
 if (fs.existsSync('./.env')) {
-  // Load environment variables from .env
   require('dotenv').config();
-
-  // Use webpack-dev-server
   const webpack = require('webpack');
   const middleware = require('webpack-dev-middleware');
   const webpackConfig = require('./webpack.config.js');
   const compiler = webpack(webpackConfig);
 
+  webpackConfig.mode = 'development';
   app.use(middleware(compiler, {
-    // webpack-dev-middleware options
+    // Options from https://github.com/webpack/webpack-dev-middleware#options
+    stats: false,
   }));
 }
 
-const getHtml = require('./index.html.js');
-// Ugly HTML template TODO: Do this better
-const html = getHtml();
+const html = fs
+  .readFileSync('./public/index.html', 'utf-8')
+  .replace(/\bsrc="\/public\/build(\/.*\.bundle.js)"/g, 'src="$1"');
 
 app.get('*', (req, res) => {
   res.send(html);
