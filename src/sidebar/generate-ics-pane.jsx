@@ -6,6 +6,7 @@ import copy from 'copy-to-clipboard';
 import React from 'react';
 import { OutboundLink } from 'react-ga';
 import docs from '../docs';
+import { API_SERVER_URL } from '../data/settings';
 
 export default class GenerateICSPane extends React.Component {
   constructor(props) {
@@ -31,7 +32,7 @@ export default class GenerateICSPane extends React.Component {
 
     const labels = this.props.selectedLabels;
 
-    const url = `${window.abe_url}/subscriptions/`;
+    const url = `${API_SERVER_URL}/subscriptions/`;
 
     axios.post(url, { labels }).then(
       (response) => {
@@ -42,7 +43,7 @@ export default class GenerateICSPane extends React.Component {
   }
 
   copyToClipboard(url) {
-    copy(window.abe_url + url);
+    copy(API_SERVER_URL + url);
 
     this.props.icsUrlCopiedToClipboard(url);
     alert('Feed URL copied to clipboard');
@@ -86,7 +87,7 @@ export default class GenerateICSPane extends React.Component {
             </a>
 
             <a
-              href={`webcal:${window.abe_url.split(':')[1]}${this.state.data.ics_url}`}
+              href={`webcal:${API_SERVER_URL.split(':')[1]}${this.state.data.ics_url}`}
               className="ics-copy-to-clipboard"
             >
               Import into Outlook

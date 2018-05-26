@@ -4,14 +4,9 @@ import { applyMiddleware, combineReducers, createStore } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import * as reducers from './reducers';
 import SidebarMode from './sidebar-modes';
+import { debug, googleAnalyticsId, dayStartHour, dayEndHour } from './settings';
 
 export default function setupStore(history) {
-  const debug = process.env.DEBUG || false;
-  const googleAnalyticsId = process.env.GA_ID;
-  // TODO: Replace these with some user-configurable option
-  const dayStartHour = process.env.DAY_START_HOUR || 8;
-  const dayEndHour = process.env.DAY_END_HOUR || 24;
-
   const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent);
   const initialState = {
     general: {

@@ -12,15 +12,9 @@ import LabelsContainer from './containers/labels-container';
 import SidebarContainer from './containers/sidebar-container';
 import SubscriptionContainer from './containers/subscription-container';
 import { withAccountInfo } from './containers/with-server-data';
-import { fetchLabels, fetchUser, toggleSidebarCollapsed } from './data/actions';
+import { fetchLabels, fetchAccessInfo, toggleSidebarCollapsed } from './data/actions';
 import { initializeAccessToken } from './data/auth';
 import setupStore from './data/setup-store';
-
-// Remove the trailing slash, if present
-//
-// TODO: change this from a global variable to an API Client that's supplied via
-// the provider pattern.
-window.abe_url = process.env.ABE_URL.replace(/\/$/, '');
 
 // React Router (with Redux middleware)
 const history = createHistory();
@@ -30,7 +24,7 @@ const store = setupStore(history);
 
 initializeAccessToken();
 
-store.dispatch(fetchUser());
+store.dispatch(fetchAccessInfo());
 store.dispatch(fetchLabels());
 
 const App = () => (

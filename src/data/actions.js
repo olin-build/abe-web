@@ -1,11 +1,13 @@
 // This file contains a bunch of Redux actions
 
 import axios from 'axios';
+import _ from 'lodash';
 import moment from 'moment';
 import ReactGA from 'react-ga';
 import { push } from 'react-router-redux';
-import { setAccessTokenFromResponse } from './auth';
+import { getAccessToken, setAccessTokenFromResponse } from './auth';
 import { decodeEvent } from './encoding';
+import { API_SERVER_URL, TOKEN_INFO_ENDPOINT } from './settings';
 
 /* eslint-disable max-len */
 export const ActionTypes = {
@@ -25,7 +27,7 @@ export const ActionTypes = {
   SET_FILTER_LABEL_SELECTED: 'SET_FILTER_LABEL_SELECTED', // Sets whether or not a specific label is selected as part
   // of the event filter
   SET_VIEW_MODE: 'SET_VIEW_MODE', // Sets which view mode (month, week, day, etc) the calendar is in
-  SET_USER: 'SET_USER',
+  SET_ACCESS_INFO: 'SET_ACCESS_INFO',
   // Event data
   SET_CURRENT_EVENT: 'SET_CURRENT_EVENT', // Keeps track of the data for the event currently being viewed or edited
   FETCH_EVENTS_IF_NEEDED: 'FETCH_EVENTS_IF_NEEDED', // Triggers FETCH_EVENTS if no event data is loaded
@@ -231,24 +233,27 @@ export function setViewMode(mode) {
 /**
  * Performs a server request to refresh the user info.
  */
-export function fetchUser() {
-  return dispatch =>
-    axios
-      .get(`${window.abe_url}/user/`)
-      .then(setAccessTokenFromResponse)
-      .then(response => response.data, error => dispatch(displayError(error)))
-      .then(user => dispatch(setUser(user)));
-}
-
-/**
- * Updates the user in the Redux store.
- */
-export function setUser(user) {
-  const data = {
-    authenticated: user.authenticated,
-    scope: new Set(user.scope),
-  };
-  return { type: ActionTypes.SET_USER, data };
+export function fetchAccessInfo() {
+  function setAccessInfo(user) {
+    const token = user.token || {};
+    // TODO: remove support for string array scope
+    const { scope } = user;
+    const scopes = _.isString(scope) ? user.scope.split(' ') : scope;
+    const data = {
+      authenticated: token.active,
+      scope: new Set(scopes),
+    };
+    return { type: ActionTypes.SET_ACCESS_INFO, data };
+  }
+  const token = getAccessToken();
+  return token
+    ? dispatch =>
+      axios
+        .get(TOKEN_INFO_ENDPOINT, { params: { token } })
+        .then(setAccessTokenFromResponse)
+        .then(response => response.data, error => dispatch(displayError(error)))
+        .then(user => dispatch(setAccessInfo(user)))
+    : dispatch => dispatch(setAccessInfo({}));
 }
 
 // ########## Begin Event Data Actions ########## //
@@ -276,8 +281,8 @@ export function setCurrentEventById(id, recId) {
     } else {
       // We don't have the data, so request it from the server
       const url = recId
-        ? `${window.abe_url}/events/${id}/${recId}`
-        : `${window.abe_url}/events/${id}`;
+        ? `${API_SERVER_URL}/events/${id}/${recId}`
+        : `${API_SERVER_URL}/events/${id}`;
       axios
         .get(url)
         .then(response => dispatch(setCurrentEventData(response.data)))
@@ -308,7 +313,7 @@ export function refreshEvents(start, end) {
     const startString = `${start.year()}-${start.month() + 1}-${start.date()}`;
     const endString = `${end.year()}-${end.month() + 1}-${end.date()}`;
     return axios
-      .get(`${window.abe_url}/events/?start=${startString}&end=${endString}`)
+      .get(`${API_SERVER_URL}/events/?start=${startString}&end=${endString}`)
       .then(response => response.data, error => dispatch(displayError(error)))
       .then((data) => {
         const events = data.map(decodeEvent);
@@ -378,7 +383,7 @@ export function deleteCurrentEvent() {
     const store = getStore();
     const event = store.events.current;
     axios
-      .delete(`${window.abe_url}/events/${event.id || event.sid}`)
+      .delete(`${API_SERVER_URL}/events/${event.id || event.sid}`)
       .then(() => dispatch(eventDeletedSuccessfully(event.id || event.sid)))
       .catch(response => eventDeleteFailed(event, response));
   };
@@ -511,7 +516,7 @@ export function refreshLabelsIfNeeded() {
 export function fetchLabels() {
   return dispatch =>
     axios
-      .get(`${window.abe_url}/labels/`)
+      .get(`${API_SERVER_URL}/labels/`)
       .then(response => response.data, error => dispatch(displayError(error)))
       .then(labels => dispatch(setLabels(labels)));
 }
@@ -573,7 +578,7 @@ export function updateLabel(data) {
   return () => {
     // TODO: update model on success
     axios
-      .post(`${window.abe_url}/labels/${data.id}`, data)
+      .post(`${API_SERVER_URL}/labels/${data.id}`, data)
       .catch(error => alert(`Update label failed:\n${error}`));
   };
 }

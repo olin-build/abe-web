@@ -62,7 +62,7 @@ const Sidebar = (props) => {
       )}
 
       {mode.LINK_PANE &&
-        scope.has('create:events') && (
+        scope.has('edit:events') && (
           <LinkPane
             addEventClicked={props.addEvent}
             importICSClicked={props.importICSClicked}
