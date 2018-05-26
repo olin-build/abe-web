@@ -103,9 +103,11 @@ LabelPane.propTypes = {
   editable: PropTypes.bool,
   disableProtectedLabels: PropTypes.bool,
   showUnselected: PropTypes.bool,
+  // TODO: DRY w/ sidebar.jsx
   possibleLabels: PropTypes.objectOf(PropTypes.shape({
     color: PropTypes.string,
     description: PropTypes.string,
+    name: PropTypes.string.isRequired,
     protected: PropTypes.bool,
     visbility: PropTypes.string,
   })),
