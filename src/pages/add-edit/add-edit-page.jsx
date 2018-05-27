@@ -16,6 +16,7 @@ import LocationField from './location-field';
 import RecurrenceSelector from './recurrence-selector';
 import SaveCancelButtons from './save-cancel-buttons';
 import EventVisibilitySelector from './visibility-selector';
+import { API_SERVER_URL } from '../../data/settings';
 
 export default class AddEditEventPage extends React.Component {
   constructor(props) {
@@ -58,7 +59,7 @@ export default class AddEditEventPage extends React.Component {
       // Editing a specific recurrence in a series of events
       // Get the series data so we know how this event differs from the rest in the series
       axios
-        .get(`${window.abe_url}/events/${props.match.params.id}`)
+        .get(`${API_SERVER_URL}/events/${props.match.params.id}`)
         .then(this.receivedSuccessfulSeriesDataResponse);
       // TODO: Handle an unsuccessful response
     }
@@ -154,17 +155,17 @@ export default class AddEditEventPage extends React.Component {
             }
           });
 
-          url = `${window.abe_url}/events/${eventData.id || eventData.sid}/${
+          url = `${API_SERVER_URL}/events/${eventData.id || eventData.sid}/${
             this.props.match.params.recId
           }`;
         } else {
-          url = `${window.abe_url}/events/${eventData.id || eventData.sid}`;
+          url = `${API_SERVER_URL}/events/${eventData.id || eventData.sid}`;
         }
         delete eventData.color; // Don't send the color used for rendering the calendar
         requestMethod = axios.put;
       } else {
         // We're adding a new event
-        url = `${window.abe_url}/events/`;
+        url = `${API_SERVER_URL}/events/`;
         requestMethod = axios.post;
       }
 
@@ -241,7 +242,7 @@ export default class AddEditEventPage extends React.Component {
 
     const { scope } = this.props.user;
     const editingExisting = this.state.eventData.id || this.state.eventData.sid;
-    const requiredScope = editingExisting ? 'create:protected_events' : 'edit:protected_events';
+    const requiredScope = 'edit:protected_events';
     const pageTitle = editingExisting ? 'Edit Event' : 'Add Event';
     const submitButtonText = editingExisting ? 'Update Event' : 'Add Event';
     const formUrl = 'https://goo.gl/forms/2cqVijokICZ5S20R2';
@@ -339,7 +340,9 @@ export default class AddEditEventPage extends React.Component {
 }
 
 AddEditEventPage.propTypes = {
+  // TODO: DRY w/ sidebar.jsx
   user: PropTypes.shape({ scope: PropTypes.instanceOf(Map) }).isRequired,
+  // TODO: DRY w/ sidebar.jsx
   eventData: PropTypes.shape({
     title: PropTypes.string,
     description: PropTypes.string,

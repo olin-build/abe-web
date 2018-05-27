@@ -33,3 +33,6 @@ class LocalStorageMock {
 }
 
 global.localStorage = new LocalStorageMock();
+
+process.env.ABE_URL = 'http://abe_url';
+process.env.CLIENT_ID = '$abe-client-id';

@@ -7,6 +7,7 @@ import TagPane from '../../components/label-pane';
 import MenuIconButton from '../../components/menu-icon-button';
 import SidebarModes from '../../data/sidebar-modes';
 import docs from '../../docs';
+import { API_SERVER_URL } from '../../data/settings';
 
 export default class SubscriptionEditorPage extends React.Component {
   constructor(props) {
@@ -20,7 +21,7 @@ export default class SubscriptionEditorPage extends React.Component {
     };
 
     axios
-      .get(`${window.abe_url}/subscriptions/${this.getIdFromURL(props)}`)
+      .get(`${API_SERVER_URL}/subscriptions/${this.getIdFromURL(props)}`)
       .then(
         response => this.setState({ data: Object.assign({}, this.state.data, response.data) }),
         (jqXHR, textStatus, errorThrown) => this.props.importFailed(errorThrown, jqXHR.message),
@@ -56,7 +57,7 @@ export default class SubscriptionEditorPage extends React.Component {
   // };
 
   submitSubscription = () => {
-    axios.put(`${window.abe_url}/subscriptions/${this.state.data.id}`, this.state.data).then(
+    axios.put(`${API_SERVER_URL}/subscriptions/${this.state.data.id}`, this.state.data).then(
       (response) => {
         this.setState({ data: Object.assign({}, this.state.data, response.data) });
         this.props.importSuccess(response, response.data);
@@ -66,7 +67,7 @@ export default class SubscriptionEditorPage extends React.Component {
   };
 
   copyToClipboard() {
-    const url = window.abe_url + this.state.data.ics_url;
+    const url = API_SERVER_URL + this.state.data.ics_url;
     copy(url);
     alert('Link copied to clipboard');
   }
@@ -99,7 +100,7 @@ export default class SubscriptionEditorPage extends React.Component {
           />
           <br />
           <a
-            href={`webcal:${window.abe_url.split(':')[1]}${this.state.data.ics_url}`}
+            href={`webcal:${API_SERVER_URL.split(':')[1]}${this.state.data.ics_url}`}
             className="ics-copy-to-clipboard"
           >
             Import into Outlook
