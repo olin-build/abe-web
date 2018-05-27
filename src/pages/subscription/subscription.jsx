@@ -1,13 +1,13 @@
 // This component allows the user to import a calendar from an ICS feed
 
-import axios from 'axios';
 import copy from 'copy-to-clipboard';
 import * as React from 'react';
 import TagPane from '../../components/label-pane';
 import MenuIconButton from '../../components/menu-icon-button';
+import apiClient from '../../data/client';
+import { API_SERVER_URL } from '../../data/settings';
 import SidebarModes from '../../data/sidebar-modes';
 import docs from '../../docs';
-import { API_SERVER_URL } from '../../data/settings';
 
 export default class SubscriptionEditorPage extends React.Component {
   constructor(props) {
@@ -20,12 +20,11 @@ export default class SubscriptionEditorPage extends React.Component {
       },
     };
 
-    axios
-      .get(`${API_SERVER_URL}/subscriptions/${this.getIdFromURL(props)}`)
-      .then(
-        response => this.setState({ data: Object.assign({}, this.state.data, response.data) }),
-        (jqXHR, textStatus, errorThrown) => this.props.importFailed(errorThrown, jqXHR.message),
-      );
+    apiClient
+      .get(`/subscriptions/${this.getIdFromURL(props)}`)
+      .catch((jqXHR, textStatus, errorThrown) =>
+        this.props.importFailed(errorThrown, jqXHR.message))
+      .then(({ data }) => this.setState({ data: Object.assign({}, this.state.data, data) }));
 
     this.props.setSidebarMode(SidebarModes.IMPORT);
     props.setPageTitlePrefix('Edit Subscription');
@@ -57,13 +56,14 @@ export default class SubscriptionEditorPage extends React.Component {
   // };
 
   submitSubscription = () => {
-    axios.put(`${API_SERVER_URL}/subscriptions/${this.state.data.id}`, this.state.data).then(
-      (response) => {
-        this.setState({ data: Object.assign({}, this.state.data, response.data) });
-        this.props.importSuccess(response, response.data);
-      },
-      (jqXHR, textStatus, errorThrown) => this.props.importFailed(errorThrown, jqXHR.message),
-    );
+    apiClient
+      .put(`/subscriptions/${this.state.data.id}`, this.state.data)
+      .catch((jqXHR, textStatus, errorThrown) =>
+        this.props.importFailed(errorThrown, jqXHR.message))
+      .then(({ data }) => {
+        this.setState({ data: Object.assign({}, this.state.data, data) });
+        this.props.importSuccess(data);
+      });
   };
 
   copyToClipboard() {

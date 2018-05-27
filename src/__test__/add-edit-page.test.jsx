@@ -6,10 +6,10 @@ import AddEditEventPage from '../pages/add-edit/add-edit-page';
 
 describe('AddEditEventPage', () => {
   const userAccount = {
-    scope: new Map(),
+    scope: new Set(),
   };
   const adminAccount = {
-    scope: new Map(),
+    scope: new Set(),
   };
   const event = {
     title: 'An event title',

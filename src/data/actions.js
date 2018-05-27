@@ -6,8 +6,9 @@ import moment from 'moment';
 import ReactGA from 'react-ga';
 import { push } from 'react-router-redux';
 import { getAccessToken, setAccessTokenFromResponse } from './auth';
+import apiClient from './client';
 import { decodeEvent } from './encoding';
-import { API_SERVER_URL, TOKEN_INFO_ENDPOINT } from './settings';
+import { TOKEN_INFO_ENDPOINT } from './settings';
 
 /* eslint-disable max-len */
 export const ActionTypes = {
@@ -71,6 +72,10 @@ export function displayMessage(message) {
  */
 export function displayError(error, message) {
   return { type: ActionTypes.DISPLAY_ERROR, error, message };
+}
+
+export function clearMessages() {
+  return { type: ActionTypes.CLEAR_MESSAGES };
 }
 
 // ----- End notification/message bar actions ----- //
@@ -280,12 +285,10 @@ export function setCurrentEventById(id, recId) {
       dispatch(setCurrentEventData(eventData));
     } else {
       // We don't have the data, so request it from the server
-      const url = recId
-        ? `${API_SERVER_URL}/events/${id}/${recId}`
-        : `${API_SERVER_URL}/events/${id}`;
-      axios
+      const url = recId ? `/events/${id}/${recId}` : `/events/${id}`;
+      apiClient
         .get(url)
-        .then(response => dispatch(setCurrentEventData(response.data)))
+        .then(({ data }) => dispatch(setCurrentEventData(data)))
         .catch(response => console.error(response)); // TODO: Display an error message to the user
     }
   };
@@ -312,13 +315,10 @@ export function refreshEvents(start, end) {
   return (dispatch) => {
     const startString = `${start.year()}-${start.month() + 1}-${start.date()}`;
     const endString = `${end.year()}-${end.month() + 1}-${end.date()}`;
-    return axios
-      .get(`${API_SERVER_URL}/events/?start=${startString}&end=${endString}`)
-      .then(response => response.data, error => dispatch(displayError(error)))
-      .then((data) => {
-        const events = data.map(decodeEvent);
-        dispatch(setEvents(events));
-      });
+    return apiClient.get(`/events/?start=${startString}&end=${endString}`).then(({ data }) => {
+      const events = data.map(decodeEvent);
+      dispatch(setEvents(events));
+    });
   };
 }
 
@@ -382,10 +382,10 @@ export function deleteCurrentEvent() {
   return (dispatch, getStore) => {
     const store = getStore();
     const event = store.events.current;
-    axios
-      .delete(`${API_SERVER_URL}/events/${event.id || event.sid}`)
-      .then(() => dispatch(eventDeletedSuccessfully(event.id || event.sid)))
-      .catch(response => eventDeleteFailed(event, response));
+    apiClient
+      .delete(`/events/${event.id || event.sid}`)
+      .catch(response => eventDeleteFailed(event, response))
+      .then(() => dispatch(eventDeletedSuccessfully(event.id || event.sid)));
   };
 }
 
@@ -515,10 +515,10 @@ export function refreshLabelsIfNeeded() {
  */
 export function fetchLabels() {
   return dispatch =>
-    axios
-      .get(`${API_SERVER_URL}/labels/`)
-      .then(response => response.data, error => dispatch(displayError(error)))
-      .then(labels => dispatch(setLabels(labels)));
+    apiClient
+      .get('/labels/')
+      .catch(error => dispatch(displayError(error)))
+      .then(({ data }) => dispatch(setLabels(data)));
 }
 
 /**
@@ -577,8 +577,8 @@ export function labelVisibilityToggled(labelName) {
 export function updateLabel(data) {
   return () => {
     // TODO: update model on success
-    axios
-      .post(`${API_SERVER_URL}/labels/${data.id}`, data)
+    apiClient
+      .post(`/labels/${data.id}`, data)
       .catch(error => alert(`Update label failed:\n${error}`));
   };
 }

@@ -30,7 +30,7 @@ const mapDispatchToProps = (dispatch, getState) => ({
   setPageTitlePrefix: (title) => {
     dispatch(setPageTitlePrefix(title));
   },
-  importSuccess: (response, importData) => {
+  importSuccess: (importData) => {
     ga.event({
       category: 'Subscription Preferences',
       variable: 'success',
@@ -51,6 +51,9 @@ const mapDispatchToProps = (dispatch, getState) => ({
 });
 
 // Connect props to Redux state and actions
-const SubscriptionContainer = connect(mapStateToProps, mapDispatchToProps)(SubscriptionEditorPage);
+const SubscriptionContainer = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(SubscriptionEditorPage);
 
 export default SubscriptionContainer;
