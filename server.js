@@ -1,10 +1,20 @@
+const fs = require('fs');
+const bodyParser = require('body-parser');
 const express = require('express');
+const helmet = require('helmet');
+
+const PORT = process.env.PORT || 8080;
+const { ENFORCE_SSL } = process.env;
 
 const app = express();
-const bodyParser = require('body-parser');
 
-const port = process.env.PORT || 8080;
-const fs = require('fs');
+app.use(helmet({
+  hsts: false,
+}));
+if (ENFORCE_SSL) {
+  app.use((req, res, next) =>
+    (req.secure ? next() : res.redirect(`https://${req.get('Host')}${req.url}`)));
+}
 
 app.use(bodyParser.json({ type: 'application/*+json' }));
 app.use(express.static(__dirname));
@@ -33,11 +43,11 @@ app.get('*', (req, res) => {
   res.send(html);
 });
 
-const server = app.listen(port, () => {
-  let host = server.address().address;
+const server = app.listen(PORT, () => {
+  const { address, port } = server.address();
   // replace IPv6 wildcard by a recognizable URL, that can be used in a browser
   // address bar
-  host = host.replace(/^::$/, '0.0.0.0');
+  const host = address.replace(/^::$/, '0.0.0.0');
   // Printed thus, some terminals display a clickable link
-  console.log('Dev server is listening at http://%s:%s/', host, server.address().port);
+  console.log(`Dev server is listening at http://${host}:${port}/`);
 });
