@@ -57,6 +57,7 @@ export default function setupStore(history) {
       labelList: null,
       visibleLabels: null,
     },
+    messages: [],
   };
 
   initialState.calendar.currentViewMode = isMobile

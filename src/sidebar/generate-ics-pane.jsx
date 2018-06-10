@@ -1,12 +1,12 @@
 // The component provides information to the user about ICS feed generation. It also gives
 // them a button to click to generate an ICS feed.
 
-import axios from 'axios';
 import copy from 'copy-to-clipboard';
 import React from 'react';
 import { OutboundLink } from 'react-ga';
-import docs from '../docs';
+import apiClient from '../data/client';
 import { API_SERVER_URL } from '../data/settings';
+import docs from '../docs';
 
 export default class GenerateICSPane extends React.Component {
   constructor(props) {
@@ -32,14 +32,10 @@ export default class GenerateICSPane extends React.Component {
 
     const labels = this.props.selectedLabels;
 
-    const url = `${API_SERVER_URL}/subscriptions/`;
-
-    axios.post(url, { labels }).then(
-      (response) => {
-        this.setState({ data: Object.assign({}, this.state.data, response.data) });
-      },
-      (_jqXHR, _textStatus, _errorThrown) => alert('Failed to get Feed URL'),
-    );
+    apiClient
+      .post('/subscriptions/', { labels })
+      .catch((_jqXHR, _textStatus, _errorThrown) => alert('Failed to get Feed URL'))
+      .then(({ data }) => this.setState({ data: Object.assign({}, this.state.data, data) }));
   }
 
   copyToClipboard(url) {

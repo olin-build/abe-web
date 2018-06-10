@@ -105,7 +105,7 @@ const Sidebar = (props) => {
         // For viewing the calendar
         <SidebarItem key="logout" header="Sign Out">
           <a onClick={onSignOut}>Sign out</a> of {olinBuildLogo}. While signed out, you will only be
-          able to view public events when you are outside the intranet.
+          able to view public events unless you are inside the intranet.
         </SidebarItem>
       )}
     </div>

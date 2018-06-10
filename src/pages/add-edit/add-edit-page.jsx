@@ -1,6 +1,5 @@
 // This page is used to add or edit an event
 
-import axios from 'axios';
 import deepcopy from 'deepcopy';
 import _ from 'lodash';
 import moment from 'moment';
@@ -10,13 +9,13 @@ import DateTimeSelector from '../../components/date-time-selector';
 import LabelPane from '../../components/label-pane';
 import MarkdownEditor from '../../components/markdown-editor';
 import MenuIconButton from '../../components/menu-icon-button';
+import apiClient from '../../data/client';
 import { encodeEvent } from '../../data/encoding';
 import SidebarModes from '../../data/sidebar-modes';
 import LocationField from './location-field';
 import RecurrenceSelector from './recurrence-selector';
 import SaveCancelButtons from './save-cancel-buttons';
 import EventVisibilitySelector from './visibility-selector';
-import { API_SERVER_URL } from '../../data/settings';
 
 export default class AddEditEventPage extends React.Component {
   constructor(props) {
@@ -58,8 +57,8 @@ export default class AddEditEventPage extends React.Component {
     if (props.match.params.id && props.match.params.recId) {
       // Editing a specific recurrence in a series of events
       // Get the series data so we know how this event differs from the rest in the series
-      axios
-        .get(`${API_SERVER_URL}/events/${props.match.params.id}`)
+      apiClient
+        .get(`/events/${props.match.params.id}`)
         .then(this.receivedSuccessfulSeriesDataResponse);
       // TODO: Handle an unsuccessful response
     }
@@ -155,24 +154,22 @@ export default class AddEditEventPage extends React.Component {
             }
           });
 
-          url = `${API_SERVER_URL}/events/${eventData.id || eventData.sid}/${
-            this.props.match.params.recId
-          }`;
+          url = `/events/${eventData.id || eventData.sid}/${this.props.match.params.recId}`;
         } else {
-          url = `${API_SERVER_URL}/events/${eventData.id || eventData.sid}`;
+          url = `/events/${eventData.id || eventData.sid}`;
         }
         delete eventData.color; // Don't send the color used for rendering the calendar
-        requestMethod = axios.put;
+        requestMethod = 'put';
       } else {
         // We're adding a new event
-        url = `${API_SERVER_URL}/events/`;
-        requestMethod = axios.post;
+        url = '/events/';
+        requestMethod = 'post';
       }
 
       // Make the request
-      requestMethod(url, encodeEvent(eventData))
-        .then(this.props.eventSavedSuccessfully)
-        .catch(jqXHR => this.props.eventSaveFailed(eventData, jqXHR.message));
+      apiClient[requestMethod](url, encodeEvent(eventData))
+        .catch(jqXHR => this.props.eventSaveFailed(eventData, jqXHR.message))
+        .then(({ data }) => this.props.eventSavedSuccessfully(data));
     }
   };
 
@@ -341,7 +338,7 @@ export default class AddEditEventPage extends React.Component {
 
 AddEditEventPage.propTypes = {
   // TODO: DRY w/ sidebar.jsx
-  user: PropTypes.shape({ scope: PropTypes.instanceOf(Map) }).isRequired,
+  user: PropTypes.shape({ scope: PropTypes.instanceOf(Set) }).isRequired,
   // TODO: DRY w/ sidebar.jsx
   eventData: PropTypes.shape({
     title: PropTypes.string,
