@@ -53,6 +53,7 @@
     "expose": "^0.1.4",
     "expose-loader": "^0.7.3",
     "express": "^4.15.3",
+    "helmet": "^3.12.1",
     "http-server": "0.10.0",
     "input-moment": "git+https://github.com/kylecombes/input-moment.git",
     "lodash": "^4.17.10",
@@ -97,7 +98,10 @@
     "webpack-dev-server": "^2.5.0"
   },
   "jest": {
-    "coveragePathIgnorePatterns": ["/node_modules/","__test__"],
+    "coveragePathIgnorePatterns": [
+      "/node_modules/",
+      "__test__"
+    ],
     "moduleNameMapper": {
       "\\.(svg)$": "<rootDir>/__mocks__/fileMock.js"
     },

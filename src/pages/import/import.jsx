@@ -1,11 +1,10 @@
 // This component allows the user to import a calendar from an ICS feed
 
-import axios from 'axios';
 import * as React from 'react';
 import TagPane from '../../components/label-pane';
 import MenuIconButton from '../../components/menu-icon-button';
+import apiClient from '../../data/client';
 import SidebarModes from '../../data/sidebar-modes';
-import { API_SERVER_URL } from '../../data/settings';
 
 export default class ImportPage extends React.Component {
   constructor(props) {
@@ -36,12 +35,11 @@ export default class ImportPage extends React.Component {
   };
 
   submitICS = () => {
-    axios
-      .post(`${API_SERVER_URL}/ics/`, this.state.importData)
-      .then(
-        response => this.props.importSuccess(response, this.state.importData),
-        (jqXHR, textStatus, errorThrown) => this.props.importFailed(errorThrown, jqXHR.message),
-      );
+    apiClient
+      .post('/ics/', this.state.importData)
+      .then(({ data }) => this.props.importSuccess(data))
+      .catch((jqXHR, textStatus, errorThrown) =>
+        this.props.importFailed(errorThrown, jqXHR.message));
   };
 
   render() {

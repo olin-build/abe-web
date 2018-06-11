@@ -35,7 +35,7 @@ const mapDispatchToProps = (dispatch, getState) => ({
   setPageTitlePrefix: (title) => {
     dispatch(setPageTitlePrefix(title));
   },
-  importSuccess: (response, importData) => {
+  importSuccess: (importData) => {
     ga.event({
       category: 'ICS Feed Import',
       variable: 'success',
@@ -57,6 +57,9 @@ const mapDispatchToProps = (dispatch, getState) => ({
 });
 
 // Connect props to Redux state and actions
-const ImportContainer = connect(mapStateToProps, mapDispatchToProps)(ImportPage);
+const ImportContainer = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(ImportPage);
 
 export default ImportContainer;

@@ -773,3 +773,21 @@ textarea.markdown-editor {
         transform: rotate(360deg);
     }
 }
+
+.messages {
+    z-index: 1000;
+    width: 100%;
+    background: yellow;
+    padding: 5px 15px;
+    position: absolute;
+    transition: transform 0.5s;
+    transform: scaleY(1);
+}
+
+.messages.count-0 {
+    transform: scaleY(0);
+}
+
+.messages.count-0 .closebox {
+    display: none;
+}

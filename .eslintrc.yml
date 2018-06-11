@@ -32,7 +32,7 @@ rules:
 
 overrides:
   # server:
-  - files: [ "index.html.js", "server.js", "webpack.config.js" ]
+  - files: [ "server/*.js", "server.js", "sslify.js", "webpack.config.js" ]
     parser: esprima
     env:
       browser: false

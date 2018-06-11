@@ -12,7 +12,12 @@ import LabelsContainer from './containers/labels-container';
 import SidebarContainer from './containers/sidebar-container';
 import SubscriptionContainer from './containers/subscription-container';
 import { withAccountInfo } from './containers/with-server-data';
-import { fetchLabels, fetchAccessInfo, toggleSidebarCollapsed } from './data/actions';
+import {
+  clearMessages,
+  fetchAccessInfo,
+  fetchLabels,
+  toggleSidebarCollapsed,
+} from './data/actions';
 import { initializeAccessToken } from './data/auth';
 import setupStore from './data/setup-store';
 
@@ -27,8 +32,14 @@ initializeAccessToken();
 store.dispatch(fetchAccessInfo());
 store.dispatch(fetchLabels());
 
-const App = () => (
+const App = ({ messages, onMessageClose }) => (
   <div className="app-container">
+    <div className={`messages count-${messages.length}`}>
+      <span className="closebox big ion-ios-close" onClick={onMessageClose}>
+        &nbsp;
+      </span>
+      {messages.map(({ id, message }) => <p key={id}>{message}</p>)}
+    </div>
     <SidebarContainer />
     <div className="scene-container">
       <div className="scene-overlay" onClick={() => store.dispatch(toggleSidebarCollapsed())} />
@@ -50,9 +61,20 @@ const App = () => (
 // Guard the entire app, in order to get a single loading indicator instead of
 // one for the sidebar and another for the main calendar view
 const mapStateToProps = state => ({
+  messages: state.messages,
   user: state.user,
 });
-const AppContainer = connect(mapStateToProps)(withAccountInfo(App));
+
+const mapDispatchToProps = dispatch => ({
+  onMessageClose: (mode) => {
+    dispatch(clearMessages(mode));
+  },
+});
+
+const AppContainer = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(withAccountInfo(App));
 
 ReactDOM.render(
   <Provider store={store}>
