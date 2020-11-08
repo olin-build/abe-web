@@ -56,7 +56,7 @@
     "helmet": "^3.12.1",
     "http-server": "0.10.0",
     "input-moment": "git+https://github.com/kylecombes/input-moment.git",
-    "lodash": "^4.17.10",
+    "lodash": "^4.17.19",
     "moment": "^2.18.1",
     "prop-types": "^15.6.1",
     "react": "^15.6.1",
