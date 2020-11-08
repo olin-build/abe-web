@@ -167,13 +167,14 @@ export function page(direction) {
 /**
  * Calculates how many of what unit (3 days, 1 week, etc) the currently viewing
  * date should be changed by, based on what display mode (month, week, day, etc)
- * the calendar is in
+ * the calendar is in.
  */
 function getPageDelta(state) {
   return state.calendar.currentViewMode.daysVisible > 0
     ? [state.calendar.currentViewMode.daysVisible, 'd']
-    : [1, 'M'];
+    : [1, 'M'];// daysVisible = -1 in month view
 }
+
 
 export function showToday() {
   return (dispatch, getStore) => {
@@ -181,7 +182,7 @@ export function showToday() {
     const state = getStore();
     const inWeekView = state.calendar.currentViewMode.daysVisible === 7;
     if (inWeekView) {
-      focusDate.day(0);
+      focusDate.day(0);// Displays the first day of the week view as Sunday
     }
     dispatch(setCurrentlyViewingDate(focusDate));
   };
@@ -199,6 +200,7 @@ export function setCurrentlyViewingDate(date) {
     .minute(0)
     .second(0); // Set to start of day to avoid any potential weirdness when manipulating later
   // TODO: Cache request responses (so don't need to make request on every page change)
+
   return (dispatch) => {
     // Find the first day of the first week of the month
     const firstDay = moment(date)
@@ -206,10 +208,10 @@ export function setCurrentlyViewingDate(date) {
       .day(0);
     // Find the last day of the last week of the month
     const lastDay = moment(date)
-      .date(0)
+      .date(1)
       .add(1, 'M')
       .subtract(1, 'd')
-      .day(6);
+      .day(7);
     dispatch(refreshEvents(firstDay, lastDay));
     dispatch({ type: ActionTypes.SET_FOCUSED_DATE, data: date });
   };
