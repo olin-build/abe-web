@@ -27,60 +27,65 @@ export function normalizeUrlLabels(labelsParam, allLabels) {
     .sort();
 }
 
-export default class CalendarPage extends React.Component {
-  componentDidMount() {
-    this.props.setSidebarMode(SidebarModes.CALENDAR_VIEW);
-    this.props.setPageTitlePrefix(null);
+const CalendarPage = (props) => {
+  // The function passed to the useEffect hook runs once when the component first renders and then
+  // once every time the dependency array changes. Since the array will always be [], it will only
+  // run once.
+  React.useEffect(() => {
+    props.setSidebarMode(SidebarModes.CALENDAR_VIEW);
+    props.setPageTitlePrefix(null);
 
     // Load the visible labels from the URL (if defined)
-    const labelsStr = this.props.match.params.labels;
+    const labelsStr = props.match.params.labels;
     if (labelsStr && labelsStr.length > 0) {
-      this.props.setVisibleLabels(normalizeUrlLabels(labelsStr, this.props.labels.labelList));
+      props.setVisibleLabels(normalizeUrlLabels(labelsStr, props.labels.labelList));
     }
 
-    if (!this.props.currentlyViewingDate) {
+    if (!props.currentlyViewingDate) {
       // Set the focused date on the calendar to today and load the events
-      this.props.showToday();
+      props.showToday();
     }
-  }
+  }, []);
 
-  componentDidUpdate() {
-    if (this.props.labels.visibleLabels) {
-      const labelsStr = this.props.labels.visibleLabels
+  // The function passed to this useEffect hook will run when the component first mounts and then
+  // again every time props.labels.visibleLabels changes.
+  React.useEffect(() => {
+    if (props.labels.visibleLabels) {
+      const labelsStr = props.labels.visibleLabels
         .sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()))
         .join(',');
       const url = `/calendar/${labelsStr}`;
-      if (url !== this.props.location.pathname) {
+      if (url !== props.location.pathname) {
         // Update URL to reflect selected labels
-        this.props.setRoute(encodeURI(url));
+        props.setRoute(encodeURI(url));
       }
     }
-  }
+  }, [props.labels.visibleLabels]);
 
-  render() {
-    const currDate = this.props.currentlyViewingDate
-      ? this.props.currentlyViewingDate.format('MMMM D, YYYY')
-      : '';
+  const currDate = props.currentlyViewingDate
+    ? props.currentlyViewingDate.format('MMMM D, YYYY')
+    : '';
 
-    return (
-      <div className="calendar-container">
-        <CalendarHeader
-          title={currDate}
-          onLeftClick={this.props.pageLeft}
-          onRightClick={this.props.pageRight}
-          onTodayClick={this.props.showToday}
-          {...this.props}
-        />
-        <UltraResponsiveCalendar
-          id="calendar"
-          className="page-container calendar-container"
-          viewType={this.props.currentViewMode.calendarModeProp}
-          days={this.props.currentViewMode.daysVisible}
-          startDate={this.props.currentlyViewingDate}
-          onEventClick={this.props.viewEvent}
-          {...this.props}
-        />
-      </div>
-    );
-  }
-}
+  return (
+    <div className="calendar-container">
+      <CalendarHeader
+        title={currDate}
+        onLeftClick={props.pageLeft}
+        onRightClick={props.pageRight}
+        onTodayClick={props.showToday}
+        {...props}
+      />
+      <UltraResponsiveCalendar
+        id="calendar"
+        className="page-container calendar-container"
+        viewType={props.currentViewMode.calendarModeProp}
+        days={props.currentViewMode.daysVisible}
+        startDate={props.currentlyViewingDate}
+        onEventClick={props.viewEvent}
+        {...props}
+      />
+    </div>
+  );
+};
+
+export default CalendarPage;
