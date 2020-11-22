@@ -1,3 +1,7 @@
+# SSL files
+*.key
+*.cert
+
 # dotenv
 .env
 
