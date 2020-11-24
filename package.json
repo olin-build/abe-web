@@ -94,7 +94,7 @@
     "redux-devtools": "^3.4.0",
     "regenerator-runtime": "^0.11.1",
     "source-map-loader": "^0.2.3",
-    "webpack-dev-server": "^2.5.0"
+    "webpack-dev-server": "^3.1.11"
   },
   "resolutions": {
     "react-input-slider": "6.0.0"
