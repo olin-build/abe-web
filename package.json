@@ -17,7 +17,7 @@
     "test": "jest"
   },
   "engines": {
-    "node": "^9"
+    "node": "^10"
   },
   "repository": "github:olin-build/abe-web",
   "keywords": [
@@ -58,21 +58,20 @@
     "input-moment": "git+https://github.com/kylecombes/input-moment.git",
     "lodash": "^4.17.10",
     "moment": "^2.18.1",
-    "prop-types": "^15.6.1",
-    "react": "^15.6.1",
+    "prop-types": "^15.7.2",
+    "react": "^17.0.1",
     "react-dnd": "^2.4.0",
-    "react-dom": "^15.6.1",
+    "react-dom": "^17.0.1",
     "react-ga": "^2.2.0",
     "react-markdown": "^2.5.0",
     "react-redux": "^5.0.5",
     "react-router": "^4.1.2",
     "react-router-dom": "^4.1.1",
-    "react-router-redux": "^5.0.0-alpha.6",
+    "react-router-redux": "^5.0.0-alpha.9",
     "redux": "^3.7.2",
     "redux-thunk": "^2.2.0",
     "serve-static": "^1.13.2",
     "svg-react-loader": "^0.4.4",
-    "typescript": "^2.4.1",
     "ultra-responsive-calendar": "https://github.com/kylecombes/ultra-responsive-calendar.git",
     "webpack": "^2.6.1",
     "webpack-dev-middleware": "^2.0.4"
@@ -96,6 +95,9 @@
     "regenerator-runtime": "^0.11.1",
     "source-map-loader": "^0.2.3",
     "webpack-dev-server": "^2.5.0"
+  },
+  "resolutions": {
+    "react-input-slider": "6.0.0"
   },
   "jest": {
     "coveragePathIgnorePatterns": [
