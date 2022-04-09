@@ -57,7 +57,7 @@
     "http-server": "0.10.0",
     "input-moment": "git+https://github.com/kylecombes/input-moment.git",
     "lodash": "^4.17.10",
-    "moment": "^2.18.1",
+    "moment": "^2.29.2",
     "prop-types": "^15.7.2",
     "react": "^17.0.1",
     "react-dnd": "^2.4.0",
