@@ -87,7 +87,7 @@
     "eslint-plugin-jsx-a11y": "6.0.2",
     "eslint-plugin-react": "^7.4.0",
     "markdownlint-cli": "^0.8.1",
-    "moment-timezone": "^0.5.16",
+    "moment-timezone": "^0.5.35",
     "react-codemirror": "^1.0.0",
     "react-tag-input": "git+https://github.com/kylecombes/react-tags.git",
     "react-test-renderer": "^15.0.0",
